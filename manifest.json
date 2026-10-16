@@ -1,0 +1,24 @@
+{
+  "name": "WARDOGS Fire Control",
+  "short_name": "Fire Control",
+  "description": "L81 Mörser & SPH-2 Artillerie Rechner",
+  "start_url": "./wardogs-moerser-rechner-premium.html",
+  "display": "standalone",
+  "background_color": "#07090d",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

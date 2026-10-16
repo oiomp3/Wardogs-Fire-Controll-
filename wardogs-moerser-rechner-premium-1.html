@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WARDOGS · Fire Control</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fire Control">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  :root {
+    --bg: #07090d;
+    --bg-elevated: #0e131b;
+    --card: #121822;
+    --card-border: rgba(255,255,255,0.06);
+    --accent: #3b82f6;
+    --accent-glow: rgba(59,130,246,0.35);
+    --green: #10b981;
+    --green-glow: rgba(16,185,129,0.25);
+    --orange: #f59e0b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --danger: #ef4444;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(ellipse at top, #0f172a 0%, var(--bg) 55%);
+    color: var(--text);
+    margin: 0;
+    padding: 20px 16px 40px;
+    min-height: 100vh;
+    line-height: 1.45;
+  }
+  .container {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 40%), var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .field { flex: 1; }
+  label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  input, select {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    background: #0c1017;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+    transition: transform 0.1s, box-shadow 0.15s;
+  }
+  button:hover { 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+  }
+  button:active { transform: translateY(0); }
+  .btn-secondary {
+    width: auto;
+    padding: 7px 14px;
+    background: #1e293b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin: 0;
+    box-shadow: none;
+  }
+  .btn-secondary:hover { background: #334155; transform: none; box-shadow: none; }
+  .btn-copy {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 16px rgba(16,185,129,0.25);
+    margin-top: 14px;
+  }
+  .btn-copy:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+  .result {
+    text-align: center;
+    padding: 8px 0 4px;
+  }
+  .big {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--green);
+    margin: 6px 0 2px;
+    letter-spacing: -1px;
+    text-shadow: 0 0 30px var(--green-glow);
+  }
+  .compass {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--orange);
+    margin-top: 6px;
+  }
+  .az-mil {
+    font-size: 1.05rem;
+    color: #64748b;
+    margin-top: 2px;
+  }
+  .label-important {
+    color: #e2e8f0;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .status {
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .in-range { 
+    background: rgba(16,185,129,0.12); 
+    color: #6ee7b7; 
+    border: 1px solid rgba(16,185,129,0.25);
+  }
+  .out-range { 
+    background: rgba(239,68,68,0.12); 
+    color: #fca5a5; 
+    border: 1px solid rgba(239,68,68,0.25);
+  }
+  .note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 18px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .slider-row input[type="range"] {
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background: #1e293b;
+    outline: none;
+    margin-top: 8px;
+    -webkit-appearance: none;
+  }
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  .history-item {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 8px;
+    margin: 0 -6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .history-item:hover { background: rgba(255,255,255,0.03); }
+  .history-item:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">Official Tool</div>
+    <h1>WARDOGS Fire Control</h1>
+    <div class="subtitle">L81 Mortar · SPH-2 Artillery</div>
+  </div>
+
+  <div class="card">
+    <div class="section-header">
+      <div class="section-title">Eigene Position</div>
+      <button class="btn-secondary" onclick="swapPositions()">⇄ Tauschen</button>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>X</label>
+        <input type="number" id="gx" step="0.01" value="80" oninput="syncInput('gx')">
+        <div class="slider-row">
+          <input type="range" id="gxSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
+        </div>
+      </div>
+      <div class="field">
+        <label>Y</label>
+        <input type="number" id="gy" step="0.01" value="80" oninput="syncInput('gy')">
+        <div class="slider-row">
+          <input type="range" id="gySlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin:18px 0 12px;">Ziel</div>
+    <div class="row">
+      <div class="field">
+        <label>X</label>
+        <input type="number" id="tx" step="0.01" value="80" oninput="syncInput('tx')">
+        <div class="slider-row">
+          <input type="range" id="txSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
+        </div>
+      </div>
+      <div class="field">
+        <label>Y</label>
+        <input type="number" id="ty" step="0.01" value="80" oninput="syncInput('ty')">
+        <div class="slider-row">
+          <input type="range" id="tySlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Waffe</label>
+      <select id="weapon">
+        <option value="mortar">L81 Mörser (132–684 m)</option>
+        <option value="arty">SPH-2 Artillerie (~780–2629 m)</option>
+      </select>
+    </div>
+    <button onclick="calculate()">Berechnen</button>
+  </div>
+
+  <div class="card result" id="result" style="display:none;">
+    <div class="label-important">Distanz</div>
+    <div class="big" id="distance">—</div>
+    <div class="label-important" style="margin-top:12px;">Kompass / Azimut</div>
+    <div class="compass" id="bearing">—</div>
+    <div class="label">Azimut (6400 mil)</div>
+    <div class="az-mil" id="azMil">—</div>
+    <div id="milResult"></div>
+    <div id="status"></div>
+    <button class="btn-copy" onclick="copyResult(event)">📋 Ergebnis kopieren</button>
+  </div>
+
+  <div class="card" id="historyCard">
+    <div class="section-header" style="margin-bottom:8px;">
+      <div class="section-title" style="margin:0;">Letzte Schüsse</div>
+      <button class="btn-secondary" onclick="clearHistory()">Löschen</button>
+    </div>
+    <div id="historyList"><div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div></div>
+  </div>
+
+  <div class="note">
+    1 Koordinaten-Einheit = 100 m · Community-Tabellen (nicht offiziell)<br>
+    Höhe wird nicht berücksichtigt – immer nach dem ersten Schuss korrigieren.
+  </div>
+</div>
+
+<script>
+const l81Table = [
+  [132,850],[140,840],[151,830],[163,820],[175,810],[187,800],[198,790],[208,780],
+  [219,770],[229,760],[239,750],[250,740],[260,730],[270,720],[280,710],[290,700],
+  [300,690],[310,680],[319,670],[329,660],[339,650],[348,640],[358,630],[367,620],
+  [376,610],[385,600],[394,590],[403,580],[412,570],[420,560],[429,550],[437,540],
+  [446,530],[454,520],[462,510],[470,500],[478,490],[486,480],[494,470],[500,461],
+  [501,460],[509,450],[516,440],[524,430],[531,420],[538,410],[545,400],[552,390],
+  [559,380],[565,370],[572,360],[578,350],[585,340],[591,330],[597,320],[603,310],
+  [609,300],[615,290],[620,280],[626,270],[631,260],[636,250],[641,240],[646,230],
+  [651,220],[656,210],[661,200],[666,190],[670,180],[675,170],[680,160],[684,150]
+];
+
+function interpolateMils(distance) {
+  if (distance < 132 || distance > 684) return null;
+  for (let i = 0; i < l81Table.length - 1; i++) {
+    const [r1, m1] = l81Table[i];
+    const [r2, m2] = l81Table[i+1];
+    if (distance >= r1 && distance <= r2) {
+      const t = (distance - r1) / (r2 - r1);
+      return Math.round(m1 + t * (m2 - m1));
+    }
+  }
+  return null;
+}
+
+function copyResult(event) {
+  const dist = document.getElementById('distance').textContent || '';
+  const bearing = document.getElementById('bearing').textContent || '';
+  const az = document.getElementById('azMil').textContent || '';
+  const milsEl = document.querySelector('#milResult .mil');
+  const mils = milsEl ? milsEl.textContent : '';
+
+  const text = mils
+    ? `${dist} · ${bearing} · ${az} · ${mils}`
+    : `${dist} · ${bearing} · ${az}`;
+
+  const btn = event.target;
+
+  function success() {
+    const old = btn.textContent;
+    btn.textContent = '✓ Kopiert!';
+    setTimeout(() => btn.textContent = old, 1600);
+  }
+
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      if (ok) success();
+      else alert('Kopieren nicht möglich. Text:\\n\\n' + text);
+    } catch (e) {
+      alert('Kopieren nicht möglich. Text:\\n\\n' + text);
+    }
+    document.body.removeChild(ta);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(success).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+
+function swapPositions() {
+  const gx = document.getElementById('gx');
+  const gy = document.getElementById('gy');
+  const tx = document.getElementById('tx');
+  const ty = document.getElementById('ty');
+
+  const tempX = gx.value;
+  const tempY = gy.value;
+
+  gx.value = tx.value;
+  gy.value = ty.value;
+  tx.value = tempX;
+  ty.value = tempY;
+
+  ['gx', 'gy', 'tx', 'ty'].forEach(id => syncInput(id));
+}
+
+function loadFromHistory(index) {
+  const e = history[index];
+  if (!e) return;
+  document.getElementById('gx').value = Number(e.gx).toFixed(2);
+  document.getElementById('gy').value = Number(e.gy).toFixed(2);
+  document.getElementById('tx').value = Number(e.tx).toFixed(2);
+  document.getElementById('ty').value = Number(e.ty).toFixed(2);
+  document.getElementById('weapon').value = e.weapon || 'mortar';
+  ['gx','gy','tx','ty'].forEach(id => syncInput(id));
+  calculate();
+}
+
+function calculate() {
+  const gx = parseFloat(document.getElementById('gx').value);
+  const gy = parseFloat(document.getElementById('gy').value);
+  const tx = parseFloat(document.getElementById('tx').value);
+  const ty = parseFloat(document.getElementById('ty').value);
+  const weapon = document.getElementById('weapon').value;
+
+  if (isNaN(gx) || isNaN(gy) || isNaN(tx) || isNaN(ty)) {
+    alert('Bitte alle Koordinaten eingeben.');
+    return;
+  }
+
+  const dx = tx - gx;
+  const dy = ty - gy;
+  const distance = 100 * Math.sqrt(dx*dx + dy*dy);
+
+  let bearing = Math.atan2(dx, dy) * 180 / Math.PI;
+  if (bearing < 0) bearing += 360;
+
+  const azMil = Math.round(bearing * 6400 / 360);
+
+  const directions = ['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  const dirIndex = Math.round(bearing / 22.5) % 16;
+  const cardinal = directions[dirIndex];
+
+  document.getElementById('distance').textContent = Math.round(distance) + ' m';
+  document.getElementById('bearing').textContent = Math.round(bearing) + '°  (' + cardinal + ')';
+  document.getElementById('azMil').textContent = azMil + ' mil';
+
+  let statusHtml = '';
+  let milHtml = '';
+
+  if (weapon === 'mortar') {
+    if (distance >= 132 && distance <= 684) {
+      const mils = interpolateMils(distance);
+      milHtml = `<div class="label-important" style="margin-top:14px;">Elevation (Mils)</div><div class="compass" style="font-size:1.4rem; color:#34d399;">${mils} mil</div>`;
+      statusHtml = `<div class="status in-range">In Reichweite (Mörser)</div>`;
+    } else if (distance < 132) {
+      statusHtml = `<div class="status out-range">Zu nah (min. 132 m)</div>`;
+    } else {
+      statusHtml = `<div class="status out-range">Außer Reichweite (max. 684 m)</div>`;
+    }
+  } else {
+    if (distance >= 780 && distance <= 2629) {
+      statusHtml = `<div class="status in-range">In Reichweite (Artillerie)</div>`;
+      milHtml = `<div class="note" style="margin-top:10px;">Elevation je nach Arc (Low/High) – Community-Tabellen nutzen</div>`;
+    } else {
+      statusHtml = `<div class="status out-range">Außer Reichweite für SPH-2</div>`;
+    }
+  }
+
+  document.getElementById('milResult').innerHTML = milHtml;
+  document.getElementById('status').innerHTML = statusHtml;
+  document.getElementById('result').style.display = 'block';
+
+  setTimeout(() => {
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+
+  const entry = {
+    time: new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}),
+    name: 'Schuss ' + (history.length + 1),
+    gx, gy, tx, ty,
+    distance: Math.round(distance),
+    bearing: Math.round(bearing),
+    cardinal,
+    azMil,
+    mils: (weapon === 'mortar' && distance >= 132 && distance <= 684) ? interpolateMils(distance) : null,
+    weapon
+  };
+  saveToHistory(entry);
+}
+
+let history = [];
+
+function loadHistory() {
+  try {
+    history = JSON.parse(localStorage.getItem('wardogsHistory') || '[]');
+  } catch (e) {
+    history = [];
+  }
+  renderHistory();
+}
+
+function saveToHistory(entry) {
+  history.unshift(entry);
+  if (history.length > 15) history = history.slice(0, 15);
+  try {
+    localStorage.setItem('wardogsHistory', JSON.stringify(history));
+  } catch (e) {}
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (!history.length) {
+    list.innerHTML = '<div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div>';
+    return;
+  }
+  list.innerHTML = history.map((e, i) => `
+    <div class="history-item" onclick="loadFromHistory(${i})" title="Klicken zum Laden">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <input type="text" value="${e.name || ('Schuss ' + (history.length - i))}" 
+               onchange="renameShot(${i}, this.value)"
+               onclick="event.stopPropagation()"
+               style="flex:1; padding:7px 10px; font-size:0.85rem; background:#0c1017; border:1px solid #1e293b; border-radius:8px; color:#f1f5f9;">
+        <span style="color:#64748b; font-size:0.75rem; white-space:nowrap;">${e.time}</span>
+      </div>
+      <div style="margin-top:6px;">
+        <span style="font-weight:700; color:#34d399; font-size:1.05rem;">${e.distance} m</span>
+        <span style="font-weight:700; color:#f59e0b; font-size:1.05rem;"> · ${e.bearing}° (${e.cardinal})</span>
+      </div>
+      <div style="color:#64748b; font-size:0.8rem; margin-top:3px;">
+        ${Number(e.gx).toFixed(2)},${Number(e.gy).toFixed(2)} → ${Number(e.tx).toFixed(2)},${Number(e.ty).toFixed(2)}
+        ${e.mils != null ? ' · ' + e.mils + ' mil' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renameShot(index, newName) {
+  if (history[index]) {
+    history[index].name = newName;
+    try { localStorage.setItem('wardogsHistory', JSON.stringify(history)); } catch (e) {}
+  }
+}
+
+function clearHistory() {
+  history = [];
+  try { localStorage.removeItem('wardogsHistory'); } catch (e) {}
+  renderHistory();
+}
+
+function syncSlider(id) {
+  const slider = document.getElementById(id + 'Slider');
+  const input = document.getElementById(id);
+  const val = parseFloat(slider.value);
+  input.value = val.toFixed(2);
+}
+
+function syncInput(id) {
+  const input = document.getElementById(id);
+  const slider = document.getElementById(id + 'Slider');
+  let val = parseFloat(input.value);
+  if (isNaN(val)) return;
+  val = Math.max(0, Math.min(160, val));
+  slider.value = val;
+}
+
+['gx','gy','tx','ty'].forEach(id => syncSlider(id));
+
+window.addEventListener('DOMContentLoaded', loadHistory);
+
+// Service Worker registrieren (für PWA / Offline)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
