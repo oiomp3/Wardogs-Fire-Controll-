@@ -443,24 +443,284 @@
   @media (prefers-reduced-motion: reduce) {
     .drawer, .drawer-overlay, body.menu-open .drawer, body.menu-open .drawer-overlay { transition: none; }
   }
+  /* ---------- Sprachauswahl ---------- */
+  .lang {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 35;
+  }
+  .lang-btn {
+    width: auto;
+    height: 44px;
+    margin: 0;
+    padding: 0 10px 0 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(18,24,34,0.85);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    font-size: 0.8rem;
+  }
+  .lang-btn:hover { transform: none; background: #1e293b; box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+  .lang-btn:focus-visible, .lang-list li:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .lang-chev { color: var(--muted); font-size: 0.7rem; transition: transform 0.2s; }
+  .lang-btn[aria-expanded="true"] .lang-chev { transform: rotate(180deg); color: var(--accent); }
+  .flag {
+    width: 24px;
+    height: 16px;
+    border-radius: 3px;
+    flex: none;
+    display: block;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+  }
+  .lang-list {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 176px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: var(--bg-elevated);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  }
+  .lang-list[hidden] { display: none; }
+  .lang-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .lang-list li:hover, .lang-list li:focus { background: rgba(255,255,255,0.05); outline: none; }
+  .lang-list li:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .lang-list li[aria-selected="true"] { background: rgba(59,130,246,0.12); }
+  .lang-list li[aria-selected="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
+  .badge { max-width: calc(100% - 120px); }
 </style>
+
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="gbS"><rect width="60" height="30"/></clipPath>
+    <clipPath id="gbT"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+  </defs>
+  <symbol id="flag-de" viewBox="0 0 5 3" preserveAspectRatio="none">
+    <rect width="5" height="3" fill="#000"/><rect y="1" width="5" height="2" fill="#DD0000"/><rect y="2" width="5" height="1" fill="#FFCE00"/>
+  </symbol>
+  <symbol id="flag-gb" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+    <g clip-path="url(#gbS)">
+      <rect width="60" height="30" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#gbT)" stroke="#C8102E" stroke-width="4"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+    </g>
+  </symbol>
+  <symbol id="flag-es" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/>
+  </symbol>
+  <symbol id="flag-fr" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="1" height="2" fill="#002654"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE1126"/>
+  </symbol>
+</svg>
+
 <button type="button" class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">
   <span></span><span></span><span></span>
 </button>
+
+<div class="lang" id="langWrap">
+  <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Sprache wählen: Deutsch">
+    <svg class="flag" aria-hidden="true" focusable="false"><use id="langBtnFlag" href="#flag-de"/></svg>
+    <span class="lang-chev" aria-hidden="true">▾</span>
+  </button>
+  <ul class="lang-list" id="langList" role="listbox" aria-label="Sprache wählen" tabindex="-1" hidden>
+    <li role="option" id="lang-de" data-lang="de" tabindex="-1" aria-selected="true" lang="de"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-de"/></svg><span>Deutsch</span></li>
+    <li role="option" id="lang-en" data-lang="en" tabindex="-1" aria-selected="false" lang="en"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-gb"/></svg><span>English</span></li>
+    <li role="option" id="lang-es" data-lang="es" tabindex="-1" aria-selected="false" lang="es"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-es"/></svg><span>Español</span></li>
+    <li role="option" id="lang-fr" data-lang="fr" tabindex="-1" aria-selected="false" lang="fr"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-fr"/></svg><span>Français</span></li>
+  </ul>
+</div>
+
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
   <div class="drawer-head">
-    <h2 class="drawer-title" id="drawerTitle"><small>Menü</small>WARDOGS Fire Control</h2>
-    <button type="button" class="drawer-close" id="drawerClose" aria-label="Menü schließen">✕</button>
+    <h2 class="drawer-title" id="drawerTitle"><small data-i18n="menuLabel">Menü</small>WARDOGS Fire Control</h2>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Menü schließen" data-i18n-aria="menuClose">✕</button>
   </div>
-  <nav class="drawer-body" aria-label="Hauptmenü">
+  <nav class="drawer-body" aria-label="Hauptmenü" data-i18n-aria="mainNav">
     <button type="button" class="menu-item" id="miHelp" aria-expanded="false" aria-controls="panelHelp">
-      <span class="mi-icon" aria-hidden="true">📖</span>Anleitung<span class="mi-chev" aria-hidden="true">›</span>
+      <span class="mi-icon" aria-hidden="true">📖</span><span data-i18n="help">Anleitung</span><span class="mi-chev" aria-hidden="true">›</span>
     </button>
-    <div class="menu-panel" id="panelHelp" role="region" aria-labelledby="miHelp" hidden>
-      <h3>So funktioniert's</h3>
+    <div class="menu-panel" id="panelHelp" role="region" aria-labelledby="miHelp" data-i18n-html="helpHtml" hidden></div>
+
+    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
+      <span class="mi-icon" aria-hidden="true">📲</span><span data-i18n="install">App installieren</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelInstall" role="region" aria-labelledby="miInstall" hidden>
+      <div id="installInstalled" hidden>
+        <p class="ok" data-i18n="installedOk">✓ Bereits installiert</p>
+        <p data-i18n="installedText">Du nutzt Fire Control gerade als App.</p>
+      </div>
+      <div id="installPrompt" hidden>
+        <p data-i18n="installPromptText">Installiere Fire Control als App auf deinem Gerät – mit eigenem Icon und auch offline nutzbar.</p>
+        <button type="button" class="btn-install" id="installBtn" data-i18n="install">App installieren</button>
+      </div>
+      <div id="installManual" data-i18n-html="installManualHtml"></div>
+    </div>
+
+    <button type="button" class="menu-item" id="miAbout" aria-expanded="false" aria-controls="panelAbout">
+      <span class="mi-icon" aria-hidden="true">ℹ️</span><span data-i18n="about">Über / Hinweis</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" data-i18n-html="aboutHtml" hidden></div>
+  </nav>
+  <div class="drawer-foot" data-i18n="footer">Community Tool · nicht offiziell</div>
+</aside>
+
+<div class="container" id="mainContent">
+  <div class="header">
+    <div class="badge" data-i18n="badge">Community Tool</div>
+    <h1>WARDOGS Fire Control</h1>
+    <div class="subtitle" data-i18n="subtitle">L81 Mörser · SPH-2 Artillerie</div>
+  </div>
+
+  <div class="card">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="ownPos">Eigene Position</h2>
+      <button class="btn-secondary" onclick="swapPositions()" data-i18n="swap">⇄ Tauschen</button>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="gx">X</label>
+        <input type="number" id="gx" min="0" max="160" inputmode="decimal" aria-label="Eigene Position X" data-i18n-aria="posX" step="0.01" value="80" oninput="syncInput('gx')">
+        <div class="slider-row">
+          <input type="range" id="gxSlider" aria-label="Eigene Position X (Schieberegler)" data-i18n-aria="posXSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
+        </div>
+      </div>
+      <div class="field">
+        <label for="gy">Y</label>
+        <input type="number" id="gy" min="0" max="160" inputmode="decimal" aria-label="Eigene Position Y" data-i18n-aria="posY" step="0.01" value="80" oninput="syncInput('gy')">
+        <div class="slider-row">
+          <input type="range" id="gySlider" aria-label="Eigene Position Y (Schieberegler)" data-i18n-aria="posYSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin:18px 0 12px;" data-i18n="target">Ziel</h2>
+    <div class="row">
+      <div class="field">
+        <label for="tx">X</label>
+        <input type="number" id="tx" min="0" max="160" inputmode="decimal" aria-label="Ziel X" data-i18n-aria="tgtX" step="0.01" value="80" oninput="syncInput('tx')">
+        <div class="slider-row">
+          <input type="range" id="txSlider" aria-label="Ziel X (Schieberegler)" data-i18n-aria="tgtXSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
+        </div>
+      </div>
+      <div class="field">
+        <label for="ty">Y</label>
+        <input type="number" id="ty" min="0" max="160" inputmode="decimal" aria-label="Ziel Y" data-i18n-aria="tgtY" step="0.01" value="80" oninput="syncInput('ty')">
+        <div class="slider-row">
+          <input type="range" id="tySlider" aria-label="Ziel Y (Schieberegler)" data-i18n-aria="tgtYSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="weapon" data-i18n="weapon">Waffe</label>
+      <select id="weapon">
+        <option value="mortar" data-i18n="optMortar">L81 Mörser (132–684 m)</option>
+        <option value="arty" data-i18n="optArty">SPH-2 Artillerie (~780–2629 m)</option>
+      </select>
+    </div>
+    <button onclick="calculate()" data-i18n="calc">Berechnen</button>
+  </div>
+
+  <div class="card result" id="result" style="display:none;">
+    <div class="label-important" data-i18n="distance">Distanz</div>
+    <div class="big" id="distance">—</div>
+    <div class="label-important" style="margin-top:12px;" data-i18n="compassAz">Kompass / Azimut</div>
+    <div class="compass" id="bearing">—</div>
+    <div class="label" data-i18n="azMilLabel">Azimut (6400 mil)</div>
+    <div class="az-mil" id="azMil">—</div>
+    <div id="milResult"></div>
+    <div id="status"></div>
+    <button class="btn-copy" id="copyBtn" onclick="copyResult(event)" data-i18n="copyBtn">📋 Ergebnis kopieren</button>
+  </div>
+
+  <div class="card" id="historyCard">
+    <div class="section-header" style="margin-bottom:8px;">
+      <h2 class="section-title" style="margin:0;" data-i18n="history">Letzte Schüsse</h2>
+      <button class="btn-secondary" onclick="clearHistory()" data-i18n="clear">Löschen</button>
+    </div>
+    <div id="historyList"><div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div></div>
+  </div>
+
+  <div class="note">
+    <span data-i18n="note1">1 Koordinaten-Einheit = 100 m · Community-Tabellen (nicht offiziell)</span><br>
+    <span data-i18n="note2">Höhe wird nicht berücksichtigt – immer nach dem ersten Schuss korrigieren.</span>
+  </div>
+</div>
+
+<script>
+// ---------- Übersetzungen ----------
+const I18N = {
+  de: {
+    title: 'WARDOGS · Fire Control – Mörser- & Artillerie-Rechner',
+    langChoose: 'Sprache wählen',
+    badge: 'Community Tool',
+    subtitle: 'L81 Mörser · SPH-2 Artillerie',
+    ownPos: 'Eigene Position',
+    swap: '⇄ Tauschen',
+    target: 'Ziel',
+    weapon: 'Waffe',
+    optMortar: 'L81 Mörser (132–684 m)',
+    optArty: 'SPH-2 Artillerie (~780–2629 m)',
+    calc: 'Berechnen',
+    distance: 'Distanz',
+    compassAz: 'Kompass / Azimut',
+    azMilLabel: 'Azimut (6400 mil)',
+    elevation: 'Elevation (Mils)',
+    inRangeMortar: 'In Reichweite (Mörser)',
+    tooClose: 'Zu nah (min. {min} m)',
+    outOfRangeMortar: 'Außer Reichweite (max. {max} m)',
+    inRangeArty: 'In Reichweite (Artillerie)',
+    outOfRangeArty: 'Außer Reichweite für SPH-2',
+    artyNote: 'Elevation je nach Arc (Low/High) – Community-Tabellen nutzen',
+    copyBtn: '📋 Ergebnis kopieren',
+    copied: '✓ Kopiert!',
+    copyFail: 'Kopieren nicht möglich. Text:',
+    enterAll: 'Bitte alle Koordinaten eingeben.',
+    history: 'Letzte Schüsse',
+    clear: 'Löschen',
+    noShots: 'Noch keine Schüsse',
+    shotN: 'Schuss {n}',
+    clickToLoad: 'Klicken zum Laden',
+    shotName: 'Name des Schusses',
+    note1: '1 Koordinaten-Einheit = 100 m · Community-Tabellen (nicht offiziell)',
+    note2: 'Höhe wird nicht berücksichtigt – immer nach dem ersten Schuss korrigieren.',
+    posX: 'Eigene Position X', posY: 'Eigene Position Y', tgtX: 'Ziel X', tgtY: 'Ziel Y',
+    posXSlider: 'Eigene Position X (Schieberegler)', posYSlider: 'Eigene Position Y (Schieberegler)',
+    tgtXSlider: 'Ziel X (Schieberegler)', tgtYSlider: 'Ziel Y (Schieberegler)',
+    menuOpen: 'Menü öffnen', menuClose: 'Menü schließen', mainNav: 'Hauptmenü', menuLabel: 'Menü',
+    help: 'Anleitung', install: 'App installieren', about: 'Über / Hinweis',
+    footer: 'Community Tool · nicht offiziell',
+    installedOk: '✓ Bereits installiert',
+    installedText: 'Du nutzt Fire Control gerade als App.',
+    installPromptText: 'Installiere Fire Control als App auf deinem Gerät – mit eigenem Icon und auch offline nutzbar.',
+    dirs: ['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSW','SW','WSW','W','WNW','NW','NNW'],
+    helpHtml: `<h3>So funktioniert's</h3>
       <ol>
         <li><strong>Eigene Position</strong>: X und Y deiner Waffe eingeben – per Zahlenfeld oder Schieberegler (0–160, 1 Einheit = 100 m).</li>
         <li><strong>Ziel</strong>: X und Y des Ziels eingeben. <strong>⇄ Tauschen</strong> vertauscht Position und Ziel.</li>
@@ -479,132 +739,294 @@
         <li><strong>Ergebnis kopieren</strong> legt alle Werte in die Zwischenablage.</li>
         <li><strong>Letzte Schüsse</strong> speichert die letzten 15 Berechnungen im Browser. Antippen lädt einen Schuss erneut, der Name ist umbenennbar, <strong>Löschen</strong> leert die Liste.</li>
       </ul>
-      <p class="tip">Höhenunterschiede werden nicht berücksichtigt – nach dem ersten Schuss korrigieren.</p>
-    </div>
-
-    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
-      <span class="mi-icon" aria-hidden="true">📲</span>App installieren<span class="mi-chev" aria-hidden="true">›</span>
-    </button>
-    <div class="menu-panel" id="panelInstall" role="region" aria-labelledby="miInstall" hidden>
-      <div id="installInstalled" hidden>
-        <p class="ok">✓ Bereits installiert</p>
-        <p>Du nutzt Fire Control gerade als App.</p>
-      </div>
-      <div id="installPrompt" hidden>
-        <p>Installiere Fire Control als App auf deinem Gerät – mit eigenem Icon und auch offline nutzbar.</p>
-        <button type="button" class="btn-install" id="installBtn">App installieren</button>
-      </div>
-      <div id="installManual">
-        <h3>iPhone / iPad (Safari)</h3>
-        <ol>
-          <li>Unten auf <strong>Teilen</strong> tippen (Quadrat mit Pfeil).</li>
-          <li><strong>Zum Home-Bildschirm</strong> wählen.</li>
-          <li>Mit <strong>Hinzufügen</strong> bestätigen.</li>
-        </ol>
-        <h3>Andere Browser</h3>
-        <p>Im Browser-Menü <strong>App installieren</strong> bzw. <strong>Zum Startbildschirm hinzufügen</strong> wählen.</p>
-      </div>
-    </div>
-
-    <button type="button" class="menu-item" id="miAbout" aria-expanded="false" aria-controls="panelAbout">
-      <span class="mi-icon" aria-hidden="true">ℹ️</span>Über / Hinweis<span class="mi-chev" aria-hidden="true">›</span>
-    </button>
-    <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" hidden>
-      <p><strong>WARDOGS Fire Control</strong> ist ein Rechner für Distanz, Azimut und Mörser-Elevation.</p>
+      <p class="tip">Höhenunterschiede werden nicht berücksichtigt – nach dem ersten Schuss korrigieren.</p>`,
+    installManualHtml: `<h3>iPhone / iPad (Safari)</h3>
+      <ol>
+        <li>Unten auf <strong>Teilen</strong> tippen (Quadrat mit Pfeil).</li>
+        <li><strong>Zum Home-Bildschirm</strong> wählen.</li>
+        <li>Mit <strong>Hinzufügen</strong> bestätigen.</li>
+      </ol>
+      <h3>Andere Browser</h3>
+      <p>Im Browser-Menü <strong>App installieren</strong> bzw. <strong>Zum Startbildschirm hinzufügen</strong> wählen.</p>`,
+    aboutHtml: `<p><strong>WARDOGS Fire Control</strong> ist ein Rechner für Distanz, Azimut und Mörser-Elevation.</p>
       <ul>
         <li>Community-Tool – <strong>kein offizielles Tool</strong>.</li>
         <li>Die Elevationswerte stammen aus Community-Tabellen.</li>
         <li>Alle Angaben ohne Gewähr.</li>
         <li>Der Schussverlauf wird nur lokal in deinem Browser gespeichert.</li>
+      </ul>`
+  },
+  en: {
+    title: 'WARDOGS · Fire Control – Mortar & Artillery Calculator',
+    langChoose: 'Choose language',
+    badge: 'Community Tool',
+    subtitle: 'L81 Mortar · SPH-2 Artillery',
+    ownPos: 'Your position',
+    swap: '⇄ Swap',
+    target: 'Target',
+    weapon: 'Weapon',
+    optMortar: 'L81 Mortar (132–684 m)',
+    optArty: 'SPH-2 Artillery (~780–2629 m)',
+    calc: 'Calculate',
+    distance: 'Distance',
+    compassAz: 'Compass / Azimuth',
+    azMilLabel: 'Azimuth (6400 mil)',
+    elevation: 'Elevation (mils)',
+    inRangeMortar: 'In range (mortar)',
+    tooClose: 'Too close (min. {min} m)',
+    outOfRangeMortar: 'Out of range (max. {max} m)',
+    inRangeArty: 'In range (artillery)',
+    outOfRangeArty: 'Out of range for SPH-2',
+    artyNote: 'Elevation depends on arc (low/high) – use community tables',
+    copyBtn: '📋 Copy result',
+    copied: '✓ Copied!',
+    copyFail: 'Could not copy. Text:',
+    enterAll: 'Please enter all coordinates.',
+    history: 'Recent shots',
+    clear: 'Clear',
+    noShots: 'No shots yet',
+    shotN: 'Shot {n}',
+    clickToLoad: 'Click to load',
+    shotName: 'Shot name',
+    note1: '1 coordinate unit = 100 m · community tables (unofficial)',
+    note2: 'Terrain height is not accounted for – always correct after the first round.',
+    posX: 'Your position X', posY: 'Your position Y', tgtX: 'Target X', tgtY: 'Target Y',
+    posXSlider: 'Your position X (slider)', posYSlider: 'Your position Y (slider)',
+    tgtXSlider: 'Target X (slider)', tgtYSlider: 'Target Y (slider)',
+    menuOpen: 'Open menu', menuClose: 'Close menu', mainNav: 'Main menu', menuLabel: 'Menu',
+    help: 'How to use', install: 'Install app', about: 'About / Disclaimer',
+    footer: 'Community tool · unofficial',
+    installedOk: '✓ Already installed',
+    installedText: 'You are currently using Fire Control as an app.',
+    installPromptText: 'Install Fire Control as an app on your device – with its own icon and available offline.',
+    dirs: ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'],
+    helpHtml: `<h3>How it works</h3>
+      <ol>
+        <li><strong>Your position</strong>: enter your weapon's X and Y – using the number field or the slider (0–160, 1 unit = 100 m).</li>
+        <li><strong>Target</strong>: enter the target's X and Y. <strong>⇄ Swap</strong> exchanges position and target.</li>
+        <li>Choose your <strong>weapon</strong>: L81 mortar (132–684 m) or SPH-2 artillery (~780–2629 m).</li>
+        <li>Tap <strong>Calculate</strong>.</li>
+      </ol>
+      <h3>Reading the result</h3>
+      <ul>
+        <li><strong>Distance</strong> in metres.</li>
+        <li><strong>Compass / Azimuth</strong> in degrees with the compass direction, below it the azimuth in mils (6400 system).</li>
+        <li><strong>Elevation (mils)</strong> – mortar only. For the SPH-2, please use community tables.</li>
+        <li>Green = in range, red = too close or out of range.</li>
       </ul>
-    </div>
-  </nav>
-  <div class="drawer-foot">Community Tool · nicht offiziell</div>
-</aside>
-<div class="container" id="mainContent">
-  <div class="header">
-    <div class="badge">Community Tool</div>
-    <h1>WARDOGS Fire Control</h1>
-    <div class="subtitle">L81 Mörser · SPH-2 Artillerie</div>
-  </div>
+      <h3>Copy &amp; history</h3>
+      <ul>
+        <li><strong>Copy result</strong> copies all values to the clipboard.</li>
+        <li><strong>Recent shots</strong> keeps your last 15 calculations in the browser. Tap a shot to load it again, rename it, or tap <strong>Clear</strong> to empty the list.</li>
+      </ul>
+      <p class="tip">Terrain height is not accounted for – always correct after the first round.</p>`,
+    installManualHtml: `<h3>iPhone / iPad (Safari)</h3>
+      <ol>
+        <li>Tap <strong>Share</strong> (the square with the arrow).</li>
+        <li>Choose <strong>Add to Home Screen</strong>.</li>
+        <li>Confirm with <strong>Add</strong>.</li>
+      </ol>
+      <h3>Other browsers</h3>
+      <p>Open the browser menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</p>`,
+    aboutHtml: `<p><strong>WARDOGS Fire Control</strong> is a calculator for distance, azimuth and mortar elevation.</p>
+      <ul>
+        <li>Community tool – <strong>not an official tool</strong>.</li>
+        <li>Elevation values come from community tables.</li>
+        <li>No guarantee of accuracy.</li>
+        <li>Your shot history is stored only locally in your browser.</li>
+      </ul>`
+  },
+  es: {
+    title: 'WARDOGS · Fire Control – Calculadora de mortero y artillería',
+    langChoose: 'Elegir idioma',
+    badge: 'Herramienta comunitaria',
+    subtitle: 'Mortero L81 · Artillería SPH-2',
+    ownPos: 'Tu posición',
+    swap: '⇄ Intercambiar',
+    target: 'Objetivo',
+    weapon: 'Arma',
+    optMortar: 'Mortero L81 (132–684 m)',
+    optArty: 'Artillería SPH-2 (~780–2629 m)',
+    calc: 'Calcular',
+    distance: 'Distancia',
+    compassAz: 'Brújula / Azimut',
+    azMilLabel: 'Azimut (6400 mil)',
+    elevation: 'Elevación (mils)',
+    inRangeMortar: 'En alcance (mortero)',
+    tooClose: 'Demasiado cerca (mín. {min} m)',
+    outOfRangeMortar: 'Fuera de alcance (máx. {max} m)',
+    inRangeArty: 'En alcance (artillería)',
+    outOfRangeArty: 'Fuera de alcance para el SPH-2',
+    artyNote: 'La elevación depende del arco (bajo/alto): usa las tablas de la comunidad',
+    copyBtn: '📋 Copiar resultado',
+    copied: '✓ ¡Copiado!',
+    copyFail: 'No se pudo copiar. Texto:',
+    enterAll: 'Introduce todas las coordenadas.',
+    history: 'Últimos disparos',
+    clear: 'Borrar',
+    noShots: 'Aún no hay disparos',
+    shotN: 'Disparo {n}',
+    clickToLoad: 'Haz clic para cargar',
+    shotName: 'Nombre del disparo',
+    note1: '1 unidad de coordenadas = 100 m · tablas de la comunidad (no oficiales)',
+    note2: 'No se tiene en cuenta la altura del terreno: corrige siempre tras el primer disparo.',
+    posX: 'Tu posición X', posY: 'Tu posición Y', tgtX: 'Objetivo X', tgtY: 'Objetivo Y',
+    posXSlider: 'Tu posición X (control deslizante)', posYSlider: 'Tu posición Y (control deslizante)',
+    tgtXSlider: 'Objetivo X (control deslizante)', tgtYSlider: 'Objetivo Y (control deslizante)',
+    menuOpen: 'Abrir menú', menuClose: 'Cerrar menú', mainNav: 'Menú principal', menuLabel: 'Menú',
+    help: 'Instrucciones', install: 'Instalar app', about: 'Acerca de / Aviso',
+    footer: 'Herramienta comunitaria · no oficial',
+    installedOk: '✓ Ya instalada',
+    installedText: 'Estás usando Fire Control como app.',
+    installPromptText: 'Instala Fire Control como app en tu dispositivo, con su propio icono y disponible sin conexión.',
+    dirs: ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
+    helpHtml: `<h3>Cómo funciona</h3>
+      <ol>
+        <li><strong>Tu posición</strong>: introduce la X y la Y de tu arma, con el campo numérico o el control deslizante (0–160, 1 unidad = 100 m).</li>
+        <li><strong>Objetivo</strong>: introduce la X y la Y del objetivo. <strong>⇄ Intercambiar</strong> invierte posición y objetivo.</li>
+        <li>Elige el <strong>arma</strong>: mortero L81 (132–684 m) o artillería SPH-2 (~780–2629 m).</li>
+        <li>Toca <strong>Calcular</strong>.</li>
+      </ol>
+      <h3>Cómo leer el resultado</h3>
+      <ul>
+        <li><strong>Distancia</strong> en metros.</li>
+        <li><strong>Brújula / Azimut</strong> en grados con el punto cardinal y, debajo, el azimut en mils (sistema de 6400).</li>
+        <li><strong>Elevación (mils)</strong>: solo para el mortero. Para el SPH-2, usa las tablas de la comunidad.</li>
+        <li>Verde = en alcance; rojo = demasiado cerca o fuera de alcance.</li>
+      </ul>
+      <h3>Copiar e historial</h3>
+      <ul>
+        <li><strong>Copiar resultado</strong> copia todos los valores al portapapeles.</li>
+        <li><strong>Últimos disparos</strong> guarda tus últimos 15 cálculos en el navegador. Toca un disparo para volver a cargarlo, cámbiale el nombre o pulsa <strong>Borrar</strong> para vaciar la lista.</li>
+      </ul>
+      <p class="tip">No se tiene en cuenta la altura del terreno: corrige siempre tras el primer disparo.</p>`,
+    installManualHtml: `<h3>iPhone / iPad (Safari)</h3>
+      <ol>
+        <li>Toca <strong>Compartir</strong> (el cuadrado con la flecha).</li>
+        <li>Elige <strong>Añadir a pantalla de inicio</strong>.</li>
+        <li>Confirma con <strong>Añadir</strong>.</li>
+      </ol>
+      <h3>Otros navegadores</h3>
+      <p>En el menú del navegador, elige <strong>Instalar aplicación</strong> o <strong>Añadir a pantalla de inicio</strong>.</p>`,
+    aboutHtml: `<p><strong>WARDOGS Fire Control</strong> es una calculadora de distancia, azimut y elevación del mortero.</p>
+      <ul>
+        <li>Herramienta de la comunidad: <strong>no es una herramienta oficial</strong>.</li>
+        <li>Los valores de elevación proceden de tablas de la comunidad.</li>
+        <li>Sin garantía de exactitud.</li>
+        <li>El historial de disparos se guarda solo de forma local en tu navegador.</li>
+      </ul>`
+  },
+  fr: {
+    title: 'WARDOGS · Fire Control – Calculateur mortier & artillerie',
+    langChoose: 'Choisir la langue',
+    badge: 'Outil communautaire',
+    subtitle: 'Mortier L81 · Artillerie SPH-2',
+    ownPos: 'Votre position',
+    swap: '⇄ Inverser',
+    target: 'Cible',
+    weapon: 'Arme',
+    optMortar: 'Mortier L81 (132–684 m)',
+    optArty: 'Artillerie SPH-2 (~780–2629 m)',
+    calc: 'Calculer',
+    distance: 'Distance',
+    compassAz: 'Boussole / Azimut',
+    azMilLabel: 'Azimut (6400 mils)',
+    elevation: 'Élévation (mils)',
+    inRangeMortar: 'À portée (mortier)',
+    tooClose: 'Trop près (min. {min} m)',
+    outOfRangeMortar: 'Hors de portée (max. {max} m)',
+    inRangeArty: 'À portée (artillerie)',
+    outOfRangeArty: 'Hors de portée pour le SPH-2',
+    artyNote: 'L\u2019élévation dépend de la trajectoire (tendue/courbe) – utilisez les tables de la communauté',
+    copyBtn: '📋 Copier le résultat',
+    copied: '✓ Copié\u00a0!',
+    copyFail: 'Impossible de copier. Texte\u00a0:',
+    enterAll: 'Veuillez saisir toutes les coordonnées.',
+    history: 'Derniers tirs',
+    clear: 'Effacer',
+    noShots: 'Aucun tir pour l\u2019instant',
+    shotN: 'Tir {n}',
+    clickToLoad: 'Cliquer pour charger',
+    shotName: 'Nom du tir',
+    note1: '1 unité de coordonnées = 100 m · tables de la communauté (non officielles)',
+    note2: 'L\u2019altitude du terrain n\u2019est pas prise en compte – corrigez toujours après le premier tir.',
+    posX: 'Votre position X', posY: 'Votre position Y', tgtX: 'Cible X', tgtY: 'Cible Y',
+    posXSlider: 'Votre position X (curseur)', posYSlider: 'Votre position Y (curseur)',
+    tgtXSlider: 'Cible X (curseur)', tgtYSlider: 'Cible Y (curseur)',
+    menuOpen: 'Ouvrir le menu', menuClose: 'Fermer le menu', mainNav: 'Menu principal', menuLabel: 'Menu',
+    help: 'Mode d\u2019emploi', install: 'Installer l\u2019app', about: 'À propos / Avertissement',
+    footer: 'Outil communautaire · non officiel',
+    installedOk: '✓ Déjà installée',
+    installedText: 'Vous utilisez actuellement Fire Control en tant qu\u2019application.',
+    installPromptText: 'Installez Fire Control comme application sur votre appareil – avec sa propre icône et utilisable hors ligne.',
+    dirs: ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
+    helpHtml: `<h3>Fonctionnement</h3>
+      <ol>
+        <li><strong>Votre position</strong>&nbsp;: saisissez le X et le Y de votre arme, via le champ numérique ou le curseur (0–160, 1 unité = 100 m).</li>
+        <li><strong>Cible</strong>&nbsp;: saisissez le X et le Y de la cible. <strong>⇄ Inverser</strong> échange position et cible.</li>
+        <li>Choisissez l\u2019<strong>arme</strong>&nbsp;: mortier L81 (132–684 m) ou artillerie SPH-2 (~780–2629 m).</li>
+        <li>Appuyez sur <strong>Calculer</strong>.</li>
+      </ol>
+      <h3>Lire le résultat</h3>
+      <ul>
+        <li><strong>Distance</strong> en mètres.</li>
+        <li><strong>Boussole / Azimut</strong> en degrés avec le point cardinal, puis l\u2019azimut en mils (système 6400).</li>
+        <li><strong>Élévation (mils)</strong>&nbsp;: mortier uniquement. Pour le SPH-2, utilisez les tables de la communauté.</li>
+        <li>Vert = à portée, rouge = trop près ou hors de portée.</li>
+      </ul>
+      <h3>Copie &amp; historique</h3>
+      <ul>
+        <li><strong>Copier le résultat</strong> copie toutes les valeurs dans le presse-papiers.</li>
+        <li><strong>Derniers tirs</strong> enregistre vos 15 derniers calculs dans le navigateur. Appuyez sur un tir pour le recharger, renommez-le ou appuyez sur <strong>Effacer</strong> pour vider la liste.</li>
+      </ul>
+      <p class="tip">L\u2019altitude du terrain n\u2019est pas prise en compte – corrigez toujours après le premier tir.</p>`,
+    installManualHtml: `<h3>iPhone / iPad (Safari)</h3>
+      <ol>
+        <li>Appuyez sur <strong>Partager</strong> (le carré avec la flèche).</li>
+        <li>Choisissez <strong>Sur l\u2019écran d\u2019accueil</strong>.</li>
+        <li>Confirmez avec <strong>Ajouter</strong>.</li>
+      </ol>
+      <h3>Autres navigateurs</h3>
+      <p>Dans le menu du navigateur, choisissez <strong>Installer l\u2019application</strong> ou <strong>Ajouter à l\u2019écran d\u2019accueil</strong>.</p>`,
+    aboutHtml: `<p><strong>WARDOGS Fire Control</strong> est un calculateur de distance, d\u2019azimut et d\u2019élévation pour le mortier.</p>
+      <ul>
+        <li>Outil communautaire – <strong>pas un outil officiel</strong>.</li>
+        <li>Les valeurs d\u2019élévation proviennent de tables de la communauté.</li>
+        <li>Aucune garantie d\u2019exactitude.</li>
+        <li>L\u2019historique des tirs est enregistré uniquement en local dans votre navigateur.</li>
+      </ul>`
+  }
+};
+const LANGS = {
+  de: { name: 'Deutsch', flag: 'flag-de' },
+  en: { name: 'English', flag: 'flag-gb' },
+  es: { name: 'Español', flag: 'flag-es' },
+  fr: { name: 'Français', flag: 'flag-fr' }
+};
+const DE_DIRS = I18N.de.dirs;
+const LEGACY_SHOT = /^(?:Schuss|Shot|Disparo|Tir) (\d+)$/;
 
-  <div class="card">
-    <div class="section-header">
-      <h2 class="section-title">Eigene Position</h2>
-      <button class="btn-secondary" onclick="swapPositions()">⇄ Tauschen</button>
-    </div>
-    <div class="row">
-      <div class="field">
-        <label for="gx">X</label>
-        <input type="number" id="gx" min="0" max="160" inputmode="decimal" aria-label="Eigene Position X" step="0.01" value="80" oninput="syncInput('gx')">
-        <div class="slider-row">
-          <input type="range" id="gxSlider" aria-label="Eigene Position X (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
-        </div>
-      </div>
-      <div class="field">
-        <label for="gy">Y</label>
-        <input type="number" id="gy" min="0" max="160" inputmode="decimal" aria-label="Eigene Position Y" step="0.01" value="80" oninput="syncInput('gy')">
-        <div class="slider-row">
-          <input type="range" id="gySlider" aria-label="Eigene Position Y (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
-        </div>
-      </div>
-    </div>
+function detectLang() {
+  try {
+    const saved = localStorage.getItem('wardogsLang');
+    if (saved && I18N[saved]) return saved;
+  } catch (e) {}
+  const list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+  for (const l of list) {
+    const code = String(l).slice(0, 2).toLowerCase();
+    if (I18N[code]) return code;
+  }
+  return 'de';
+}
 
-    <h2 class="section-title" style="margin:18px 0 12px;">Ziel</h2>
-    <div class="row">
-      <div class="field">
-        <label for="tx">X</label>
-        <input type="number" id="tx" min="0" max="160" inputmode="decimal" aria-label="Ziel X" step="0.01" value="80" oninput="syncInput('tx')">
-        <div class="slider-row">
-          <input type="range" id="txSlider" aria-label="Ziel X (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
-        </div>
-      </div>
-      <div class="field">
-        <label for="ty">Y</label>
-        <input type="number" id="ty" min="0" max="160" inputmode="decimal" aria-label="Ziel Y" step="0.01" value="80" oninput="syncInput('ty')">
-        <div class="slider-row">
-          <input type="range" id="tySlider" aria-label="Ziel Y (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
-        </div>
-      </div>
-    </div>
+let lang = detectLang();
 
-    <div class="field">
-      <label for="weapon">Waffe</label>
-      <select id="weapon">
-        <option value="mortar">L81 Mörser (132–684 m)</option>
-        <option value="arty">SPH-2 Artillerie (~780–2629 m)</option>
-      </select>
-    </div>
-    <button onclick="calculate()">Berechnen</button>
-  </div>
+function t(key, params) {
+  let s = (I18N[lang] && I18N[lang][key] !== undefined) ? I18N[lang][key] : I18N.de[key];
+  if (typeof s === 'string' && params) s = s.replace(/\{(\w+)\}/g, (m, k) => params[k] !== undefined ? params[k] : m);
+  return s;
+}
 
-  <div class="card result" id="result" style="display:none;">
-    <div class="label-important">Distanz</div>
-    <div class="big" id="distance">—</div>
-    <div class="label-important" style="margin-top:12px;">Kompass / Azimut</div>
-    <div class="compass" id="bearing">—</div>
-    <div class="label">Azimut (6400 mil)</div>
-    <div class="az-mil" id="azMil">—</div>
-    <div id="milResult"></div>
-    <div id="status"></div>
-    <button class="btn-copy" onclick="copyResult(event)">📋 Ergebnis kopieren</button>
-  </div>
-
-  <div class="card" id="historyCard">
-    <div class="section-header" style="margin-bottom:8px;">
-      <h2 class="section-title" style="margin:0;">Letzte Schüsse</h2>
-      <button class="btn-secondary" onclick="clearHistory()">Löschen</button>
-    </div>
-    <div id="historyList"><div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div></div>
-  </div>
-
-  <div class="note">
-    1 Koordinaten-Einheit = 100 m · Community-Tabellen (nicht offiziell)<br>
-    Höhe wird nicht berücksichtigt – immer nach dem ersten Schuss korrigieren.
-  </div>
-</div>
-
-<script>
 const l81Table = [
   [132,850],[140,840],[151,830],[163,820],[175,810],[187,800],[198,790],[208,780],
   [219,770],[229,760],[239,750],[250,740],[260,730],[270,720],[280,710],[290,700],
@@ -641,12 +1063,11 @@ function copyResult(event) {
     ? `${dist} · ${bearing} · ${az} · ${mils}`
     : `${dist} · ${bearing} · ${az}`;
 
-  const btn = event.target;
+  const btn = event.currentTarget || event.target;
 
   function success() {
-    const old = btn.textContent;
-    btn.textContent = '✓ Kopiert!';
-    setTimeout(() => btn.textContent = old, 1600);
+    btn.textContent = t('copied');
+    setTimeout(() => btn.textContent = t('copyBtn'), 1600);
   }
 
   function fallbackCopy() {
@@ -659,9 +1080,9 @@ function copyResult(event) {
     try {
       const ok = document.execCommand('copy');
       if (ok) success();
-      else alert('Kopieren nicht möglich. Text:\n\n' + text);
+      else alert(t('copyFail') + '\n\n' + text);
     } catch (e) {
-      alert('Kopieren nicht möglich. Text:\n\n' + text);
+      alert(t('copyFail') + '\n\n' + text);
     }
     document.body.removeChild(ta);
   }
@@ -702,6 +1123,47 @@ function loadFromHistory(index) {
   calculate();
 }
 
+let lastResult = null;
+
+function dirIndexOf(bearing) {
+  return Math.round(bearing / 22.5) % 16;
+}
+
+function renderResult() {
+  const r = lastResult;
+  if (!r) return;
+  const cardinal = t('dirs')[r.dirIndex];
+  document.getElementById('distance').textContent = Math.round(r.distance) + ' m';
+  document.getElementById('bearing').textContent = Math.round(r.bearing) + '°  (' + cardinal + ')';
+  document.getElementById('azMil').textContent = r.azMil + ' mil';
+
+  let statusHtml = '';
+  let milHtml = '';
+  const d = r.distance;
+
+  if (r.weapon === 'mortar') {
+    if (d >= 132 && d <= 684) {
+      const mils = interpolateMils(d);
+      milHtml = `<div class="label-important" style="margin-top:14px;">${t('elevation')}</div><div class="compass mil" style="font-size:1.4rem; color:#34d399;">${mils} mil</div>`;
+      statusHtml = `<div class="status in-range">${t('inRangeMortar')}</div>`;
+    } else if (d < 132) {
+      statusHtml = `<div class="status out-range">${t('tooClose', {min: 132})}</div>`;
+    } else {
+      statusHtml = `<div class="status out-range">${t('outOfRangeMortar', {max: 684})}</div>`;
+    }
+  } else {
+    if (d >= 780 && d <= 2629) {
+      statusHtml = `<div class="status in-range">${t('inRangeArty')}</div>`;
+      milHtml = `<div class="note" style="margin-top:10px;">${t('artyNote')}</div>`;
+    } else {
+      statusHtml = `<div class="status out-range">${t('outOfRangeArty')}</div>`;
+    }
+  }
+
+  document.getElementById('milResult').innerHTML = milHtml;
+  document.getElementById('status').innerHTML = statusHtml;
+}
+
 function calculate() {
   const gx = parseFloat(document.getElementById('gx').value);
   const gy = parseFloat(document.getElementById('gy').value);
@@ -710,7 +1172,7 @@ function calculate() {
   const weapon = document.getElementById('weapon').value;
 
   if (isNaN(gx) || isNaN(gy) || isNaN(tx) || isNaN(ty)) {
-    alert('Bitte alle Koordinaten eingeben.');
+    alert(t('enterAll'));
     return;
   }
 
@@ -722,39 +1184,10 @@ function calculate() {
   if (bearing < 0) bearing += 360;
 
   const azMil = Math.round(bearing * 6400 / 360);
+  const dirIndex = dirIndexOf(bearing);
 
-  const directions = ['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSW','SW','WSW','W','WNW','NW','NNW'];
-  const dirIndex = Math.round(bearing / 22.5) % 16;
-  const cardinal = directions[dirIndex];
-
-  document.getElementById('distance').textContent = Math.round(distance) + ' m';
-  document.getElementById('bearing').textContent = Math.round(bearing) + '°  (' + cardinal + ')';
-  document.getElementById('azMil').textContent = azMil + ' mil';
-
-  let statusHtml = '';
-  let milHtml = '';
-
-  if (weapon === 'mortar') {
-    if (distance >= 132 && distance <= 684) {
-      const mils = interpolateMils(distance);
-      milHtml = `<div class="label-important" style="margin-top:14px;">Elevation (Mils)</div><div class="compass" style="font-size:1.4rem; color:#34d399;">${mils} mil</div>`;
-      statusHtml = `<div class="status in-range">In Reichweite (Mörser)</div>`;
-    } else if (distance < 132) {
-      statusHtml = `<div class="status out-range">Zu nah (min. 132 m)</div>`;
-    } else {
-      statusHtml = `<div class="status out-range">Außer Reichweite (max. 684 m)</div>`;
-    }
-  } else {
-    if (distance >= 780 && distance <= 2629) {
-      statusHtml = `<div class="status in-range">In Reichweite (Artillerie)</div>`;
-      milHtml = `<div class="note" style="margin-top:10px;">Elevation je nach Arc (Low/High) – Community-Tabellen nutzen</div>`;
-    } else {
-      statusHtml = `<div class="status out-range">Außer Reichweite für SPH-2</div>`;
-    }
-  }
-
-  document.getElementById('milResult').innerHTML = milHtml;
-  document.getElementById('status').innerHTML = statusHtml;
+  lastResult = { distance, bearing, azMil, dirIndex, weapon };
+  renderResult();
   document.getElementById('result').style.display = 'block';
 
   setTimeout(() => {
@@ -763,11 +1196,13 @@ function calculate() {
 
   const entry = {
     time: new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}),
-    name: 'Schuss ' + (history.length + 1),
+    name: null,
+    num: history.length + 1,
     gx, gy, tx, ty,
     distance: Math.round(distance),
     bearing: Math.round(bearing),
-    cardinal,
+    dirIndex,
+    cardinal: DE_DIRS[dirIndex],
     azMil,
     mils: (weapon === 'mortar' && distance >= 132 && distance <= 684) ? interpolateMils(distance) : null,
     weapon
@@ -799,16 +1234,30 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+function shotDisplayName(e, i) {
+  if (e.name) {
+    const m = LEGACY_SHOT.exec(e.name);
+    return m ? t('shotN', {n: m[1]}) : e.name;
+  }
+  return t('shotN', {n: e.num || (history.length - i)});
+}
+
+function shotDirection(e) {
+  let idx = Number.isInteger(e.dirIndex) ? e.dirIndex : DE_DIRS.indexOf(e.cardinal);
+  if (idx < 0) idx = dirIndexOf(Number(e.bearing) || 0);
+  return t('dirs')[idx];
+}
+
 function renderHistory() {
   const list = document.getElementById('historyList');
   if (!history.length) {
-    list.innerHTML = '<div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div>';
+    list.innerHTML = `<div style="color:#64748b; font-size:0.9rem;">${escapeHtml(t('noShots'))}</div>`;
     return;
   }
   list.innerHTML = history.map((e, i) => `
-    <div class="history-item" onclick="loadFromHistory(${i})" title="Klicken zum Laden">
+    <div class="history-item" onclick="loadFromHistory(${i})" title="${escapeHtml(t('clickToLoad'))}">
       <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-        <input type="text" value="${escapeHtml(e.name || ('Schuss ' + (history.length - i)))}" aria-label="Name des Schusses" 
+        <input type="text" value="${escapeHtml(shotDisplayName(e, i))}" aria-label="${escapeHtml(t('shotName'))}" 
                onchange="renameShot(${i}, this.value)"
                onclick="event.stopPropagation()"
                style="flex:1; padding:7px 10px; font-size:0.85rem; background:#0c1017; border:1px solid #1e293b; border-radius:8px; color:#f1f5f9;">
@@ -816,7 +1265,7 @@ function renderHistory() {
       </div>
       <div style="margin-top:6px;">
         <span style="font-weight:700; color:#34d399; font-size:1.05rem;">${e.distance} m</span>
-        <span style="font-weight:700; color:#f59e0b; font-size:1.05rem;"> · ${e.bearing}° (${escapeHtml(e.cardinal || '')})</span>
+        <span style="font-weight:700; color:#f59e0b; font-size:1.05rem;"> · ${e.bearing}° (${escapeHtml(shotDirection(e))})</span>
       </div>
       <div style="color:#64748b; font-size:0.8rem; margin-top:3px;">
         ${Number(e.gx).toFixed(2)},${Number(e.gy).toFixed(2)} → ${Number(e.tx).toFixed(2)},${Number(e.ty).toFixed(2)}
@@ -860,6 +1309,38 @@ function syncInput(id) {
 
 ['gx','gy','tx','ty'].forEach(id => syncSlider(id));
 
+// ---------- Sprache anwenden ----------
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.title = t('title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+
+  const menuBtn = document.getElementById('menuBtn');
+  menuBtn.setAttribute('aria-label', document.body.classList.contains('menu-open') ? t('menuClose') : t('menuOpen'));
+
+  const info = LANGS[lang];
+  document.getElementById('langBtnFlag').setAttribute('href', '#' + info.flag);
+  document.getElementById('langBtn').setAttribute('aria-label', t('langChoose') + ': ' + info.name);
+  document.getElementById('langList').setAttribute('aria-label', t('langChoose'));
+  document.querySelectorAll('#langList [role="option"]').forEach(li => {
+    li.setAttribute('aria-selected', li.dataset.lang === lang ? 'true' : 'false');
+  });
+
+  renderResult();
+  renderHistory();
+}
+
+function setLang(code) {
+  if (!I18N[code]) return;
+  lang = code;
+  try { localStorage.setItem('wardogsLang', code); } catch (e) {}
+  applyLang();
+}
+
+applyLang();
+
 window.addEventListener('DOMContentLoaded', loadHistory);
 
 // Service Worker registrieren (für PWA / Offline)
@@ -869,6 +1350,75 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// ---------- Sprachauswahl (Dropdown) ----------
+(function () {
+  const wrap = document.getElementById('langWrap');
+  const btn = document.getElementById('langBtn');
+  const list = document.getElementById('langList');
+  const options = Array.from(list.querySelectorAll('[role="option"]'));
+
+  function isOpen() { return !list.hidden; }
+
+  function focusOption(i) {
+    const idx = (i + options.length) % options.length;
+    options.forEach((o, j) => o.tabIndex = j === idx ? 0 : -1);
+    options[idx].focus();
+    list.setAttribute('aria-activedescendant', options[idx].id);
+  }
+
+  function open(focusIdx) {
+    list.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    const sel = options.findIndex(o => o.dataset.lang === lang);
+    focusOption(focusIdx === undefined ? Math.max(0, sel) : focusIdx);
+  }
+
+  function close(returnFocus) {
+    if (!isOpen()) return;
+    list.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    list.removeAttribute('aria-activedescendant');
+    if (returnFocus) btn.focus();
+  }
+
+  function choose(li) {
+    setLang(li.dataset.lang);
+    close(true);
+  }
+
+  window.closeLangMenu = () => close(false);
+
+  btn.addEventListener('click', () => isOpen() ? close(true) : open());
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); open(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); open(options.length - 1); }
+    else if (e.key === 'Escape' && isOpen()) { e.preventDefault(); e.stopPropagation(); close(true); }
+  });
+
+  list.addEventListener('keydown', (e) => {
+    const cur = options.indexOf(document.activeElement);
+    switch (e.key) {
+      case 'ArrowDown': e.preventDefault(); focusOption(cur + 1); break;
+      case 'ArrowUp': e.preventDefault(); focusOption(cur - 1); break;
+      case 'Home': e.preventDefault(); focusOption(0); break;
+      case 'End': e.preventDefault(); focusOption(options.length - 1); break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        if (cur >= 0) choose(options[cur]);
+        break;
+      case 'Escape': e.preventDefault(); e.stopPropagation(); close(true); break;
+      case 'Tab': close(false); break;
+    }
+  });
+
+  options.forEach(li => li.addEventListener('click', () => choose(li)));
+
+  document.addEventListener('pointerdown', (e) => {
+    if (isOpen() && !wrap.contains(e.target)) close(false);
+  });
+})();
+
 // ---------- Menü / Drawer ----------
 (function () {
   const btn = document.getElementById('menuBtn');
@@ -876,6 +1426,7 @@ if ('serviceWorker' in navigator) {
   const overlay = document.getElementById('drawerOverlay');
   const closeBtn = document.getElementById('drawerClose');
   const main = document.getElementById('mainContent');
+  const langWrap = document.getElementById('langWrap');
   const items = Array.from(drawer.querySelectorAll('.menu-item'));
   let lastFocus = null;
 
@@ -883,12 +1434,14 @@ if ('serviceWorker' in navigator) {
 
   function openMenu() {
     if (isOpen()) return;
+    if (window.closeLangMenu) window.closeLangMenu();
     lastFocus = document.activeElement;
     document.body.classList.add('menu-open');
     btn.setAttribute('aria-expanded', 'true');
-    btn.setAttribute('aria-label', 'Menü schließen');
+    btn.setAttribute('aria-label', t('menuClose'));
     main.inert = true;
     btn.inert = true;
+    langWrap.inert = true;
     updateInstallUI();
     setTimeout(() => closeBtn.focus(), 30);
   }
@@ -897,9 +1450,10 @@ if ('serviceWorker' in navigator) {
     if (!isOpen()) return;
     document.body.classList.remove('menu-open');
     btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', 'Menü öffnen');
+    btn.setAttribute('aria-label', t('menuOpen'));
     main.inert = false;
     btn.inert = false;
+    langWrap.inert = false;
     (lastFocus && document.contains(lastFocus) ? lastFocus : btn).focus();
   }
 
