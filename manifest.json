@@ -37,6 +37,17 @@
       ]
     },
     {
+      "name": "Loadout-Planer",
+      "short_name": "Loadout",
+      "url": "/tools/loadout/",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Tools",
       "short_name": "Tools",
       "url": "/tools/",

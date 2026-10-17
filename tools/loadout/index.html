@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loadout-Planer für WARDOGS · Frontbuch</title>
-<meta name="description" content="Loadout-Planer für WARDOGS: Waffen, Aufsätze, Rüstung und Ausrüstung wählen, Kosten pro Leben sehen und per Link teilen – mit offiziellen Preisen aus den Patchnotes.">
+<title>WARDOGS Loadout-Planer: Kosten, Gewicht &amp; Freischaltungen · Frontbuch</title>
+<meta name="description" content="Loadout-Planer für WARDOGS: Waffen, Werfer, Aufsätze, Rüstung und Ausrüstung wählen – Kosten pro Leben, Gewicht und nötige Level pro Track sehen, Vorlagen laden, Loadouts speichern und per Link teilen.">
 <link rel="canonical" href="https://oiotv.de/tools/loadout/">
 <meta property="og:site_name" content="Frontbuch">
-<meta property="og:title" content="Loadout-Planer für WARDOGS · Frontbuch">
-<meta property="og:description" content="Loadout-Planer für WARDOGS: Waffen, Aufsätze, Rüstung und Ausrüstung wählen, Kosten pro Leben sehen und per Link teilen – mit offiziellen Preisen aus den Patchnotes.">
+<meta property="og:title" content="WARDOGS Loadout-Planer: Kosten, Gewicht &amp; Freischaltungen · Frontbuch">
+<meta property="og:description" content="Loadout-Planer für WARDOGS: Waffen, Werfer, Aufsätze, Rüstung und Ausrüstung wählen – Kosten pro Leben, Gewicht und nötige Level pro Track sehen, Vorlagen laden, Loadouts speichern und per Link teilen.">
 <meta property="og:url" content="https://oiotv.de/tools/loadout/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
@@ -22,8 +22,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Frontbuch">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="stylesheet" href="/assets/site.css?v=12">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Frontbuch Loadout-Planer", "url": "https://oiotv.de/tools/loadout/", "description": "Loadout-Planer für WARDOGS: Waffen, Aufsätze, Rüstung und Ausrüstung wählen, Kosten pro Leben sehen und per Link teilen – mit offiziellen Preisen aus den Patchnotes.", "applicationCategory": "GameApplication", "operatingSystem": "Web", "inLanguage": "de", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
+<link rel="stylesheet" href="/assets/site.css?v=13">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Frontbuch Loadout-Planer", "url": "https://oiotv.de/tools/loadout/", "description": "Loadout-Planer für WARDOGS: Waffen, Werfer, Aufsätze, Rüstung und Ausrüstung wählen – Kosten pro Leben, Gewicht und nötige Level pro Track sehen, Vorlagen laden, Loadouts speichern und per Link teilen.", "applicationCategory": "GameApplication", "operatingSystem": "Web", "inLanguage": "de", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
 </head>
 <body>
 <a class="skip-link" href="#mainContent" data-i18n="skip">Zum Inhalt springen</a>
@@ -54,7 +54,7 @@
 <header class="fb-top" id="siteHeader">
 <button type="button" class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
 <a class="fb-brand" href="/"><b>Frontbuch</b><small data-i18n="siteSub">Guides &amp; Tools für WARDOGS</small></a>
-<nav class="fb-nav" aria-label="Hauptnavigation" data-i18n-aria="mainNav"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/tools/" data-i18n="navTools" aria-current="page">Tools</a><a href="/rechner/" data-i18n="navCalc">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/neu/" data-i18n="navNews">Was ist neu</a></nav>
+<nav class="fb-nav" aria-label="Hauptnavigation" data-i18n-aria="mainNav"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><div class="nav-grp" id="navGrpTools"><button type="button" class="nav-grp-btn" id="navToolsBtn" aria-expanded="false" aria-controls="navToolsPop" data-current="true"><span data-i18n="navTools">Tools</span><span class="nav-chev" aria-hidden="true">▾</span></button><div class="nav-pop" id="navToolsPop" hidden><a href="/tools/"><span aria-hidden="true">🧰</span> <span data-i18n="navToolsAll">Alle Tools</span></a><a href="/rechner/"><span aria-hidden="true">🎯</span> <span data-i18n="navCalc">Mörser-Rechner</span></a><a href="/tools/loadout/" aria-current="page"><span aria-hidden="true">🎒</span> <span data-i18n="tLoadoutT">Loadout-Planer</span></a><a href="/tools/tierlist/"><span aria-hidden="true">🏆</span> <span data-i18n="tTierT">Tierlist</span></a><a href="/tools/datenbank/"><span aria-hidden="true">🗃️</span> <span data-i18n="tDbT">Datenbank</span></a><a href="/slots/"><span aria-hidden="true">🎰</span> <span data-i18n="navSlots">Slotmaschine</span></a></div></div><a href="/neu/" data-i18n="navNews">Was ist neu</a><div class="nav-grp" id="navGrpMore"><button type="button" class="nav-grp-btn" id="navMoreBtn" aria-expanded="false" aria-controls="navMorePop"><span data-i18n="navMore">Mehr</span><span class="nav-chev" aria-hidden="true">▾</span></button><div class="nav-pop" id="navMorePop" hidden><button type="button" id="navInstall"><span aria-hidden="true">📲</span> <span data-i18n="install">App installieren</span></button><button type="button" id="navShare" aria-haspopup="dialog"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span> <span data-i18n="share">Seite teilen</span></button></div></div></nav>
 <button type="button" class="share-head-btn" id="shareHeadBtn" aria-label="Seite teilen" data-i18n-aria="share" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class=""><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
 <div class="lang" id="langWrap">
   <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Sprache wählen: Deutsch">
@@ -69,28 +69,45 @@
 </div>
 </header>
 <main id="mainContent" class="fb-main">
-<div class="fbt"><nav class="fb-crumbs" aria-label="Brotkrumen-Navigation" data-i18n-aria="crumbLabel"><ol><li><a href="/" data-i18n="crumbHome">Start</a></li><li><a href="/tools/" data-i18n="navTools">Tools</a></li><li aria-current="page" data-i18n="tLoadoutT">Loadout-Planer</li></ol></nav><h1><span aria-hidden="true">🎒 </span><span data-i18n="tLoadoutT">Loadout-Planer</span></h1><p class="fb-lead" data-i18n="tLoadoutD">Ausrüstung zusammenstellen, Kosten sehen und per Link teilen.</p><p class="fbt-meta"><span data-i18n="tStand" data-i18n-n="17.10.2026">Stand: 17.10.2026</span> · <span data-i18n="tLegend">Legende: ⚠ = Community-Wert (unbestätigt) · [Q] = Quelle · „– unbekannt“ = kein belegter Wert</span></p><div class="fbt-lo" id="loRoot">
-<div class="fbt-lo-form">
-<div class="fbt-field"><label for="loKlasse" data-i18n="tClass">Klasse / Rolle (Track)</label><select id="loKlasse"><option value="" data-i18n="tAnyClass">Alle</option><option value="Assault">Assault</option><option value="Medic">Medic</option><option value="Recon">Recon</option><option value="Support">Support</option><option value="WARDOG">WARDOG</option></select></div>
-<div class="fbt-field"><label for="loPrim" data-i18n="tPrimary">Primärwaffe</label><select id="loPrim"></select></div>
-<fieldset class="fbt-fs"><legend data-i18n="tAttach">Aufsätze</legend><div id="loAtt" class="fbt-checks"></div></fieldset>
-<div class="fbt-field"><label for="loSec" data-i18n="tSecondary">Sekundärwaffe</label><select id="loSec"></select></div>
-<div class="fbt-row3"><div class="fbt-field"><label for="loVest" data-i18n="tVest">Weste</label><select id="loVest"></select></div><div class="fbt-field"><label for="loHelm" data-i18n="tHelmet">Helm</label><select id="loHelm"></select></div><div class="fbt-field"><label for="loPack" data-i18n="tPack">Rucksack</label><select id="loPack"></select></div></div>
-<fieldset class="fbt-fs"><legend data-i18n="tEquip">Granaten &amp; Ausrüstung</legend><div id="loEq" class="fbt-qtys"></div></fieldset>
+<div class="fbt"><nav class="fb-crumbs" aria-label="Brotkrumen-Navigation" data-i18n-aria="crumbLabel"><ol><li><a href="/" data-i18n="crumbHome">Start</a></li><li><a href="/tools/" data-i18n="navTools">Tools</a></li><li aria-current="page" data-i18n="tLoadoutT">Loadout-Planer</li></ol></nav><h1><span aria-hidden="true">🎒 </span><span data-i18n="tLoadoutT">Loadout-Planer</span></h1><p class="fb-lead" data-i18n="tLoadoutD">Loadout bauen: Kosten pro Leben, Gewicht und Freischaltungen.</p><div class="lo" id="loRoot">
+<div class="lo-strip" id="loStrip" aria-hidden="true"><span><small data-i18n="tCostShort">Kosten</small><b id="loStripCost">0 $</b></span><span><small data-i18n="tWeightShort">Gewicht</small><b id="loStripW">–</b></span><span><small data-i18n="tItemsShort">Items</small><b id="loStripN">0</b></span></div>
+<div class="lo-presets"><div class="lo-presets-head"><h2 data-i18n="tPresets">Vorlagen</h2></div><div class="lo-preset-list" id="loPresets"></div></div>
+<div class="lo-grid">
+<div class="lo-form">
+<div class="lo-trk"><div class="fbt-field"><label for="loKlasse" data-i18n="tClass">Klasse / Rolle (Track)</label><select id="loKlasse"><option value="" data-i18n="tAnyClass">Alle</option><option value="Assault">Assault</option><option value="Medic">Medic</option><option value="Recon">Recon</option><option value="Support">Support</option><option value="WARDOG">WARDOG</option></select></div></div>
+<section class="lo-group" aria-labelledby="loGW"><h2 id="loGW" data-i18n="tGrpWeapons">Waffen</h2>
+<div class="lo-slot" data-slot="loPrim"><span class="lo-ic" aria-hidden="true">🔫</span><div class="lo-slot-main"><label for="loPrim" data-i18n="tPrimary">Primärwaffe</label><select id="loPrim"></select><div class="lo-meta" id="loPrimMeta"></div></div></div>
+<div class="lo-att" id="loAttWrap"><div class="lo-sublabel" data-i18n="tAttach">Aufsätze</div><div id="loAtt" class="lo-chips"></div></div>
+<div class="lo-slot" data-slot="loSec"><span class="lo-ic" aria-hidden="true">🔫</span><div class="lo-slot-main"><label for="loSec" data-i18n="tSecondary">Seitenwaffe</label><select id="loSec"></select><div class="lo-meta" id="loSecMeta"></div></div></div>
+<div class="lo-slot" data-slot="loLaunch"><span class="lo-ic" aria-hidden="true">🚀</span><div class="lo-slot-main"><label for="loLaunch" data-i18n="tLauncher">Werfer</label><select id="loLaunch"></select><div class="lo-meta" id="loLaunchMeta"></div></div></div>
+</section>
+<section class="lo-group" aria-labelledby="loGA"><h2 id="loGA" data-i18n="tGrpArmor">Rüstung &amp; Tragen</h2>
+<div class="lo-slot" data-slot="loHelm"><span class="lo-ic" aria-hidden="true">⛑️</span><div class="lo-slot-main"><label for="loHelm" data-i18n="tHelmet">Helm</label><select id="loHelm"></select><div class="lo-meta" id="loHelmMeta"></div></div></div><div class="lo-slot" data-slot="loVest"><span class="lo-ic" aria-hidden="true">🦺</span><div class="lo-slot-main"><label for="loVest" data-i18n="tVest">Schutzweste</label><select id="loVest"></select><div class="lo-meta" id="loVestMeta"></div></div></div><div class="lo-slot" data-slot="loPack"><span class="lo-ic" aria-hidden="true">🎒</span><div class="lo-slot-main"><label for="loPack" data-i18n="tPack">Rucksack</label><select id="loPack"></select><div class="lo-meta" id="loPackMeta"></div></div></div>
+</section>
+<section class="lo-group" aria-labelledby="loGE"><h2 id="loGE" data-i18n="tEquip">Ausrüstung</h2><div id="loEq"></div></section>
 </div>
-<aside class="fbt-panel fbt-lo-sum" aria-labelledby="loSumH"><h2 id="loSumH" data-i18n="tSummary">Zusammenfassung</h2><div id="loSum" aria-live="polite"></div>
-<div class="fbt-actions"><button type="button" class="fbt-btn" id="loShare" data-i18n="tCopyLink">Link kopieren</button><button type="button" class="fbt-btn ghost" id="loReset" data-i18n="tReset">Zurücksetzen</button></div>
+<aside class="lo-sum" aria-labelledby="loSumH"><h2 id="loSumH" class="fb-sr" data-i18n="tSummary">Zusammenfassung</h2>
+<div class="lo-kpis">
+<div class="lo-kpi main"><small data-i18n="tCostLife">Kosten pro Leben</small><b id="loTotal" data-v="0">0 $</b><span class="lo-delta" id="loDTotal"></span><span class="lo-kpi-sub" id="loUnknown" hidden></span></div>
+<div class="lo-kpi"><small data-i18n="tUnlockSum">Freischaltkosten</small><b id="loUnlock" data-v="0">0 $</b><span class="lo-delta" id="loDUnlock"></span></div>
+<div class="lo-kpi"><small data-i18n="tWeight">Gewicht</small><b id="loWeight" data-v="0">–</b><span class="lo-delta" id="loDWeight"></span><span class="lo-kpi-sub" id="loWeightN"></span></div>
+</div>
+<div class="lo-budget"><div class="fbt-field"><label for="loBudget" data-i18n="tBudget">Budget ($)</label><input type="number" id="loBudget" min="0" step="100" inputmode="numeric" placeholder="10000"></div><p class="lo-budget-out" id="loBudgetOut" aria-live="polite"></p></div>
+<div class="lo-bars" id="loBars"></div>
+<h3 data-i18n="tUnlocksNeeded">Nötige Level</h3><div id="loLevels" class="lo-levels"></div>
+<h3 data-i18n="tItemList">Liste</h3><div id="loSum" aria-live="polite"></div>
+<div class="fbt-actions"><button type="button" class="fbt-btn" id="loShare" data-i18n="tCopyLink">Link kopieren</button><button type="button" class="fbt-btn ghost" id="loBase" aria-pressed="false" data-i18n="tCompareBase">Vergleichen</button><button type="button" class="fbt-btn ghost" id="loReset" data-i18n="tReset">Zurücksetzen</button></div>
 <div class="fbt-field"><label for="loLink" data-i18n="tShareLabel">Link zu diesem Loadout</label><input type="text" id="loLink" readonly></div>
-<p class="fbt-msg" id="loMsg" aria-live="polite"></p><p class="fbt-sub" data-i18n="tSaved">Wird automatisch im Browser gespeichert.</p></aside>
+<p class="fbt-msg" id="loMsg" aria-live="polite"></p>
+<div class="lo-saved"><h3 data-i18n="tSavedKits">Gespeicherte Loadouts</h3>
+<div class="lo-save-row"><label class="fb-sr" for="loSaveName" data-i18n="tSaveName">Name</label><input type="text" id="loSaveName" maxlength="40" placeholder="Name" data-i18n-ph="tSaveName"><button type="button" class="fbt-btn ghost" id="loSave" data-i18n="tSave">Speichern</button></div>
+<ul class="lo-saved-list" id="loSavedList"></ul></div>
+</aside>
 </div>
-<div class="fb-article" lang="de"><h2>Hinweise</h2><ul>
-<li>Preise sind Vendor-Preise pro Kauf (also pro Leben) aus den offiziellen Season-2-Patchnotes. Werte mit ⚠ stammen aus Community-Quellen.</li>
-<li>Gewichte veröffentlicht BULKHEAD nicht – daher „– unbekannt“.</li>
-<li>Aufsätze: Ist in den Patchnotes eine Waffe genannt („für die M14“), zeigen wir den Aufsatz nur bei dieser Waffe. Bei allgemeinen Aufsätzen ist die Kompatibilität unbekannt.</li>
-<li>Munition und Magazine sind nicht enthalten.</li></ul></div><section class="fb-sources"><h2 data-i18n="tSources">Quellen</h2><ol><li><a href="https://store.steampowered.com/news/app/1867240/view/1846651706674560" rel="noopener noreferrer" target="_blank">BULKHEAD: Season 02 Patch Notes (14.10.2026)</a></li><li><a href="https://wardogsbuild.com/builds/tier-list/" rel="noopener noreferrer" target="_blank">WardogsBuild: Tier List Season 2 (Community)</a> ⚠</li><li><a href="https://wardogsgame.net/medic-revive/" rel="noopener noreferrer" target="_blank">wardogsgame.net: Medic- &amp; Revive-Guide (Community)</a> ⚠</li><li><a href="https://store.steampowered.com/news/app/1867240/view/1843481262690549" rel="noopener noreferrer" target="_blank">BULKHEAD: Pre-Load Live &amp; Season 1 Changelog (09.09.2026)</a></li></ol></section></div>
+</div><details class="fb-sources fbt-srcs"><summary data-i18n="tSources">Quellen</summary><ol><li><a href="https://store.steampowered.com/news/app/1867240/view/1846651706674560" rel="noopener noreferrer" target="_blank">BULKHEAD: Season 02 Patch Notes (14.10.2026)</a></li><li><a href="https://wardogsbuild.com/builds/tier-list/" rel="noopener noreferrer" target="_blank">WardogsBuild: Tier List Season 2 (Community)</a> ⚠</li><li><a href="https://metabot.gg/en/wardogs/loadout-builder" rel="noopener noreferrer" target="_blank">MetaBot.GG: WARDOGS Loadout Builder (Community, Season 1)</a> ⚠</li><li><a href="https://wardogsgame.net/medic-revive/" rel="noopener noreferrer" target="_blank">wardogsgame.net: Medic- &amp; Revive-Guide (Community)</a> ⚠</li><li><a href="https://store.steampowered.com/news/app/1867240/view/1843481262690549" rel="noopener noreferrer" target="_blank">BULKHEAD: Pre-Load Live &amp; Season 1 Changelog (09.09.2026)</a></li></ol></details></div>
 </main>
 <footer class="fb-foot" id="siteFooter">
-<nav aria-label="Fußzeile"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/tools/" data-i18n="navTools" aria-current="page">Tools</a><a href="/rechner/" data-i18n="navCalc">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/glossar/" data-i18n="navGlossary">Glossar</a><a href="/faq/" data-i18n="navFaq">FAQ</a><a href="/neu/" data-i18n="navNews">Was ist neu</a><a href="/impressum/" data-i18n="navImpressum">Impressum</a><a href="/datenschutz/" data-i18n="navPrivacy">Datenschutz</a></nav>
+<nav aria-label="Fußzeile"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/rechner/" data-i18n="navCalc">Mörser-Rechner</a><a href="/tools/loadout/" data-i18n="tLoadoutT" aria-current="page">Loadout-Planer</a><a href="/tools/tierlist/" data-i18n="tTierT">Tierlist</a><a href="/tools/datenbank/" data-i18n="tDbT">Datenbank</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/glossar/" data-i18n="navGlossary">Glossar</a><a href="/faq/" data-i18n="navFaq">FAQ</a><a href="/neu/" data-i18n="navNews">Was ist neu</a><a href="/impressum/" data-i18n="navImpressum">Impressum</a><a href="/datenschutz/" data-i18n="navPrivacy">Datenschutz</a></nav>
 <p class="disc" data-i18n="fbFooter">Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.</p>
 <p data-i18n="fbFooterSmall">WARDOGS ist eine Marke der jeweiligen Rechteinhaber. Alle Angaben ohne Gewähr.</p>
 </footer>
@@ -128,9 +145,7 @@
     <button type="button" class="drawer-close" id="drawerClose" aria-label="Menü schließen" data-i18n-aria="menuClose">✕</button>
   </div>
   <nav class="drawer-body" aria-label="Hauptmenü" data-i18n-aria="mainNav">
-    <a class="menu-item" href="/"><span class="mi-icon" aria-hidden="true">🏠</span><span data-i18n="navHome">Start</span></a><a class="menu-item" href="/guides/"><span class="mi-icon" aria-hidden="true">📚</span><span data-i18n="navGuides">Guides</span></a><a class="menu-item" href="/tools/" aria-current="page"><span class="mi-icon" aria-hidden="true">🧰</span><span data-i18n="navTools">Tools</span></a><a class="menu-item" href="/rechner/"><span class="mi-icon" aria-hidden="true">🎯</span><span data-i18n="navCalc">Mörser-Rechner</span></a><a class="menu-item" href="/slots/"><span class="mi-icon" aria-hidden="true">🎰</span><span data-i18n="navSlots">Slotmaschine</span></a><div class="drawer-sep" data-i18n="navMore">Mehr</div><a class="menu-item" href="/glossar/"><span class="mi-icon" aria-hidden="true">📖</span><span data-i18n="navGlossary">Glossar</span></a><a class="menu-item" href="/faq/"><span class="mi-icon" aria-hidden="true">❓</span><span data-i18n="navFaq">FAQ</span></a><a class="menu-item" href="/neu/"><span class="mi-icon" aria-hidden="true">🆕</span><span data-i18n="navNews">Was ist neu</span></a><div class="drawer-sep" data-i18n="navLegal">Rechtliches</div><a class="menu-item" href="/impressum/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navImpressum">Impressum</span></a><a class="menu-item" href="/datenschutz/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navPrivacy">Datenschutz</span></a>
-    <div class="drawer-sep" aria-hidden="true"></div>
-    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
+    <a class="menu-item" href="/"><span class="mi-icon" aria-hidden="true">🏠</span><span data-i18n="navHome">Start</span></a><a class="menu-item" href="/guides/"><span class="mi-icon" aria-hidden="true">📚</span><span data-i18n="navGuides">Guides</span></a><div class="drawer-sep" data-i18n="navTools">Tools</div><a class="menu-item" href="/tools/"><span class="mi-icon" aria-hidden="true">🧰</span><span data-i18n="navToolsAll">Alle Tools</span></a><a class="menu-item" href="/rechner/"><span class="mi-icon" aria-hidden="true">🎯</span><span data-i18n="navCalc">Mörser-Rechner</span></a><a class="menu-item" href="/tools/loadout/" aria-current="page"><span class="mi-icon" aria-hidden="true">🎒</span><span data-i18n="tLoadoutT">Loadout-Planer</span></a><a class="menu-item" href="/tools/tierlist/"><span class="mi-icon" aria-hidden="true">🏆</span><span data-i18n="tTierT">Tierlist</span></a><a class="menu-item" href="/tools/datenbank/"><span class="mi-icon" aria-hidden="true">🗃️</span><span data-i18n="tDbT">Datenbank</span></a><a class="menu-item" href="/slots/"><span class="mi-icon" aria-hidden="true">🎰</span><span data-i18n="navSlots">Slotmaschine</span></a><div class="drawer-sep" data-i18n="navRef">Nachschlagen</div><a class="menu-item" href="/glossar/"><span class="mi-icon" aria-hidden="true">📖</span><span data-i18n="navGlossary">Glossar</span></a><a class="menu-item" href="/faq/"><span class="mi-icon" aria-hidden="true">❓</span><span data-i18n="navFaq">FAQ</span></a><a class="menu-item" href="/neu/"><span class="mi-icon" aria-hidden="true">🆕</span><span data-i18n="navNews">Was ist neu</span></a><div class="drawer-sep" data-i18n="navMore">Mehr</div>    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
       <span class="mi-icon" aria-hidden="true">📲</span><span data-i18n="install">App installieren</span><span class="mi-chev" aria-hidden="true">›</span>
     </button>
     <div class="menu-panel" id="panelInstall" role="region" aria-labelledby="miInstall" hidden>
@@ -151,11 +166,12 @@
     <button type="button" class="menu-item" id="miShare" aria-haspopup="dialog">
       <span class="mi-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span><span data-i18n="share">Seite teilen</span>
     </button>
+<div class="drawer-sep" data-i18n="navLegal">Rechtliches</div><a class="menu-item" href="/impressum/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navImpressum">Impressum</span></a><a class="menu-item" href="/datenschutz/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navPrivacy">Datenschutz</span></a>
   </nav>
   <div class="drawer-foot" data-i18n="footer">Inoffizielle Fan-Seite</div>
 </aside>
-<script src="/assets/site.js?v=12"></script>
-<script src="/assets/data.js?v=12"></script>
-<script src="/assets/tools.js?v=12"></script>
+<script src="/assets/site.js?v=13"></script>
+<script src="/assets/data.js?v=13"></script>
+<script src="/assets/tools.js?v=13"></script>
 </body>
 </html>

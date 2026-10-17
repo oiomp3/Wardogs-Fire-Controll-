@@ -1,4 +1,4 @@
-// ---------- Frontbuch-Tools (Datenbank, Loadout, Tierlist, Ballistik, Patchnotes) ----------
+// ---------- Frontbuch-Tools (Datenbank, Loadout, Tierlist) ----------
 // Alle Werte kommen aus window.FB_DATA (assets/data.js, erzeugt aus fbsrc/data/wardogs.json).
 (function () {
   const D = window.FB_DATA;
@@ -89,6 +89,14 @@
     function fieldRows(i) {
       return FIELD_ORDER.filter(f => has(i, f)).map(f => `<tr><th scope="row">${esc(D.fields[f])}</th><td>${val(i, f)}</td></tr>`).join('');
     }
+    const LOK = { primary: 'p', secondary: 's', launcher: 'l', helmet: 'h', vest: 'v', backpack: 'b' };
+    function loLink(i) {
+      let q = '';
+      if (LOK[i.slot]) q = LOK[i.slot] + '=' + i.id;
+      else if (i.slot === 'equip') q = 'e=' + i.id + ':1';
+      else if (i.cat === 'attachment' && i.for) q = 'p=' + i.for + '&a=' + i.id;
+      return q ? `<p><a href="/tools/loadout/?${q}">${esc(t('tToLoadout'))}</a></p>` : '';
+    }
     function openDetail(id) {
       const i = BY[id];
       if (!i) return;
@@ -99,7 +107,7 @@
 <p class="fbt-sub">${esc(catName(i.cat))} · ${esc(i.type)}</p>
 <div class="fb-tablewrap"><table class="fbt-kv"><tbody>${fieldRows(i) || `<tr><td>${unk()}</td></tr>`}</tbody></table></div>
 ${missing.length ? `<p class="fbt-sub">${esc(t('tMissingFields'))}: ${missing.map(esc).join(', ')}</p>` : ''}
-${compat}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}
+${compat}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}${loLink(i)}
 <h3>${esc(t('tSources'))}</h3><ul class="fbt-srclist">${srcs.map(k => `<li><a href="${esc(D.sources[k].url)}" target="_blank" rel="noopener noreferrer">${esc(D.sources[k].title)}</a>${D.sources[k].type === 'community' ? ' ⚠' : ''}</li>`).join('') || '<li>–</li>'}</ul>`;
       detail.hidden = false;
       detail.dataset.id = id;
@@ -146,109 +154,246 @@ ${fields.map(f => `<tr><th scope="row">${esc(D.fields[f])}</th>${items.map(i => 
   (function loadout() {
     const root = $('#loRoot');
     if (!root) return;
-    const KEY = 'fbLoadout';
+    const KEY = 'fbLoadout', SKEY = 'fbLoadoutSaved', MAXQ = 9, MAXKITS = 12;
     const el = id => document.getElementById(id);
-    const selK = el('loKlasse'), selP = el('loPrim'), selS = el('loSec'), selV = el('loVest'), selH = el('loHelm'), selB = el('loPack');
-    const attBox = el('loAtt'), eqBox = el('loEq'), sum = el('loSum'), msg = el('loMsg');
-    const W = D.items.filter(i => i.cat === 'weapon');
+    const SLOTS = { p: ['loPrim', 'primary'], s: ['loSec', 'secondary'], l: ['loLaunch', 'launcher'], h: ['loHelm', 'helmet'], v: ['loVest', 'vest'], b: ['loPack', 'backpack'] };
+    const SK = Object.keys(SLOTS);
+    const GROUP = { p: 'w', s: 'w', l: 'w', h: 'r', v: 'r', b: 'r' };
+    const selK = el('loKlasse'), attBox = el('loAtt'), attWrap = el('loAttWrap'), eqBox = el('loEq'), sum = el('loSum'), msg = el('loMsg');
+    const budgetIn = el('loBudget'), baseBtn = el('loBase');
     const EQ = D.items.filter(i => i.slot === 'equip');
-    let st = { k: '', p: '', s: '', v: '', h: '', b: '', a: [], e: {} };
+    const PRESETS = D.presets || [];
+    const empty = () => ({ k: '', p: '', s: '', l: '', v: '', h: '', b: '', a: [], e: {} });
+    let st = empty(), base = null;
 
-    function priceTxt(i) { const p = num(i, 'price'); return p === null ? t('tNoPrice') : (p === 0 ? t('tFree') : money(p)); }
-    function opt(i, cur) { return `<option value="${i.id}"${i.id === cur ? ' selected' : ''}>${esc(i.name)} – ${esc(priceTxt(i))}${i.price && i.price.f === 'c' ? ' ⚠' : ''}</option>`; }
-    function none(cur) { return `<option value=""${!cur ? ' selected' : ''}>${esc(t('tNoneSel'))}</option>`; }
-    function fillWeapons(sel, slot, cur) {
-      const list = W.filter(i => i.slot === slot);
-      if (!st.k) { sel.innerHTML = none(cur) + list.map(i => opt(i, cur)).join(''); return; }
+    const priceTxt = i => { const p = num(i, 'price'); return p === null ? t('tNoPrice') : (p === 0 ? t('tFree') : money(p)); };
+    const cw = v => v && v.f === 'c' ? ' ⚠' : '';
+    const kg = n => (Math.round(n * 100) / 100).toLocaleString('de-DE') + ' kg';
+    const maxQ = i => i.type === 'Fallschirm' ? 1 : MAXQ;
+    function opt(i, cur) { return `<option value="${i.id}"${i.id === cur ? ' selected' : ''}>${esc(i.name)} · ${esc(priceTxt(i))}${cw(i.price)}</option>`; }
+    function fillSel(sel, slot, cur) {
+      const list = D.items.filter(i => i.slot === slot);
+      const none = `<option value=""${!cur ? ' selected' : ''}>${esc(t('tNoneSel'))}</option>`;
+      if (!st.k) { sel.innerHTML = none + list.map(i => opt(i, cur)).join(''); return; }
       const mine = list.filter(i => has(i, 'track') && i.track.v === st.k), other = list.filter(i => !mine.includes(i));
-      sel.innerHTML = none(cur) + (mine.length ? `<optgroup label="${esc(st.k)}">${mine.map(i => opt(i, cur)).join('')}</optgroup>` : '') +
-        `<optgroup label="${esc(t('tOtherTrack'))}">${other.map(i => opt(i, cur)).join('')}</optgroup>`;
+      sel.innerHTML = none + (mine.length ? `<optgroup label="${esc(st.k)}">${mine.map(i => opt(i, cur)).join('')}</optgroup>` : '') +
+        (other.length ? `<optgroup label="${esc(t('tOtherTrack'))}">${other.map(i => opt(i, cur)).join('')}</optgroup>` : '');
     }
-    function fillSimple(sel, slot, cur) { sel.innerHTML = none(cur) + D.items.filter(i => i.slot === slot).map(i => opt(i, cur)).join(''); }
-    function allowedAtt() { return D.items.filter(i => i.cat === 'attachment' && (!i.for || i.for === st.p)); }
+    function lvTxt(i) {
+      if (!has(i, 'level')) return has(i, 'track') ? esc(i.track.v) + warn(i.track) : '';
+      if (i.level.v === 'Standard') return esc(t('tStd')) + warn(i.level);
+      return (has(i, 'track') ? esc(i.track.v) + ' ' : '') + esc(t('tLv')) + ' ' + esc(i.level.v) + warn(i.level);
+    }
+    function meta(i) {
+      if (!i) return '';
+      const parts = [`<span class="lo-tag price">${has(i, 'price') ? fmt('price', i.price.v) + warn(i.price) + srcLink(i.price) : unk()}</span>`];
+      const lv = lvTxt(i); if (lv) parts.push(`<span class="lo-tag">${lv}</span>`);
+      if (has(i, 'unlock') && i.unlock.v > 0) parts.push(`<span class="lo-tag">🔓 ${money(i.unlock.v)}${warn(i.unlock)}</span>`);
+      parts.push(`<span class="lo-tag">⚖ ${has(i, 'weight') ? kg(i.weight.v) + warn(i.weight) + srcLink(i.weight) : unk()}</span>`);
+      return parts.join('') + `<a class="lo-db" href="/tools/datenbank/?id=${i.id}" aria-label="${esc(t('tToDb'))}">ⓘ</a>`;
+    }
+    function allowedAtt() {
+      return D.items.filter(i => i.cat === 'attachment' && (!i.for || i.for === st.p))
+        .sort((a, b) => (a.for ? 0 : 1) - (b.for ? 0 : 1) || a.name.localeCompare(b.name));
+    }
+    function renderPresets() {
+      el('loPresets').innerHTML = PRESETS.map(p => {
+        const c = totals(fromPreset(p));
+        return `<button type="button" class="lo-preset" data-preset="${p.id}"><b lang="de">${esc(p.name)}</b><span class="lo-tag">${esc(p.track)}</span><span class="lo-preset-cost">${money(c.cost)}${c.comm ? ' ⚠' : ''}</span><small lang="de">${esc(p.desc)}</small></button>`;
+      }).join('');
+    }
     function renderInputs() {
       selK.value = st.k;
-      fillWeapons(selP, 'primary', st.p); fillWeapons(selS, 'secondary', st.s);
-      fillSimple(selV, 'vest', st.v); fillSimple(selH, 'helmet', st.h); fillSimple(selB, 'backpack', st.b);
-      const atts = allowedAtt().sort((a, b) => (a.for ? 0 : 1) - (b.for ? 0 : 1) || a.name.localeCompare(b.name));
+      SK.forEach(k => { const [id, slot] = SLOTS[k]; fillSel(el(id), slot, st[k]); });
+      const atts = allowedAtt();
       st.a = st.a.filter(id => atts.some(i => i.id === id));
-      attBox.innerHTML = st.p ? atts.map(i => `<label class="fbt-check"><input type="checkbox" value="${i.id}"${st.a.includes(i.id) ? ' checked' : ''}> <span>${esc(i.name)} <small>${esc(priceTxt(i))} · ${esc(i.for ? t('tCompatOk') : t('tCompatUnknown'))}</small></span></label>`).join('')
-        : `<p class="fbt-sub">${esc(t('tPickPrimary'))}</p>`;
-      eqBox.innerHTML = EQ.map(i => `<label class="fbt-qty"><span>${esc(i.name)} <small>${esc(priceTxt(i))}${i.price && i.price.f === 'c' ? ' ⚠' : ''}</small></span><input type="number" min="0" max="9" step="1" inputmode="numeric" data-id="${i.id}" value="${st.e[i.id] || 0}" aria-label="${esc(t('tQty'))}: ${esc(i.name)}"></label>`).join('');
+      attWrap.hidden = !st.p;
+      attBox.innerHTML = !st.p ? '' : (atts.length ? atts.map(i => `<button type="button" class="lo-chip" data-att="${i.id}" aria-pressed="${st.a.includes(i.id)}"${i.for ? '' : ` title="${esc(t('tCompatUnknown'))}"`}><span>${esc(i.name)}</span><small>${esc(priceTxt(i))}${cw(i.price)}${i.for ? '' : ' · ?'}</small></button>`).join('')
+        : `<p class="fbt-sub">${esc(t('tNoAtt'))}</p>`);
+      const types = [...new Set(EQ.map(i => i.type))];
+      const openG = new Set([...eqBox.querySelectorAll('details[open]')].map(d => d.dataset.ty));
+      eqBox.innerHTML = types.map(ty => { const L = EQ.filter(i => i.type === ty), sel = L.reduce((x, i) => x + (st.e[i.id] || 0), 0);
+        return `<details class="lo-eqgrp" data-ty="${esc(ty)}"${sel || openG.has(ty) ? ' open' : ''}><summary><span lang="de">${esc(ty)}</span><span class="lo-eqcnt" data-cnt="${esc(ty)}">${sel || ''}</span></summary>${L.map(i => {
+        const n = st.e[i.id] || 0;
+        return `<div class="lo-eq${n ? ' on' : ''}"><span class="lo-eq-name"><span>${esc(i.name)}</span><small>${esc(priceTxt(i))}${cw(i.price)}${has(i, 'weight') ? ' · ' + kg(i.weight.v) + cw(i.weight) : ''}</small></span>
+<span class="lo-step" role="group" aria-label="${esc(t('tQty'))}: ${esc(i.name)}"><button type="button" data-eq="${i.id}" data-d="-1" aria-label="− ${esc(i.name)}"${n ? '' : ' disabled'}>−</button><output data-q="${i.id}">${n}</output><button type="button" data-eq="${i.id}" data-d="1" aria-label="+ ${esc(i.name)}"${n >= maxQ(i) ? ' disabled' : ''}>+</button></span></div>`;
+      }).join('')}</details>`; }).join('');
+      renderMeta();
     }
-    function chosen() {
+    function renderMeta() { SK.forEach(k => { el(SLOTS[k][0] + 'Meta').innerHTML = meta(BY[st[k]]); el(SLOTS[k][0]).closest('.lo-slot').classList.toggle('on', !!st[k]); }); }
+    function chosen(s) {
       const out = [];
-      ['p', 's', 'v', 'h', 'b'].forEach(k => { if (st[k] && BY[st[k]]) out.push([BY[st[k]], 1]); });
-      st.a.forEach(id => BY[id] && out.push([BY[id], 1]));
-      Object.entries(st.e).forEach(([id, n]) => { if (BY[id] && n > 0) out.push([BY[id], n]); });
+      SK.forEach(k => { if (s[k] && BY[s[k]]) out.push([BY[s[k]], 1, GROUP[k]]); });
+      s.a.forEach(id => BY[id] && out.push([BY[id], 1, 'a']));
+      Object.entries(s.e).forEach(([id, n]) => { if (BY[id] && n > 0) out.push([BY[id], n, 'e']); });
       return out;
     }
-    function renderSum() {
-      const c = chosen();
-      let total = 0, unknownP = 0, unlock = 0, unknownU = 0, comm = false, weight = 0, unknownW = 0;
-      const rowsH = c.map(([i, n]) => {
-        const p = num(i, 'price'), u = num(i, 'unlock'), w = num(i, 'weight');
-        if (p === null) unknownP++; else { total += p * n; if (i.price.f === 'c') comm = true; }
-        if (u !== null) unlock += u; else if (!(has(i, 'level') && i.level.v === 'Standard')) unknownU++;
-        if (w === null) unknownW++; else weight += w * n;
-        return `<tr><td>${esc(i.name)}${n > 1 ? ' × ' + n : ''}</td><td>${p === null ? unk() : fmt('price', p * n) + warn(i.price)}</td></tr>`;
-      }).join('');
-      sum.innerHTML = c.length ? `<div class="fb-tablewrap"><table class="fbt-kv"><tbody>${rowsH}</tbody></table></div>
-<p class="fbt-total"><span>${esc(t('tTotal'))}</span><b id="loTotal" data-v="${total}">${money(total)}</b>${comm ? ' ' + warn({ f: 'c' }) : ''}</p>
-${unknownP ? `<p class="fbt-sub" id="loUnknown">${esc(t('tUnknownPrices', { n: unknownP }))}</p>` : ''}
-<p class="fbt-total small"><span>${esc(t('tUnlockSum'))}</span><b id="loUnlock" data-v="${unlock}">${money(unlock)}</b></p>
-${unknownU ? `<p class="fbt-sub">${esc(t('tUnknownUnlocks', { n: unknownU }))}</p>` : ''}
-<p class="fbt-total small"><span>${esc(t('tWeight'))}</span><b id="loWeight">${unknownW ? esc(t('tUnknown')) : nf(weight) + ' kg'}</b></p>
-${unknownW ? `<p class="fbt-sub">${esc(t('tWeightNote'))}</p>` : ''}` : `<p class="fbt-sub">${esc(t('tEmptyLoadout'))}</p>`;
+    function totals(s) {
+      const c = chosen(s), g = { w: [0, 0], a: [0, 0], r: [0, 0], e: [0, 0] }, lv = {};
+      let cost = 0, unk = 0, unlock = 0, w = 0, wn = 0, cnt = 0, lvUnk = 0, comm = false, wComm = false;
+      c.forEach(([i, n, grp]) => {
+        cnt += n;
+        const p = num(i, 'price'), u = num(i, 'unlock'), wt = num(i, 'weight');
+        if (p === null) unk++; else { cost += p * n; g[grp][0] += p * n; if (i.price.f === 'c') comm = true; }
+        if (u !== null) unlock += u;
+        if (wt !== null) { w += wt * n; wn++; g[grp][1] += wt * n; if (i.weight.f === 'c') wComm = true; }
+        if (has(i, 'level') && typeof i.level.v === 'number' && has(i, 'track')) {
+          const tr = i.track.v;
+          if (!lv[tr] || lv[tr][0] < i.level.v) lv[tr] = [i.level.v, i.name];
+        } else if (!(has(i, 'level') && i.level.v === 'Standard')) lvUnk++;
+      });
+      return { c, g, lv, cost, unk, unlock, w, wn, n: c.length, cnt, lvUnk, comm, wComm };
     }
-    function encode() {
+    function delta(cur, old, f) {
+      if (!base) return '';
+      const d = Math.round((cur - old) * 100) / 100;
+      if (!d) return '±0';
+      return (d > 0 ? '+' : '−') + f(Math.abs(d));
+    }
+    function renderSum() {
+      const T = totals(st), B = base ? totals(base) : null;
+      el('loTotal').textContent = money(T.cost) + (T.comm ? ' ⚠' : ''); el('loTotal').dataset.v = T.cost;
+      el('loUnlock').textContent = money(T.unlock); el('loUnlock').dataset.v = T.unlock;
+      const wEl = el('loWeight');
+      wEl.textContent = T.wn ? kg(T.w) + (T.wComm ? ' ⚠' : '') : t('tUnknown'); wEl.dataset.v = T.w;
+      el('loWeightN').textContent = T.n ? t('tWeightKnown', { n: T.wn, m: T.n }) : '';
+      const u = el('loUnknown'); u.hidden = !T.unk; u.textContent = T.unk ? t('tUnknownPrices', { n: T.unk }) : '';
+      el('loDTotal').textContent = B ? delta(T.cost, B.cost, money) : '';
+      el('loDUnlock').textContent = B ? delta(T.unlock, B.unlock, money) : '';
+      el('loDWeight').textContent = B ? delta(T.w, B.w, kg) : '';
+      root.classList.toggle('has-base', !!B);
+      el('loStripCost').textContent = money(T.cost); el('loStripW').textContent = T.wn ? kg(T.w) : '–'; el('loStripN').textContent = T.cnt;
+      // Budget
+      const bud = parseInt(budgetIn.value, 10), bo = el('loBudgetOut');
+      if (bud > 0 && T.cost > 0) {
+        const over = T.cost - bud;
+        bo.className = 'lo-budget-out ' + (over > 0 ? 'bad' : 'ok');
+        bo.textContent = over > 0 ? t('tBudgetOver', { n: money(over) }) : t('tBudgetLives', { n: Math.floor(bud / T.cost) });
+      } else { bo.textContent = ''; bo.className = 'lo-budget-out'; }
+      // Balken
+      const G = [['w', 'tBarWeapons'], ['a', 'tBarAtt'], ['r', 'tBarArmor'], ['e', 'tBarEquip']];
+      el('loBars').innerHTML = T.n ? G.map(([k, lab]) => {
+        const [c, w] = T.g[k], pct = T.cost ? Math.round(c / T.cost * 100) : 0;
+        return `<div class="lo-barrow"><span>${esc(t(lab))}</span><span class="lo-bar"><i style="width:${pct}%"></i></span><b>${money(c)}</b><small>${w ? kg(w) : '–'}</small></div>`;
+      }).join('') : '';
+      // Level
+      const tr = Object.keys(T.lv).sort();
+      el('loLevels').innerHTML = !T.n ? `<p class="fbt-sub">${esc(t('tEmptyLoadout'))}</p>` :
+        (tr.length ? tr.map(k => `<span class="lo-lvl" title="${esc(T.lv[k][1])}"><b>${esc(k)}</b> ${esc(t('tLv'))} ${T.lv[k][0]}</span>`).join('') : `<p class="fbt-sub">${esc(t('tNoLevel'))}</p>`) +
+        (T.lvUnk ? `<p class="fbt-sub">${esc(t('tLevelUnknown', { n: T.lvUnk }))}</p>` : '');
+      // Liste
+      sum.innerHTML = T.n ? `<div class="fb-tablewrap"><table class="fbt-kv lo-list"><tbody>${T.c.map(([i, n]) => {
+        const p = num(i, 'price');
+        return `<tr><td>${esc(i.name)}${n > 1 ? ' × ' + n : ''}</td><td>${p === null ? unk() : fmt('price', p * n) + warn(i.price)}</td><td>${has(i, 'weight') ? kg(i.weight.v * n) + warn(i.weight) : unk()}</td></tr>`;
+      }).join('')}</tbody></table></div>` : `<p class="fbt-sub">${esc(t('tEmptyLoadout'))}</p>`;
+    }
+    function encode(s) {
+      s = s || st;
       const p = new URLSearchParams();
-      ['k', 'p', 's', 'v', 'h', 'b'].forEach(k => st[k] && p.set(k, st[k]));
-      if (st.a.length) p.set('a', st.a.join(','));
-      const e = Object.entries(st.e).filter(([, n]) => n > 0).map(([id, n]) => id + ':' + n);
+      ['k'].concat(SK).forEach(k => s[k] && p.set(k, s[k]));
+      if (s.a.length) p.set('a', s.a.join(','));
+      const e = Object.entries(s.e).filter(([, n]) => n > 0).map(([id, n]) => id + ':' + n);
       if (e.length) p.set('e', e.join(','));
       return p.toString();
     }
     function decode(str) {
-      const p = new URLSearchParams(str), s = { k: '', p: '', s: '', v: '', h: '', b: '', a: [], e: {} };
-      const okSlot = (id, slot) => BY[id] && BY[id].slot === slot ? id : '';
+      const p = new URLSearchParams(str), s = empty();
+      const okSlot = (id, slot) => id && BY[id] && BY[id].slot === slot ? id : '';
       const tracks = [...selK.options].map(o => o.value);
       s.k = tracks.includes(p.get('k')) ? p.get('k') : '';
-      s.p = okSlot(p.get('p'), 'primary'); s.s = okSlot(p.get('s'), 'secondary');
-      s.v = okSlot(p.get('v'), 'vest'); s.h = okSlot(p.get('h'), 'helmet'); s.b = okSlot(p.get('b'), 'backpack');
-      s.a = (p.get('a') || '').split(',').filter(id => BY[id] && BY[id].cat === 'attachment');
-      (p.get('e') || '').split(',').forEach(x => { const [id, n] = x.split(':'); const q = Math.max(0, Math.min(9, parseInt(n, 10) || 0)); if (BY[id] && BY[id].slot === 'equip' && q) s.e[id] = q; });
+      SK.forEach(k => { s[k] = okSlot(p.get(k), SLOTS[k][1]); });
+      if (!s.l && okSlot(p.get('s'), 'launcher')) s.l = p.get('s'); // alte Links: Werfer im Sekundär-Slot
+      s.a = [...new Set((p.get('a') || '').split(',').filter(id => BY[id] && BY[id].cat === 'attachment'))];
+      (p.get('e') || '').split(',').forEach(x => { const [id, n] = x.split(':'); if (!BY[id] || BY[id].slot !== 'equip') return; const q = Math.max(0, Math.min(maxQ(BY[id]), parseInt(n, 10) || 0)); if (q) s.e[id] = q; });
+      if (s.a.length) { const ok = new Set(D.items.filter(i => i.cat === 'attachment' && (!i.for || i.for === s.p)).map(i => i.id)); s.a = s.p ? s.a.filter(id => ok.has(id)) : []; }
       return s;
     }
+    function fromPreset(p) {
+      const s = empty();
+      s.k = p.track || '';
+      SK.forEach(k => { if (p[k]) s[k] = p[k]; });
+      s.a = (p.a || []).slice(); s.e = Object.assign({}, p.e || {});
+      return s;
+    }
+    function url(s) { const q = encode(s); return location.origin + location.pathname + (q ? '?' + q : ''); }
     function save() {
       const qs = encode();
       try { localStorage.setItem(KEY, qs); } catch (e) {}
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
-      el('loLink').value = location.origin + location.pathname + (qs ? '?' + qs : '');
+      el('loLink').value = url();
     }
-    function update(full) { if (full) renderInputs(); renderSum(); save(); }
+    function update(full) { if (full) renderInputs(); else renderMeta(); renderSum(); save(); }
+    // ---- gespeicherte Loadouts
+    function store() { try { const x = JSON.parse(localStorage.getItem(SKEY) || '{}'); return { kits: Array.isArray(x.kits) ? x.kits : [], budget: x.budget || '' }; } catch (e) { return { kits: [], budget: '' }; } }
+    function putStore(x) { try { localStorage.setItem(SKEY, JSON.stringify(x)); } catch (e) {} }
+    function renderSaved() {
+      const kits = store().kits;
+      el('loSavedList').innerHTML = kits.length ? kits.map((k, ix) => {
+        const c = totals(decode(k.q));
+        return `<li><span><b>${esc(k.n)}</b><small>${money(c.cost)}${c.wn ? ' · ' + kg(c.w) : ''}</small></span><button type="button" class="fbt-btn ghost" data-load="${ix}">${esc(t('tLoad'))}</button><button type="button" class="fbt-btn ghost" data-del="${ix}" aria-label="${esc(t('tDelete'))}: ${esc(k.n)}">✕</button></li>`;
+      }).join('') : `<li class="fbt-sub">${esc(t('tSavedNone'))}</li>`;
+    }
+    el('loSave').addEventListener('click', () => {
+      const x = store();
+      const name = (el('loSaveName').value.trim() || t('tUntitled') + ' ' + (x.kits.length + 1)).slice(0, 40);
+      const ix = x.kits.findIndex(k => k.n === name);
+      if (ix < 0 && x.kits.length >= MAXKITS) { msg.textContent = t('tSavedMax'); return; }
+      if (ix >= 0) x.kits[ix].q = encode(); else x.kits.push({ n: name, q: encode() });
+      putStore(x); el('loSaveName').value = ''; msg.textContent = t('tSavedOk', { n: name }); renderSaved();
+    });
+    el('loSavedList').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      const x = store();
+      if (b.dataset.load !== undefined) { const k = x.kits[+b.dataset.load]; if (k) { st = decode(k.q); msg.textContent = ''; update(true); } }
+      else if (b.dataset.del !== undefined) { x.kits.splice(+b.dataset.del, 1); putStore(x); renderSaved(); }
+    });
+    // ---- Events
     selK.addEventListener('change', () => { st.k = selK.value; update(true); });
-    selP.addEventListener('change', () => { st.p = selP.value; update(true); });
-    [[selS, 's'], [selV, 'v'], [selH, 'h'], [selB, 'b']].forEach(([s, k]) => s.addEventListener('change', () => { st[k] = s.value; update(false); }));
-    attBox.addEventListener('change', e => { st.a = [...attBox.querySelectorAll('input:checked')].map(x => x.value); update(false); });
-    eqBox.addEventListener('input', e => {
-      const inp = e.target.closest('input[data-id]'); if (!inp) return;
-      const n = Math.max(0, Math.min(9, parseInt(inp.value, 10) || 0));
-      if (n) st.e[inp.dataset.id] = n; else delete st.e[inp.dataset.id];
+    SK.forEach(k => el(SLOTS[k][0]).addEventListener('change', e => { st[k] = e.target.value; update(k === 'p'); }));
+    attBox.addEventListener('click', e => {
+      const b = e.target.closest('[data-att]'); if (!b) return;
+      const id = b.dataset.att, on = st.a.includes(id);
+      st.a = on ? st.a.filter(x => x !== id) : st.a.concat(id);
+      b.setAttribute('aria-pressed', String(!on));
       update(false);
     });
-    el('loReset').addEventListener('click', () => { st = decode(''); msg.textContent = ''; update(true); });
+    eqBox.addEventListener('click', e => {
+      const b = e.target.closest('[data-eq]'); if (!b) return;
+      const i = BY[b.dataset.eq], n = Math.max(0, Math.min(maxQ(i), (st.e[i.id] || 0) + (+b.dataset.d)));
+      if (n) st.e[i.id] = n; else delete st.e[i.id];
+      const row = b.closest('.lo-eq');
+      row.querySelector('output').textContent = n; row.classList.toggle('on', n > 0);
+      row.querySelector('[data-d="-1"]').disabled = !n; row.querySelector('[data-d="1"]').disabled = n >= maxQ(i);
+      const g = row.closest('details'), cnt = EQ.filter(x => x.type === i.type).reduce((x, y) => x + (st.e[y.id] || 0), 0);
+      g.querySelector('.lo-eqcnt').textContent = cnt || '';
+      update(false);
+    });
+    el('loPresets').addEventListener('click', e => {
+      const b = e.target.closest('[data-preset]'); if (!b) return;
+      const p = PRESETS.find(x => x.id === b.dataset.preset); if (!p) return;
+      st = fromPreset(p); msg.textContent = t('tPresetApplied', { n: p.name }); update(true);
+    });
+    budgetIn.addEventListener('input', () => { const x = store(); x.budget = budgetIn.value; putStore(x); renderSum(); });
+    baseBtn.addEventListener('click', () => {
+      base = base ? null : JSON.parse(JSON.stringify(st));
+      baseBtn.setAttribute('aria-pressed', String(!!base));
+      baseBtn.textContent = t(base ? 'tCompareOn' : 'tCompareBase');
+      msg.textContent = base ? t('tBaseSet') : '';
+      renderSum();
+    });
+    el('loReset').addEventListener('click', () => { st = empty(); msg.textContent = ''; update(true); });
     el('loShare').addEventListener('click', async () => {
-      const url = location.origin + location.pathname + (encode() ? '?' + encode() : '');
-      try { await navigator.clipboard.writeText(url); msg.textContent = t('tCopied'); }
-      catch (e) { msg.textContent = url; }
-      el('loLink').value = url;
+      const u = url();
+      el('loLink').value = u;
+      try { await navigator.clipboard.writeText(u); msg.textContent = t('tCopied'); }
+      catch (e) { el('loLink').focus(); el('loLink').select(); msg.textContent = ''; }
     });
     let stored = '';
     try { stored = localStorage.getItem(KEY) || ''; } catch (e) {}
     st = decode(location.search.length > 1 ? location.search : stored);
-    update(true);
-    hooks.push(() => { renderInputs(); renderSum(); });
+    budgetIn.value = store().budget || '';
+    renderPresets(); renderSaved(); update(true);
+    hooks.push(() => { renderPresets(); renderInputs(); renderSum(); renderSaved(); baseBtn.textContent = t(base ? 'tCompareOn' : 'tCompareBase'); });
   })();
 
   // ======================================================== Tierlist
@@ -274,121 +419,4 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     hooks.push(render);
   })();
 
-  // ======================================================== Ballistik
-  (function bal() {
-    const root = $('#baRoot');
-    if (!root) return;
-    const el = id => document.getElementById(id);
-    const f = { dmg: el('baDmg'), rpm: el('baRpm'), hp: el('baHp'), armor: el('baArmor'), apct: el('baArmorPct'), zone: el('baZone'), dist: el('baDist'), fs: el('baFs'), fe: el('baFe'), fmin: el('baFmin') };
-    const item = el('baItem'), out = el('baOut');
-    // Presets nur für Waffen mit belegtem Schaden UND Feuerrate
-    const W = D.items.filter(i => i.cat === 'weapon');
-    function fillItems() {
-      const ok = W.filter(i => has(i, 'dmg') && has(i, 'rpm'));
-      item.innerHTML = `<option value="">${esc(t('tCustom'))}</option>` +
-        (ok.length ? `<optgroup label="${esc(t('tSourced'))}">${ok.map(i => `<option value="${i.id}">${esc(i.name)}</option>`).join('')}</optgroup>` : '') +
-        `<optgroup label="${esc(t('tMissing'))}">${W.filter(i => !ok.includes(i)).map(i => `<option value="${i.id}" disabled>${esc(i.name)}</option>`).join('')}</optgroup>`;
-    }
-    const armors = D.items.filter(i => i.slot === 'vest' && has(i, 'dr'));
-    function fillArmor() {
-      const cur = f.armor.value;
-      f.armor.innerHTML = `<option value="0">${esc(t('tArmorNone'))}</option>` + armors.map(i => `<option value="${i.id}">${esc(i.name)} – ${i.dr.v} %</option>`).join('') + `<option value="custom">${esc(t('tArmorCustom'))}</option>`;
-      if (cur) f.armor.value = cur;
-    }
-    const n = x => { const v = parseFloat(String(x.value).replace(',', '.')); return isFinite(v) ? v : NaN; };
-    function drPct() {
-      const a = f.armor.value;
-      if (a === 'custom') return Math.max(0, Math.min(100, n(f.apct) || 0));
-      return a && BY[a] ? BY[a].dr.v : 0;
-    }
-    function mult(d, fs, fe, fmin) {
-      if (!(fe > fs)) return d > fs && fe === fs ? fmin : 1;
-      if (d <= fs) return 1;
-      if (d >= fe) return fmin;
-      return 1 - (1 - fmin) * (d - fs) / (fe - fs);
-    }
-    function calc(d) {
-      const dmg = n(f.dmg), rpm = n(f.rpm), hp = n(f.hp), zone = isNaN(n(f.zone)) ? 1 : n(f.zone);
-      const fs = isNaN(n(f.fs)) ? 0 : n(f.fs), fe = isNaN(n(f.fe)) ? fs : n(f.fe), fmin = (isNaN(n(f.fmin)) ? 100 : n(f.fmin)) / 100;
-      const hasFall = !isNaN(n(f.fs)) && f.fs.value !== '';
-      const m = hasFall ? mult(d, fs, fe, fmin) : 1;
-      const eff = dmg * zone * m * (1 - drPct() / 100);
-      if (!(eff > 0)) return { eff: 0, shots: Infinity, ttk: Infinity, m };
-      const shots = Math.ceil(hp / eff - 1e-9);
-      return { eff, shots, ttk: (shots - 1) * 60000 / rpm, m };
-    }
-    function render() {
-      f.apct.closest('.fbt-field').hidden = f.armor.value !== 'custom';
-      const dmg = n(f.dmg), rpm = n(f.rpm), hp = n(f.hp);
-      if (!(dmg > 0 && rpm > 0 && hp > 0)) { out.innerHTML = `<p class="fbt-sub">${esc(t('tBalInvalid'))}</p>`; return; }
-      const d = isNaN(n(f.dist)) ? 0 : n(f.dist), r = calc(d);
-      const ttk = r => isFinite(r.ttk) ? Math.round(r.ttk) + ' ms' : '∞';
-      const steps = [0, 25, 50, 75, 100, 150, 200, 300];
-      out.innerHTML = `<div class="fbt-result">
-<div><span>${esc(t('tPerHit'))}</span><b id="baEff">${(Math.round(r.eff * 100) / 100).toLocaleString('de-DE')}</b></div>
-<div><span>${esc(t('tShots'))}</span><b id="baShots">${isFinite(r.shots) ? r.shots : '∞'}</b></div>
-<div><span>${esc(t('tTtk'))}</span><b id="baTtk">${ttk(r)}</b></div></div>
-<p class="fbt-sub">${esc(t('tBalFormula'))}</p>
-<div class="fb-tablewrap"><table class="fbt-kv"><thead><tr><th>${esc(t('tDist'))}</th><th>${esc(t('tFalloffMult'))}</th><th>${esc(t('tShots'))}</th><th>${esc(t('tTtk'))}</th></tr></thead><tbody>
-${steps.map(s => { const x = calc(s); return `<tr><td>${s} m</td><td>${Math.round(x.m * 100)} %</td><td>${isFinite(x.shots) ? x.shots : '∞'}</td><td>${ttk(x)}</td></tr>`; }).join('')}</tbody></table></div>`;
-    }
-    item.addEventListener('change', () => {
-      const i = BY[item.value];
-      if (i && has(i, 'dmg') && has(i, 'rpm')) { f.dmg.value = i.dmg.v; f.rpm.value = i.rpm.v; }
-      render();
-    });
-    Object.values(f).forEach(x => x.addEventListener('input', render));
-    el('baExample').addEventListener('click', () => {
-      item.value = ''; f.dmg.value = 40; f.rpm.value = 600; f.hp.value = 100; f.armor.value = 'l3armor'; f.zone.value = 1;
-      f.dist.value = 0; f.fs.value = ''; f.fe.value = ''; f.fmin.value = '';
-      render();
-    });
-    fillItems(); fillArmor(); render();
-    hooks.push(() => { const a = f.armor.value, it = item.value; fillItems(); fillArmor(); f.armor.value = a; item.value = it; render(); });
-  })();
-
-  // ======================================================== Patchnote-Vergleich
-  (function pn() {
-    const root = $('#pnRoot');
-    if (!root) return;
-    const P = D.patches.slice().sort((a, b) => a.date.localeCompare(b.date));
-    const from = $('#pnFrom'), to = $('#pnTo'), q = $('#pnQ'), chips = $('#pnCats'), diff = $('#pnDiff'), list = $('#pnList');
-    let cat = 'alle';
-    const label = p => `${p.version} – ${p.date.slice(8, 10)}.${p.date.slice(5, 7)}.${p.date.slice(0, 4)}`;
-    function fillSel() {
-      const fv = from.value, tv = to.value;
-      from.innerHTML = `<option value="-1">${esc(t('tStart'))}</option>` + P.map((p, i) => `<option value="${i}">${esc(label(p))}</option>`).join('');
-      to.innerHTML = P.map((p, i) => `<option value="${i}">${esc(label(p))}</option>`).join('');
-      from.value = fv !== '' ? fv : String(P.length - 2);
-      to.value = tv !== '' ? tv : String(P.length - 1);
-    }
-    const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    const match = c => (cat === 'alle' || c.cat === cat) && (!q.value.trim() || norm(c.text + ' ' + D.patchCats[c.cat]).includes(norm(q.value.trim())));
-    const orig = p => `<a href="${esc(D.sources[p.src].url)}" target="_blank" rel="noopener noreferrer">${esc(t('tOriginal'))}</a>`;
-    function render() {
-      const a = parseInt(from.value, 10), b = parseInt(to.value, 10);
-      if (!(b > a)) { diff.innerHTML = `<p class="fbt-sub" id="pnInvalid">${esc(t('tPnInvalid'))}</p>`; }
-      else {
-        const range = P.slice(a + 1, b + 1);
-        const groups = {};
-        range.forEach(p => p.changes.filter(match).forEach(c => (groups[c.cat] = groups[c.cat] || []).push([p, c])));
-        const cats = Object.keys(D.patchCats).filter(k => groups[k]);
-        const total = cats.reduce((s, k) => s + groups[k].length, 0);
-        diff.innerHTML = `<p class="fbt-sub" id="pnSummary">${esc(t('tPnRange', { n: range.length, c: total }))}</p>` + (cats.map(k => `<section class="fbt-pncat" data-cat="${k}"><h3>${esc(D.patchCats[k])} <small>(${groups[k].length})</small></h3><ul>${groups[k].map(([p, c]) => `<li lang="de">${esc(c.text)} <small class="fbt-pnv">${esc(p.version)} · ${orig(p)}</small></li>`).join('')}</ul></section>`).join('') || `<p class="fbt-sub">${esc(t('tNone'))}</p>`);
-      }
-      list.innerHTML = P.slice().reverse().map(p => {
-        const cs = p.changes.filter(match);
-        return `<details class="fbt-pnitem"${cs.length ? '' : ' hidden'}><summary><b>${esc(p.title)}</b> <small>${esc(label(p))} · ${esc(t('tChanges', { n: cs.length }))}</small></summary><p lang="de">${esc(p.summary)}</p><ul>${cs.map(c => `<li lang="de"><span class="fbt-tag">${esc(D.patchCats[c.cat])}</span> ${esc(c.text)}</li>`).join('')}</ul><p>${orig(p)}</p></details>`;
-      }).join('');
-    }
-    chips.addEventListener('click', e => {
-      const b = e.target.closest('.fb-chip'); if (!b) return;
-      cat = b.dataset.c;
-      chips.querySelectorAll('.fb-chip').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
-      render();
-    });
-    [from, to, q].forEach(x => x.addEventListener('input', render));
-    fillSel(); render();
-    hooks.push(() => { fillSel(); render(); });
-  })();
 })();
