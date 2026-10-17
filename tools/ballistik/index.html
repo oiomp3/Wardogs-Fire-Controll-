@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ballistik- &amp; TTK-Rechner für WARDOGS · Frontbuch</title>
+<meta name="description" content="Schadensrechner für WARDOGS: Treffer bis zum Kill und Time-to-Kill aus Schaden, Feuerrate, Rüstung (offizielle Werte) und Schadensabfall berechnen.">
+<link rel="canonical" href="https://oiotv.de/tools/ballistik/">
+<meta property="og:site_name" content="Frontbuch">
+<meta property="og:title" content="Ballistik- &amp; TTK-Rechner für WARDOGS · Frontbuch">
+<meta property="og:description" content="Schadensrechner für WARDOGS: Treffer bis zum Kill und Time-to-Kill aus Schaden, Feuerrate, Rüstung (offizielle Werte) und Schadensabfall berechnen.">
+<meta property="og:url" content="https://oiotv.de/tools/ballistik/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://oiotv.de/icon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/icon-192.png" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Frontbuch">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="stylesheet" href="/assets/site.css?v=12">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Frontbuch Ballistik-Rechner", "url": "https://oiotv.de/tools/ballistik/", "description": "Schadensrechner für WARDOGS: Treffer bis zum Kill und Time-to-Kill aus Schaden, Feuerrate, Rüstung (offizielle Werte) und Schadensabfall berechnen.", "applicationCategory": "GameApplication", "operatingSystem": "Web", "inLanguage": "de", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#mainContent" data-i18n="skip">Zum Inhalt springen</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="gbS"><rect width="60" height="30"/></clipPath>
+    <clipPath id="gbT"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+  </defs>
+  <symbol id="flag-de" viewBox="0 0 5 3" preserveAspectRatio="none">
+    <rect width="5" height="3" fill="#000"/><rect y="1" width="5" height="2" fill="#DD0000"/><rect y="2" width="5" height="1" fill="#FFCE00"/>
+  </symbol>
+  <symbol id="flag-gb" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+    <g clip-path="url(#gbS)">
+      <rect width="60" height="30" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#gbT)" stroke="#C8102E" stroke-width="4"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+    </g>
+  </symbol>
+  <symbol id="flag-es" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/>
+  </symbol>
+  <symbol id="flag-fr" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="1" height="2" fill="#002654"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE1126"/>
+  </symbol>
+</svg>
+<header class="fb-top" id="siteHeader">
+<button type="button" class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
+<a class="fb-brand" href="/"><b>Frontbuch</b><small data-i18n="siteSub">Guides &amp; Tools für WARDOGS</small></a>
+<nav class="fb-nav" aria-label="Hauptnavigation" data-i18n-aria="mainNav"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/tools/" data-i18n="navTools" aria-current="page">Tools</a><a href="/rechner/" data-i18n="navCalc">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/neu/" data-i18n="navNews">Was ist neu</a></nav>
+<button type="button" class="share-head-btn" id="shareHeadBtn" aria-label="Seite teilen" data-i18n-aria="share" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class=""><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
+<div class="lang" id="langWrap">
+  <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Sprache wählen: Deutsch">
+    <svg class="flag" aria-hidden="true" focusable="false"><use id="langBtnFlag" href="#flag-de"/></svg><span class="lang-chev" aria-hidden="true">▾</span>
+  </button>
+  <ul class="lang-list" id="langList" role="listbox" aria-label="Sprache wählen" hidden>
+    <li role="option" id="lang-de" data-lang="de" tabindex="-1" aria-selected="true" lang="de"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-de"/></svg><span>Deutsch</span></li>
+    <li role="option" id="lang-en" data-lang="en" tabindex="-1" aria-selected="false" lang="en"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-gb"/></svg><span>English</span></li>
+    <li role="option" id="lang-es" data-lang="es" tabindex="-1" aria-selected="false" lang="es"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-es"/></svg><span>Español</span></li>
+    <li role="option" id="lang-fr" data-lang="fr" tabindex="-1" aria-selected="false" lang="fr"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-fr"/></svg><span>Français</span></li>
+  </ul>
+</div>
+</header>
+<main id="mainContent" class="fb-main">
+<div class="fbt"><nav class="fb-crumbs" aria-label="Brotkrumen-Navigation" data-i18n-aria="crumbLabel"><ol><li><a href="/" data-i18n="crumbHome">Start</a></li><li><a href="/tools/" data-i18n="navTools">Tools</a></li><li aria-current="page" data-i18n="tBalT">Ballistik-Rechner</li></ol></nav><h1><span aria-hidden="true">🎯 </span><span data-i18n="tBalT">Ballistik-Rechner</span></h1><p class="fb-lead" data-i18n="tBalD">Treffer bis zum Kill und Time-to-Kill aus eigenen Werten berechnen.</p><p class="fbt-meta"><span data-i18n="tStand" data-i18n-n="17.10.2026">Stand: 17.10.2026</span> · <span data-i18n="tLegend">Legende: ⚠ = Community-Wert (unbestätigt) · [Q] = Quelle · „– unbekannt“ = kein belegter Wert</span></p><div class="fbt-note" lang="de"><p><strong>Wichtig:</strong> BULKHEAD veröffentlicht keine Schadenswerte pro Waffe. Deshalb sind alle Waffen-Vorlagen gesperrt, und du rechnest mit <strong>eigenen Werten</strong> (z. B. aus eigenen Tests). Belegt ist nur die Schadensreduktion der Rüstungen: Level 3 = 50 %, Level 4 = 60 % (offiziell, Season 2). Die Lebenspunkte (Standard 100) sind eine <strong>Annahme</strong>, kein offizieller Wert. Kopfschüsse, Helme und Durchschlag sind im vereinfachten Modell nicht abgebildet – nutze dafür den Trefferzonen-Faktor.</p></div>
+<div class="fbt-ba" id="baRoot">
+<div class="fbt-panel">
+<div class="fbt-field"><label for="baItem" data-i18n="tItem">Waffe (Vorlage)</label><select id="baItem"></select></div>
+<div class="fbt-row3"><div class="fbt-field"><label for="baDmg" data-i18n="tDmg">Schaden pro Treffer</label><input type="number" id="baDmg" inputmode="decimal" step="any" min="0" placeholder="z. B. 40"></div><div class="fbt-field"><label for="baRpm" data-i18n="tRpm">Feuerrate (RPM)</label><input type="number" id="baRpm" inputmode="decimal" step="any" min="0" placeholder="z. B. 600"></div><div class="fbt-field"><label for="baHp" data-i18n="tHp">Lebenspunkte des Ziels</label><input type="number" id="baHp" inputmode="decimal" step="any" min="0" placeholder="100" value="100"></div></div>
+<div class="fbt-row3"><div class="fbt-field"><label for="baArmor" data-i18n="tArmor">Rüstung</label><select id="baArmor"></select></div><div class="fbt-field"><label for="baArmorPct" data-i18n="tArmorPct">Schadensreduktion (%)</label><input type="number" id="baArmorPct" inputmode="decimal" step="any" min="0" placeholder="0" max="100"></div><div class="fbt-field"><label for="baZone" data-i18n="tZone">Trefferzonen-Faktor</label><input type="number" id="baZone" inputmode="decimal" step="any" min="0" placeholder="1" value="1"></div></div>
+<fieldset class="fbt-fs"><legend data-i18n="tFalloff">Schadensabfall (optional)</legend>
+<div class="fbt-row4"><div class="fbt-field"><label for="baDist" data-i18n="tDist">Distanz (m)</label><input type="number" id="baDist" inputmode="decimal" step="any" min="0" placeholder="0" value="0"></div><div class="fbt-field"><label for="baFs" data-i18n="tFs">Abfall ab (m)</label><input type="number" id="baFs" inputmode="decimal" step="any" min="0" placeholder="–"></div><div class="fbt-field"><label for="baFe" data-i18n="tFe">Abfall bis (m)</label><input type="number" id="baFe" inputmode="decimal" step="any" min="0" placeholder="–"></div><div class="fbt-field"><label for="baFmin" data-i18n="tFmin">Minimum (%)</label><input type="number" id="baFmin" inputmode="decimal" step="any" min="0" placeholder="100" max="100"></div></div></fieldset>
+<button type="button" class="fbt-btn ghost" id="baExample" data-i18n="tExample">Beispiel laden</button>
+</div>
+<div class="fbt-panel" id="baOut" aria-live="polite"></div>
+</div><section class="fb-sources"><h2 data-i18n="tSources">Quellen</h2><ol><li><a href="https://store.steampowered.com/news/app/1867240/view/1846651706674560" rel="noopener noreferrer" target="_blank">BULKHEAD: Season 02 Patch Notes (14.10.2026)</a></li></ol></section></div>
+</main>
+<footer class="fb-foot" id="siteFooter">
+<nav aria-label="Fußzeile"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/tools/" data-i18n="navTools" aria-current="page">Tools</a><a href="/rechner/" data-i18n="navCalc">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/glossar/" data-i18n="navGlossary">Glossar</a><a href="/faq/" data-i18n="navFaq">FAQ</a><a href="/neu/" data-i18n="navNews">Was ist neu</a><a href="/impressum/" data-i18n="navImpressum">Impressum</a><a href="/datenschutz/" data-i18n="navPrivacy">Datenschutz</a></nav>
+<p class="disc" data-i18n="fbFooter">Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.</p>
+<p data-i18n="fbFooterSmall">WARDOGS ist eine Marke der jeweiligen Rechteinhaber. Alle Angaben ohne Gewähr.</p>
+</footer>
+<section class="music-bar" id="musicBar" aria-label="Musik von cloudybeatz">
+  <div class="music-embed" id="musicEmbed">
+    <div id="musicHost"></div>
+    <div class="music-placeholder" id="musicPlaceholder"></div>
+    <div class="music-consent" id="musicConsent" hidden><p><span data-i18n="musicConsentText">♪ Musik von cloudybeatz – Beim Abspielen werden Daten an Spotify übertragen.</span> <a href="/datenschutz/#spotify" data-i18n="musicConsentPrivacy">Datenschutz</a></p><button type="button" id="musicConsentBtn" data-i18n="musicConsentBtn">Player laden</button></div>
+    <div class="music-cover" id="musicCoverPlus" aria-hidden="true" hidden></div>
+    <div class="music-cover" id="musicCoverMore" aria-hidden="true" hidden></div>
+  </div>
+  <p class="music-toast" id="musicToast" role="status" aria-live="polite" hidden></p>
+</section>
+<button type="button" class="music-fab" id="musicFab" aria-controls="musicBar" aria-expanded="true" aria-label="Musik von cloudybeatz anzeigen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+
+<div class="share-backdrop" id="shareBackdrop" hidden></div>
+<div class="share-pop" id="sharePop" role="dialog" aria-modal="true" aria-labelledby="sharePopTitle" hidden>
+  <div class="share-pop-head">
+    <h2 class="share-pop-title" id="sharePopTitle" data-i18n="share">Seite teilen</h2>
+    <button type="button" class="drawer-close" id="shareClose" aria-label="Schließen" data-i18n-aria="closeShare">✕</button>
+  </div>
+  <div class="share-url-row">
+    <input type="text" id="shareUrl" value="https://oiotv.de/" readonly aria-label="Link zur Seite" data-i18n-aria="pageLink">
+    <button type="button" id="shareCopy" data-i18n="copyLink">Link kopieren</button>
+  </div>
+  <p class="share-msg" id="shareMsg" role="status" aria-live="polite"></p>
+  <div class="share-via" data-i18n="shareVia">Teilen über</div>
+  <div class="share-links" id="shareLinks"></div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="drawer-head">
+    <h2 class="drawer-title" id="drawerTitle"><small data-i18n="menuLabel">Menü</small>Frontbuch</h2>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Menü schließen" data-i18n-aria="menuClose">✕</button>
+  </div>
+  <nav class="drawer-body" aria-label="Hauptmenü" data-i18n-aria="mainNav">
+    <a class="menu-item" href="/"><span class="mi-icon" aria-hidden="true">🏠</span><span data-i18n="navHome">Start</span></a><a class="menu-item" href="/guides/"><span class="mi-icon" aria-hidden="true">📚</span><span data-i18n="navGuides">Guides</span></a><a class="menu-item" href="/tools/" aria-current="page"><span class="mi-icon" aria-hidden="true">🧰</span><span data-i18n="navTools">Tools</span></a><a class="menu-item" href="/rechner/"><span class="mi-icon" aria-hidden="true">🎯</span><span data-i18n="navCalc">Mörser-Rechner</span></a><a class="menu-item" href="/slots/"><span class="mi-icon" aria-hidden="true">🎰</span><span data-i18n="navSlots">Slotmaschine</span></a><div class="drawer-sep" data-i18n="navMore">Mehr</div><a class="menu-item" href="/glossar/"><span class="mi-icon" aria-hidden="true">📖</span><span data-i18n="navGlossary">Glossar</span></a><a class="menu-item" href="/faq/"><span class="mi-icon" aria-hidden="true">❓</span><span data-i18n="navFaq">FAQ</span></a><a class="menu-item" href="/neu/"><span class="mi-icon" aria-hidden="true">🆕</span><span data-i18n="navNews">Was ist neu</span></a><div class="drawer-sep" data-i18n="navLegal">Rechtliches</div><a class="menu-item" href="/impressum/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navImpressum">Impressum</span></a><a class="menu-item" href="/datenschutz/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navPrivacy">Datenschutz</span></a>
+    <div class="drawer-sep" aria-hidden="true"></div>
+    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
+      <span class="mi-icon" aria-hidden="true">📲</span><span data-i18n="install">App installieren</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelInstall" role="region" aria-labelledby="miInstall" hidden>
+      <div id="installInstalled" hidden>
+        <p class="ok" data-i18n="installedOk">✓ Bereits installiert</p>
+        <p data-i18n="installedText">Du nutzt Frontbuch gerade als App.</p>
+      </div>
+      <div id="installPrompt" hidden>
+        <p data-i18n="installPromptText">Installiere Frontbuch als App.</p>
+        <button type="button" class="btn-install" id="installBtn" data-i18n="install">App installieren</button>
+      </div>
+      <div id="installManual" data-i18n-html="installManualHtml"></div>
+    </div>
+    <button type="button" class="menu-item" id="miAbout" aria-expanded="false" aria-controls="panelAbout">
+      <span class="mi-icon" aria-hidden="true">ℹ️</span><span data-i18n="about">Über / Hinweis</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" data-i18n-html="aboutHtml" hidden></div>
+    <button type="button" class="menu-item" id="miShare" aria-haspopup="dialog">
+      <span class="mi-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span><span data-i18n="share">Seite teilen</span>
+    </button>
+  </nav>
+  <div class="drawer-foot" data-i18n="footer">Inoffizielle Fan-Seite</div>
+</aside>
+<script src="/assets/site.js?v=12"></script>
+<script src="/assets/data.js?v=12"></script>
+<script src="/assets/tools.js?v=12"></script>
+</body>
+</html>

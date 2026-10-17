@@ -37,6 +37,17 @@
       ]
     },
     {
+      "name": "Tools",
+      "short_name": "Tools",
+      "url": "/tools/",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Guides",
       "short_name": "Guides",
       "url": "/guides/",

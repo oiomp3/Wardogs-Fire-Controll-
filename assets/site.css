@@ -988,3 +988,88 @@
   .fb-consent-box button { width: auto; margin: 0; padding: 10px 16px; font-size: .92rem; background: #1e293b; box-shadow: none; }
   .fb-consent-box button:hover { transform: none; box-shadow: none; background: #334155; }
   .fb-consent-box button:disabled { opacity: .5; cursor: default; }
+
+  /* ================= Tools ================= */
+  @media (min-width: 720px) { .fb-tiles { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .fb-tiles { grid-template-columns: 1.3fr 1fr 1fr 1fr; } .fbt-grid { grid-template-columns: repeat(4, 1fr); } }
+  .fbt-about { margin-top: 10px; }
+  .fbt-meta { font-size: .82rem; color: var(--muted); margin: 0 0 16px; }
+  .fbt-sub { font-size: .85rem; color: var(--muted); margin: 6px 0; }
+  .fbt-msg { font-size: .88rem; color: var(--orange); margin: 4px 0; min-height: 1px; }
+  .fbt-warn { color: var(--orange); margin-left: 3px; cursor: help; font-size: .9em; }
+  .fbt-unk { color: var(--muted); font-style: italic; white-space: nowrap; }
+  .fbt-src { font-size: .72rem; vertical-align: super; text-decoration: none; color: #93c5fd; margin-left: 2px; }
+  .fbt-note { padding: 12px 16px; border-radius: 14px; background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.35); margin: 0 0 16px; font-size: .9rem; }
+  .fbt-note p { margin: 0; }
+  .fbt-controls { display: grid; gap: 12px; grid-template-columns: 1fr; margin-bottom: 8px; }
+  @media (min-width: 720px) { .fbt-controls { grid-template-columns: 2fr 1fr 1fr; } }
+  .fbt-field { min-width: 0; margin-bottom: 12px; }
+  .fbt-field[hidden] { display: none; }
+  .fbt-field select, .fbt-field input { padding: 11px 12px; font-size: .95rem; }
+  .fbt-row3, .fbt-row4 { display: grid; gap: 0 12px; grid-template-columns: 1fr; }
+  @media (min-width: 560px) { .fbt-row3 { grid-template-columns: repeat(3, 1fr); } .fbt-row4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .fbt-row4 { grid-template-columns: repeat(4, 1fr); } }
+  .fbt-fs { border: 1px solid var(--card-border); border-radius: 14px; padding: 10px 14px 4px; margin: 0 0 14px; min-width: 0; }
+  .fbt-fs legend { font-size: .75rem; font-weight: 600; color: var(--muted); letter-spacing: .04em; padding: 0 6px; }
+  .fbt-panel { padding: 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--card-border); margin: 0 0 16px; min-width: 0; }
+  .fbt-panel[hidden] { display: none; }
+  .fbt-panel h2 { font-size: 1.15rem; margin: 0; }
+  .fbt-panel h3 { font-size: 1rem; margin: 14px 0 6px; }
+  .fbt-detail-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .fbt .fbt-btn { width: auto; margin: 0; padding: 10px 16px; font-size: .92rem; border-radius: 12px; }
+  .fbt .fbt-btn.ghost { background: #1e293b; box-shadow: none; }
+  .fbt .fbt-btn.ghost:hover { background: #334155; box-shadow: none; }
+  .fbt .fbt-btn:hover { transform: none; }
+  .fbt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 12px; }
+  .fbt input[type="checkbox"] { width: 18px; height: 18px; padding: 0; margin: 0; accent-color: var(--accent); flex: none; }
+  .fbt-table, .fbt-kv, .fbt-cmp-table { width: 100%; border-collapse: collapse; font-size: .88rem; background: var(--card); }
+  .fbt-table th, .fbt-table td, .fbt-kv th, .fbt-kv td, .fbt-cmp-table th, .fbt-cmp-table td { padding: 8px 10px; border-bottom: 1px solid var(--card-border); text-align: left; vertical-align: top; }
+  .fbt-table thead th, .fbt-cmp-table thead th, .fbt-kv thead th { background: #0e131b; position: sticky; top: 0; white-space: nowrap; }
+  .fbt-kv th[scope="row"], .fbt-cmp-table th[scope="row"] { color: var(--muted); font-weight: 600; width: 40%; }
+  .fbt-table td small { display: block; color: var(--muted); font-size: .76rem; }
+  .fbt-table td:first-child, .fbt-table th:first-child { width: 36px; text-align: center; }
+  .fbt .fbt-sort { width: auto; margin: 0; padding: 0; background: none; box-shadow: none; color: var(--text); font-size: .85rem; font-weight: 700; border-radius: 0; }
+  .fbt .fbt-sort:hover { transform: none; box-shadow: none; color: #93c5fd; }
+  th[aria-sort="ascending"] .fbt-sort::after { content: " ▲"; color: var(--accent); }
+  th[aria-sort="descending"] .fbt-sort::after { content: " ▼"; color: var(--accent); }
+  .fbt .fbt-link { width: auto; margin: 0; padding: 0; background: none; box-shadow: none; color: #93c5fd; font-size: .9rem; font-weight: 600; text-align: left; border-radius: 0; text-decoration: underline; text-underline-offset: 2px; }
+  .fbt .fbt-link:hover { transform: none; box-shadow: none; color: #bfdbfe; }
+  .fbt-srclist { margin: 0; padding-left: 18px; font-size: .85rem; }
+  .fbt-lo { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .fbt-lo { grid-template-columns: 1.4fr 1fr; align-items: start; } .fbt-lo-sum { position: sticky; top: 84px; } }
+  .fbt-checks { display: grid; gap: 6px; grid-template-columns: 1fr; padding-bottom: 8px; }
+  .fbt-check { display: flex; gap: 10px; align-items: flex-start; font-size: .9rem; color: var(--text); font-weight: 500; letter-spacing: 0; margin: 0; cursor: pointer; }
+  .fbt-check small, .fbt-qty small { color: var(--muted); display: block; font-size: .76rem; }
+  .fbt-qtys { display: grid; gap: 6px 14px; grid-template-columns: 1fr; padding-bottom: 8px; }
+  @media (min-width: 560px) { .fbt-qtys, .fbt-checks { grid-template-columns: 1fr 1fr; } }
+  .fbt-qty { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; color: var(--text); font-size: .88rem; font-weight: 500; letter-spacing: 0; }
+  .fbt-qty input { width: 64px; flex: none; padding: 7px 8px; text-align: center; }
+  .fbt-total { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 12px 0 2px; }
+  .fbt-total b { font-size: 1.5rem; color: var(--green); }
+  .fbt-total.small b { font-size: 1.05rem; color: var(--text); }
+  .fbt-tierclass { margin: 0 0 22px; }
+  .fbt-tierclass h2 { font-size: 1.2rem; margin: 0 0 8px; }
+  .fbt-tierrow { display: flex; gap: 10px; align-items: stretch; margin-bottom: 8px; }
+  .fbt-tier { flex: none; width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; color: #0b1220; }
+  .t-S { background: #f87171; } .t-A { background: #fb923c; } .t-B { background: #facc15; } .t-C { background: #86efac; } .t-x { background: #94a3b8; }
+  .fbt-tieritems { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+  .fbt-tieritem { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 8px 12px; flex: 1 1 220px; }
+  .fbt-tieritem summary { cursor: pointer; font-weight: 700; }
+  .fbt-tieritem p { margin: 6px 0; font-size: .88rem; color: #cbd5e1; }
+  .fbt-tieritem a { font-size: .82rem; }
+  .fbt-badge { font-size: .68rem; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: rgba(245,158,11,.18); color: var(--orange); vertical-align: middle; }
+  .fbt-ba { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .fbt-ba { grid-template-columns: 1.3fr 1fr; align-items: start; } }
+  .fbt-result { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
+  .fbt-result div { background: #0c1017; border-radius: 12px; padding: 10px; text-align: center; }
+  .fbt-result span { display: block; font-size: .72rem; color: var(--muted); }
+  .fbt-result b { font-size: 1.35rem; color: var(--green); }
+  .fbt-pncat h3 { font-size: 1rem; margin: 14px 0 6px; }
+  .fbt-pncat ul, .fbt-pnitem ul { margin: 0; padding-left: 18px; }
+  .fbt-pncat li, .fbt-pnitem li { margin: 4px 0; font-size: .92rem; }
+  .fbt-pnv { color: var(--muted); white-space: nowrap; }
+  .fbt-pnitem { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; }
+  .fbt-pnitem summary { cursor: pointer; }
+  .fbt-pnitem summary small { color: var(--muted); }
+  .fbt-tag { font-size: .7rem; padding: 2px 7px; border-radius: 999px; background: #1e293b; color: #cbd5e1; white-space: nowrap; }
+  .fbt button, .fbt select, .fbt input { font-family: inherit; }
