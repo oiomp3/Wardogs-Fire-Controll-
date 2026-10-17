@@ -641,7 +641,7 @@
     opacity: 0;
     pointer-events: none;
   }
-  .music-bar[hidden], .music-fab[hidden], .music-placeholder[hidden], .music-toast[hidden], .music-share[hidden] { display: none; }
+  .music-bar[hidden], .music-fab[hidden], .music-placeholder[hidden], .music-toast[hidden], .music-cover[hidden] { display: none; }
   .music-embed { position: relative; height: 80px; border-radius: 12px; overflow: hidden; }
   .music-embed iframe { display: block; border: 0; border-radius: 12px; }
   .music-placeholder {
@@ -656,27 +656,19 @@
     color: #a1a1aa;
     background: #282828;
   }
-  .music-share {
+  .music-cover {
     position: absolute;
     top: 46px;
-    right: 98px;
     z-index: 2;
     width: 28px;
     height: 28px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 50%;
     background: var(--music-bg, #282828);
-    color: #fff;
-    box-shadow: none;
+    pointer-events: auto; /* blockiert Klicks auf „+“ bzw. „…“ im Spotify-Player */
+    cursor: default;
     transition: background 0.3s;
   }
-  .music-share:hover { transform: none; box-shadow: none; filter: brightness(1.15); }
-  .music-share svg { width: 20px; height: 20px; display: block; }
-  .music-share:focus-visible, .music-fab:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 2px; }
+  .music-fab:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 2px; }
   .music-toast {
     position: absolute;
     left: 50%;
@@ -788,7 +780,8 @@
   <div class="music-embed" id="musicEmbed">
     <div id="musicHost"></div>
     <div class="music-placeholder" id="musicPlaceholder"></div>
-    <button type="button" class="music-share" id="musicShare" aria-label="Seite teilen" aria-haspopup="dialog" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
+    <div class="music-cover" id="musicCoverPlus" aria-hidden="true" hidden></div>
+    <div class="music-cover" id="musicCoverMore" aria-hidden="true" hidden></div>
   </div>
   <p class="music-toast" id="musicToast" role="status" aria-live="polite" hidden></p>
 </section>
@@ -2057,7 +2050,7 @@ const MUSIC = {
   const host = document.getElementById('musicHost');
   const placeholder = document.getElementById('musicPlaceholder');
   const toast = document.getElementById('musicToast');
-  const shareBtn = document.getElementById('musicShare');
+  const covers = [document.getElementById('musicCoverPlus'), document.getElementById('musicCoverMore')];
   const n = MUSIC.tracks.length;
 
   let idx = 0;
@@ -2085,7 +2078,6 @@ const MUSIC = {
   function renderMusic() {
     bar.setAttribute('aria-label', t('musicBy', { name: MUSIC.name }));
     fab.setAttribute('aria-label', t('musicShow', { name: MUSIC.name }));
-    shareBtn.setAttribute('aria-label', t('share'));
     fab.classList.toggle('playing', isPlaying);
     const f = bar.querySelector('iframe');
     if (f) f.title = t('musicBy', { name: MUSIC.name });
@@ -2094,20 +2086,25 @@ const MUSIC = {
   }
   window.renderMusic = renderMusic;
 
-  // ----- Teilen-Button exakt über dem „+“ des Spotify-Players -----
+  // ----- Abdeckungen über „+“ und „…“ des Spotify-Players (fremder iframe) -----
   function placeShare() {
     const w = bar.clientWidth;
-    // Spotify-Layout (gemessen): „+“ 24×24 bei top 48, Abstand rechts 100 px (ab 360 px Breite) bzw. 84 px
-    const right = w >= 360 ? 100 : 84;
-    shareBtn.style.right = (right - 2) + 'px';
-    shareBtn.style.setProperty('--music-bg', MUSIC.colors[MUSIC.tracks[idx]] || '#282828');
+    // Spotify-Layout (gemessen): beide Buttons 24×24 bei top 48;
+    // Abstand rechts ab 360 px Breite: „+“ 100 px, „…“ 60 px; darunter 84 px bzw. 52 px
+    const wide = w >= 360;
+    const rights = wide ? [100, 60] : [84, 52];
+    const bg = MUSIC.colors[MUSIC.tracks[idx]] || '#282828';
+    covers.forEach((c, k) => {
+      c.style.right = (rights[k] - 2) + 'px';
+      c.style.setProperty('--music-bg', bg);
+    });
   }
 
   function showPlaceholder(key) {
     phKey = key;
     placeholder.textContent = t(key);
     placeholder.hidden = false;
-    shareBtn.hidden = true;
+    covers.forEach(c => c.hidden = true);
   }
 
   // ----- Auto-Einklappen -----
@@ -2141,8 +2138,7 @@ const MUSIC = {
     fab.tabIndex = -1;
     placeShare();
     ensureApi();
-    if (focusPlayer && !shareBtn.hidden) shareBtn.focus({ preventScroll: true });
-    else if (document.activeElement === fab) fab.blur();
+    if (document.activeElement === fab) fab.blur();
     scheduleCollapse();
   }
   function interact() { if (!collapsed) scheduleCollapse(); }
@@ -2164,7 +2160,7 @@ const MUSIC = {
     if (!bar.contains(e.target) && !fab.contains(e.target)) collapse();
   });
   fab.addEventListener('click', (e) => expand(e.detail === 0)); // Fokus nur bei Tastaturbedienung verschieben
-  shareBtn.addEventListener('click', () => { if (window.fcShare) window.fcShare(shareBtn); });
+  covers.forEach(c => c.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); }));
 
   // ----- Hinweis-Toast (strenge Autoplay-Regeln) -----
   function showToast(show) {
@@ -2181,7 +2177,7 @@ const MUSIC = {
   // ----- Spotify iFrame API -----
   function onReady() {
     placeholder.hidden = true;
-    shareBtn.hidden = false;
+    covers.forEach(c => c.hidden = false);
     placeShare();
     renderMusic();
     if (pendingPlay) {
@@ -2228,6 +2224,7 @@ const MUSIC = {
     setTimeout(() => { advancing = false; }, 1200);
   }
   window.fcMusicNext = () => go(idx + 1, true);
+  window.fcMusicGo = (i) => go(i, false);
 
   function ensureApi() {
     if (apiRequested) return;
