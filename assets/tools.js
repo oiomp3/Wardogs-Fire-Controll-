@@ -100,7 +100,7 @@
     function openDetail(id) {
       const i = BY[id];
       if (!i) return;
-      const srcs = [...new Set(FIELD_ORDER.filter(f => has(i, f)).map(f => i[f].s))];
+      const srcs = [...new Set(FIELD_ORDER.filter(f => has(i, f)).map(f => i[f].s))].filter(k => D.sources[k]);
       const compat = i.for && BY[i.for] ? `<p>${esc(t('tCompatOk'))}: <b>${esc(BY[i.for].name)}</b></p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
       const missing = FIELD_ORDER.filter(f => !has(i, f) && ['track', 'level', 'unlock', 'price'].includes(f)).map(f => D.fields[f]);
       detail.innerHTML = `<div class="fbt-detail-head"><h2 id="dbDetailH">${esc(i.name)}</h2><button type="button" class="fbt-btn ghost" id="dbDetailClose">${esc(t('tClose'))}</button></div>

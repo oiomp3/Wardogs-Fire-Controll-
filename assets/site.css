@@ -960,6 +960,13 @@
   .drawer a.menu-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
   .drawer-sep { margin: 10px 4px 4px; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
   .menu-panel a { color: #93c5fd; }
+  .drawer-grp { margin-top: 6px; }
+  .drawer .drawer-grp-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 0; padding: 12px 14px; border-radius: 12px; background: none; box-shadow: none; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; text-align: left; }
+  .drawer .drawer-grp-btn:hover { transform: none; box-shadow: none; background: rgba(255,255,255,0.04); color: var(--text); }
+  .drawer .drawer-grp-btn[aria-expanded="true"] { color: var(--text); }
+  .dg-chev { font-size: .9rem; letter-spacing: 0; transition: transform .15s; }
+  .drawer-grp-btn[aria-expanded="true"] .dg-chev { transform: rotate(180deg); }
+  .drawer-grp-body[hidden] { display: none; }
 
   /* Rechner- & Slot-Seite */
   .fb-calc { max-width: 540px; margin: 0 auto; }

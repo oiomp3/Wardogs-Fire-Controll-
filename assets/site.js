@@ -1506,6 +1506,13 @@ document.querySelectorAll('.fb-mail').forEach(el => {
   window.fbLangHooks.push(render);
 })();
 
+// ---------- Menü (Drawer): aufklappbare Gruppen ----------
+function fbDrawerGroup(btn, open) {
+  btn.setAttribute('aria-expanded', String(open));
+  document.getElementById(btn.getAttribute('aria-controls')).hidden = !open;
+}
+document.querySelectorAll('.drawer-grp-btn').forEach(b => b.addEventListener('click', () => fbDrawerGroup(b, b.getAttribute('aria-expanded') !== 'true')));
+
 // ---------- Desktop-Navigation: Gruppen (Tools / Mehr) ----------
 (function () {
   const groups = [...document.querySelectorAll('.nav-grp')];
@@ -1524,6 +1531,7 @@ document.querySelectorAll('.fb-mail').forEach(el => {
     closeAll();
     const mb = document.getElementById('menuBtn'), mi = document.getElementById('miInstall');
     if (!document.body.classList.contains('menu-open')) mb.click();
+    const gm = document.getElementById('dgb-more'); if (gm) fbDrawerGroup(gm, true);
     if (mi && mi.getAttribute('aria-expanded') !== 'true') mi.click();
   });
   if (ns) ns.addEventListener('click', () => { closeAll(); document.getElementById('shareHeadBtn').click(); });
