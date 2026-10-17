@@ -509,6 +509,118 @@
   .lang-list li[aria-selected="true"] { background: rgba(59,130,246,0.12); }
   .lang-list li[aria-selected="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
   .badge { max-width: calc(100% - 120px); }
+  /* ---------- Teilen ---------- */
+  .share-head-btn {
+    position: absolute;
+    top: 14px;
+    right: 81px;
+    z-index: 35;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18,24,34,0.85);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    color: var(--text);
+  }
+  .share-head-btn:hover { transform: none; background: #1e293b; box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+  .share-head-btn:focus-visible, .share-pop button:focus-visible, .share-pop a:focus-visible, .share-pop input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .share-head-btn svg, .menu-item .mi-svg { width: 20px; height: 20px; }
+  @media (min-width: 600px) {
+    .share-head-btn { display: flex; }
+  }
+  .menu-item .mi-svg { display: block; margin: 0 auto; color: var(--text); }
+  .share-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(2,4,8,0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .share-backdrop[hidden], .share-pop[hidden] { display: none; }
+  .share-pop {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 70;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 40%), var(--bg-elevated);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    animation: sharePopIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (min-width: 600px) {
+    .share-pop { top: 50%; bottom: auto; transform: translateY(-50%); animation-name: sharePopInCenter; }
+  }
+  @keyframes sharePopIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes sharePopInCenter { from { opacity: 0; transform: translateY(calc(-50% + 12px)); } to { opacity: 1; transform: translateY(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .share-pop { animation: none; } }
+  .share-pop-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .share-pop-title { margin: 0; font-size: 1.05rem; font-weight: 800; }
+  .share-url-row { display: flex; gap: 8px; }
+  .share-url-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 12px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .share-url-row button {
+    width: auto;
+    margin: 0;
+    padding: 0 14px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    border-radius: 12px;
+  }
+  .share-msg { min-height: 1.2em; margin: 6px 0 0; font-size: 0.78rem; color: var(--orange); }
+  .share-via {
+    margin: 12px 0 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .share-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+  }
+  .share-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .share-links a:hover { background: #1a2230; border-color: rgba(59,130,246,0.3); }
+  .share-links .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
 </style>
 
 </head>
@@ -555,6 +667,25 @@
   </ul>
 </div>
 
+<button type="button" class="share-head-btn" id="shareHeadBtn" aria-label="Seite teilen" data-i18n-aria="share" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class=""><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+</button>
+
+<div class="share-backdrop" id="shareBackdrop" hidden></div>
+<div class="share-pop" id="sharePop" role="dialog" aria-modal="true" aria-labelledby="sharePopTitle" hidden>
+  <div class="share-pop-head">
+    <h2 class="share-pop-title" id="sharePopTitle" data-i18n="share">Seite teilen</h2>
+    <button type="button" class="drawer-close" id="shareClose" aria-label="Schließen" data-i18n-aria="closeShare">✕</button>
+  </div>
+  <div class="share-url-row">
+    <input type="text" id="shareUrl" value="https://oiotv.de/" readonly aria-label="Link zur Seite" data-i18n-aria="pageLink">
+    <button type="button" id="shareCopy" data-i18n="copyLink">Link kopieren</button>
+  </div>
+  <p class="share-msg" id="shareMsg" role="status" aria-live="polite"></p>
+  <div class="share-via" data-i18n="shareVia">Teilen über</div>
+  <div class="share-links" id="shareLinks"></div>
+</div>
+
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
   <div class="drawer-head">
@@ -586,6 +717,10 @@
       <span class="mi-icon" aria-hidden="true">ℹ️</span><span data-i18n="about">Über / Hinweis</span><span class="mi-chev" aria-hidden="true">›</span>
     </button>
     <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" data-i18n-html="aboutHtml" hidden></div>
+
+    <button type="button" class="menu-item" id="miShare" aria-haspopup="dialog">
+      <span class="mi-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span><span data-i18n="share">Seite teilen</span>
+    </button>
   </nav>
   <div class="drawer-foot" data-i18n="footer">Community Tool · nicht offiziell</div>
 </aside>
@@ -997,6 +1132,58 @@ const I18N = {
       </ul>`
   }
 };
+const SHARE_I18N = {
+  de: {
+    share: 'Seite teilen',
+    shareText: 'WARDOGS Fire Control – Rechner für Distanz, Azimut und Mörser-Elevation (L81 & SPH-2).',
+    copyLink: 'Link kopieren',
+    linkCopied: '✓ Kopiert!',
+    copyLinkFail: 'Kopieren nicht möglich – Link bitte manuell kopieren.',
+    shareVia: 'Teilen über',
+    email: 'E-Mail',
+    closeShare: 'Teilen schließen',
+    pageLink: 'Link zur Seite',
+    newTab: 'öffnet in neuem Tab'
+  },
+  en: {
+    share: 'Share page',
+    shareText: 'WARDOGS Fire Control – calculator for distance, azimuth and mortar elevation (L81 & SPH-2).',
+    copyLink: 'Copy link',
+    linkCopied: '✓ Copied!',
+    copyLinkFail: 'Could not copy – please copy the link manually.',
+    shareVia: 'Share via',
+    email: 'Email',
+    closeShare: 'Close sharing',
+    pageLink: 'Page link',
+    newTab: 'opens in a new tab'
+  },
+  es: {
+    share: 'Compartir página',
+    shareText: 'WARDOGS Fire Control: calculadora de distancia, azimut y elevación del mortero (L81 y SPH-2).',
+    copyLink: 'Copiar enlace',
+    linkCopied: '✓ ¡Copiado!',
+    copyLinkFail: 'No se pudo copiar: copia el enlace manualmente.',
+    shareVia: 'Compartir en',
+    email: 'Correo',
+    closeShare: 'Cerrar compartir',
+    pageLink: 'Enlace de la página',
+    newTab: 'se abre en una pestaña nueva'
+  },
+  fr: {
+    share: 'Partager la page',
+    shareText: 'WARDOGS Fire Control – calculateur de distance, d\u2019azimut et d\u2019élévation pour le mortier (L81 & SPH-2).',
+    copyLink: 'Copier le lien',
+    linkCopied: '✓ Copié\u00a0!',
+    copyLinkFail: 'Impossible de copier – copiez le lien manuellement.',
+    shareVia: 'Partager via',
+    email: 'E-mail',
+    closeShare: 'Fermer le partage',
+    pageLink: 'Lien de la page',
+    newTab: 's\u2019ouvre dans un nouvel onglet'
+  }
+};
+Object.keys(SHARE_I18N).forEach(l => Object.assign(I18N[l], SHARE_I18N[l]));
+
 const LANGS = {
   de: { name: 'Deutsch', flag: 'flag-de' },
   en: { name: 'English', flag: 'flag-gb' },
@@ -1330,6 +1517,7 @@ function applyLang() {
 
   renderResult();
   renderHistory();
+  if (window.renderShare) window.renderShare();
 }
 
 function setLang(code) {
@@ -1427,7 +1615,7 @@ if ('serviceWorker' in navigator) {
   const closeBtn = document.getElementById('drawerClose');
   const main = document.getElementById('mainContent');
   const langWrap = document.getElementById('langWrap');
-  const items = Array.from(drawer.querySelectorAll('.menu-item'));
+  const items = Array.from(drawer.querySelectorAll('.menu-item[aria-controls]'));
   let lastFocus = null;
 
   function isOpen() { return document.body.classList.contains('menu-open'); }
@@ -1446,7 +1634,7 @@ if ('serviceWorker' in navigator) {
     setTimeout(() => closeBtn.focus(), 30);
   }
 
-  function closeMenu() {
+  function closeMenu(refocus) {
     if (!isOpen()) return;
     document.body.classList.remove('menu-open');
     btn.setAttribute('aria-expanded', 'false');
@@ -1454,8 +1642,10 @@ if ('serviceWorker' in navigator) {
     main.inert = false;
     btn.inert = false;
     langWrap.inert = false;
-    (lastFocus && document.contains(lastFocus) ? lastFocus : btn).focus();
+    if (refocus !== false) (lastFocus && document.contains(lastFocus) ? lastFocus : btn).focus();
   }
+
+  window.fcCloseMenu = closeMenu;
 
   btn.addEventListener('click', () => isOpen() ? closeMenu() : openMenu());
   closeBtn.addEventListener('click', closeMenu);
@@ -1527,6 +1717,146 @@ if ('serviceWorker' in navigator) {
   });
 
   updateInstallUI();
+})();
+
+// ---------- Seite teilen ----------
+(function () {
+  const SHARE_URL = 'https://oiotv.de/';
+  const SHARE_TITLE = 'WARDOGS · Fire Control';
+  const pop = document.getElementById('sharePop');
+  const backdrop = document.getElementById('shareBackdrop');
+  const closeBtn = document.getElementById('shareClose');
+  const copyBtn = document.getElementById('shareCopy');
+  const urlInput = document.getElementById('shareUrl');
+  const msg = document.getElementById('shareMsg');
+  const linksBox = document.getElementById('shareLinks');
+  const headBtn = document.getElementById('shareHeadBtn');
+  const menuItem = document.getElementById('miShare');
+  const menuBtn = document.getElementById('menuBtn');
+  const background = ['mainContent', 'menuBtn', 'langWrap', 'shareHeadBtn'].map(id => document.getElementById(id));
+  let returnFocus = null;
+  let copyTimer = null;
+
+  function shareLinks() {
+    const u = encodeURIComponent(SHARE_URL);
+    const text = t('shareText');
+    const tx = encodeURIComponent(text);
+    return [
+      { name: 'WhatsApp', color: '#25D366', href: 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + SHARE_URL) },
+      { name: 'Telegram', color: '#229ED9', href: 'https://t.me/share/url?url=' + u + '&text=' + tx },
+      { name: 'X', color: '#e7e9ea', href: 'https://x.com/intent/tweet?text=' + tx + '&url=' + u },
+      { name: 'Reddit', color: '#FF4500', href: 'https://www.reddit.com/submit?url=' + u + '&title=' + encodeURIComponent(SHARE_TITLE) },
+      { name: t('email'), color: '#94a3b8', href: 'mailto:?subject=' + encodeURIComponent(SHARE_TITLE) + '&body=' + encodeURIComponent(text + '\n\n' + SHARE_URL), mail: true }
+    ];
+  }
+
+  function renderShare() {
+    linksBox.innerHTML = shareLinks().map(l =>
+      `<a href="${escapeHtml(l.href)}"${l.mail ? '' : ' target="_blank" rel="noopener noreferrer"'} aria-label="${escapeHtml(l.name + (l.mail ? '' : ' (' + t('newTab') + ')'))}"><span class="dot" style="background:${l.color}" aria-hidden="true"></span>${escapeHtml(l.name)}</a>`
+    ).join('');
+    if (!copyTimer) copyBtn.textContent = t('copyLink');
+  }
+  window.renderShare = renderShare;
+
+  function isOpen() { return !pop.hidden; }
+
+  function openPop(from) {
+    returnFocus = from || document.activeElement;
+    renderShare();
+    msg.textContent = '';
+    pop.hidden = false;
+    backdrop.hidden = false;
+    document.body.classList.add('share-open');
+    document.body.style.overflow = 'hidden';
+    background.forEach(el => el && (el.inert = true));
+    setTimeout(() => copyBtn.focus(), 30);
+  }
+
+  function closePop() {
+    if (!isOpen()) return;
+    pop.hidden = true;
+    backdrop.hidden = true;
+    document.body.classList.remove('share-open');
+    document.body.style.overflow = '';
+    background.forEach(el => el && (el.inert = false));
+    const target = (returnFocus && document.contains(returnFocus) && returnFocus.offsetParent !== null) ? returnFocus : menuBtn;
+    target.focus();
+  }
+
+  async function share(from) {
+    if (navigator.share) {
+      const refocus = () => { if (from && document.contains(from) && from.offsetParent !== null) from.focus(); };
+      try {
+        await navigator.share({ title: SHARE_TITLE, text: t('shareText'), url: SHARE_URL });
+        refocus();
+        return;
+      } catch (e) {
+        if (e && e.name === 'AbortError') { refocus(); return; }
+      }
+    }
+    openPop(from);
+  }
+
+  function copied() {
+    copyBtn.textContent = t('linkCopied');
+    msg.textContent = '';
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => { copyTimer = null; copyBtn.textContent = t('copyLink'); }, 1600);
+  }
+
+  function copyFallback() {
+    const ta = document.createElement('textarea');
+    ta.value = SHARE_URL;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    pop.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    pop.removeChild(ta);
+    if (ok) { copied(); copyBtn.focus(); }
+    else {
+      urlInput.focus();
+      urlInput.select();
+      msg.textContent = t('copyLinkFail');
+    }
+  }
+
+  copyBtn.addEventListener('click', () => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SHARE_URL).then(copied).catch(copyFallback);
+    } else {
+      copyFallback();
+    }
+  });
+
+  urlInput.addEventListener('focus', () => urlInput.select());
+
+  headBtn.addEventListener('click', () => share(headBtn));
+  menuItem.addEventListener('click', () => {
+    if (window.fcCloseMenu) window.fcCloseMenu(false);
+    share(menuBtn);
+  });
+  closeBtn.addEventListener('click', closePop);
+  backdrop.addEventListener('click', closePop);
+
+  pop.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      closePop();
+    } else if (e.key === 'Tab') {
+      const f = Array.from(pop.querySelectorAll('button, a[href], input'))
+        .filter(el => !el.disabled && el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  renderShare();
 })();
 </script>
 </body>

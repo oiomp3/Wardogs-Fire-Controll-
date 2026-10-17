@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wardogs-firecontrol-v4';
+const CACHE_NAME = 'wardogs-firecontrol-v5';
 const ASSETS = [
   './',
   './index.html',
