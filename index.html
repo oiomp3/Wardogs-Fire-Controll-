@@ -726,6 +726,95 @@
     .music-fab.playing::after { animation: none; }
     .music-bar, .music-fab { transition: none; }
   }
+  /* ---------- Slotmaschine (Spielgeld) ---------- */
+  .slot-overlay {
+    position: fixed; inset: 0; z-index: 90;
+    background: radial-gradient(ellipse at top, #111a2e 0%, var(--bg) 60%);
+    overflow-y: auto; overscroll-behavior: contain;
+    padding: max(14px, env(safe-area-inset-top)) 14px max(24px, env(safe-area-inset-bottom));
+    animation: slotIn .18s ease-out;
+  }
+  .slot-overlay[hidden] { display: none; }
+  @keyframes slotIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+  body.slot-open { overflow: hidden; }
+  body.slot-open .music-bar, body.slot-open .music-fab { visibility: hidden; }
+  .slot-inner { max-width: 520px; margin: 0 auto; }
+  .slot-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .slot-title { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; }
+  .slot-money {
+    display: inline-flex; align-items: center; gap: 6px; margin: 0 0 14px;
+    padding: 5px 12px; border-radius: 999px; font-size: .8rem; font-weight: 700;
+    color: #fde68a; background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.4);
+  }
+  .slot-card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
+    padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  .slot-balance { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+  .slot-balance strong { color: var(--text); font-size: 1.7rem; letter-spacing: 0; font-variant-numeric: tabular-nums; text-transform: none; }
+  .slot-machine { --cell: 92px; position: relative; padding: 10px; border-radius: 16px; background: linear-gradient(#1e293b, #0b1220); border: 2px solid rgba(59,130,246,.35); box-shadow: inset 0 0 24px rgba(0,0,0,.6); }
+  .slot-reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .slot-reel { height: var(--cell); overflow: hidden; border-radius: 10px; background: linear-gradient(#e2e8f0 0%, #f8fafc 45%, #f8fafc 55%, #cbd5e1 100%); position: relative; }
+  .slot-reel::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(0,0,0,.28), transparent 22%, transparent 78%, rgba(0,0,0,.28)); }
+  .slot-strip { will-change: transform; }
+  .slot-cell { height: var(--cell); display: flex; align-items: center; justify-content: center; }
+  .slot-cell svg { width: 66%; height: 66%; }
+  .slot-machine.win { border-color: var(--green); box-shadow: inset 0 0 24px rgba(0,0,0,.6), 0 0 22px var(--green-glow); }
+  .slot-machine.win .slot-reel.hit { outline: 3px solid var(--green); outline-offset: -3px; }
+  .slot-result { min-height: 3em; margin: 12px 0 10px; text-align: center; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+  .slot-result.win { color: #6ee7b7; }
+  .slot-result.lose { color: var(--muted); }
+  .slot-bets { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .slot-bets .lbl { color: var(--muted); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-right: auto; }
+  .slot-bet {
+    min-width: 54px; min-height: 44px; padding: 8px 10px; border-radius: 10px; cursor: pointer;
+    background: var(--bg-elevated); color: var(--text); border: 1px solid rgba(255,255,255,.12);
+    font: inherit; font-weight: 700; font-variant-numeric: tabular-nums; box-shadow: none; transform: none;
+  }
+  .slot-bet[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+  .slot-bet:disabled { opacity: .35; cursor: not-allowed; }
+  .slot-spin, .slot-restart {
+    width: 100%; min-height: 56px; border: 0; border-radius: 14px; cursor: pointer; font: inherit;
+    font-size: 1.15rem; font-weight: 800; letter-spacing: .04em; color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  .slot-spin:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+  .slot-restart { margin-top: 10px; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 24px var(--green-glow); }
+  .slot-restart[hidden] { display: none; }
+  .slot-bet:focus-visible, .slot-spin:focus-visible, .slot-restart:focus-visible, .slot-sound:focus-visible, .slot-overlay .drawer-close:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+  .slot-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .slot-stats { display: flex; gap: 18px; margin: 0; }
+  .slot-stats div { display: flex; flex-direction: column; }
+  .slot-stats dt { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+  .slot-stats dd { margin: 0; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .slot-sound { min-height: 40px; padding: 6px 12px; border-radius: 10px; cursor: pointer; font: inherit; font-size: .85rem; font-weight: 700; color: var(--text); background: var(--bg-elevated); border: 1px solid rgba(255,255,255,.12); box-shadow: none; transform: none; }
+  .slot-sound[aria-pressed="true"] { border-color: var(--green); color: #6ee7b7; }
+  .slot-side { margin-top: 14px; }
+  .slot-side h3 { margin: 0 0 8px; font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; }
+  .slot-pay { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .slot-pay td { padding: 5px 4px; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .slot-pay td:last-child { text-align: right; font-weight: 800; color: #fde68a; font-variant-numeric: tabular-nums; }
+  .slot-pay .ico { display: inline-flex; gap: 2px; vertical-align: middle; }
+  .slot-pay .ico svg { width: 22px; height: 22px; }
+  .slot-pay .nm { color: var(--muted); font-size: .8rem; margin-left: 6px; }
+  .slot-note { color: var(--muted); font-size: .8rem; margin: 10px 0 0; }
+  .slot-bets .slot-bet { width: auto; flex: 1 1 0; margin-top: 0; font-size: 1rem; }
+  .slot-bets .lbl { flex: 0 0 100%; margin: 0 0 2px; }
+  .slot-meta .slot-sound { width: auto; margin-top: 0; padding: 6px 14px; font-size: .85rem; }
+  .slot-spin { margin-top: 0; }
+  .slot-bet:hover, .slot-sound:hover { transform: none; box-shadow: none; filter: brightness(1.15); }
+  .slot-bet[aria-pressed="true"]:hover { box-shadow: 0 0 12px var(--accent-glow); }
+  .slot-pay td.hd { text-align: left; color: var(--muted); font-weight: 600; font-size: .78rem; }
+  @media (min-width: 600px) { .slot-machine { --cell: 120px; } }
+  @media (min-width: 900px) {
+    .slot-inner { max-width: 920px; }
+    .slot-body { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+    .slot-side { margin-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slot-overlay { animation: none; }
+    .slot-strip { transition: none !important; }
+  }
 </style>
 
 </head>
@@ -834,12 +923,69 @@
     </button>
     <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" data-i18n-html="aboutHtml" hidden></div>
 
+    <button type="button" class="menu-item" id="miSlot" aria-haspopup="dialog">
+      <span class="mi-icon" aria-hidden="true">🎰</span><span data-i18n="slot">Slotmaschine</span>
+    </button>
+
     <button type="button" class="menu-item" id="miShare" aria-haspopup="dialog">
       <span class="mi-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span><span data-i18n="share">Seite teilen</span>
     </button>
   </nav>
   <div class="drawer-foot" data-i18n="footer">Community Tool · nicht offiziell</div>
 </aside>
+
+<div class="slot-overlay" id="slotOverlay" role="dialog" aria-modal="true" aria-labelledby="slotTitle" hidden>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="sym-cherry" viewBox="0 0 64 64"><path d="M34 8C30 20 22 30 18 36M34 8c2 12 8 22 12 26" fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round"/><path d="M34 8c7-4 16-2 20 4c-7 3-15 2-20-4z" fill="#22c55e"/><circle cx="18" cy="44" r="12" fill="#dc2626"/><circle cx="46" cy="42" r="12" fill="#ef4444"/><circle cx="14" cy="40" r="3" fill="#fff" opacity=".55"/><circle cx="42" cy="38" r="3" fill="#fff" opacity=".55"/></symbol>
+    <symbol id="sym-star" viewBox="0 0 64 64"><polygon points="32.0,6.0 38.8,23.7 57.7,24.7 42.9,36.6 47.9,54.8 32.0,44.5 16.1,54.8 21.1,36.6 6.3,24.7 25.2,23.7" fill="#facc15" stroke="#ca8a04" stroke-width="2.5" stroke-linejoin="round"/></symbol>
+    <symbol id="sym-target" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#dc2626"/><circle cx="32" cy="32" r="21" fill="#f8fafc"/><circle cx="32" cy="32" r="14" fill="#dc2626"/><circle cx="32" cy="32" r="7" fill="#f8fafc"/><circle cx="32" cy="32" r="3" fill="#dc2626"/></symbol>
+    <symbol id="sym-bomb" viewBox="0 0 64 64"><circle cx="28" cy="38" r="20" fill="#1e293b" stroke="#0f172a" stroke-width="2"/><rect x="33" y="14" width="10" height="9" rx="2" transform="rotate(40 38 18)" fill="#475569"/><path d="M42 14c4-6 10-6 12-2" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round"/><circle cx="55" cy="10" r="5" fill="#f59e0b"/><circle cx="55" cy="10" r="2.4" fill="#fef3c7"/><circle cx="20" cy="30" r="5" fill="#fff" opacity=".25"/></symbol>
+    <symbol id="sym-skull" viewBox="0 0 64 64"><path d="M32 6C18 6 9 16 9 28c0 8 4 13 9 16v7c0 3 2 5 5 5h18c3 0 5-2 5-5v-7c5-3 9-8 9-16C55 16 46 6 32 6z" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/><ellipse cx="22" cy="30" rx="7" ry="8" fill="#0f172a"/><ellipse cx="42" cy="30" rx="7" ry="8" fill="#0f172a"/><path d="M32 38l-4 7h8z" fill="#0f172a"/><path d="M26 50v6M32 50v6M38 50v6" stroke="#64748b" stroke-width="2"/></symbol>
+    <symbol id="sym-seven" viewBox="0 0 64 64"><polygon points="12,8 54,8 54,18 31,58 17,58 39,19 12,19" fill="#ef4444" stroke="#7f1d1d" stroke-width="3" stroke-linejoin="round"/><polygon points="15,11 51,11 51,13 15,13" fill="#fecaca" opacity=".7"/></symbol>
+  </svg>
+  <div class="slot-inner">
+    <div class="slot-head">
+      <h2 class="slot-title" id="slotTitle"><span aria-hidden="true">🎰 </span><span data-i18n="slot">Slotmaschine</span></h2>
+      <button type="button" class="drawer-close" id="slotClose" aria-label="Slotmaschine schließen" data-i18n-aria="slotClose">✕</button>
+    </div>
+    <p class="slot-money"><span aria-hidden="true">🪙</span><span data-i18n="slotPlayMoney">Spielgeld – kein echtes Geld</span></p>
+    <div class="slot-body">
+      <div class="slot-card">
+        <div class="slot-balance"><span data-i18n="slotBalance">Guthaben</span><strong id="slotBal">$100</strong></div>
+        <div class="slot-machine" id="slotMachine">
+          <div class="slot-reels" aria-hidden="true">
+            <div class="slot-reel"><div class="slot-strip"></div></div>
+            <div class="slot-reel"><div class="slot-strip"></div></div>
+            <div class="slot-reel"><div class="slot-strip"></div></div>
+          </div>
+        </div>
+        <p class="slot-result" id="slotResult" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="slot-bets" role="group" aria-labelledby="slotBetLbl">
+          <span class="lbl" id="slotBetLbl" data-i18n="slotBet">Einsatz</span>
+          <button type="button" class="slot-bet" data-bet="1" aria-pressed="false">$1</button>
+          <button type="button" class="slot-bet" data-bet="5" aria-pressed="false">$5</button>
+          <button type="button" class="slot-bet" data-bet="10" aria-pressed="false">$10</button>
+          <button type="button" class="slot-bet" data-bet="25" aria-pressed="false">$25</button>
+        </div>
+        <button type="button" class="slot-spin" id="slotSpin" data-i18n="slotSpin">Drehen</button>
+        <button type="button" class="slot-restart" id="slotRestart" data-i18n="slotRestart" hidden>Neustart mit $100</button>
+        <div class="slot-meta">
+          <dl class="slot-stats">
+            <div><dt data-i18n="slotSpins">Drehungen</dt><dd id="slotSpins">0</dd></div>
+            <div><dt data-i18n="slotBest">Größter Gewinn</dt><dd id="slotBest">$0</dd></div>
+          </dl>
+          <button type="button" class="slot-sound" id="slotSound" aria-pressed="false"><span aria-hidden="true" id="slotSoundIco">🔇</span> <span data-i18n="slotSound">Ton</span></button>
+        </div>
+      </div>
+      <section class="slot-card slot-side" aria-labelledby="slotPayTitle">
+        <h3 id="slotPayTitle" data-i18n="slotPaytable">Gewinntabelle</h3>
+        <table class="slot-pay"><tbody id="slotPayBody"></tbody></table>
+        <p class="slot-note" data-i18n="slotRtp"></p>
+        <p class="slot-note" data-i18n="slotDisclaimer"></p>
+      </section>
+    </div>
+  </div>
+</div>
 
 <div class="container" id="mainContent">
   <div class="header">
@@ -1343,6 +1489,110 @@ Object.keys(MUSIC_I18N).forEach(l => {
   I18N[l].aboutHtml = I18N[l].aboutHtml.replace(/<\/ul>\s*$/, '  <li>' + MUSIC_I18N[l].aboutSpotify + '</li>\n      </ul>');
 });
 
+const SLOT_I18N = {
+  de: {
+    slot: 'Slotmaschine',
+    slotClose: 'Slotmaschine schließen',
+    slotPlayMoney: 'Spielgeld – kein echtes Geld',
+    slotBalance: 'Guthaben',
+    slotBet: 'Einsatz',
+    slotSpin: 'Drehen',
+    slotSpinning: 'Dreht …',
+    slotRestart: 'Neustart mit $100',
+    slotSpins: 'Drehungen',
+    slotBest: 'Größter Gewinn',
+    slotSound: 'Ton',
+    slotPaytable: 'Gewinntabelle',
+    slotThree: '3 gleiche',
+    slotTwo: '2 gleiche (beliebige Position)',
+    slotRtp: 'Auszahlungsquote (RTP) ≈ 95 %: Auf lange Sicht verliert man – wie bei jedem Automaten. Zufall per crypto.getRandomValues.',
+    slotDisclaimer: 'Nur zum Spaß: Spielgeld ohne Wert. Keine Einzahlung, keine Auszahlung, keine echten Gewinne.',
+    slotReady: 'Einsatz wählen und „Drehen“ drücken.',
+    slotWin3: '{syms} – Drei gleiche! +{amount} (×{mult})',
+    slotWin2: '{syms} – Zwei gleiche: +{amount} (×{mult})',
+    slotLose: '{syms} – kein Gewinn (−{bet})',
+    slotBroke: 'Guthaben aufgebraucht – Neustart mit $100?',
+    slotRestarted: 'Neues Spielgeld: $100. Viel Spaß!',
+    symCherry: 'Kirsche', symStar: 'Stern', symTarget: 'Zielscheibe', symBomb: 'Bombe', symSkull: 'Totenkopf', symSeven: 'Sieben'
+  },
+  en: {
+    slot: 'Slot machine',
+    slotClose: 'Close slot machine',
+    slotPlayMoney: 'Play money – not real money',
+    slotBalance: 'Balance',
+    slotBet: 'Bet',
+    slotSpin: 'Spin',
+    slotSpinning: 'Spinning …',
+    slotRestart: 'Restart with $100',
+    slotSpins: 'Spins',
+    slotBest: 'Biggest win',
+    slotSound: 'Sound',
+    slotPaytable: 'Paytable',
+    slotThree: '3 of a kind',
+    slotTwo: '2 of a kind (any position)',
+    slotRtp: 'Return to player (RTP) ≈ 95%: in the long run you lose – like any slot machine. Randomness via crypto.getRandomValues.',
+    slotDisclaimer: 'Just for fun: play money with no value. No deposits, no payouts, no real winnings.',
+    slotReady: 'Pick your bet and press “Spin”.',
+    slotWin3: '{syms} – Three of a kind! +{amount} (×{mult})',
+    slotWin2: '{syms} – Two of a kind: +{amount} (×{mult})',
+    slotLose: '{syms} – no win (−{bet})',
+    slotBroke: 'Out of play money – restart with $100?',
+    slotRestarted: 'Fresh play money: $100. Have fun!',
+    symCherry: 'Cherry', symStar: 'Star', symTarget: 'Target', symBomb: 'Bomb', symSkull: 'Skull', symSeven: 'Seven'
+  },
+  es: {
+    slot: 'Tragaperras',
+    slotClose: 'Cerrar tragaperras',
+    slotPlayMoney: 'Dinero de juego: no es dinero real',
+    slotBalance: 'Saldo',
+    slotBet: 'Apuesta',
+    slotSpin: 'Girar',
+    slotSpinning: 'Girando…',
+    slotRestart: 'Reiniciar con $100',
+    slotSpins: 'Tiradas',
+    slotBest: 'Mayor premio',
+    slotSound: 'Sonido',
+    slotPaytable: 'Tabla de premios',
+    slotThree: '3 iguales',
+    slotTwo: '2 iguales (cualquier posición)',
+    slotRtp: 'Retorno al jugador (RTP) ≈ 95 %: a la larga se pierde, como en cualquier tragaperras. Azar mediante crypto.getRandomValues.',
+    slotDisclaimer: 'Solo por diversión: dinero de juego sin valor. Sin depósitos, sin pagos, sin premios reales.',
+    slotReady: 'Elige tu apuesta y pulsa «Girar».',
+    slotWin3: '{syms}: ¡tres iguales! +{amount} (×{mult})',
+    slotWin2: '{syms}: dos iguales, +{amount} (×{mult})',
+    slotLose: '{syms}: sin premio (−{bet})',
+    slotBroke: 'Te has quedado sin dinero de juego. ¿Reiniciar con $100?',
+    slotRestarted: 'Nuevo dinero de juego: $100. ¡Diviértete!',
+    symCherry: 'Cereza', symStar: 'Estrella', symTarget: 'Diana', symBomb: 'Bomba', symSkull: 'Calavera', symSeven: 'Siete'
+  },
+  fr: {
+    slot: 'Machine à sous',
+    slotClose: 'Fermer la machine à sous',
+    slotPlayMoney: 'Argent fictif – pas d\u2019argent réel',
+    slotBalance: 'Solde',
+    slotBet: 'Mise',
+    slotSpin: 'Lancer',
+    slotSpinning: 'Ça tourne…',
+    slotRestart: 'Recommencer avec $100',
+    slotSpins: 'Tours',
+    slotBest: 'Plus gros gain',
+    slotSound: 'Son',
+    slotPaytable: 'Table des gains',
+    slotThree: '3 identiques',
+    slotTwo: '2 identiques (n\u2019importe où)',
+    slotRtp: 'Taux de retour (RTP) ≈ 95\u00a0% : à long terme, on perd – comme sur toute machine à sous. Hasard via crypto.getRandomValues.',
+    slotDisclaimer: 'Juste pour le plaisir : argent fictif sans valeur. Pas de dépôt, pas de retrait, aucun gain réel.',
+    slotReady: 'Choisissez votre mise et appuyez sur «\u00a0Lancer\u00a0».',
+    slotWin3: '{syms} – Trois identiques\u00a0! +{amount} (×{mult})',
+    slotWin2: '{syms} – Deux identiques\u00a0: +{amount} (×{mult})',
+    slotLose: '{syms} – pas de gain (−{bet})',
+    slotBroke: 'Plus d\u2019argent fictif – recommencer avec $100\u00a0?',
+    slotRestarted: 'Nouvel argent fictif\u00a0: $100. Amusez-vous bien\u00a0!',
+    symCherry: 'Cerise', symStar: 'Étoile', symTarget: 'Cible', symBomb: 'Bombe', symSkull: 'Crâne', symSeven: 'Sept'
+  }
+};
+Object.keys(SLOT_I18N).forEach(l => Object.assign(I18N[l], SLOT_I18N[l]));
+
 const LANGS = {
   de: { name: 'Deutsch', flag: 'flag-de' },
   en: { name: 'English', flag: 'flag-gb' },
@@ -1678,6 +1928,7 @@ function applyLang() {
   renderHistory();
   if (window.renderShare) window.renderShare();
   if (window.renderMusic) window.renderMusic();
+  if (window.renderSlot) window.renderSlot();
 }
 
 function setLang(code) {
@@ -2268,6 +2519,342 @@ const MUSIC = {
   };
   if (document.readyState === 'complete') lazyStart(); else window.addEventListener('load', lazyStart);
 })();
+// ---------- Slotmaschine (nur Spielgeld) ----------
+(function () {
+  const SYMS = [
+    { id: 'cherry', key: 'symCherry', w: 8, three: 8, two: 2 },
+    { id: 'star',   key: 'symStar',   w: 7, three: 10, two: 0 },
+    { id: 'target', key: 'symTarget', w: 6, three: 20, two: 0 },
+    { id: 'bomb',   key: 'symBomb',   w: 5, three: 30, two: 0 },
+    { id: 'skull',  key: 'symSkull',  w: 4, three: 75, two: 0 },
+    { id: 'seven',  key: 'symSeven',  w: 2, three: 100, two: 2 }
+  ];
+  const TOTAL_W = SYMS.reduce((s, x) => s + x.w, 0); // 32
+  const BETS = [1, 5, 10, 25];
+  const START = 100;
+  const KEY = 'wardogsSlot';
+  const DUR = [900, 1300, 1700];
+
+  const ov = document.getElementById('slotOverlay');
+  const closeBtn = document.getElementById('slotClose');
+  const balEl = document.getElementById('slotBal');
+  const machine = document.getElementById('slotMachine');
+  const reels = Array.from(ov.querySelectorAll('.slot-reel'));
+  const resultEl = document.getElementById('slotResult');
+  const betBtns = Array.from(ov.querySelectorAll('.slot-bet'));
+  const spinBtn = document.getElementById('slotSpin');
+  const restartBtn = document.getElementById('slotRestart');
+  const spinsEl = document.getElementById('slotSpins');
+  const bestEl = document.getElementById('slotBest');
+  const soundBtn = document.getElementById('slotSound');
+  const soundIco = document.getElementById('slotSoundIco');
+  const payBody = document.getElementById('slotPayBody');
+  const menuItem = document.getElementById('miSlot');
+  const menuBtn = document.getElementById('menuBtn');
+  const background = ['mainContent', 'menuBtn', 'langWrap', 'shareHeadBtn', 'musicBar', 'musicFab', 'drawer', 'drawerOverlay']
+    .map(id => document.getElementById(id));
+  const reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+  // ----- Zustand -----
+  function load() {
+    let s = null;
+    try { s = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    const okInt = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
+    return {
+      bal: s && okInt(s.bal, 1e9) ? s.bal : START,
+      bet: s && BETS.includes(s.bet) ? s.bet : 5,
+      spins: s && okInt(s.spins, 1e12) ? s.spins : 0,
+      best: s && okInt(s.best, 1e12) ? s.best : 0,
+      sound: !!(s && s.sound === true)
+    };
+  }
+  let st = load();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  let shownBal = st.bal;     // angezeigtes Guthaben (während der Drehung = alt − Einsatz)
+  let spinning = false;
+  let pending = null;        // laufende Drehung
+  let lastMsg = null;        // { key, params, cls } für Sprachwechsel
+  let lastSyms = [0, 1, 2];
+  let forced = null;         // Test-Hook: erzwungenes Ergebnis
+
+  // ----- Zufall (fair, ohne Modulo-Bias) -----
+  function randInt(n) {
+    const buf = new Uint32Array(1);
+    const limit = Math.floor(0x100000000 / n) * n;
+    let x;
+    do { crypto.getRandomValues(buf); x = buf[0]; } while (x >= limit);
+    return x % n;
+  }
+  function randSym() {
+    let r = randInt(TOTAL_W);
+    for (let i = 0; i < SYMS.length; i++) { if (r < SYMS[i].w) return i; r -= SYMS[i].w; }
+    return SYMS.length - 1;
+  }
+
+  // ----- Auszahlung: Rückgabe = Einsatz × Faktor (Einsatz wurde vorher abgezogen) -----
+  function evaluate(idx, bet) {
+    const [a, b, c] = idx;
+    if (a === b && b === c) return { kind: 3, sym: a, mult: SYMS[a].three, win: bet * SYMS[a].three, hit: [0, 1, 2] };
+    let pair = -1;
+    if (a === b || a === c) pair = a; else if (b === c) pair = b;
+    if (pair >= 0 && SYMS[pair].two > 0) {
+      const hit = idx.map((v, i) => v === pair ? i : -1).filter(i => i >= 0);
+      return { kind: 2, sym: pair, mult: SYMS[pair].two, win: bet * SYMS[pair].two, hit };
+    }
+    return { kind: 0, sym: -1, mult: 0, win: 0, hit: [] };
+  }
+
+  const money = n => '$' + n.toLocaleString('en-US');
+  const icon = i => `<svg aria-hidden="true" focusable="false"><use href="#sym-${SYMS[i].id}"/></svg>`;
+  const cell = i => `<div class="slot-cell">${icon(i)}</div>`;
+
+  // ----- Sound (WebAudio, standardmäßig aus) -----
+  let actx = null;
+  function beep(freq, dur, when, vol) {
+    if (!st.sound) return;
+    try {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      const t0 = actx.currentTime + (when || 0);
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'square'; o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.05, t0);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(actx.destination);
+      o.start(t0); o.stop(t0 + dur + 0.02);
+    } catch (e) {}
+  }
+  function winTune(kind) {
+    const notes = kind === 3 ? [523, 659, 784, 1047] : [523, 784];
+    notes.forEach((f, i) => beep(f, 0.14, i * 0.11, 0.06));
+  }
+
+  // ----- Darstellung -----
+  function setMsg(key, params, cls) {
+    lastMsg = { key, params, cls };
+    resultEl.className = 'slot-result' + (cls ? ' ' + cls : '');
+    resultEl.textContent = msgText();
+  }
+  function msgText() {
+    if (!lastMsg) return '';
+    const p = Object.assign({}, lastMsg.params || {});
+    if (p.symIdx) p.syms = p.symIdx.map(i => t(SYMS[i].key)).join(' · ');
+    return t(lastMsg.key, p);
+  }
+
+  function renderControls() {
+    balEl.textContent = money(shownBal);
+    spinsEl.textContent = st.spins.toLocaleString('en-US');
+    bestEl.textContent = money(st.best);
+    betBtns.forEach(b => {
+      const v = +b.dataset.bet;
+      b.setAttribute('aria-pressed', v === st.bet ? 'true' : 'false');
+      b.disabled = spinning || v > st.bal;
+    });
+    const broke = !spinning && st.bal < BETS[0];
+    spinBtn.disabled = spinning || broke || st.bet > st.bal;
+    spinBtn.textContent = spinning ? t('slotSpinning') : t('slotSpin') + ' · ' + money(st.bet);
+    spinBtn.setAttribute('aria-label', t('slotSpin') + ', ' + t('slotBet') + ' ' + money(st.bet));
+    restartBtn.hidden = !broke;
+    soundBtn.setAttribute('aria-pressed', st.sound ? 'true' : 'false');
+    soundIco.textContent = st.sound ? '🔊' : '🔇';
+  }
+
+  function renderPay() {
+    const rows = SYMS.map((s, i) => ({ i, m: s.three })).sort((x, y) => y.m - x.m)
+      .map(r => `<tr><td><span class="ico">${icon(r.i)}${icon(r.i)}${icon(r.i)}</span><span class="nm">${escapeHtml(t(SYMS[r.i].key))}</span></td><td>×${r.m}</td></tr>`);
+    SYMS.forEach((s, i) => {
+      if (s.two > 0) rows.push(`<tr><td><span class="ico">${icon(i)}${icon(i)}</span><span class="nm">${escapeHtml(t('slotTwo'))}</span></td><td>×${s.two}</td></tr>`);
+    });
+    payBody.innerHTML = `<tr><td colspan="2" class="hd">${escapeHtml(t('slotThree'))} · ${escapeHtml(t('slotBet'))} ×</td></tr>` + rows.join('');
+  }
+
+  function showStatic(idx) {
+    reels.forEach((r, k) => {
+      const strip = r.firstElementChild;
+      strip.style.transition = 'none';
+      strip.style.transform = 'none';
+      strip.innerHTML = cell(idx[k]);
+    });
+  }
+
+  function renderSlot() {
+    renderPay();
+    renderControls();
+    if (lastMsg) resultEl.textContent = msgText();
+  }
+  window.renderSlot = renderSlot;
+
+  // ----- Drehen -----
+  function settle() {
+    if (!pending) return;
+    const p = pending; pending = null;
+    p.timers.forEach(clearTimeout);
+    showStatic(p.idx);
+    lastSyms = p.idx;
+    spinning = false;
+    shownBal = st.bal;
+    const r = p.res;
+    if (r.win > 0) {
+      machine.classList.add('win');
+      r.hit.forEach(i => reels[i].classList.add('hit'));
+      setMsg(r.kind === 3 ? 'slotWin3' : 'slotWin2', { symIdx: p.idx, amount: money(r.win), mult: r.mult }, 'win');
+      winTune(r.kind);
+    } else if (st.bal < BETS[0]) {
+      setMsg('slotLose', { symIdx: p.idx, bet: money(p.bet) }, 'lose');
+      resultEl.textContent += ' ' + t('slotBroke');
+      lastMsg.broke = true;
+    } else {
+      setMsg('slotLose', { symIdx: p.idx, bet: money(p.bet) }, 'lose');
+    }
+    renderControls();
+    const ae = document.activeElement;
+    if (isOpen() && (!ae || ae === document.body || (ov.contains(ae) && ae.disabled))) {
+      (restartBtn.hidden ? spinBtn : restartBtn).focus();
+    }
+  }
+
+  function spin() {
+    if (spinning) return;
+    const bet = st.bet;
+    if (bet > st.bal || bet < 1) { renderControls(); return; }
+    let idx;
+    if (forced) { idx = forced.slice(0, 3); forced = null; }
+    else idx = [randSym(), randSym(), randSym()];
+    const res = evaluate(idx, bet);
+    const before = st.bal;
+    // Endzustand sofort speichern (Neuladen während der Animation verliert nichts)
+    st.bal = st.bal - bet + res.win;
+    st.spins += 1;
+    if (res.win > st.best) st.best = res.win;
+    if (st.bet > st.bal) { const ok = BETS.filter(b => b <= st.bal); if (ok.length) st.bet = ok[ok.length - 1]; }
+    save();
+    shownBal = before - bet;
+    spinning = true;
+    machine.classList.remove('win');
+    reels.forEach(r => r.classList.remove('hit'));
+    lastMsg = null;
+    resultEl.className = 'slot-result';
+    resultEl.textContent = '';
+    renderControls();
+    beep(220, 0.08, 0, 0.04);
+
+    pending = { idx, res, bet, timers: [] };
+    const reduce = reduceMQ.matches;
+    reels.forEach((r, k) => {
+      const strip = r.firstElementChild;
+      if (reduce) {
+        pending.timers.push(setTimeout(() => { strip.innerHTML = cell(idx[k]); beep(440 + k * 110, 0.06); }, 150 * (k + 1)));
+        return;
+      }
+      const n = 14 + k * 5;
+      const seq = [lastSyms[k]];
+      for (let j = 0; j < n; j++) seq.push(randSym());
+      seq.push(idx[k]);
+      strip.style.transition = 'none';
+      strip.style.transform = 'translateY(0)';
+      strip.innerHTML = seq.map(cell).join('');
+      void strip.offsetHeight;
+      strip.style.transition = `transform ${DUR[k]}ms cubic-bezier(.12,.68,.22,1.02)`;
+      strip.style.transform = `translateY(${-(seq.length - 1) / seq.length * 100}%)`;
+      pending.timers.push(setTimeout(() => beep(440 + k * 110, 0.06), DUR[k]));
+    });
+    pending.timers.push(setTimeout(settle, (reduce ? 150 * 3 : DUR[2]) + 60));
+  }
+
+  function restart() {
+    if (spinning || st.bal >= BETS[0]) return;
+    st.bal = START;
+    if (st.bet > st.bal) st.bet = 5;
+    save();
+    shownBal = st.bal;
+    machine.classList.remove('win');
+    setMsg('slotRestarted', null, '');
+    renderControls();
+    spinBtn.focus();
+  }
+
+  // ----- Overlay öffnen / schließen -----
+  let returnFocus = null;
+  function isOpen() { return !ov.hidden; }
+  function open(from) {
+    if (isOpen()) return;
+    returnFocus = from || menuBtn;
+    if (window.fcCloseMenu) window.fcCloseMenu(false);
+    if (window.closeLangMenu) window.closeLangMenu();
+    st = load(); shownBal = st.bal;
+    if (st.bet > st.bal) { const ok = BETS.filter(b => b <= st.bal); if (ok.length) st.bet = ok[ok.length - 1]; }
+    showStatic(lastSyms);
+    if (!lastMsg) setMsg(st.bal < BETS[0] ? 'slotBroke' : 'slotReady', null, '');
+    renderSlot();
+    ov.hidden = false;
+    document.body.classList.add('slot-open');
+    background.forEach(el => el && (el.inert = true));
+    setTimeout(() => (spinBtn.disabled ? (restartBtn.hidden ? closeBtn : restartBtn) : spinBtn).focus(), 30);
+  }
+  function close() {
+    if (!isOpen()) return;
+    settle();
+    ov.hidden = true;
+    document.body.classList.remove('slot-open');
+    background.forEach(el => el && (el.inert = false));
+    const target = (returnFocus && document.contains(returnFocus) && returnFocus.offsetParent !== null) ? returnFocus : menuBtn;
+    target.focus();
+  }
+
+  menuItem.addEventListener('click', () => open(menuBtn));
+  closeBtn.addEventListener('click', close);
+  spinBtn.addEventListener('click', spin);
+  restartBtn.addEventListener('click', restart);
+  betBtns.forEach(b => b.addEventListener('click', () => {
+    const v = +b.dataset.bet;
+    if (spinning || v > st.bal) return;
+    st.bet = v; save(); renderControls();
+  }));
+  soundBtn.addEventListener('click', () => {
+    st.sound = !st.sound; save(); renderControls();
+    if (st.sound) beep(660, 0.08);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'Tab') {
+      const f = Array.from(ov.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+        .filter(el => !el.disabled && !el.hidden && el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (!ov.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  window.addEventListener('storage', (e) => { if (e.key === KEY && !spinning) { st = load(); shownBal = st.bal; renderControls(); } });
+
+  showStatic(lastSyms);
+  renderSlot();
+
+  // Test-/Analyse-Hooks (ändern keine Auszahlungslogik)
+  window.fcSlot = {
+    open: () => open(menuBtn), close, isOpen,
+    force: (ids) => { forced = ids ? ids.map(id => SYMS.findIndex(s => s.id === id)) : null; },
+    state: () => ({ bal: st.bal, shown: shownBal, bet: st.bet, spins: st.spins, best: st.best, sound: st.sound, spinning }),
+    evaluate: (ids, bet) => evaluate(ids.map(id => SYMS.findIndex(s => s.id === id)), bet),
+    simulate: (n, bet) => {
+      bet = bet || 1; let paid = 0, wins = 0;
+      for (let i = 0; i < n; i++) { const r = evaluate([randSym(), randSym(), randSym()], bet); paid += r.win; if (r.win) wins++; }
+      return { spins: n, wagered: n * bet, paid, rtp: paid / (n * bet), hitRate: wins / n };
+    },
+    theoreticalRtp: () => {
+      let r = 0;
+      for (let a = 0; a < 6; a++) for (let b = 0; b < 6; b++) for (let c = 0; c < 6; c++)
+        r += SYMS[a].w * SYMS[b].w * SYMS[c].w / TOTAL_W ** 3 * evaluate([a, b, c], 1).win;
+      return r;
+    },
+    paytable: () => SYMS.map(s => ({ id: s.id, weight: s.w, three: s.three, two: s.two }))
+  };
+})();
+
 </script>
 </body>
 </html>
