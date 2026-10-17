@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WARDOGS · Fire Control</title>
+<meta name="description" content="WARDOGS Fire Control: Rechner für Distanz, Azimut und Elevation für L81 Mörser und SPH-2 Artillerie – mit Schussverlauf, auch offline nutzbar.">
+<meta property="og:title" content="WARDOGS · Fire Control">
+<meta property="og:description" content="Rechner für Distanz, Azimut und Elevation für L81 Mörser und SPH-2 Artillerie.">
+<meta property="og:url" content="https://oiotv.de/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://oiotv.de/icon-512.png">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -86,6 +95,7 @@
     margin-bottom: 14px;
   }
   .section-title {
+    margin: 0;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -160,7 +170,7 @@
   .btn-copy:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
   .result {
     text-align: center;
-    padding: 8px 0 4px;
+    padding: 16px 22px 22px;
   }
   .big {
     font-size: 3.2rem;
@@ -176,12 +186,13 @@
     color: var(--orange);
     margin-top: 6px;
   }
+  .label { margin-top: 10px; }
   .az-mil {
     font-size: 1.05rem;
     color: #64748b;
     margin-top: 2px;
   }
-  .label-important {
+  .label-important, .label {
     color: #e2e8f0;
     font-weight: 700;
     font-size: 0.78rem;
@@ -214,6 +225,9 @@
   }
   .slider-row input[type="range"] {
     width: 100%;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
     height: 3px;
     border-radius: 2px;
     background: #1e293b;
@@ -229,6 +243,18 @@
     background: var(--accent);
     cursor: pointer;
     box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  .slider-row input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  .slider-row input[type="range"]:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px var(--accent-glow);
   }
   .history-item {
     padding: 12px 0;
@@ -247,53 +273,53 @@
 <body>
 <div class="container">
   <div class="header">
-    <div class="badge">Official Tool</div>
+    <div class="badge">Community Tool</div>
     <h1>WARDOGS Fire Control</h1>
-    <div class="subtitle">L81 Mortar · SPH-2 Artillery</div>
+    <div class="subtitle">L81 Mörser · SPH-2 Artillerie</div>
   </div>
 
   <div class="card">
     <div class="section-header">
-      <div class="section-title">Eigene Position</div>
+      <h2 class="section-title">Eigene Position</h2>
       <button class="btn-secondary" onclick="swapPositions()">⇄ Tauschen</button>
     </div>
     <div class="row">
       <div class="field">
-        <label>X</label>
-        <input type="number" id="gx" step="0.01" value="80" oninput="syncInput('gx')">
+        <label for="gx">X</label>
+        <input type="number" id="gx" min="0" max="160" inputmode="decimal" aria-label="Eigene Position X" step="0.01" value="80" oninput="syncInput('gx')">
         <div class="slider-row">
-          <input type="range" id="gxSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
+          <input type="range" id="gxSlider" aria-label="Eigene Position X (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
         </div>
       </div>
       <div class="field">
-        <label>Y</label>
-        <input type="number" id="gy" step="0.01" value="80" oninput="syncInput('gy')">
+        <label for="gy">Y</label>
+        <input type="number" id="gy" min="0" max="160" inputmode="decimal" aria-label="Eigene Position Y" step="0.01" value="80" oninput="syncInput('gy')">
         <div class="slider-row">
-          <input type="range" id="gySlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
+          <input type="range" id="gySlider" aria-label="Eigene Position Y (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
         </div>
       </div>
     </div>
 
-    <div class="section-title" style="margin:18px 0 12px;">Ziel</div>
+    <h2 class="section-title" style="margin:18px 0 12px;">Ziel</h2>
     <div class="row">
       <div class="field">
-        <label>X</label>
-        <input type="number" id="tx" step="0.01" value="80" oninput="syncInput('tx')">
+        <label for="tx">X</label>
+        <input type="number" id="tx" min="0" max="160" inputmode="decimal" aria-label="Ziel X" step="0.01" value="80" oninput="syncInput('tx')">
         <div class="slider-row">
-          <input type="range" id="txSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
+          <input type="range" id="txSlider" aria-label="Ziel X (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
         </div>
       </div>
       <div class="field">
-        <label>Y</label>
-        <input type="number" id="ty" step="0.01" value="80" oninput="syncInput('ty')">
+        <label for="ty">Y</label>
+        <input type="number" id="ty" min="0" max="160" inputmode="decimal" aria-label="Ziel Y" step="0.01" value="80" oninput="syncInput('ty')">
         <div class="slider-row">
-          <input type="range" id="tySlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
+          <input type="range" id="tySlider" aria-label="Ziel Y (Schieberegler)" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
         </div>
       </div>
     </div>
 
     <div class="field">
-      <label>Waffe</label>
+      <label for="weapon">Waffe</label>
       <select id="weapon">
         <option value="mortar">L81 Mörser (132–684 m)</option>
         <option value="arty">SPH-2 Artillerie (~780–2629 m)</option>
@@ -316,7 +342,7 @@
 
   <div class="card" id="historyCard">
     <div class="section-header" style="margin-bottom:8px;">
-      <div class="section-title" style="margin:0;">Letzte Schüsse</div>
+      <h2 class="section-title" style="margin:0;">Letzte Schüsse</h2>
       <button class="btn-secondary" onclick="clearHistory()">Löschen</button>
     </div>
     <div id="historyList"><div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div></div>
@@ -383,9 +409,9 @@ function copyResult(event) {
     try {
       const ok = document.execCommand('copy');
       if (ok) success();
-      else alert('Kopieren nicht möglich. Text:\\n\\n' + text);
+      else alert('Kopieren nicht möglich. Text:\n\n' + text);
     } catch (e) {
-      alert('Kopieren nicht möglich. Text:\\n\\n' + text);
+      alert('Kopieren nicht möglich. Text:\n\n' + text);
     }
     document.body.removeChild(ta);
   }
@@ -519,6 +545,10 @@ function saveToHistory(entry) {
   renderHistory();
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 function renderHistory() {
   const list = document.getElementById('historyList');
   if (!history.length) {
@@ -528,15 +558,15 @@ function renderHistory() {
   list.innerHTML = history.map((e, i) => `
     <div class="history-item" onclick="loadFromHistory(${i})" title="Klicken zum Laden">
       <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-        <input type="text" value="${e.name || ('Schuss ' + (history.length - i))}" 
+        <input type="text" value="${escapeHtml(e.name || ('Schuss ' + (history.length - i)))}" aria-label="Name des Schusses" 
                onchange="renameShot(${i}, this.value)"
                onclick="event.stopPropagation()"
                style="flex:1; padding:7px 10px; font-size:0.85rem; background:#0c1017; border:1px solid #1e293b; border-radius:8px; color:#f1f5f9;">
-        <span style="color:#64748b; font-size:0.75rem; white-space:nowrap;">${e.time}</span>
+        <span style="color:#64748b; font-size:0.75rem; white-space:nowrap;">${escapeHtml(e.time || '')}</span>
       </div>
       <div style="margin-top:6px;">
         <span style="font-weight:700; color:#34d399; font-size:1.05rem;">${e.distance} m</span>
-        <span style="font-weight:700; color:#f59e0b; font-size:1.05rem;"> · ${e.bearing}° (${e.cardinal})</span>
+        <span style="font-weight:700; color:#f59e0b; font-size:1.05rem;"> · ${e.bearing}° (${escapeHtml(e.cardinal || '')})</span>
       </div>
       <div style="color:#64748b; font-size:0.8rem; margin-top:3px;">
         ${Number(e.gx).toFixed(2)},${Number(e.gy).toFixed(2)} → ${Number(e.tx).toFixed(2)},${Number(e.ty).toFixed(2)}
@@ -571,8 +601,11 @@ function syncInput(id) {
   const slider = document.getElementById(id + 'Slider');
   let val = parseFloat(input.value);
   if (isNaN(val)) return;
-  val = Math.max(0, Math.min(160, val));
-  slider.value = val;
+  const min = parseFloat(slider.min);
+  const max = parseFloat(slider.max);
+  const clamped = Math.max(min, Math.min(max, val));
+  if (clamped !== val) input.value = clamped;
+  slider.value = clamped;
 }
 
 ['gx','gy','tx','ty'].forEach(id => syncSlider(id));
