@@ -1,34 +1,82 @@
-const CACHE_NAME = 'wardogs-firecontrol-v9';
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './favicon.ico'
+// Frontbuch Service Worker v11
+// - Precache: App-Shell + Rechner + Slots + Offline-Seite
+// - HTML (Navigation): network-first, besuchte Seiten werden zwischengespeichert
+// - Gleiche Herkunft, nur GET; alles andere (Spotify usw.) geht direkt ans Netz
+const CACHE_NAME = 'frontbuch-v11';
+const PRECACHE = [
+  "/",
+  "/rechner/",
+  "/slots/",
+  "/guides/",
+  "/offline/",
+  "/manifest.json",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/favicon.ico",
+  "/assets/site.css?v=11",
+  "/assets/site.js?v=11",
+  "/assets/rechner.js?v=11",
+  "/assets/slots.js?v=11",
+  "/assets/guides.js?v=11",
+  "/assets/guides-data.js?v=11"
 ];
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache =>
-      cache.addAll(ASSETS.map(url => new Request(url, { cache: 'reload' })))
-    )
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE.map((u) => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  if (new URL(event.request.url).origin !== self.location.origin) return;
-  event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
-  );
+function isHtml(req) {
+  return req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html');
+}
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (isHtml(req)) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const res = await fetch(req);
+        if (res && res.ok && res.type === 'basic') {
+          // Ohne Query speichern, damit /guides/?q=… offline die Übersicht findet
+          cache.put(url.origin + url.pathname, res.clone());
+        }
+        return res;
+      } catch (e) {
+        const hit = await cache.match(url.origin + url.pathname) || await cache.match(req, { ignoreSearch: true });
+        if (hit) return hit;
+        if (url.pathname === '/index.html') { const home = await cache.match('/'); if (home) return home; }
+        return (await cache.match('/offline/')) || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+      }
+    })());
+    return;
+  }
+
+  // Statische Dateien: stale-while-revalidate
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const hit = await cache.match(req);
+    const net = fetch(req).then((res) => {
+      if (res && res.ok && res.type === 'basic') cache.put(req, res.clone());
+      return res;
+    }).catch(() => null);
+    if (hit) { event.waitUntil(net); return hit; }
+    const res = await net;
+    return res || new Response('', { status: 504 });
+  })());
 });

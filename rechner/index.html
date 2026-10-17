@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mörser-Rechner (L81 &amp; SPH-2) · Frontbuch</title>
+<meta name="description" content="Rechner für Distanz, Richtung (Mil) und Elevation für den L81-Mörser und die SPH-2-Artillerie in WARDOGS – mit Schussverlauf, auch offline.">
+<link rel="canonical" href="https://oiotv.de/rechner/">
+<meta property="og:site_name" content="Frontbuch">
+<meta property="og:title" content="Mörser-Rechner (L81 &amp; SPH-2) · Frontbuch">
+<meta property="og:description" content="Rechner für Distanz, Richtung (Mil) und Elevation für den L81-Mörser und die SPH-2-Artillerie in WARDOGS – mit Schussverlauf, auch offline.">
+<meta property="og:url" content="https://oiotv.de/rechner/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://oiotv.de/icon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/icon-192.png" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Frontbuch">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="stylesheet" href="/assets/site.css?v=11">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Frontbuch Mörser-Rechner", "url": "https://oiotv.de/rechner/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": ["de", "en", "es", "fr"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
+</head>
+<body data-title-key="titleCalc">
+<a class="skip-link" href="#mainContent" data-i18n="skip">Zum Inhalt springen</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="gbS"><rect width="60" height="30"/></clipPath>
+    <clipPath id="gbT"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+  </defs>
+  <symbol id="flag-de" viewBox="0 0 5 3" preserveAspectRatio="none">
+    <rect width="5" height="3" fill="#000"/><rect y="1" width="5" height="2" fill="#DD0000"/><rect y="2" width="5" height="1" fill="#FFCE00"/>
+  </symbol>
+  <symbol id="flag-gb" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+    <g clip-path="url(#gbS)">
+      <rect width="60" height="30" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#gbT)" stroke="#C8102E" stroke-width="4"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+    </g>
+  </symbol>
+  <symbol id="flag-es" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/>
+  </symbol>
+  <symbol id="flag-fr" viewBox="0 0 3 2" preserveAspectRatio="none">
+    <rect width="1" height="2" fill="#002654"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE1126"/>
+  </symbol>
+</svg>
+<header class="fb-top" id="siteHeader">
+<button type="button" class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
+<a class="fb-brand" href="/"><b>Frontbuch</b><small data-i18n="siteSub">Guides &amp; Tools für WARDOGS</small></a>
+<nav class="fb-nav" aria-label="Hauptnavigation" data-i18n-aria="mainNav"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/rechner/" data-i18n="navCalc" aria-current="page">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/glossar/" data-i18n="navGlossary">Glossar</a><a href="/neu/" data-i18n="navNews">Was ist neu</a></nav>
+<button type="button" class="share-head-btn" id="shareHeadBtn" aria-label="Seite teilen" data-i18n-aria="share" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class=""><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
+<div class="lang" id="langWrap">
+  <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Sprache wählen: Deutsch">
+    <svg class="flag" aria-hidden="true" focusable="false"><use id="langBtnFlag" href="#flag-de"/></svg><span class="lang-chev" aria-hidden="true">▾</span>
+  </button>
+  <ul class="lang-list" id="langList" role="listbox" aria-label="Sprache wählen" hidden>
+    <li role="option" id="lang-de" data-lang="de" tabindex="-1" aria-selected="true" lang="de"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-de"/></svg><span>Deutsch</span></li>
+    <li role="option" id="lang-en" data-lang="en" tabindex="-1" aria-selected="false" lang="en"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-gb"/></svg><span>English</span></li>
+    <li role="option" id="lang-es" data-lang="es" tabindex="-1" aria-selected="false" lang="es"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-es"/></svg><span>Español</span></li>
+    <li role="option" id="lang-fr" data-lang="fr" tabindex="-1" aria-selected="false" lang="fr"><svg class="flag" aria-hidden="true" focusable="false"><use href="#flag-fr"/></svg><span>Français</span></li>
+  </ul>
+</div>
+</header>
+<main id="mainContent" class="fb-main">
+<div class="container fb-calc">
+  <div class="header">
+    <div class="badge" data-i18n="badge">Community Tool</div>
+    <h1 data-i18n="tileCalcT">Mörser-Rechner</h1>
+    <div class="subtitle" data-i18n="subtitle">L81 Mörser · SPH-2 Artillerie</div>
+  </div>
+
+  <div class="card">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="ownPos">Eigene Position</h2>
+      <button class="btn-secondary" onclick="swapPositions()" data-i18n="swap">⇄ Tauschen</button>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="gx">X</label>
+        <input type="number" id="gx" min="0" max="160" inputmode="decimal" aria-label="Eigene Position X" data-i18n-aria="posX" step="0.01" value="80" oninput="syncInput('gx')">
+        <div class="slider-row">
+          <input type="range" id="gxSlider" aria-label="Eigene Position X (Schieberegler)" data-i18n-aria="posXSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gx')">
+        </div>
+      </div>
+      <div class="field">
+        <label for="gy">Y</label>
+        <input type="number" id="gy" min="0" max="160" inputmode="decimal" aria-label="Eigene Position Y" data-i18n-aria="posY" step="0.01" value="80" oninput="syncInput('gy')">
+        <div class="slider-row">
+          <input type="range" id="gySlider" aria-label="Eigene Position Y (Schieberegler)" data-i18n-aria="posYSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('gy')">
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin:18px 0 12px;" data-i18n="target">Ziel</h2>
+    <div class="row">
+      <div class="field">
+        <label for="tx">X</label>
+        <input type="number" id="tx" min="0" max="160" inputmode="decimal" aria-label="Ziel X" data-i18n-aria="tgtX" step="0.01" value="80" oninput="syncInput('tx')">
+        <div class="slider-row">
+          <input type="range" id="txSlider" aria-label="Ziel X (Schieberegler)" data-i18n-aria="tgtXSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('tx')">
+        </div>
+      </div>
+      <div class="field">
+        <label for="ty">Y</label>
+        <input type="number" id="ty" min="0" max="160" inputmode="decimal" aria-label="Ziel Y" data-i18n-aria="tgtY" step="0.01" value="80" oninput="syncInput('ty')">
+        <div class="slider-row">
+          <input type="range" id="tySlider" aria-label="Ziel Y (Schieberegler)" data-i18n-aria="tgtYSlider" min="0" max="160" step="0.01" value="80" oninput="syncSlider('ty')">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="weapon" data-i18n="weapon">Waffe</label>
+      <select id="weapon">
+        <option value="mortar" data-i18n="optMortar">L81 Mörser (132–684 m)</option>
+        <option value="arty" data-i18n="optArty">SPH-2 Artillerie (~780–2629 m)</option>
+      </select>
+    </div>
+    <button onclick="calculate()" data-i18n="calc">Berechnen</button>
+  </div>
+
+  <div class="card result" id="result" style="display:none;">
+    <div class="label-important" data-i18n="distance">Distanz</div>
+    <div class="big" id="distance">—</div>
+    <div class="label-important" style="margin-top:12px;" data-i18n="compassAz">Kompass / Azimut</div>
+    <div class="compass" id="bearing">—</div>
+    <div class="label" data-i18n="azMilLabel">Azimut (6400 mil)</div>
+    <div class="az-mil" id="azMil">—</div>
+    <div id="milResult"></div>
+    <div id="status"></div>
+    <button class="btn-copy" id="copyBtn" onclick="copyResult(event)" data-i18n="copyBtn">📋 Ergebnis kopieren</button>
+  </div>
+
+  <div class="card" id="historyCard">
+    <div class="section-header" style="margin-bottom:8px;">
+      <h2 class="section-title" style="margin:0;" data-i18n="history">Letzte Schüsse</h2>
+      <button class="btn-secondary" onclick="clearHistory()" data-i18n="clear">Löschen</button>
+    </div>
+    <div id="historyList"><div style="color:#64748b; font-size:0.9rem;">Noch keine Schüsse</div></div>
+  </div>
+
+  <div class="note">
+    <span data-i18n="note1">1 Koordinaten-Einheit = 100 m · Community-Tabellen (nicht offiziell)</span><br>
+    <span data-i18n="note2">Höhe wird nicht berücksichtigt – immer nach dem ersten Schuss korrigieren.</span>
+  </div>
+</div>
+
+
+<div class="fb-calc-help">
+<a class="fb-guide-link" href="/guides/moerser-sph2/" data-i18n="calcGuideLink">Wie funktioniert der Rechner? → Guide „Mörser L81 &amp; SPH-2“</a>
+<details><summary><span aria-hidden="true">📖 </span><span data-i18n="help">Anleitung</span></summary><div class="help-body" data-i18n-html="helpHtml"></div></details>
+</div>
+</main>
+<footer class="fb-foot" id="siteFooter">
+<nav aria-label="Fußzeile"><a href="/" data-i18n="navHome">Start</a><a href="/guides/" data-i18n="navGuides">Guides</a><a href="/rechner/" data-i18n="navCalc" aria-current="page">Mörser-Rechner</a><a href="/slots/" data-i18n="navSlots">Slotmaschine</a><a href="/glossar/" data-i18n="navGlossary">Glossar</a><a href="/faq/" data-i18n="navFaq">FAQ</a><a href="/neu/" data-i18n="navNews">Was ist neu</a><a href="/impressum/" data-i18n="navImpressum">Impressum</a><a href="/datenschutz/" data-i18n="navPrivacy">Datenschutz</a></nav>
+<p class="disc" data-i18n="fbFooter">Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.</p>
+<p data-i18n="fbFooterSmall">WARDOGS ist eine Marke der jeweiligen Rechteinhaber. Alle Angaben ohne Gewähr.</p>
+</footer>
+<section class="music-bar" id="musicBar" aria-label="Musik von cloudybeatz">
+  <div class="music-embed" id="musicEmbed">
+    <div id="musicHost"></div>
+    <div class="music-placeholder" id="musicPlaceholder"></div>
+    <div class="music-consent" id="musicConsent" hidden><p><span data-i18n="musicConsentText">♪ Musik von cloudybeatz – Beim Abspielen werden Daten an Spotify übertragen.</span> <a href="/datenschutz/#spotify" data-i18n="musicConsentPrivacy">Datenschutz</a></p><button type="button" id="musicConsentBtn" data-i18n="musicConsentBtn">Player laden</button></div>
+    <div class="music-cover" id="musicCoverPlus" aria-hidden="true" hidden></div>
+    <div class="music-cover" id="musicCoverMore" aria-hidden="true" hidden></div>
+  </div>
+  <p class="music-toast" id="musicToast" role="status" aria-live="polite" hidden></p>
+</section>
+<button type="button" class="music-fab" id="musicFab" aria-controls="musicBar" aria-expanded="true" aria-label="Musik von cloudybeatz anzeigen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+
+<div class="share-backdrop" id="shareBackdrop" hidden></div>
+<div class="share-pop" id="sharePop" role="dialog" aria-modal="true" aria-labelledby="sharePopTitle" hidden>
+  <div class="share-pop-head">
+    <h2 class="share-pop-title" id="sharePopTitle" data-i18n="share">Seite teilen</h2>
+    <button type="button" class="drawer-close" id="shareClose" aria-label="Schließen" data-i18n-aria="closeShare">✕</button>
+  </div>
+  <div class="share-url-row">
+    <input type="text" id="shareUrl" value="https://oiotv.de/" readonly aria-label="Link zur Seite" data-i18n-aria="pageLink">
+    <button type="button" id="shareCopy" data-i18n="copyLink">Link kopieren</button>
+  </div>
+  <p class="share-msg" id="shareMsg" role="status" aria-live="polite"></p>
+  <div class="share-via" data-i18n="shareVia">Teilen über</div>
+  <div class="share-links" id="shareLinks"></div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="drawer-head">
+    <h2 class="drawer-title" id="drawerTitle"><small data-i18n="menuLabel">Menü</small>Frontbuch</h2>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Menü schließen" data-i18n-aria="menuClose">✕</button>
+  </div>
+  <nav class="drawer-body" aria-label="Hauptmenü" data-i18n-aria="mainNav">
+    <a class="menu-item" href="/"><span class="mi-icon" aria-hidden="true">🏠</span><span data-i18n="navHome">Start</span></a><a class="menu-item" href="/guides/"><span class="mi-icon" aria-hidden="true">📚</span><span data-i18n="navGuides">Guides</span></a><a class="menu-item" href="/rechner/" aria-current="page"><span class="mi-icon" aria-hidden="true">🎯</span><span data-i18n="navCalc">Mörser-Rechner</span></a><a class="menu-item" href="/slots/"><span class="mi-icon" aria-hidden="true">🎰</span><span data-i18n="navSlots">Slotmaschine</span></a><div class="drawer-sep" data-i18n="navMore">Mehr</div><a class="menu-item" href="/glossar/"><span class="mi-icon" aria-hidden="true">📖</span><span data-i18n="navGlossary">Glossar</span></a><a class="menu-item" href="/faq/"><span class="mi-icon" aria-hidden="true">❓</span><span data-i18n="navFaq">FAQ</span></a><a class="menu-item" href="/neu/"><span class="mi-icon" aria-hidden="true">🆕</span><span data-i18n="navNews">Was ist neu</span></a><div class="drawer-sep" data-i18n="navLegal">Rechtliches</div><a class="menu-item" href="/impressum/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navImpressum">Impressum</span></a><a class="menu-item" href="/datenschutz/"><span class="mi-icon" aria-hidden="true">§</span><span data-i18n="navPrivacy">Datenschutz</span></a>
+    <div class="drawer-sep" aria-hidden="true"></div>
+    <button type="button" class="menu-item" id="miInstall" aria-expanded="false" aria-controls="panelInstall">
+      <span class="mi-icon" aria-hidden="true">📲</span><span data-i18n="install">App installieren</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelInstall" role="region" aria-labelledby="miInstall" hidden>
+      <div id="installInstalled" hidden>
+        <p class="ok" data-i18n="installedOk">✓ Bereits installiert</p>
+        <p data-i18n="installedText">Du nutzt Frontbuch gerade als App.</p>
+      </div>
+      <div id="installPrompt" hidden>
+        <p data-i18n="installPromptText">Installiere Frontbuch als App.</p>
+        <button type="button" class="btn-install" id="installBtn" data-i18n="install">App installieren</button>
+      </div>
+      <div id="installManual" data-i18n-html="installManualHtml"></div>
+    </div>
+    <button type="button" class="menu-item" id="miAbout" aria-expanded="false" aria-controls="panelAbout">
+      <span class="mi-icon" aria-hidden="true">ℹ️</span><span data-i18n="about">Über / Hinweis</span><span class="mi-chev" aria-hidden="true">›</span>
+    </button>
+    <div class="menu-panel" id="panelAbout" role="region" aria-labelledby="miAbout" data-i18n-html="aboutHtml" hidden></div>
+    <button type="button" class="menu-item" id="miShare" aria-haspopup="dialog">
+      <span class="mi-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="mi-svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></span><span data-i18n="share">Seite teilen</span>
+    </button>
+  </nav>
+  <div class="drawer-foot" data-i18n="footer">Inoffizielle Fan-Seite</div>
+</aside>
+<script src="/assets/site.js?v=11"></script>
+<script src="/assets/rechner.js?v=11"></script>
+</body>
+</html>
