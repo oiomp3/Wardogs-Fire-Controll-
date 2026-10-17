@@ -621,6 +621,119 @@
   }
   .share-links a:hover { background: #1a2230; border-color: rgba(59,130,246,0.3); }
   .share-links .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  /* ---------- Musik-Player (Spotify, schlank) ---------- */
+  .music-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    max-width: 560px;
+    height: 80px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background: #282828;
+    box-shadow: 0 10px 32px rgba(0,0,0,0.55);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+  }
+  .music-bar.collapsed {
+    transform: translateY(calc(100% + 40px));
+    opacity: 0;
+    pointer-events: none;
+  }
+  .music-bar[hidden], .music-fab[hidden], .music-placeholder[hidden], .music-toast[hidden], .music-share[hidden] { display: none; }
+  .music-embed { position: relative; height: 80px; border-radius: 12px; overflow: hidden; }
+  .music-embed iframe { display: block; border: 0; border-radius: 12px; }
+  .music-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #a1a1aa;
+    background: #282828;
+  }
+  .music-share {
+    position: absolute;
+    top: 46px;
+    right: 98px;
+    z-index: 2;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--music-bg, #282828);
+    color: #fff;
+    box-shadow: none;
+    transition: background 0.3s;
+  }
+  .music-share:hover { transform: none; box-shadow: none; filter: brightness(1.15); }
+  .music-share svg { width: 20px; height: 20px; display: block; }
+  .music-share:focus-visible, .music-fab:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 2px; }
+  .music-toast {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    max-width: calc(100% - 16px);
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0b1220;
+    background: var(--orange);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+  .music-fab {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+    border: 1px solid rgba(196,181,253,0.35);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .music-fab.show { opacity: 1; transform: none; pointer-events: auto; }
+  .music-fab:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.5); filter: brightness(1.1); }
+  .music-fab.show:hover { transform: none; }
+  .music-fab svg { width: 22px; height: 22px; }
+  .music-fab.playing::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid #1DB954;
+    animation: musicPulse 1.6s ease-out infinite;
+  }
+  @keyframes musicPulse { from { opacity: 0.9; transform: scale(0.95); } to { opacity: 0; transform: scale(1.25); } }
+  @media (prefers-reduced-motion: reduce) {
+    .music-fab.playing::after { animation: none; }
+    .music-bar, .music-fab { transition: none; }
+  }
 </style>
 
 </head>
@@ -670,6 +783,16 @@
 <button type="button" class="share-head-btn" id="shareHeadBtn" aria-label="Seite teilen" data-i18n-aria="share" aria-haspopup="dialog">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class=""><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
 </button>
+
+<section class="music-bar" id="musicBar" aria-label="Musik von cloudybeatz">
+  <div class="music-embed" id="musicEmbed">
+    <div id="musicHost"></div>
+    <div class="music-placeholder" id="musicPlaceholder"></div>
+    <button type="button" class="music-share" id="musicShare" aria-label="Seite teilen" aria-haspopup="dialog" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
+  </div>
+  <p class="music-toast" id="musicToast" role="status" aria-live="polite" hidden></p>
+</section>
+<button type="button" class="music-fab" id="musicFab" aria-controls="musicBar" aria-expanded="true" aria-label="Musik von cloudybeatz anzeigen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
 
 <div class="share-backdrop" id="shareBackdrop" hidden></div>
 <div class="share-pop" id="sharePop" role="dialog" aria-modal="true" aria-labelledby="sharePopTitle" hidden>
@@ -1184,6 +1307,49 @@ const SHARE_I18N = {
 };
 Object.keys(SHARE_I18N).forEach(l => Object.assign(I18N[l], SHARE_I18N[l]));
 
+const MUSIC_I18N = {
+  de: {
+    musicBy: 'Musik von {name}',
+    musicShow: 'Musik von {name} anzeigen',
+    musicTapNext: 'Tippe im Spotify-Player auf ▶, um weiterzuhören.',
+    musicOffline: 'Offline – Spotify-Player nicht verfügbar',
+    musicFail: 'Spotify-Player konnte nicht geladen werden.',
+    musicLoading: 'Spotify-Player wird geladen …',
+    aboutSpotify: 'Der Musik-Player wird von Spotify geladen; dabei werden Daten (z. B. deine IP-Adresse) an Spotify übertragen.'
+  },
+  en: {
+    musicBy: 'Music by {name}',
+    musicShow: 'Show music by {name}',
+    musicTapNext: 'Tap ▶ in the Spotify player to keep listening.',
+    musicOffline: 'Offline – Spotify player unavailable',
+    musicFail: 'Could not load the Spotify player.',
+    musicLoading: 'Loading Spotify player …',
+    aboutSpotify: 'The music player is loaded from Spotify, which means data (e.g. your IP address) is sent to Spotify.'
+  },
+  es: {
+    musicBy: 'Música de {name}',
+    musicShow: 'Mostrar música de {name}',
+    musicTapNext: 'Toca ▶ en el reproductor de Spotify para seguir escuchando.',
+    musicOffline: 'Sin conexión: reproductor de Spotify no disponible',
+    musicFail: 'No se pudo cargar el reproductor de Spotify.',
+    musicLoading: 'Cargando el reproductor de Spotify…',
+    aboutSpotify: 'El reproductor de música se carga desde Spotify, por lo que se envían datos (p. ej., tu dirección IP) a Spotify.'
+  },
+  fr: {
+    musicBy: 'Musique de {name}',
+    musicShow: 'Afficher la musique de {name}',
+    musicTapNext: 'Appuyez sur ▶ dans le lecteur Spotify pour continuer l\u2019écoute.',
+    musicOffline: 'Hors ligne – lecteur Spotify indisponible',
+    musicFail: 'Impossible de charger le lecteur Spotify.',
+    musicLoading: 'Chargement du lecteur Spotify…',
+    aboutSpotify: 'Le lecteur de musique est chargé depuis Spotify\u00a0; des données (p.\u00a0ex. votre adresse IP) sont donc transmises à Spotify.'
+  }
+};
+Object.keys(MUSIC_I18N).forEach(l => {
+  Object.assign(I18N[l], MUSIC_I18N[l]);
+  I18N[l].aboutHtml = I18N[l].aboutHtml.replace(/<\/ul>\s*$/, '  <li>' + MUSIC_I18N[l].aboutSpotify + '</li>\n      </ul>');
+});
+
 const LANGS = {
   de: { name: 'Deutsch', flag: 'flag-de' },
   en: { name: 'English', flag: 'flag-gb' },
@@ -1518,6 +1684,7 @@ function applyLang() {
   renderResult();
   renderHistory();
   if (window.renderShare) window.renderShare();
+  if (window.renderMusic) window.renderMusic();
 }
 
 function setLang(code) {
@@ -1630,6 +1797,7 @@ if ('serviceWorker' in navigator) {
     main.inert = true;
     btn.inert = true;
     langWrap.inert = true;
+    ['musicBar', 'musicFab'].forEach(id => document.getElementById(id).inert = true);
     updateInstallUI();
     setTimeout(() => closeBtn.focus(), 30);
   }
@@ -1642,6 +1810,7 @@ if ('serviceWorker' in navigator) {
     main.inert = false;
     btn.inert = false;
     langWrap.inert = false;
+    ['musicBar', 'musicFab'].forEach(id => document.getElementById(id).inert = false);
     if (refocus !== false) (lastFocus && document.contains(lastFocus) ? lastFocus : btn).focus();
   }
 
@@ -1733,7 +1902,7 @@ if ('serviceWorker' in navigator) {
   const headBtn = document.getElementById('shareHeadBtn');
   const menuItem = document.getElementById('miShare');
   const menuBtn = document.getElementById('menuBtn');
-  const background = ['mainContent', 'menuBtn', 'langWrap', 'shareHeadBtn'].map(id => document.getElementById(id));
+  const background = ['mainContent', 'menuBtn', 'langWrap', 'shareHeadBtn', 'musicBar', 'musicFab'].map(id => document.getElementById(id));
   let returnFocus = null;
   let copyTimer = null;
 
@@ -1833,6 +2002,7 @@ if ('serviceWorker' in navigator) {
 
   urlInput.addEventListener('focus', () => urlInput.select());
 
+  window.fcShare = share;
   headBtn.addEventListener('click', () => share(headBtn));
   menuItem.addEventListener('click', () => {
     if (window.fcCloseMenu) window.fcCloseMenu(false);
@@ -1857,6 +2027,249 @@ if ('serviceWorker' in navigator) {
   });
 
   renderShare();
+})();
+
+// ---------- Musik-Player: Spotify-Vorschauen von cloudybeatz ----------
+// Track-Liste = Top-Tracks aus dem öffentlichen Spotify-Artist-Embed (Stand 17.10.2026).
+// Neue Releases erscheinen hier erst nach einem Update dieser Liste.
+  // 1. Can I Be for Real? – 3VKkgVw7qCtrvQ5OWrttLj
+  // 2. Hardstyle Raverz – 0sLNVGZRddExhb4cun8z36
+  // 3. Won't Stay – 3Yjh8SWU063b46lFBhsRm4
+  // 4. Heart of Iron – 4rb2oi1eHqQG3ic4Qm21u8
+  // 5. Please Stab Me.... – 4qnTOVMzGx91r2dNtbuwAC
+  // 6. Dont Leave (explicit) – 5f2nKgvzGUutHSbfBS1iGN
+  // 7. Night Times – 7tUCTIYPPiiNc8NXkHVLlv
+  // 8. Ashes of the Fallen – 2bqLlvOmcQ2aC1n8hxx2vK
+  // 9. R.a.W – 49yzGd69TSWivEVh66dET5
+  // 10. L O V E S I C K – 0JiuhcOJCaejzvPOXAl1hN
+const MUSIC = {
+  name: 'cloudybeatz',
+  tracks: ["3VKkgVw7qCtrvQ5OWrttLj", "0sLNVGZRddExhb4cun8z36", "3Yjh8SWU063b46lFBhsRm4", "4rb2oi1eHqQG3ic4Qm21u8", "4qnTOVMzGx91r2dNtbuwAC", "5f2nKgvzGUutHSbfBS1iGN", "7tUCTIYPPiiNc8NXkHVLlv", "2bqLlvOmcQ2aC1n8hxx2vK", "49yzGd69TSWivEVh66dET5", "0JiuhcOJCaejzvPOXAl1hN"],
+  // Hintergrundfarbe des Spotify-Players je Track (für den Teilen-Button über dem „+“)
+  colors: {"3VKkgVw7qCtrvQ5OWrttLj": "#7821ac", "0sLNVGZRddExhb4cun8z36": "#380000", "3Yjh8SWU063b46lFBhsRm4": "#972700", "4rb2oi1eHqQG3ic4Qm21u8": "#0d5395", "4qnTOVMzGx91r2dNtbuwAC": "#535353", "5f2nKgvzGUutHSbfBS1iGN": "#485048", "7tUCTIYPPiiNc8NXkHVLlv": "#102038", "2bqLlvOmcQ2aC1n8hxx2vK": "#28586f", "49yzGd69TSWivEVh66dET5": "#9f0000", "0JiuhcOJCaejzvPOXAl1hN": "#9f0000"},
+  previewMs: 30000,
+  collapseMs: 6000
+};
+
+(function () {
+  const bar = document.getElementById('musicBar');
+  const fab = document.getElementById('musicFab');
+  const host = document.getElementById('musicHost');
+  const placeholder = document.getElementById('musicPlaceholder');
+  const toast = document.getElementById('musicToast');
+  const shareBtn = document.getElementById('musicShare');
+  const n = MUSIC.tracks.length;
+
+  let idx = 0;
+  try {
+    localStorage.removeItem('wardogsMusic'); // alter Minimiert-Status aus v6
+    const savedIdx = parseInt(localStorage.getItem('wardogsMusicIdx'), 10);
+    if (savedIdx >= 0 && savedIdx < n) idx = savedIdx;
+  } catch (e) {}
+
+  let ctl = null;
+  let apiRequested = false;
+  let isPlaying = false;
+  let pendingPlay = false;
+  let advancing = false;
+  let last = { pos: 0, dur: 0, playing: false };
+  let blockTimer = null;
+  let toastTimer = null;
+  let collapseTimer = null;
+  let collapsed = false;
+  let hovering = false;
+  let phKey = 'musicLoading';
+
+  const uri = (i) => 'spotify:track:' + MUSIC.tracks[i];
+
+  function renderMusic() {
+    bar.setAttribute('aria-label', t('musicBy', { name: MUSIC.name }));
+    fab.setAttribute('aria-label', t('musicShow', { name: MUSIC.name }));
+    shareBtn.setAttribute('aria-label', t('share'));
+    fab.classList.toggle('playing', isPlaying);
+    const f = bar.querySelector('iframe');
+    if (f) f.title = t('musicBy', { name: MUSIC.name });
+    if (!placeholder.hidden) placeholder.textContent = t(phKey);
+    if (!toast.hidden) toast.textContent = t('musicTapNext');
+  }
+  window.renderMusic = renderMusic;
+
+  // ----- Teilen-Button exakt über dem „+“ des Spotify-Players -----
+  function placeShare() {
+    const w = bar.clientWidth;
+    // Spotify-Layout (gemessen): „+“ 24×24 bei top 48, Abstand rechts 100 px (ab 360 px Breite) bzw. 84 px
+    const right = w >= 360 ? 100 : 84;
+    shareBtn.style.right = (right - 2) + 'px';
+    shareBtn.style.setProperty('--music-bg', MUSIC.colors[MUSIC.tracks[idx]] || '#282828');
+  }
+
+  function showPlaceholder(key) {
+    phKey = key;
+    placeholder.textContent = t(key);
+    placeholder.hidden = false;
+    shareBtn.hidden = true;
+  }
+
+  // ----- Auto-Einklappen -----
+  function clearCollapse() { clearTimeout(collapseTimer); collapseTimer = null; }
+  function scheduleCollapse() {
+    clearCollapse();
+    const a = document.activeElement;
+    // Fokus auf eigenen Elementen im Player pausiert den Timer (Fokus im Spotify-iframe nicht – sonst klappt er auf Touch-Geräten nie ein)
+    if (collapsed || hovering || (a && a.tagName !== 'IFRAME' && bar.contains(a) && a.matches(':focus-visible'))) return;
+    collapseTimer = setTimeout(() => collapse(), MUSIC.collapseMs);
+  }
+  function collapse() {
+    if (collapsed) return;
+    if (!toast.hidden) return; // Hinweis sichtbar → offen lassen
+    clearCollapse();
+    collapsed = true;
+    bar.classList.add('collapsed');
+    bar.inert = true;
+    bar.setAttribute('aria-hidden', 'true');
+    fab.classList.add('show');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.tabIndex = 0;
+  }
+  function expand(focusPlayer) {
+    collapsed = false;
+    bar.classList.remove('collapsed');
+    bar.inert = false;
+    bar.removeAttribute('aria-hidden');
+    fab.classList.remove('show');
+    fab.setAttribute('aria-expanded', 'true');
+    fab.tabIndex = -1;
+    placeShare();
+    ensureApi();
+    if (focusPlayer && !shareBtn.hidden) shareBtn.focus({ preventScroll: true });
+    else if (document.activeElement === fab) fab.blur();
+    scheduleCollapse();
+  }
+  function interact() { if (!collapsed) scheduleCollapse(); }
+
+  bar.addEventListener('pointerenter', () => { hovering = true; clearCollapse(); });
+  bar.addEventListener('pointerleave', () => { hovering = false; scheduleCollapse(); });
+  bar.addEventListener('focusin', clearCollapse);
+  bar.addEventListener('focusout', () => setTimeout(scheduleCollapse, 0));
+  // Klick/Tipp in den (fremden) Spotify-iframe → Fenster verliert den Fokus
+  window.addEventListener('blur', () => {
+    setTimeout(() => {
+      const a = document.activeElement;
+      if (a && a.tagName === 'IFRAME' && bar.contains(a)) interact();
+    }, 0);
+  });
+  // Scrollen oder Tippen außerhalb → einklappen
+  window.addEventListener('scroll', () => { if (!hovering) collapse(); }, { passive: true });
+  document.addEventListener('pointerdown', (e) => {
+    if (!bar.contains(e.target) && !fab.contains(e.target)) collapse();
+  });
+  fab.addEventListener('click', (e) => expand(e.detail === 0)); // Fokus nur bei Tastaturbedienung verschieben
+  shareBtn.addEventListener('click', () => { if (window.fcShare) window.fcShare(shareBtn); });
+
+  // ----- Hinweis-Toast (strenge Autoplay-Regeln) -----
+  function showToast(show) {
+    clearTimeout(toastTimer);
+    toast.hidden = !show;
+    if (show) {
+      toast.textContent = t('musicTapNext');
+      if (collapsed) expand(false);
+      clearCollapse();
+      toastTimer = setTimeout(() => { toast.hidden = true; scheduleCollapse(); }, 8000);
+    }
+  }
+
+  // ----- Spotify iFrame API -----
+  function onReady() {
+    placeholder.hidden = true;
+    shareBtn.hidden = false;
+    placeShare();
+    renderMusic();
+    if (pendingPlay) {
+      pendingPlay = false;
+      ctl.play();
+      clearTimeout(blockTimer);
+      // Manche Browser blockieren Autoplay im neu geladenen Player → kurzer Hinweis
+      blockTimer = setTimeout(() => { if (!isPlaying) showToast(true); }, 3500);
+    } else if (!collapsed) {
+      scheduleCollapse();
+    }
+  }
+
+  function onUpdate(e) {
+    const d = (e && e.data) || {};
+    if (d.playingURI && d.playingURI !== uri(idx)) return; // Nachzügler des vorherigen Songs
+    const playing = !d.isPaused;
+    if (playing !== isPlaying) {
+      isPlaying = playing;
+      fab.classList.toggle('playing', isPlaying);
+      interact(); // Play/Pause im Player = Interaktion
+    }
+    if (playing && !toast.hidden) showToast(false);
+    const pos = d.position || 0;
+    const dur = d.duration || 0;
+    if (!advancing) {
+      const cutOff = playing && pos >= MUSIC.previewMs;
+      // Ende der Vorschau: Spotify meldet position === duration und sendet danach keine Updates mehr
+      const ended = dur > 0 && pos >= dur - 250 && (playing || last.playing);
+      if (cutOff || ended) { advancing = true; go(idx + 1, true); return; }
+    }
+    last = { pos, dur, playing };
+  }
+
+  function go(i, play) {
+    idx = ((i % n) + n) % n;
+    try { localStorage.setItem('wardogsMusicIdx', String(idx)); } catch (e) {}
+    last = { pos: 0, dur: 0, playing: false };
+    isPlaying = false;
+    placeShare();
+    if (!ctl) { pendingPlay = pendingPlay || play; return; }
+    pendingPlay = play;
+    ctl.loadUri(uri(idx));
+    setTimeout(() => { advancing = false; }, 1200);
+  }
+  window.fcMusicNext = () => go(idx + 1, true);
+
+  function ensureApi() {
+    if (apiRequested) return;
+    if (!navigator.onLine) { showPlaceholder('musicOffline'); return; }
+    apiRequested = true;
+    showPlaceholder('musicLoading');
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      IFrameAPI.createController(host, { uri: uri(idx), width: '100%', height: 80 }, (c) => {
+        ctl = c;
+        c.addListener('ready', onReady);
+        c.addListener('playback_update', onUpdate);
+      });
+    };
+    const sc = document.createElement('script');
+    sc.src = 'https://open.spotify.com/embed/iframe-api/v1';
+    sc.async = true;
+    sc.onerror = () => {
+      apiRequested = false;
+      sc.remove();
+      showPlaceholder(navigator.onLine ? 'musicFail' : 'musicOffline');
+      scheduleCollapse();
+    };
+    document.head.appendChild(sc);
+  }
+
+  window.addEventListener('online', () => { if (!apiRequested) ensureApi(); });
+  window.addEventListener('offline', () => { if (!ctl) showPlaceholder('musicOffline'); });
+  window.addEventListener('resize', placeShare);
+  if ('ResizeObserver' in window) new ResizeObserver(placeShare).observe(bar);
+
+  // Platz unten nur für das kleine Musik-Icon
+  document.body.style.paddingBottom = '84px';
+  fab.tabIndex = -1;
+  renderMusic();
+  placeShare();
+  showPlaceholder('musicLoading');
+  // Player erst nach dem Laden der Seite im Leerlauf nachladen (Performance)
+  const lazyStart = () => {
+    (window.requestIdleCallback || ((f) => setTimeout(f, 1200)))(() => ensureApi(), { timeout: 3000 });
+    scheduleCollapse();
+  };
+  if (document.readyState === 'complete') lazyStart(); else window.addEventListener('load', lazyStart);
 })();
 </script>
 </body>
