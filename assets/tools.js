@@ -20,8 +20,14 @@
   function warn(v) {
     return v && v.f === 'c' ? `<span class="fbt-warn" role="img" title="${esc(t('tCommunity'))}" aria-label="${esc(t('tCommunity'))}">⚠</span>` : '';
   }
+  const SIGNED = { vrec: ' %', hrec: ' %', spread: ' %', ads: ' %', adsSec: ' s' };
+  const TONE = { vrec: 1, hrec: 1, ads: 1, adsSec: 1 };
+  const fname = f => (I18N.de['fld_' + f] ? t('fld_' + f) : D.fields[f]);
+  const sgn = (x, unit) => (x > 0 ? '+' : x < 0 ? '−' : '±') + nf(Math.abs(x)) + unit;
   function fmt(field, x) {
     if (typeof x === 'number') {
+      if (SIGNED[field]) { const txt = sgn(x, SIGNED[field]); return TONE[field] && x ? `<span class="fbt-tone ${x < 0 ? 'good' : 'bad'}">${txt}</span>` : txt; }
+      if (field === 'zoom') return nf(x) + '×';
       if (MONEY.includes(field)) return x === 0 ? esc(t('tFree')) : nf(x) + ' $';
       if (PCT.includes(field)) return x + ' %';
       return nf(x);
@@ -38,7 +44,7 @@
   function num(item, f) { const v = item && item[f]; return v && typeof v.v === 'number' ? v.v : null; }
   function catName(c) { return D.cats[c] || c; }
   function money(n) { return nf(n) + ' $'; }
-  const CAT_EMO = { weapon: '🔫', vehicle: '🚙', buildable: '🏗️', attachment: '🔧', equipment: '🧰', armor: '🦺', gear: '🎒' };
+  const CAT_EMO = { weapon: '🔫', vehicle: '🚙', buildable: '🏗️', attachment: '🔧', equipment: '🧰', armor: '🦺', gear: '🎒', magazine: '📦', ammo: '💥' };
   function pic(i, sz, cls) {
     if (!i || !i.img) { const w = i && i.cat === 'weapon' ? sz * 2 : sz; return `<span class="fbt-pic none ${w > sz ? 'wide ' : ''}${cls || ''}" style="width:${w}px;height:${sz}px;font-size:${Math.round(sz * (w > sz ? .34 : .55))}px" aria-hidden="true">${w > sz ? esc(i.name.split(' ')[0].slice(0, 7)) : (CAT_EMO[i && i.cat] || '•')}</span>`; }
     const w = i.cat === 'weapon' ? sz * 2 : sz;
@@ -104,7 +110,7 @@
       renderCompare();
     }
     function fieldRows(i) {
-      return FIELD_ORDER.filter(f => has(i, f)).map(f => `<tr><th scope="row">${esc(D.fields[f])}</th><td>${val(i, f)}</td></tr>`).join('');
+      return FIELD_ORDER.filter(f => has(i, f)).map(f => `<tr><th scope="row">${esc(fname(f))}</th><td>${val(i, f)}</td></tr>`).join('');
     }
     const LOK = { primary: 'p', secondary: 's', launcher: 'l', helmet: 'h', vest: 'v', rig: 'r', backpack: 'b' };
     function loLink(i) {
@@ -119,9 +125,11 @@
       if (!i) return;
       const srcs = [...new Set(FIELD_ORDER.filter(f => has(i, f)).map(f => i[f].s))].filter(k => D.sources[k]);
       const fw = (i.for ? [i.for] : (i.fits || [])).filter(w => BY[w]);
-      const compat = fw.length ? `<p>${esc(t('tCompatOk'))}: ${fw.map(w => `<b>${esc(BY[w].name)}</b>`).join(', ')}${i.fits && i.fits.length ? warn({ f: 'c' }) : ''}</p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
+      const compat = fw.length ? `<p>${esc(t('tCompatOk'))}: ${fw.map(w => `<a href="/tools/datenbank/?id=${w}"><b>${esc(BY[w].name)}</b></a>`).join(', ')}${i.fits && i.fits.length ? warn({ f: 'c' }) : ''}</p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
+      const mg = i.cat === 'weapon' ? D.items.filter(m => m.cat === 'magazine' && (m.fits || []).includes(id)).sort((x, y) => (num(x, 'cap') || 0) - (num(y, 'cap') || 0)) : [];
+      const mags = mg.length ? `<p>${esc(t('dbMags'))}: ${mg.map(m => `<a href="/tools/datenbank/?id=${m.id}">${esc(m.name)}</a>`).join(', ')}${warn({ f: 'c' })}</p>` : '';
       const dm = dmgMag(i);
-      const missing = FIELD_ORDER.filter(f => !has(i, f) && ['track', 'level', 'unlock', 'price'].includes(f)).map(f => D.fields[f]);
+      const missing = ['magazine', 'ammo'].includes(i.cat) ? [] : FIELD_ORDER.filter(f => !has(i, f) && ['track', 'level', 'unlock', 'price'].includes(f)).map(f => fname(f));
       const du = '/tools/datenbank/?id=' + id;
       const xl = [loLink(i)].concat(i.cat === 'weapon' ? [`<a href="/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>`] : [],
         tierOf(id).map(([c, tr]) => `<a href="/tools/tierlist/#t-${id}">🏆 ${esc(t('dbInTier'))}: <b>${esc(tr)}</b>&nbsp;<small lang="de">${esc(c)}</small></a>`)).filter(Boolean).join('');
@@ -131,7 +139,7 @@
 ${xl ? `<div class="fbt-xlinks">${xl}</div>` : ''}
 <div class="fb-tablewrap"><table class="fbt-kv"><tbody>${fieldRows(i) || `<tr><td>${unk()}</td></tr>`}${dm !== null ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th><td>${nf(dm)}${warn({ f: 'c' })}</td></tr>` : ''}</tbody></table></div>
 ${missing.length ? `<p class="fbt-sub">${esc(t('tMissingFields'))}: ${missing.map(esc).join(', ')}</p>` : ''}
-${compat}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}
+${compat}${mags}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}
 ${gm.length ? `<h3>${esc(t('dbInGuides'))}</h3><ul class="fbt-glinks">${gm.map(([sl, ti, ic]) => `<li><a href="/guides/${esc(sl)}/" lang="de"><span aria-hidden="true">${esc(ic)}</span> ${esc(ti)}</a></li>`).join('')}</ul>` : ''}
 <h3>${esc(t('tSources'))}</h3><ul class="fbt-srclist">${srcs.map(k => `<li><a href="${esc(D.sources[k].url)}" target="_blank" rel="noopener noreferrer">${esc(D.sources[k].title)}</a>${D.sources[k].type === 'community' ? ' ⚠' : ''}</li>`).join('') || '<li>–</li>'}</ul>`;
       detail.hidden = false;
@@ -155,14 +163,14 @@ ${gm.length ? `<h3>${esc(t('dbInGuides'))}</h3><ul class="fbt-glinks">${gm.map((
       if (!sel.length) { cmpBox.hidden = true; return; }
       const items = sel.map(id => BY[id]);
       const fields = FIELD_ORDER.filter(f => items.some(i => has(i, f)));
-      const HI = { dmg: 1, hdmg: 1, rpm: 1, mag: 1, magmax: 1, dr: 1, supp: 1, price: -1, unlock: -1, weight: -1 };
+      const HI = { dmg: 1, hdmg: 1, rpm: 1, mag: 1, magmax: 1, dr: 1, supp: 1, price: -1, unlock: -1, weight: -1, vrec: -1, hrec: -1, ads: -1, adsSec: -1 };
       const best = f => { if (!HI[f] || items.length < 2) return null; const xs = items.map(i => num(i, f)).filter(x => x !== null); if (xs.length < 2) return null; const b = HI[f] > 0 ? Math.max(...xs) : Math.min(...xs); return xs.every(x => x === b) ? null : b; };
       const dms = items.map(dmgMag), dmb = dms.filter(x => x !== null).length > 1 ? Math.max(...dms.filter(x => x !== null)) : null;
       cmpBox.hidden = false;
       cmpBox.innerHTML = `<div class="fbt-detail-head"><h2>${esc(t('tCompare'))} (${items.length}/3)</h2><button type="button" class="fbt-btn ghost" id="dbCmpClear">${esc(t('tCompareClear'))}</button></div>
 <div class="fb-tablewrap"><table class="fbt-cmp-table"><thead><tr><th></th>${items.map(i => `<th scope="col">${pic(i, 48, 'cmp')}<span>${esc(i.name)}</span></th>`).join('')}</tr></thead><tbody>
 <tr><th scope="row">${esc(t('tCat'))}</th>${items.map(i => `<td>${esc(catName(i.cat))} · ${esc(i.type)}</td>`).join('')}</tr>
-${fields.map(f => { const b = best(f); return `<tr><th scope="row">${esc(D.fields[f])}</th>${items.map(i => `<td${b !== null && num(i, f) === b ? ' class="best"' : ''}>${val(i, f)}</td>`).join('')}</tr>`; }).join('')}
+${fields.map(f => { const b = best(f); return `<tr><th scope="row">${esc(fname(f))}</th>${items.map(i => `<td${b !== null && num(i, f) === b ? ' class="best"' : ''}>${val(i, f)}</td>`).join('')}</tr>`; }).join('')}
 ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dms.map(x => `<td${dmb !== null && x === dmb ? ' class="best"' : ''}>${x === null ? unk() : nf(x) + warn({ f: 'c' })}</td>`).join('')}</tr>` : ''}
 </tbody></table></div>`;
       $('#dbCmpClear').addEventListener('click', () => { sel.length = 0; cmpMsg.textContent = ''; render(); });
@@ -333,7 +341,15 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       el('loWpn').innerHTML = ['p', 's', 'l'].map(k => BY[st[k]]).filter(Boolean).map(i => {
         const c = (lab, x) => `<span class="lo-wst"><small>${esc(lab)}</small><b>${x}</b></span>`, dm = dmgMag(i);
         const mags = has(i, 'mag') ? val(i, 'mag', false) + (num(i, 'magmax') !== null && num(i, 'magmax') !== num(i, 'mag') ? ' / ' + val(i, 'magmax', false) : '') : unk();
-        return `<div class="lo-wrow" data-w="${i.id}">${pic(i, 30, 'wpn')}<div><b class="lo-wname">${esc(i.name)}</b><div class="lo-wstats">${c(t('tDmgBody'), val(i, 'dmg', false))}${c(t('tDmgHead'), val(i, 'hdmg', false))}${c('RPM', val(i, 'rpm', false))}${c(t('tMagShort'), mags)}${c(t('tDmgMag'), dm === null ? unk() : nf(dm) + warn({ f: 'c' }))}</div></div></div>`;
+        let rec = '';
+        if (i.id === st.p) {
+          const A = st.a.map(id => BY[id]).filter(a => a && (num(a, 'vrec') !== null || num(a, 'hrec') !== null));
+          if (A.length) {
+            const sv = A.reduce((x, a) => x + (num(a, 'vrec') || 0), 0), sh = A.reduce((x, a) => x + (num(a, 'hrec') || 0), 0);
+            rec = c(t('tRecoil'), `<span class="lo-rec">V ${fmt('vrec', sv)} · H ${fmt('hrec', sh)}</span>${warn({ f: 'c' })}`);
+          }
+        }
+        return `<div class="lo-wrow" data-w="${i.id}">${pic(i, 30, 'wpn')}<div><b class="lo-wname">${esc(i.name)}</b><div class="lo-wstats">${c(t('tDmgBody'), val(i, 'dmg', false))}${c(t('tDmgHead'), val(i, 'hdmg', false))}${c('RPM', val(i, 'rpm', false))}${c(t('tMagShort'), mags)}${c(t('tDmgMag'), dm === null ? unk() : nf(dm) + warn({ f: 'c' }))}${rec}</div></div></div>`;
       }).join('');
       sum.innerHTML = T.n ? `<div class="fb-tablewrap"><table class="fbt-kv lo-list"><tbody>${T.c.map(([i, n]) => {
         const p = num(i, 'price');

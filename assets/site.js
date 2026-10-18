@@ -840,6 +840,9 @@ Object.keys(FB_TOOLS_I18N).forEach(l => Object.assign(I18N[l], FB_TOOLS_I18N[l])
 // ---------- Frontbuch v15: neue UI-Texte ----------
 const FB15_I18N = {
   de: {
+    dbMags: 'Magazine',
+    fld_cap: 'Kapazität (Schuss)', fld_bdmg: 'Schaden', fld_arms: 'Waffenklasse',
+    tRecoil: 'Rückstoß', fld_vrec: 'Vertikaler Rückstoß (%)', fld_hrec: 'Horizontaler Rückstoß (%)', fld_spread: 'Streuung (%)', fld_ads: 'ADS-Zeit (%)', fld_adsSec: 'ADS-Zeit (s)', fld_zoom: 'Zoom',
     cmpMagMax: 'Größtes Magazin',
     tabNav: 'Schnellnavigation', tabSearch: 'Suche', tabMenu: 'Menü', searchBtn: 'Suchen', sPh: 'Guides, Waffen, Begriffe …',
     sAll: 'Alle', sClose: 'Schließen', sResults: 'Ergebnisse', sNone: 'Nichts gefunden.', sRecent: 'Zuletzt angesehen', sQuick: 'Schnellzugriff',
@@ -852,6 +855,9 @@ const FB15_I18N = {
     titleFavs: 'Merkliste · Frontbuch', guidesN: '{n} Guides', minRead: '{n} Min.'
   },
   en: {
+    dbMags: 'Magazines',
+    fld_cap: 'Capacity (rounds)', fld_bdmg: 'Damage', fld_arms: 'Arms class',
+    tRecoil: 'Recoil', fld_vrec: 'Vertical recoil (%)', fld_hrec: 'Horizontal recoil (%)', fld_spread: 'Spread (%)', fld_ads: 'ADS time (%)', fld_adsSec: 'ADS time (s)', fld_zoom: 'Zoom',
     cmpMagMax: 'Largest magazine',
     tabNav: 'Quick navigation', tabSearch: 'Search', tabMenu: 'Menu', searchBtn: 'Search', sPh: 'Guides, weapons, terms …',
     sAll: 'All', sClose: 'Close', sResults: 'Results', sNone: 'Nothing found.', sRecent: 'Recently viewed', sQuick: 'Quick access',
@@ -864,6 +870,9 @@ const FB15_I18N = {
     titleFavs: 'Saved · Frontbuch', guidesN: '{n} guides', minRead: '{n} min'
   },
   es: {
+    dbMags: 'Cargadores',
+    fld_cap: 'Capacidad (balas)', fld_bdmg: 'Daño', fld_arms: 'Clase de arma',
+    tRecoil: 'Retroceso', fld_vrec: 'Retroceso vertical (%)', fld_hrec: 'Retroceso horizontal (%)', fld_spread: 'Dispersión (%)', fld_ads: 'Tiempo de apuntado (%)', fld_adsSec: 'Tiempo de apuntado (s)', fld_zoom: 'Zoom',
     cmpMagMax: 'Cargador más grande',
     tabNav: 'Navegación rápida', tabSearch: 'Buscar', tabMenu: 'Menú', searchBtn: 'Buscar', sPh: 'Guías, armas, términos …',
     sAll: 'Todo', sClose: 'Cerrar', sResults: 'Resultados', sNone: 'No se encontró nada.', sRecent: 'Vistos recientemente', sQuick: 'Acceso rápido',
@@ -876,6 +885,9 @@ const FB15_I18N = {
     titleFavs: 'Guardados · Frontbuch', guidesN: '{n} guías', minRead: '{n} min'
   },
   fr: {
+    dbMags: 'Chargeurs',
+    fld_cap: 'Capacité (cartouches)', fld_bdmg: 'Dégâts', fld_arms: 'Classe d’arme',
+    tRecoil: 'Recul', fld_vrec: 'Recul vertical (%)', fld_hrec: 'Recul horizontal (%)', fld_spread: 'Dispersion (%)', fld_ads: 'Temps de visée (%)', fld_adsSec: 'Temps de visée (s)', fld_zoom: 'Zoom',
     cmpMagMax: 'Plus grand chargeur',
     tabNav: 'Navigation rapide', tabSearch: 'Recherche', tabMenu: 'Menu', searchBtn: 'Rechercher', sPh: 'Guides, armes, termes …',
     sAll: 'Tout', sClose: 'Fermer', sResults: 'Résultats', sNone: 'Aucun résultat.', sRecent: 'Vus récemment', sQuick: 'Accès rapide',
@@ -1598,7 +1610,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '15';
+      sc.src = '/assets/search-data.js?v=' + '16';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

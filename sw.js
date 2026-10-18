@@ -1,8 +1,8 @@
-// Frontbuch Service Worker v15
+// Frontbuch Service Worker v16
 // - Precache: App-Shell + Rechner + Slots + Offline-Seite
 // - HTML (Navigation): network-first, besuchte Seiten werden zwischengespeichert
 // - Gleiche Herkunft, nur GET; alles andere (Spotify usw.) geht direkt ans Netz
-const CACHE_NAME = 'frontbuch-v15';
+const CACHE_NAME = 'frontbuch-v16';
 const PRECACHE = [
   "/",
   "/rechner/",
@@ -14,15 +14,16 @@ const PRECACHE = [
   "/icon-192.png",
   "/icon-512.png",
   "/favicon.ico",
-  "/assets/site.css?v=15",
-  "/assets/site.js?v=15",
-  "/assets/rechner.js?v=15",
-  "/assets/slots.js?v=15",
-  "/assets/guides.js?v=15",
-  "/assets/guides-data.js?v=15",
-  "/assets/data.js?v=15",
-  "/assets/tools.js?v=15",
-  "/assets/search-data.js?v=15"
+  "/favicon.svg",
+  "/assets/site.css?v=16",
+  "/assets/site.js?v=16",
+  "/assets/rechner.js?v=16",
+  "/assets/slots.js?v=16",
+  "/assets/guides.js?v=16",
+  "/assets/guides-data.js?v=16",
+  "/assets/data.js?v=16",
+  "/assets/tools.js?v=16",
+  "/assets/search-data.js?v=16"
 ];
 
 self.addEventListener('install', (event) => {
