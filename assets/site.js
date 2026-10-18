@@ -576,7 +576,7 @@ const FB_I18N = {
     guidesTitle: 'Alle Guides', guidesLead: 'Filtere nach Kategorie oder suche nach Stichworten.',
     crumbHome: 'Start', crumbLabel: 'Brotkrumen-Navigation',
     calcGuideLink: 'Wie funktioniert der Rechner? → Guide „Mörser L81 & SPH-2“',
-    titleHome: 'Frontbuch – Guides & Tools für WARDOGS', titleCalc: 'Mörser-Rechner (L81 & SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guides und Tools für WARDOGS', titleCalc: 'Mörser-Rechner (L81 und SPH-2) · Frontbuch',
     titleSlots: 'Slotmaschine (Spielgeld) · Frontbuch', titleGuides: 'Alle Guides · Frontbuch',
     slotPageLead: 'Ein kleines Spiel zum Zeitvertreib. Es geht nur um Spielgeld, das in deinem Browser gespeichert wird.',
     nfTitle: 'Seite nicht gefunden', nfText: 'Diese Seite gibt es nicht (mehr). Vielleicht hilft die Suche?', nfBack: 'Zur Startseite',
@@ -584,7 +584,7 @@ const FB_I18N = {
     skip: 'Zum Inhalt springen',
     installedText: 'Du nutzt Frontbuch gerade als App.',
     installPromptText: 'Installiere Frontbuch als App – mit eigenem Icon. Rechner und besuchte Seiten funktionieren auch offline.',
-    shareText: 'Frontbuch – Guides & Tools für WARDOGS',
+    shareText: 'Frontbuch – Guides und Tools für WARDOGS',
     aboutHtml: `<p><strong>Frontbuch</strong> ist eine <strong>inoffizielle Fan-Seite</strong> zu WARDOGS – nicht verbunden mit BULKHEAD oder Team17.</p>
       <ul>
         <li>Die Guides sind eigene Texte. Fakten stammen aus öffentlichen Quellen, die unter jedem Guide verlinkt sind.</li>
@@ -617,7 +617,7 @@ const FB_I18N = {
     guidesTitle: 'All guides', guidesLead: 'Filter by category or search by keyword.',
     crumbHome: 'Home', crumbLabel: 'Breadcrumb',
     calcGuideLink: 'How does it work? → Guide \u201cMörser L81 & SPH-2\u201d (German)',
-    titleHome: 'Frontbuch – Guides & tools for WARDOGS', titleCalc: 'Mortar calculator (L81 & SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'Mortar calculator (L81 and SPH-2) · Frontbuch',
     titleSlots: 'Slot machine (play money) · Frontbuch', titleGuides: 'All guides · Frontbuch',
     slotPageLead: 'A little game to pass the time. Play money only, stored in your browser.',
     nfTitle: 'Page not found', nfText: 'This page does not exist (any more). Maybe the search helps?', nfBack: 'Back to home',
@@ -625,7 +625,7 @@ const FB_I18N = {
     skip: 'Skip to content',
     installedText: 'You are currently using Frontbuch as an app.',
     installPromptText: 'Install Frontbuch as an app – with its own icon. The calculator and visited pages also work offline.',
-    shareText: 'Frontbuch – guides & tools for WARDOGS',
+    shareText: 'Frontbuch – guides and tools for WARDOGS',
     aboutHtml: `<p><strong>Frontbuch</strong> is an <strong>unofficial fan site</strong> about WARDOGS – not affiliated with BULKHEAD or Team17.</p>
       <ul>
         <li>The guides are original texts (currently German only). Facts come from public sources linked below each guide.</li>
@@ -1610,7 +1610,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '16';
+      sc.src = '/assets/search-data.js?v=' + '17';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
