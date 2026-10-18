@@ -559,7 +559,7 @@ const FB_I18N = {
     siteSub: 'Guides & Tools für WARDOGS',
     navHome: 'Start', navGuides: 'Guides', navCalc: 'Mörser-Rechner', navSlots: 'Slotmaschine',
     navGlossary: 'Glossar', navFaq: 'FAQ', navNews: 'Was ist neu', navImpressum: 'Impressum', navPrivacy: 'Datenschutz',
-    navMore: 'Mehr', navLegal: 'Rechtliches',
+    navMore: 'Mehr', discordJoin: 'Discord beitreten', navLegal: 'Rechtliches',
     fbFooter: 'Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.',
     fbFooterSmall: 'WARDOGS ist eine Marke der jeweiligen Rechteinhaber. Alle Angaben ohne Gewähr.',
     footer: 'Inoffizielle Fan-Seite',
@@ -600,7 +600,7 @@ const FB_I18N = {
     siteSub: 'Guides & tools for WARDOGS',
     navHome: 'Home', navGuides: 'Guides', navCalc: 'Mortar calculator', navSlots: 'Slot machine',
     navGlossary: 'Glossary', navFaq: 'FAQ', navNews: 'What\u2019s new', navImpressum: 'Legal notice', navPrivacy: 'Privacy',
-    navMore: 'More', navLegal: 'Legal',
+    navMore: 'More', discordJoin: 'Join Discord', navLegal: 'Legal',
     fbFooter: 'Unofficial fan site, not affiliated with BULKHEAD or Team17.',
     fbFooterSmall: 'WARDOGS is a trademark of its respective owners. All information without guarantee.',
     footer: 'Unofficial fan site',
@@ -641,7 +641,7 @@ const FB_I18N = {
     siteSub: 'Guías y herramientas para WARDOGS',
     navHome: 'Inicio', navGuides: 'Guías', navCalc: 'Calculadora de mortero', navSlots: 'Tragaperras',
     navGlossary: 'Glosario', navFaq: 'FAQ', navNews: 'Novedades', navImpressum: 'Aviso legal', navPrivacy: 'Privacidad',
-    navMore: 'Más', navLegal: 'Legal',
+    navMore: 'Más', discordJoin: 'Únete a Discord', navLegal: 'Legal',
     fbFooter: 'Sitio de fans no oficial, sin relación con BULKHEAD ni Team17.',
     fbFooterSmall: 'WARDOGS es una marca de sus respectivos propietarios. Información sin garantía.',
     footer: 'Sitio de fans no oficial',
@@ -682,7 +682,7 @@ const FB_I18N = {
     siteSub: 'Guides et outils pour WARDOGS',
     navHome: 'Accueil', navGuides: 'Guides', navCalc: 'Calculateur de mortier', navSlots: 'Machine à sous',
     navGlossary: 'Glossaire', navFaq: 'FAQ', navNews: 'Nouveautés', navImpressum: 'Mentions légales', navPrivacy: 'Confidentialité',
-    navMore: 'Plus', navLegal: 'Légal',
+    navMore: 'Plus', discordJoin: 'Rejoindre Discord', navLegal: 'Légal',
     fbFooter: 'Site de fans non officiel, sans lien avec BULKHEAD ou Team17.',
     fbFooterSmall: 'WARDOGS est une marque de ses détenteurs respectifs. Informations sans garantie.',
     footer: 'Site de fans non officiel',
@@ -1610,7 +1610,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '17';
+      sc.src = '/assets/search-data.js?v=' + '18';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
