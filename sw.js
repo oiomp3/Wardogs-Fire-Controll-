@@ -56,7 +56,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       try {
-        const res = await fetch(req);
+        const res = await fetch(req, { cache: 'no-cache' });
         if (res && res.ok && res.type === 'basic') {
           // Ohne Query speichern, damit /guides/?q=… offline die Übersicht findet
           cache.put(url.origin + url.pathname, res.clone());
