@@ -837,6 +837,59 @@ const FB_TOOLS_I18N = {
 };
 Object.keys(FB_TOOLS_I18N).forEach(l => Object.assign(I18N[l], FB_TOOLS_I18N[l]));
 
+// ---------- Frontbuch v15: neue UI-Texte ----------
+const FB15_I18N = {
+  de: {
+    cmpMagMax: 'Größtes Magazin',
+    tabNav: 'Schnellnavigation', tabSearch: 'Suche', tabMenu: 'Menü', searchBtn: 'Suchen', sPh: 'Guides, Waffen, Begriffe …',
+    sAll: 'Alle', sClose: 'Schließen', sResults: 'Ergebnisse', sNone: 'Nichts gefunden.', sRecent: 'Zuletzt angesehen', sQuick: 'Schnellzugriff',
+    sAllResults: 'Alle Ergebnisse', fav: 'Merken', faved: 'Gemerkt', favRemove: 'Entfernen', navFavs: 'Merkliste', favsSaved: 'Gemerkt',
+    favsEmpty: 'Noch nichts gemerkt.', recentEmpty: 'Noch nichts angesehen.', recentClear: 'Verlauf löschen',
+    homeNew: 'Neu & beliebt', homeMeta: 'Meta-Loadouts', homeCats: 'Kategorien',
+    gToc: 'Inhalt', gNext: 'Weiter mit', gRelated: 'Verwandte Guides', gMentioned: 'Im Guide erwähnt',
+    cmpT: 'Waffenvergleich', cmpD: 'Schaden, Feuerrate und Magazin nebeneinander.', cmpWeapon: 'Waffe', cmpDps: 'Schaden/Sek.', cmpAdd: 'Waffe wählen',
+    loRandom: '🎲 Zufall', loRandomMsg: 'Zufalls-Loadout erstellt.', dbInTier: 'Tierlist', dbInGuides: 'In Guides', dbToCmp: 'Vergleichen',
+    titleFavs: 'Merkliste · Frontbuch', guidesN: '{n} Guides', minRead: '{n} Min.'
+  },
+  en: {
+    cmpMagMax: 'Largest magazine',
+    tabNav: 'Quick navigation', tabSearch: 'Search', tabMenu: 'Menu', searchBtn: 'Search', sPh: 'Guides, weapons, terms …',
+    sAll: 'All', sClose: 'Close', sResults: 'Results', sNone: 'Nothing found.', sRecent: 'Recently viewed', sQuick: 'Quick access',
+    sAllResults: 'All results', fav: 'Save', faved: 'Saved', favRemove: 'Remove', navFavs: 'Saved', favsSaved: 'Saved',
+    favsEmpty: 'Nothing saved yet.', recentEmpty: 'Nothing viewed yet.', recentClear: 'Clear history',
+    homeNew: 'New & popular', homeMeta: 'Meta loadouts', homeCats: 'Categories',
+    gToc: 'Contents', gNext: 'Up next', gRelated: 'Related guides', gMentioned: 'Mentioned in this guide',
+    cmpT: 'Weapon compare', cmpD: 'Damage, fire rate and magazine side by side.', cmpWeapon: 'Weapon', cmpDps: 'Damage/sec', cmpAdd: 'Pick a weapon',
+    loRandom: '🎲 Random', loRandomMsg: 'Random loadout created.', dbInTier: 'Tier list', dbInGuides: 'In guides', dbToCmp: 'Compare',
+    titleFavs: 'Saved · Frontbuch', guidesN: '{n} guides', minRead: '{n} min'
+  },
+  es: {
+    cmpMagMax: 'Cargador más grande',
+    tabNav: 'Navegación rápida', tabSearch: 'Buscar', tabMenu: 'Menú', searchBtn: 'Buscar', sPh: 'Guías, armas, términos …',
+    sAll: 'Todo', sClose: 'Cerrar', sResults: 'Resultados', sNone: 'No se encontró nada.', sRecent: 'Vistos recientemente', sQuick: 'Acceso rápido',
+    sAllResults: 'Todos los resultados', fav: 'Guardar', faved: 'Guardado', favRemove: 'Quitar', navFavs: 'Guardados', favsSaved: 'Guardados',
+    favsEmpty: 'Aún no has guardado nada.', recentEmpty: 'Aún no has visto nada.', recentClear: 'Borrar historial',
+    homeNew: 'Nuevo y popular', homeMeta: 'Loadouts meta', homeCats: 'Categorías',
+    gToc: 'Contenido', gNext: 'Sigue con', gRelated: 'Guías relacionadas', gMentioned: 'Mencionado en la guía',
+    cmpT: 'Comparar armas', cmpD: 'Daño, cadencia y cargador lado a lado.', cmpWeapon: 'Arma', cmpDps: 'Daño/seg.', cmpAdd: 'Elegir arma',
+    loRandom: '🎲 Aleatorio', loRandomMsg: 'Loadout aleatorio creado.', dbInTier: 'Tier list', dbInGuides: 'En guías', dbToCmp: 'Comparar',
+    titleFavs: 'Guardados · Frontbuch', guidesN: '{n} guías', minRead: '{n} min'
+  },
+  fr: {
+    cmpMagMax: 'Plus grand chargeur',
+    tabNav: 'Navigation rapide', tabSearch: 'Recherche', tabMenu: 'Menu', searchBtn: 'Rechercher', sPh: 'Guides, armes, termes …',
+    sAll: 'Tout', sClose: 'Fermer', sResults: 'Résultats', sNone: 'Aucun résultat.', sRecent: 'Vus récemment', sQuick: 'Accès rapide',
+    sAllResults: 'Tous les résultats', fav: 'Enregistrer', faved: 'Enregistré', favRemove: 'Retirer', navFavs: 'Favoris', favsSaved: 'Enregistrés',
+    favsEmpty: 'Rien d’enregistré pour l’instant.', recentEmpty: 'Rien de consulté pour l’instant.', recentClear: 'Effacer l’historique',
+    homeNew: 'Nouveau & populaire', homeMeta: 'Loadouts méta', homeCats: 'Catégories',
+    gToc: 'Sommaire', gNext: 'À suivre', gRelated: 'Guides liés', gMentioned: 'Cité dans ce guide',
+    cmpT: 'Comparateur d’armes', cmpD: 'Dégâts, cadence et chargeur côte à côte.', cmpWeapon: 'Arme', cmpDps: 'Dégâts/s', cmpAdd: 'Choisir une arme',
+    loRandom: '🎲 Aléatoire', loRandomMsg: 'Loadout aléatoire créé.', dbInTier: 'Tier list', dbInGuides: 'Dans les guides', dbToCmp: 'Comparer',
+    titleFavs: 'Favoris · Frontbuch', guidesN: '{n} guides', minRead: '{n} min'
+  }
+};
+Object.keys(FB15_I18N).forEach(l => Object.assign(I18N[l], FB15_I18N[l]));
+
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -961,7 +1014,7 @@ if ('serviceWorker' in navigator) {
   const drawer = document.getElementById('drawer');
   const overlay = document.getElementById('drawerOverlay');
   const closeBtn = document.getElementById('drawerClose');
-  const BG = ['siteHeader', 'mainContent', 'siteFooter', 'musicBar', 'musicFab'];
+  const BG = ['siteHeader', 'mainContent', 'siteFooter', 'tabBar', 'musicBar', 'musicFab'];
   const items = Array.from(drawer.querySelectorAll('.menu-item[aria-controls]'));
   let lastFocus = null;
 
@@ -1076,7 +1129,7 @@ if ('serviceWorker' in navigator) {
   const headBtn = document.getElementById('shareHeadBtn');
   const menuItem = document.getElementById('miShare');
   const menuBtn = document.getElementById('menuBtn');
-  const background = ['siteHeader', 'mainContent', 'siteFooter', 'musicBar', 'musicFab'].map(id => document.getElementById(id));
+  const background = ['siteHeader', 'mainContent', 'siteFooter', 'tabBar', 'musicBar', 'musicFab'].map(id => document.getElementById(id));
   let returnFocus = null;
   let copyTimer = null;
   urlInput.value = SHARE_URL;
@@ -1467,6 +1520,281 @@ const MUSIC = {
   };
   if (document.readyState === 'complete') lazyStart(); else window.addEventListener('load', lazyStart);
 })();
+// ---------- Frontbuch v15: Merkliste, Verlauf, Suche, Lesefortschritt ----------
+(function () {
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const esc = s => escapeHtml(String(s == null ? '' : s));
+  const hooks = window.fbLangHooks;
+
+  // ======================================================== Speicher
+  const FK = 'fbFavs', RK = 'fbRecent';
+  const get = k => { try { const x = JSON.parse(localStorage.getItem(k) || '[]'); return Array.isArray(x) ? x.filter(e => e && typeof e.u === 'string' && e.u.startsWith('/')) : []; } catch (e) { return []; } };
+  const put = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const FBP = window.FBP = {
+    favs: () => get(FK),
+    recent: () => get(RK),
+    isFav: u => get(FK).some(e => e.u === u),
+    toggleFav(e) {
+      let L = get(FK); const on = L.some(x => x.u === e.u);
+      L = on ? L.filter(x => x.u !== e.u) : [{ u: e.u, t: e.t, k: e.k, i: e.i || '', tk: e.tk || '' }].concat(L).slice(0, 60);
+      put(FK, L); renderAll(); return !on;
+    },
+    track(e) {
+      if (!e || !e.u) return;
+      const L = get(RK).filter(x => x.u !== e.u);
+      L.unshift({ u: e.u, t: e.t, k: e.k, i: e.i || '', tk: e.tk || '', ts: Date.now() });
+      put(RK, L.slice(0, 12)); renderAll();
+    },
+    clearRecent() { put(RK, []); renderAll(); }
+  };
+  const label = e => e.tk ? t(e.tk) : e.t;
+  const isImg = s => typeof s === 'string' && s.startsWith('/assets/');
+  function thumb(e, sz) {
+    if (isImg(e.i)) return `<img class="fbt-pic${e.k === 'iw' ? ' wide' : ''}" src="${esc(e.i)}" width="${e.k === 'iw' ? sz * 2 : sz}" height="${sz}" loading="lazy" decoding="async" alt="">`;
+    return `<span class="fb-ic" aria-hidden="true">${esc(e.i || '•')}</span>`;
+  }
+  const KIND = { g: 'navGuides', t: 'navTools', i: 'tDbT', iw: 'tDbT', l: 'navGlossary', f: 'navFaq' };
+  function renderList(el) {
+    const kind = el.dataset.fbList, max = +el.dataset.max || 60;
+    const L = (kind === 'favs' ? FBP.favs() : FBP.recent()).filter(e => e.u !== location.pathname || kind === 'favs').slice(0, max);
+    const sec = el.closest('[data-fb-sec]');
+    if (sec) sec.hidden = !L.length;
+    if (!L.length) { el.innerHTML = el.dataset.empty ? `<li class="fb-empty">${esc(t(el.dataset.empty))}</li>` : ''; return; }
+    el.innerHTML = L.map(e => `<li><a class="fb-ritem" href="${esc(e.u)}">${thumb(e, 28)}<span><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>${kind === 'favs' ? `<button type="button" class="fb-unfav" data-unfav="${esc(e.u)}" aria-label="${esc(t('favRemove'))}: ${esc(label(e))}">✕</button>` : ''}</li>`).join('');
+  }
+  function renderFavBtns() {
+    $$('.fb-fav').forEach(b => {
+      const on = FBP.isFav(b.dataset.fu);
+      b.setAttribute('aria-pressed', String(on));
+      const s = b.querySelector('span'); if (s) s.textContent = t(on ? 'faved' : 'fav');
+    });
+  }
+  function renderAll() { $$('[data-fb-list]').forEach(renderList); renderFavBtns(); }
+  window.fbRenderPersonal = renderAll;
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.fb-fav');
+    if (b) { FBP.toggleFav({ u: b.dataset.fu, t: b.dataset.ft, k: b.dataset.fk, i: b.dataset.fi, tk: b.dataset.ftk }); return; }
+    const u = e.target.closest('[data-unfav]');
+    if (u) { const L = FBP.favs().filter(x => x.u === u.dataset.unfav)[0]; if (L) FBP.toggleFav(L); return; }
+    const sh = e.target.closest('.fb-sharebtn');
+    if (sh) { const h = $('#shareHeadBtn'); if (h) h.click(); }
+  });
+  const rc = $('#recentClear'); if (rc) rc.addEventListener('click', () => FBP.clearRecent());
+  // Seitenaufruf merken
+  try { const tr = document.body.dataset.track; if (tr) { const e = JSON.parse(tr); e.u = location.pathname; FBP.track(e); } } catch (e) {}
+  hooks.push(renderAll);
+  renderAll();
+  window.addEventListener('storage', e => { if (e.key === FK || e.key === RK) renderAll(); });
+
+  // ======================================================== Such-Index
+  let IDX = null, loading = null;
+  const norm = s => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  function loadIndex() {
+    if (IDX) return Promise.resolve(IDX);
+    if (loading) return loading;
+    loading = new Promise(res => {
+      const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
+      if (window.FB_SEARCH) return done();
+      const sc = document.createElement('script');
+      sc.src = '/assets/search-data.js?v=' + '15';
+      sc.onload = done; sc.onerror = () => { loading = null; res([]); };
+      document.head.appendChild(sc);
+    });
+    return loading;
+  }
+  const KW = { t: 3, g: 2, i: 2, l: 1, f: 0 }, EX = { t: 15, g: 8, i: 8, l: 4, f: 0 };
+  function search(q, kind) {
+    const toks = norm(q).split(' ').filter(Boolean);
+    if (!toks.length || !IDX) return [];
+    const out = [];
+    for (const r of IDX) {
+      if (kind && kind !== 'all' && r.e.k !== kind) continue;
+      const tl = r.e.tk ? ' ' + norm(t(r.e.tk)) + r.t : r.t;
+      let sc = 0, ok = true;
+      for (const tk of toks) {
+        let s = 0;
+        if (tl.startsWith(' ' + tk)) s += 10; else if (tl.includes(' ' + tk)) s += 7; else if (tk.length > 2 && tl.includes(tk)) s += 4;
+        if ((' ' + r.x).includes(' ' + tk)) s += 2;
+        if ((' ' + r.s).includes(' ' + tk)) s += 1;
+        if (!s) { ok = false; break; }
+        sc += s;
+      }
+      if (!ok) continue;
+      if (tl.trim() === toks.join(' ')) sc += EX[r.e.k];
+      out.push({ e: r.e, sc: sc + KW[r.e.k] });
+    }
+    return out.sort((a, b) => b.sc - a.sc);
+  }
+  function hl(text, q) {
+    const toks = norm(q).split(' ').filter(x => x.length > 1).sort((a, b) => b.length - a.length);
+    let h = esc(text);
+    toks.forEach(tk => { h = h.replace(new RegExp('(^|[^<&;\\w/])(' + tk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'i'), '$1<mark>$2</mark>'); });
+    return h;
+  }
+  const GROUPS = [['t', 'navTools', 4], ['g', 'navGuides', 6], ['i', 'tDbT', 8], ['l', 'navGlossary', 4], ['f', 'navFaq', 4]];
+  function optionHtml(e, q, n, pre) {
+    const img = e.m ? `<img class="fbt-pic${e.w ? ' wide' : ''}" src="${esc(e.m)}" width="${e.w ? 64 : 32}" height="32" loading="lazy" decoding="async" alt="">` : `<span class="fb-ic" aria-hidden="true">${esc(e.i || '•')}</span>`;
+    const title = e.tk ? t(e.tk) : e.t;
+    return `<a class="fb-sopt" role="option" id="${pre}-${n}" href="${esc(e.u)}" aria-selected="false" tabindex="-1">${img}<span class="fb-sopt-txt"><b>${hl(title, q)}</b>${e.s ? `<small>${esc(e.s)}</small>` : ''}</span></a>`;
+  }
+  function resultsHtml(q, kind, pre, compact) {
+    if (!q.trim()) return '';
+    const res = search(q, kind);
+    if (!res.length) return `<p class="fb-snone">${esc(t('sNone'))}</p>`;
+    let n = 0, h = '';
+    if (compact) { const O = 'tgilf'; return res.slice(0, 7).sort((a, b) => O.indexOf(a.e.k) - O.indexOf(b.e.k)).map(r => optionHtml(r.e, q, n++, pre)).join(''); }
+    if (kind && kind !== 'all') return res.slice(0, 40).map(r => optionHtml(r.e, q, n++, pre)).join('');
+    const top = k => Math.max(0, ...res.filter(r => r.e.k === k).map(r => r.sc));
+    GROUPS.slice().sort((a, b) => top(b[0]) - top(a[0])).forEach(([k, key, max]) => {
+      const L = res.filter(r => r.e.k === k).slice(0, max);
+      if (L.length) h += `<div class="fb-sgrp" role="presentation">${esc(t(key))}</div>` + L.map(r => optionHtml(r.e, q, n++, pre)).join('');
+    });
+    return h;
+  }
+  // Tastatur-Navigation für eine Combobox
+  function listNav(input, list) {
+    const opts = () => $$('[role=option]', list);
+    let idx = -1;
+    function setIdx(i) {
+      const O = opts(); if (!O.length) { idx = -1; input.removeAttribute('aria-activedescendant'); return; }
+      idx = (i + O.length) % O.length;
+      O.forEach((o, j) => o.setAttribute('aria-selected', String(j === idx)));
+      input.setAttribute('aria-activedescendant', O[idx].id);
+      O[idx].scrollIntoView({ block: 'nearest' });
+    }
+    input.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); setIdx(idx + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setIdx(idx - 1); }
+      else if (e.key === 'Enter') {
+        const O = opts();
+        const o = O[idx >= 0 ? idx : 0];
+        if (o && input.value.trim()) { e.preventDefault(); location.href = o.getAttribute('href'); }
+      }
+    });
+    return { reset() { idx = -1; input.removeAttribute('aria-activedescendant'); } };
+  }
+
+  // ======================================================== Such-Dialog
+  const dlg = $('#searchDlg'), inp = $('#searchInput'), list = $('#searchList');
+  if (dlg) {
+    let kind = 'all', lastFocus = null;
+    const nav = listNav(inp, list);
+    const BG = ['siteHeader', 'mainContent', 'siteFooter', 'tabBar', 'musicBar', 'musicFab'];
+    function quick() {
+      const R = FBP.recent().slice(0, 6);
+      const tools = (IDX || []).filter(r => r.e.k === 't').slice(0, 7);
+      let n = 0;
+      return (R.length ? `<div class="fb-sgrp" role="presentation">${esc(t('sRecent'))}</div>` + R.map(e => `<a class="fb-sopt" role="option" id="so-${n++}" href="${esc(e.u)}" aria-selected="false" tabindex="-1">${thumb(e, 32)}<span class="fb-sopt-txt"><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>`).join('') : '') +
+        `<div class="fb-sgrp" role="presentation">${esc(t('sQuick'))}</div>` + tools.map(r => optionHtml(r.e, '', n++, 'so')).join('');
+    }
+    function render() {
+      nav.reset();
+      const q = inp.value;
+      list.innerHTML = q.trim() ? resultsHtml(q, kind, 'so') : quick();
+    }
+    function open(prefill) {
+      if (!dlg.hidden) return;
+      if (window.fcCloseMenu) window.fcCloseMenu(false);
+      lastFocus = document.activeElement;
+      dlg.hidden = false; document.body.classList.add('search-open');
+      BG.forEach(id => { const el = document.getElementById(id); if (el) el.inert = true; });
+      if (typeof prefill === 'string') inp.value = prefill;
+      render();
+      loadIndex().then(render);
+      setTimeout(() => { inp.focus(); inp.select(); }, 20);
+    }
+    function close() {
+      if (dlg.hidden) return;
+      dlg.hidden = true; document.body.classList.remove('search-open');
+      BG.forEach(id => { const el = document.getElementById(id); if (el) el.inert = false; });
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+    }
+    window.fbSearchOpen = open; window.fbSearchClose = close;
+    window.fbSearchQuery = (q, k) => loadIndex().then(() => search(q, k).map(r => r.e));
+    $$('#searchBtn, #tabSearch').forEach(b => b && b.addEventListener('click', () => open()));
+    $('#searchClose').addEventListener('click', close);
+    $('#searchBack').addEventListener('click', close);
+    inp.addEventListener('input', render);
+    $('#searchFilters').addEventListener('click', e => {
+      const c = e.target.closest('[data-sk]'); if (!c) return;
+      kind = c.dataset.sk;
+      $$('#searchFilters [data-sk]').forEach(x => x.setAttribute('aria-pressed', String(x === c)));
+      render(); inp.focus();
+    });
+    dlg.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') {
+        const f = $$('input, button, a[href]', dlg).filter(x => x.offsetParent !== null && x.tabIndex !== -1);
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    list.addEventListener('click', e => { if (e.target.closest('a')) close(); });
+    document.addEventListener('keydown', e => {
+      const tg = e.target, typing = tg && (tg.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName));
+      if ((e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) {
+        if (!dlg.hidden) return;
+        e.preventDefault(); open();
+      }
+    });
+    hooks.push(() => { if (!dlg.hidden) render(); });
+  }
+
+  // ======================================================== Startseiten-Suche (Vorschläge)
+  const hIn = $('#fbHomeSearch'), hRes = $('#fbHomeResults');
+  if (hIn && hRes) {
+    const nav = listNav(hIn, hRes);
+    function render() {
+      nav.reset();
+      const q = hIn.value;
+      if (!q.trim()) { hRes.hidden = true; hIn.setAttribute('aria-expanded', 'false'); hRes.innerHTML = ''; return; }
+      hRes.innerHTML = resultsHtml(q, 'all', 'ho', true) + `<button type="button" class="fb-smore" id="homeMore">${esc(t('sAllResults'))} ${svgArrow}</button>`;
+      hRes.hidden = false; hIn.setAttribute('aria-expanded', 'true');
+    }
+    const svgArrow = '<svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    hIn.addEventListener('focus', () => loadIndex().then(() => { if (hIn.value.trim()) render(); }), { once: false });
+    hIn.addEventListener('input', () => loadIndex().then(render));
+    hIn.addEventListener('keydown', e => { if (e.key === 'Escape') { hIn.value = ''; render(); } });
+    hRes.addEventListener('click', e => { if (e.target.closest('#homeMore')) { const q = hIn.value; hIn.value = ''; render(); window.fbSearchOpen && window.fbSearchOpen(q); } });
+    $('#homeSearchForm').addEventListener('submit', e => { e.preventDefault(); const q = hIn.value; if (window.fbSearchOpen) { hIn.value = ''; render(); window.fbSearchOpen(q); } });
+    document.addEventListener('pointerdown', e => { if (!e.target.closest('#homeSearchForm')) { hRes.hidden = true; hIn.setAttribute('aria-expanded', 'false'); } });
+    hooks.push(() => { if (!hRes.hidden) render(); });
+    if ('requestIdleCallback' in window) requestIdleCallback(() => loadIndex()); else setTimeout(loadIndex, 1500);
+  }
+
+  // ======================================================== Guide: Lesefortschritt + Inhaltsverzeichnis
+  const art = $('.guide .fb-article');
+  if (art) {
+    const bar = document.createElement('div'); bar.className = 'fb-progress'; bar.setAttribute('aria-hidden', 'true'); document.body.appendChild(bar);
+    const heads = $$('h2[id]', art), tocLinks = $$('.fb-toc a, .fb-toc-m a');
+    let ticking = false;
+    function upd() {
+      ticking = false;
+      const r = art.getBoundingClientRect(), h = r.height - innerHeight * 0.6;
+      bar.style.transform = `scaleX(${Math.max(0, Math.min(1, -r.top / Math.max(1, h)))})`;
+      let cur = '';
+      for (const hd of heads) { if (hd.getBoundingClientRect().top < 120) cur = hd.id; else break; }
+      tocLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+    upd();
+    $$('.fb-toc-m a').forEach(a => a.addEventListener('click', () => { const d = a.closest('details'); if (d) d.open = false; }));
+  }
+
+  // ======================================================== Sprungziele (FAQ/Glossar) öffnen + markieren
+  function openHash() {
+    if (!location.hash) return;
+    let el = null; try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) {}
+    if (!el) return;
+    if (el.tagName === 'DETAILS') el.open = true;
+    el.classList.remove('fb-flash'); void el.offsetWidth; el.classList.add('fb-flash');
+  }
+  addEventListener('hashchange', openHash); openHash();
+})();
+
 
 // ---------- Startseite: „Weiter zum Rechner“ ----------
 (function () {

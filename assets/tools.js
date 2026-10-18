@@ -38,11 +38,17 @@
   function num(item, f) { const v = item && item[f]; return v && typeof v.v === 'number' ? v.v : null; }
   function catName(c) { return D.cats[c] || c; }
   function money(n) { return nf(n) + ' $'; }
+  const CAT_EMO = { weapon: '🔫', vehicle: '🚙', buildable: '🏗️', attachment: '🔧', equipment: '🧰', armor: '🦺', gear: '🎒' };
   function pic(i, sz, cls) {
-    if (!i || !i.img) return `<span class="fbt-pic none ${cls || ''}" style="width:${sz}px;height:${sz}px" aria-hidden="true"></span>`;
+    if (!i || !i.img) { const w = i && i.cat === 'weapon' ? sz * 2 : sz; return `<span class="fbt-pic none ${w > sz ? 'wide ' : ''}${cls || ''}" style="width:${w}px;height:${sz}px;font-size:${Math.round(sz * (w > sz ? .34 : .55))}px" aria-hidden="true">${w > sz ? esc(i.name.split(' ')[0].slice(0, 7)) : (CAT_EMO[i && i.cat] || '•')}</span>`; }
     const w = i.cat === 'weapon' ? sz * 2 : sz;
     return `<img class="fbt-pic ${i.cat === 'weapon' ? 'wide ' : ''}${cls || ''}" src="${esc(i.img)}" width="${w}" height="${sz}" loading="lazy" decoding="async" alt="">`;
   }
+  const STAR = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.2 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+  function favBtn(u, title, k, ic) { return `<button type="button" class="fb-fav" data-fu="${esc(u)}" data-ft="${esc(title)}" data-fk="${k}" data-fi="${esc(ic)}" aria-pressed="false">${STAR}<span>${esc(t('fav'))}</span></button>`; }
+  const itemIc = i => i.img || CAT_EMO[i.cat] || '•';
+  const itemK = i => i.cat === 'weapon' && i.img ? 'iw' : 'i';
+  function tierOf(id) { return ((D.tierlist && D.tierlist.classes) || []).flatMap(c => c.tiers.filter(r => r[1] === id).map(r => [c.name, r[0]])); }
   const fitsW = (a, w) => a.for ? a.for === w : (a.fits ? a.fits.includes(w) : true);
   const fitKnown = a => !!(a.for || a.fits);
   function dmgMag(i) {
@@ -89,8 +95,8 @@
       body.innerHTML = list.map(i => `<tr data-id="${i.id}">
 <td><input type="checkbox" class="fbt-cmp" value="${i.id}" ${sel.includes(i.id) ? 'checked' : ''} aria-label="${esc(t('tCompare'))}: ${esc(i.name)}"></td>
 <td class="fbt-namecell">${pic(i, 32)}<button type="button" class="fbt-link" data-open="${i.id}">${esc(i.name)}</button></td>
-<td>${esc(catName(i.cat))}<small>${esc(i.type)}</small></td>
-<td>${val(i, 'track', false)}</td><td>${val(i, 'level', false)}</td><td>${val(i, 'unlock', false)}</td><td>${val(i, 'price', false)}</td></tr>`).join('');
+<td data-l="">${esc(catName(i.cat))}${i.type && i.type !== catName(i.cat) ? `<small>${esc(i.type)}</small>` : ''}</td>
+<td data-l="${esc(t('tTrack'))}">${val(i, 'track', false)}</td><td data-l="${esc(t('tLevel'))}">${val(i, 'level', false)}</td><td data-l="${esc(t('tUnlock'))}">${val(i, 'unlock', false)}</td><td data-l="${esc(t('tPrice'))}">${val(i, 'price', false)}</td></tr>`).join('');
       cnt.textContent = list.length ? t('tCount', { n: list.length }) : t('tNone');
       tbl.querySelectorAll('th[data-k]').forEach(th => {
         th.setAttribute('aria-sort', th.dataset.k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none');
@@ -106,7 +112,7 @@
       if (LOK[i.slot]) q = LOK[i.slot] + '=' + i.id;
       else if (i.slot === 'equip') q = 'e=' + i.id + ':1';
       else if (i.cat === 'attachment' && (i.for || (i.fits && i.fits.length))) q = 'p=' + (i.for || i.fits[0]) + '&a=' + i.id;
-      return q ? `<p><a href="/tools/loadout/?${q}">${esc(t('tToLoadout'))}</a></p>` : '';
+      return q ? `<a href="/tools/loadout/?${q}">🎒 ${esc(t('tToLoadout'))}</a>` : '';
     }
     function openDetail(id) {
       const i = BY[id];
@@ -116,16 +122,34 @@
       const compat = fw.length ? `<p>${esc(t('tCompatOk'))}: ${fw.map(w => `<b>${esc(BY[w].name)}</b>`).join(', ')}${i.fits && i.fits.length ? warn({ f: 'c' }) : ''}</p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
       const dm = dmgMag(i);
       const missing = FIELD_ORDER.filter(f => !has(i, f) && ['track', 'level', 'unlock', 'price'].includes(f)).map(f => D.fields[f]);
+      const du = '/tools/datenbank/?id=' + id;
+      const xl = [loLink(i)].concat(i.cat === 'weapon' ? [`<a href="/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>`] : [],
+        tierOf(id).map(([c, tr]) => `<a href="/tools/tierlist/#t-${id}">🏆 ${esc(t('dbInTier'))}: <b>${esc(tr)}</b>&nbsp;<small lang="de">${esc(c)}</small></a>`)).filter(Boolean).join('');
+      const gm = (D.mentions || {})[id] || [];
       detail.innerHTML = `<div class="fbt-detail-head">${pic(i, i.cat === 'weapon' ? 72 : 96, 'big')}<h2 id="dbDetailH">${esc(i.name)}</h2><button type="button" class="fbt-btn ghost" id="dbDetailClose">${esc(t('tClose'))}</button></div>
-<p class="fbt-sub">${esc(catName(i.cat))} · ${esc(i.type)}</p>
+<div class="fbt-detail-sub"><p class="fbt-sub">${esc(catName(i.cat))}${i.type && i.type !== catName(i.cat) ? ' · ' + esc(i.type) : ''}</p>${favBtn(du, i.name, itemK(i), itemIc(i))}</div>
+${xl ? `<div class="fbt-xlinks">${xl}</div>` : ''}
 <div class="fb-tablewrap"><table class="fbt-kv"><tbody>${fieldRows(i) || `<tr><td>${unk()}</td></tr>`}${dm !== null ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th><td>${nf(dm)}${warn({ f: 'c' })}</td></tr>` : ''}</tbody></table></div>
 ${missing.length ? `<p class="fbt-sub">${esc(t('tMissingFields'))}: ${missing.map(esc).join(', ')}</p>` : ''}
-${compat}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}${loLink(i)}
+${compat}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}
+${gm.length ? `<h3>${esc(t('dbInGuides'))}</h3><ul class="fbt-glinks">${gm.map(([sl, ti, ic]) => `<li><a href="/guides/${esc(sl)}/" lang="de"><span aria-hidden="true">${esc(ic)}</span> ${esc(ti)}</a></li>`).join('')}</ul>` : ''}
 <h3>${esc(t('tSources'))}</h3><ul class="fbt-srclist">${srcs.map(k => `<li><a href="${esc(D.sources[k].url)}" target="_blank" rel="noopener noreferrer">${esc(D.sources[k].title)}</a>${D.sources[k].type === 'community' ? ' ⚠' : ''}</li>`).join('') || '<li>–</li>'}</ul>`;
       detail.hidden = false;
+      const fresh = detail.dataset.id !== id;
       detail.dataset.id = id;
-      $('#dbDetailClose').addEventListener('click', () => { detail.hidden = true; delete detail.dataset.id; });
-      detail.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      $('#dbDetailClose').addEventListener('click', () => {
+        detail.hidden = true; delete detail.dataset.id;
+        const P = new URLSearchParams(location.search); P.delete('id');
+        history.replaceState(null, '', location.pathname + (P.toString() ? '?' + P : ''));
+        const b = body.querySelector(`[data-open="${id}"]`); if (b) b.focus();
+      });
+      if (window.fbRenderPersonal) window.fbRenderPersonal();
+      if (fresh) {
+        const P = new URLSearchParams(location.search); P.set('id', id);
+        history.replaceState(null, '', location.pathname + '?' + P);
+        if (window.FBP) window.FBP.track({ u: du, t: i.name, k: itemK(i), i: itemIc(i) });
+        detail.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
     }
     function renderCompare() {
       if (!sel.length) { cmpBox.hidden = true; return; }
@@ -410,6 +434,34 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       msg.textContent = base ? t('tBaseSet') : '';
       renderSum();
     });
+    el('loRandom').addEventListener('click', () => {
+      const rnd = L => L[Math.floor(Math.random() * L.length)];
+      const priced = slot => D.items.filter(i => i.slot === slot && num(i, 'price') !== null);
+      const tracks = [...selK.options].map(o => o.value).filter(Boolean);
+      const bud = parseInt(budgetIn.value, 10);
+      let best = null;
+      for (let n = 0; n < 300; n++) {
+        const s = empty();
+        s.k = rnd(tracks) || '';
+        const mine = slot => { const L = priced(slot), M = L.filter(i => has(i, 'track') && i.track.v === s.k); return M.length && Math.random() < .75 ? M : L; };
+        const pr = mine('primary'); if (pr.length) s.p = rnd(pr).id;
+        if (Math.random() < .35) { const L = mine('launcher'); if (L.length) s.l = rnd(L).id; }
+        if (Math.random() < .3) { const L = mine('secondary'); if (L.length) s.s = rnd(L).id; }
+        ['helmet', 'vest'].forEach((slot, ix) => { if (Math.random() < .8) { const L = priced(slot); if (L.length) s[ix ? 'v' : 'h'] = rnd(L).id; } });
+        if (Math.random() < .4) { const L = priced('backpack'); if (L.length) s.b = rnd(L).id; }
+        const atts = D.items.filter(i => i.cat === 'attachment' && fitKnown(i) && fitsW(i, s.p) && num(i, 'price') !== null);
+        const types = {};
+        atts.sort(() => Math.random() - .5).forEach(i => { if (!types[i.type] && Object.keys(types).length < 2 && Math.random() < .6) types[i.type] = i.id; });
+        s.a = Object.values(types);
+        const eq = EQ.filter(i => num(i, 'price') !== null && i.type !== 'Fallschirm');
+        for (let k = 0, m = 1 + Math.floor(Math.random() * 3); k < m && eq.length; k++) { const i = rnd(eq); s.e[i.id] = Math.min(maxQ(i), (s.e[i.id] || 0) + 1); }
+        const c = totals(s).cost;
+        if (!(bud > 0) || c <= bud) { best = s; break; }
+        if (!best || c < totals(best).cost) best = s;
+      }
+      if (!best) return;
+      st = best; msg.textContent = t('loRandomMsg'); update(true);
+    });
     el('loReset').addEventListener('click', () => { st = empty(); msg.textContent = ''; update(true); });
     el('loShare').addEventListener('click', async () => {
       const u = url();
@@ -435,7 +487,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       root.innerHTML = T.classes.filter((c, ix) => cur === 'alle' || String(ix) === cur).map(c => {
         const tiers = [...new Set(c.tiers.map(r => r[0]))];
         return `<section class="fbt-tierclass"><h2>${esc(c.name)}</h2>${tiers.map(tr => `<div class="fbt-tierrow"><div class="fbt-tier t-${tr === '–' ? 'x' : tr}" aria-label="Tier ${esc(tr)}">${esc(tr)}</div><div class="fbt-tieritems">
-${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="fbt-tieritem"><summary>${pic(BY[id], 32, 'tier')}<span>${esc(BY[id].name)}</span>${prov ? ` <span class="fbt-badge">${esc(t('tProv'))}</span>` : ''}</summary><p lang="de">${esc(why)}</p><a href="/tools/datenbank/?id=${id}">${esc(t('tToDb'))}</a></details>`).join('')}</div></div>`).join('')}</section>`;
+${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="fbt-tieritem" id="t-${id}"${location.hash === '#t-' + id ? ' open' : ''}><summary>${pic(BY[id], 32, 'tier')}<span>${esc(BY[id].name)}</span>${prov ? ` <span class="fbt-badge">${esc(t('tProv'))}</span>` : ''}</summary><p lang="de">${esc(why)}</p><div class="fbt-xlinks sm"><a href="/tools/datenbank/?id=${id}">🗃️ ${esc(t('tToDb'))}</a>${BY[id].cat === 'weapon' ? `<a href="/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>` : ''}${BY[id].slot ? `<a href="/tools/loadout/?${{ primary: 'p', secondary: 's', launcher: 'l' }[BY[id].slot] || 'p'}=${id}">🎒 ${esc(t('tToLoadout'))}</a>` : ''}</div></details>`).join('')}</div></div>`).join('')}</section>`;
       }).join('');
     }
     chips.addEventListener('click', e => {
@@ -444,8 +496,87 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       chips.querySelectorAll('.fb-chip').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
       render();
     });
-    render();
+    function jump() {
+      const h = location.hash; if (!h.startsWith('#t-')) return;
+      const el = document.getElementById(h.slice(1)); if (!el) return;
+      el.open = true; el.scrollIntoView({ block: 'center' }); el.classList.remove('fb-flash'); void el.offsetWidth; el.classList.add('fb-flash');
+    }
+    render(); jump();
+    addEventListener('hashchange', () => { if (cur !== 'alle' && location.hash.startsWith('#t-')) { cur = 'alle'; chips.querySelectorAll('.fb-chip').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.c === 'alle'))); render(); } jump(); });
     hooks.push(render);
+  })();
+
+  // ======================================================== Waffenvergleich
+  (function compare() {
+    const pick = $('#cmpPick');
+    if (!pick) return;
+    const out = $('#cmpOut'), msgEl = $('#cmpMsg'), KEY = 'fbCompare';
+    const sels = [1, 2, 3, 4].map(n => document.getElementById('cmpW' + n));
+    const W = D.items.filter(i => i.cat === 'weapon');
+    const okId = id => BY[id] && BY[id].cat === 'weapon';
+    let ids = [];
+    const P = new URLSearchParams(location.search).get('w');
+    if (P !== null) ids = P.split(',').filter(okId);
+    else { try { ids = (localStorage.getItem(KEY) || '').split(',').filter(okId); } catch (e) {} }
+    if (!ids.length && P === null) ids = ['ak74', 'm4'].filter(okId);
+    ids = [...new Set(ids)].slice(0, 4);
+    const dps = i => { const d = num(i, 'dmg'), r = num(i, 'rpm'); return d !== null && r !== null ? Math.round(d * r / 60) : null; };
+    const ROWS = [
+      ['dmg', () => t('tDmgBody'), i => num(i, 'dmg'), 1],
+      ['hdmg', () => t('tDmgHead'), i => num(i, 'hdmg'), 1],
+      ['rpm', () => 'RPM', i => num(i, 'rpm'), 1],
+      ['dps', () => t('cmpDps'), dps, 1, true],
+      ['mag', () => t('tMagShort'), i => num(i, 'mag'), 1],
+      ['magmax', () => t('cmpMagMax'), i => num(i, 'magmax'), 1],
+      ['dm', () => t('tDmgMag'), dmgMag, 1, true],
+      ['weight', () => t('tWeight'), i => num(i, 'weight'), -1],
+      ['price', () => t('tPrice'), i => num(i, 'price'), -1],
+      ['unlock', () => t('tUnlock'), i => num(i, 'unlock'), -1]
+    ];
+    function render() {
+      sels.forEach((s, n) => {
+        const cur = ids[n] || '';
+        if (s.dataset.filled !== '1') {
+          const types = [...new Set(W.map(i => i.type))];
+          s.innerHTML = `<option value="">${esc(t('cmpAdd'))}</option>` + types.map(ty => `<optgroup label="${esc(ty)}">${W.filter(i => i.type === ty).map(i => `<option value="${i.id}">${esc(i.name)}</option>`).join('')}</optgroup>`).join('');
+          s.dataset.filled = '1';
+        }
+        s.value = cur;
+      });
+      const items = ids.map(id => BY[id]);
+      if (!items.length) { out.innerHTML = `<p class="cmp-empty">${esc(t('cmpAdd'))}</p>`; return; }
+      const rows = ROWS.filter(r => items.some(i => r[2](i) !== null));
+      out.innerHTML = `<table class="cmp-tbl"><thead><tr><th scope="col"><span class="fb-sr">${esc(t('cmpWeapon'))}</span></th>${items.map(i => `<th scope="col"><a href="/tools/datenbank/?id=${i.id}">${pic(i, 40)}<span>${esc(i.name)}</span></a><small class="fbt-sub">${esc(i.type)}${has(i, 'cal') ? ' · ' + esc(i.cal.v) : ''}</small></th>`).join('')}</tr></thead><tbody>${rows.map(r => {
+        const xs = items.map(r[2]).filter(x => x !== null);
+        const max = xs.length ? Math.max(...xs) : 0, min = xs.length ? Math.min(...xs) : 0;
+        const best = items.length > 1 && xs.length > 1 && max !== min ? (r[3] > 0 ? max : min) : null;
+        return `<tr><th scope="row">${esc(r[1]())}</th>${items.map(i => barCell(i, r, best, max, min)).join('')}</tr>`;
+      }).join('')}</tbody></table>`;
+    }
+    function barCell(i, r, best, max, min) {
+      const [f, , get, dir, derived] = r, x = get(i);
+      if (x === null) return `<td>${unk()}</td>`;
+      const txt = derived ? nf(x) + warn({ f: 'c' }) : val(i, f, false);
+      const pct = !max ? 0 : dir > 0 ? x / max : (x ? min / x : 1);
+      return `<td class="${best !== null && x === best ? 'cmp-best' : ''}"><div class="cmp-v"><b>${txt}</b><span class="cmp-bar" aria-hidden="true"><i style="width:${Math.max(4, Math.round(pct * 100))}%"></i></span></div></td>`;
+    }
+    function save() {
+      try { localStorage.setItem(KEY, ids.join(',')); } catch (e) {}
+      history.replaceState(null, '', location.pathname + (ids.length ? '?w=' + ids.join(',') : ''));
+    }
+    pick.addEventListener('change', e => {
+      const s = e.target.closest('select'); if (!s) return;
+      const n = sels.indexOf(s), v = s.value;
+      const next = ids.slice(); next[n] = v;
+      ids = [...new Set(next.filter(Boolean))].slice(0, 4);
+      msgEl.textContent = ''; save(); render();
+    });
+    $('#cmpClear').addEventListener('click', () => { ids = []; msgEl.textContent = ''; save(); render(); });
+    $('#cmpShare').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(location.href); msgEl.textContent = t('tCopied'); } catch (e) { msgEl.textContent = location.href; }
+    });
+    render(); if (P !== null) save();
+    hooks.push(() => { sels.forEach(s => { s.dataset.filled = ''; }); render(); });
   })();
 
 })();
