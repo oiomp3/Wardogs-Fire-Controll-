@@ -834,6 +834,115 @@ const FB15_I18N = {
 };
 Object.keys(FB15_I18N).forEach(l => Object.assign(I18N[l], FB15_I18N[l]));
 
+// ---------- Frontbuch v25: Progression-Planer, Preis-Leistung (Tierlist), Tools-Menügruppen ----------
+const FB25_I18N = {
+  de: {
+    navGrpMatch: 'Im Match', navGrpPlan: 'Planen', navGrpData: 'Waffen & Daten',
+    tProgT: 'Progression-Planer', tProgD: 'Nächste Freischaltungen pro Track – mit Level und Kosten.',
+    prLevel: 'Dein Level', prCash: 'Dein Kontostand ($)', prTo: 'Bis Level (optional)', prToPh: 'alle',
+    prNextH: 'Nächste Freischaltungen', prHaveH: 'Schon im Level erreicht', prHaveHint: 'Ab deinem Level verfügbar – die einmalige Freischaltung musst du ggf. noch bezahlen.',
+    prStdH: 'Standard & Level unbekannt', prXpH: 'So levelst du schneller',
+    prTip1: '<b>Logistik in Serie:</b> Wer Kisten, Paletten oder Spieler nacheinander in die Control Zone bringt, bekommt pro Lieferung in Folge mehr XP (z. B. +100 XP pro Palette, bis 10 in Folge).',
+    prTip2: '<b>Ziele angreifen:</b> Einen feindlichen Drill Tower erobern bringt jetzt 300 XP, eine feindliche FOB hacken 250 XP – auch für Teammitglieder im Radius.',
+    prTip3: '<b>Richtigen Track füttern:</b> Bauwerke zerstören sowie IED/C4 zählen für Assault, Artillerie für Driver, Reparieren je nach Fahrzeug für Driver oder Pilot.',
+    prTip4: '<b>Bewaffnete Fahrzeuge jagen:</b> Bewaffnete Varianten bringen 1,5-mal so viel XP wie die Standardvariante.',
+    prTip5: '<b>Lonestar:</b> In Season 2 bekommt Lonestar testweise einen Cash- und XP-Bonus.',
+    prTip6: '<b>Kein XP-Farming:</b> BULKHEAD bestraft Exploits mit Reset von Cash und XP, XP-Farming mit dauerhafter Sperre.',
+    prXpSrc: 'Alles laut offiziellen Patchnotes (Season 2 bzw. Patch 0.11), in eigenen Worten.',
+    prToGuide: '→ Guide: XP & Freischaltungen', prToLoadout: '→ Loadout-Planer',
+    prLvUnk: 'unbekannt', prPerLife: 'pro Leben', prPlusUnk: 'unbekannt',
+    prSumTo: 'Freischaltkosten bis Level {n}', prSumAll: 'Freischaltkosten (alle offenen)', prSumSub: '{n} von {m} mit belegtem Preis', prUnkN: '{n} unbekannt',
+    prNextLv: 'Nächstes Unlock-Level', prNoneLeft: 'Nichts mehr offen', prAfford: 'Kontostand reicht für', prAffordV: '{n} von {m}', prAffordLv: 'der Reihe nach bis Level {n}',
+    prMissing: 'Fehlt noch', prLeft: 'Bleibt übrig', prOnlyKnown: 'nur belegte Preise', prEnterCash: 'Kontostand eintragen',
+    prStat: '{t}: {n} Einträge in unseren Daten · {o} Level offiziell, {c} Level Community · {u} mit Freischaltpreis, {x} ohne',
+    prAllDone: 'Für diesen Bereich ist keine weitere Freischaltung in unseren Daten.', prNoData: 'Für diesen Track haben wir noch keine belegten Level.',
+    prXpNext: 'Bis Level {n} brauchst du in diesem Rollen-Track insgesamt {x} XP (Season 2).', prXpMax: 'Höchster Wert aus den Patchnotes: Level {n} = {x} XP. Höhere Stufen sind nicht veröffentlicht.',
+    prXpNone: 'Eine XP-Kurve für diesen Track ist offiziell nicht veröffentlicht – die Patchnotes nennen nur die Rollen-Tracks.',
+    tlViewLabel: 'Ansicht', tlViewTiers: 'Tiers', tlViewValue: 'Preis-Leistung',
+    tlRule: 'So lesen: Preis pro Leben neben <b>unserem</b> Tier. Gibt es in derselben Klasse eine billigere Waffe mit gleichem oder besserem Tier, steht dort „Günstigere Alternative“. Berücksichtigt werden nur Waffen mit <b>offiziell belegtem</b> Preis. Das Tier ist unsere Einschätzung, nicht nur eine Frage des Preises – Reichweite, Freischaltung und Spielstil zählen mit.',
+    tlAlt: 'Günstigere Alternative', tlBest: 'Günstigste Wahl ab Tier {t}', tlNoPrice: 'Ohne offiziellen Preis (nicht bewertet)', tlPriceLife: 'Preis pro Leben', tlVerdict: 'Einordnung'
+  },
+  en: {
+    navGrpMatch: 'In match', navGrpPlan: 'Plan', navGrpData: 'Weapons & data',
+    tProgT: 'Progression planner', tProgD: 'Next unlocks per track – with level and cost.',
+    prLevel: 'Your level', prCash: 'Your balance ($)', prTo: 'Up to level (optional)', prToPh: 'all',
+    prNextH: 'Next unlocks', prHaveH: 'Already reached by level', prHaveHint: 'Available at your level – you may still have to pay the one-time unlock.',
+    prStdH: 'Default & level unknown', prXpH: 'How to level faster',
+    prTip1: '<b>Logistics streaks:</b> Delivering crates, pallets or players to the Control Zone in a row earns extra XP per delivery in the streak (e.g. +100 XP per pallet, up to 10 in a row).',
+    prTip2: '<b>Hit objectives:</b> Capturing an enemy Drill Tower now gives 300 XP, hacking an enemy FOB 250 XP – teammates in the radius get XP too.',
+    prTip3: '<b>Feed the right track:</b> Destroying buildables and IED/C4 count for Assault, artillery for Driver, repairs for Driver or Pilot depending on the vehicle.',
+    prTip4: '<b>Hunt armed vehicles:</b> Armed variants give 1.5 times the XP of the default variant.',
+    prTip5: '<b>Lonestar:</b> In Season 2 Lonestar gets an experimental cash and XP bonus.',
+    prTip6: '<b>No XP farming:</b> BULKHEAD punishes exploits with a cash and XP reset and XP farming with a permanent ban.',
+    prXpSrc: 'All based on the official patch notes (Season 2 and patch 0.11), in our own words.',
+    prToGuide: '→ Guide: XP & unlocks', prToLoadout: '→ Loadout planner',
+    prLvUnk: 'unknown', prPerLife: 'per life', prPlusUnk: 'unknown',
+    prSumTo: 'Unlock cost up to level {n}', prSumAll: 'Unlock cost (all remaining)', prSumSub: '{n} of {m} with a sourced price', prUnkN: '{n} unknown',
+    prNextLv: 'Next unlock level', prNoneLeft: 'Nothing left', prAfford: 'Your balance covers', prAffordV: '{n} of {m}', prAffordLv: 'in order up to level {n}',
+    prMissing: 'Still missing', prLeft: 'Left over', prOnlyKnown: 'sourced prices only', prEnterCash: 'Enter your balance',
+    prStat: '{t}: {n} entries in our data · {o} levels official, {c} levels community · {u} with unlock price, {x} without',
+    prAllDone: 'No further unlock in our data for this range.', prNoData: 'We have no sourced levels for this track yet.',
+    prXpNext: 'Reaching level {n} in this role track takes {x} XP in total (Season 2).', prXpMax: 'Highest value in the patch notes: level {n} = {x} XP. Higher levels are not published.',
+    prXpNone: 'No XP curve has been published for this track – the patch notes only cover the role tracks.',
+    tlViewLabel: 'View', tlViewTiers: 'Tiers', tlViewValue: 'Value for money',
+    tlRule: 'How to read it: price per life next to <b>our</b> tier. If the same class has a cheaper weapon with an equal or better tier, you’ll see “Cheaper alternative”. Only weapons with an <b>officially sourced</b> price are included. The tier is our assessment and not just about price – range, unlock and play style matter too.',
+    tlAlt: 'Cheaper alternative', tlBest: 'Cheapest pick at tier {t} or better', tlNoPrice: 'No official price (not rated)', tlPriceLife: 'Price per life', tlVerdict: 'Verdict'
+  },
+  es: {
+    navGrpMatch: 'En partida', navGrpPlan: 'Planificar', navGrpData: 'Armas y datos',
+    tProgT: 'Planificador de progresión', tProgD: 'Próximos desbloqueos por track, con nivel y coste.',
+    prLevel: 'Tu nivel', prCash: 'Tu saldo ($)', prTo: 'Hasta el nivel (opcional)', prToPh: 'todos',
+    prNextH: 'Próximos desbloqueos', prHaveH: 'Ya alcanzado por nivel', prHaveHint: 'Disponible con tu nivel; puede que aún tengas que pagar el desbloqueo único.',
+    prStdH: 'Estándar y nivel desconocido', prXpH: 'Cómo subir de nivel más rápido',
+    prTip1: '<b>Rachas de logística:</b> si llevas cajas, palés o jugadores a la Control Zone seguidos, ganas más XP por cada entrega de la racha (p. ej. +100 XP por palé, hasta 10 seguidos).',
+    prTip2: '<b>Ataca objetivos:</b> capturar una Drill Tower enemiga da ahora 300 XP y hackear una FOB enemiga 250 XP; los compañeros en el radio también ganan XP.',
+    prTip3: '<b>Alimenta el track correcto:</b> destruir construcciones y los IED/C4 cuentan para Assault, la artillería para Driver y las reparaciones para Driver o Pilot según el vehículo.',
+    prTip4: '<b>Caza vehículos armados:</b> las variantes armadas dan 1,5 veces la XP de la variante estándar.',
+    prTip5: '<b>Lonestar:</b> en la Season 2, Lonestar recibe de forma experimental un bonus de dinero y XP.',
+    prTip6: '<b>Nada de farmear XP:</b> BULKHEAD castiga los exploits con un reinicio de dinero y XP, y el farmeo de XP con un baneo permanente.',
+    prXpSrc: 'Todo según las notas oficiales del parche (Season 2 y parche 0.11), con nuestras palabras.',
+    prToGuide: '→ Guía: XP y desbloqueos', prToLoadout: '→ Planificador de loadouts',
+    prLvUnk: 'desconocido', prPerLife: 'por vida', prPlusUnk: 'desconocido',
+    prSumTo: 'Coste de desbloqueo hasta el nivel {n}', prSumAll: 'Coste de desbloqueo (todos los pendientes)', prSumSub: '{n} de {m} con precio con fuente', prUnkN: '{n} desconocidos',
+    prNextLv: 'Próximo nivel con desbloqueo', prNoneLeft: 'No queda nada', prAfford: 'Tu saldo alcanza para', prAffordV: '{n} de {m}', prAffordLv: 'en orden hasta el nivel {n}',
+    prMissing: 'Te falta', prLeft: 'Te sobra', prOnlyKnown: 'solo precios con fuente', prEnterCash: 'Introduce tu saldo',
+    prStat: '{t}: {n} entradas en nuestros datos · {o} niveles oficiales, {c} niveles de la comunidad · {u} con precio de desbloqueo, {x} sin él',
+    prAllDone: 'No hay más desbloqueos en nuestros datos para este rango.', prNoData: 'Aún no tenemos niveles con fuente para este track.',
+    prXpNext: 'Para llegar al nivel {n} en este track de rol necesitas {x} XP en total (Season 2).', prXpMax: 'Valor más alto en las notas del parche: nivel {n} = {x} XP. Los niveles superiores no están publicados.',
+    prXpNone: 'No se ha publicado una curva de XP para este track; las notas del parche solo cubren los tracks de rol.',
+    tlViewLabel: 'Vista', tlViewTiers: 'Tiers', tlViewValue: 'Calidad-precio',
+    tlRule: 'Cómo leerlo: precio por vida junto a <b>nuestro</b> tier. Si en la misma clase hay un arma más barata con el mismo tier o mejor, verás «Alternativa más barata». Solo se incluyen armas con precio <b>oficial</b>. El tier es nuestra valoración y no depende solo del precio: el alcance, el desbloqueo y el estilo de juego también cuentan.',
+    tlAlt: 'Alternativa más barata', tlBest: 'La opción más barata con tier {t} o mejor', tlNoPrice: 'Sin precio oficial (sin valorar)', tlPriceLife: 'Precio por vida', tlVerdict: 'Valoración'
+  },
+  fr: {
+    navGrpMatch: 'En match', navGrpPlan: 'Planifier', navGrpData: 'Armes et données',
+    tProgT: 'Planificateur de progression', tProgD: 'Prochains déblocages par track – avec niveau et coût.',
+    prLevel: 'Ton niveau', prCash: 'Ton solde ($)', prTo: 'Jusqu’au niveau (optionnel)', prToPh: 'tous',
+    prNextH: 'Prochains déblocages', prHaveH: 'Déjà atteint par niveau', prHaveHint: 'Disponible à ton niveau – il te reste peut-être à payer le déblocage unique.',
+    prStdH: 'Standard et niveau inconnu', prXpH: 'Monter de niveau plus vite',
+    prTip1: '<b>Séries logistiques :</b> livrer des caisses, des palettes ou des joueurs d’affilée dans la Control Zone rapporte plus d’XP par livraison de la série (p. ex. +100 XP par palette, jusqu’à 10 d’affilée).',
+    prTip2: '<b>Attaque les objectifs :</b> capturer une Drill Tower ennemie rapporte désormais 300 XP, pirater une FOB ennemie 250 XP – les coéquipiers dans le rayon gagnent aussi de l’XP.',
+    prTip3: '<b>Nourris le bon track :</b> détruire des constructions et les IED/C4 comptent pour Assault, l’artillerie pour Driver, les réparations pour Driver ou Pilot selon le véhicule.',
+    prTip4: '<b>Chasse les véhicules armés :</b> les variantes armées rapportent 1,5 fois l’XP de la variante standard.',
+    prTip5: '<b>Lonestar :</b> en Season 2, Lonestar reçoit à titre expérimental un bonus d’argent et d’XP.',
+    prTip6: '<b>Pas de farm d’XP :</b> BULKHEAD sanctionne les exploits par une remise à zéro de l’argent et de l’XP, et le farm d’XP par un bannissement définitif.',
+    prXpSrc: 'Le tout d’après les notes de patch officielles (Season 2 et patch 0.11), avec nos propres mots.',
+    prToGuide: '→ Guide : XP et déblocages', prToLoadout: '→ Planificateur de loadout',
+    prLvUnk: 'inconnu', prPerLife: 'par vie', prPlusUnk: 'inconnu',
+    prSumTo: 'Coût de déblocage jusqu’au niveau {n}', prSumAll: 'Coût de déblocage (tout ce qui reste)', prSumSub: '{n} sur {m} avec prix sourcé', prUnkN: '{n} inconnus',
+    prNextLv: 'Prochain niveau de déblocage', prNoneLeft: 'Plus rien à débloquer', prAfford: 'Ton solde suffit pour', prAffordV: '{n} sur {m}', prAffordLv: 'dans l’ordre jusqu’au niveau {n}',
+    prMissing: 'Il manque', prLeft: 'Il reste', prOnlyKnown: 'prix sourcés uniquement', prEnterCash: 'Saisis ton solde',
+    prStat: '{t} : {n} entrées dans nos données · {o} niveaux officiels, {c} niveaux communauté · {u} avec prix de déblocage, {x} sans',
+    prAllDone: 'Plus aucun déblocage dans nos données pour cette plage.', prNoData: 'Nous n’avons pas encore de niveaux sourcés pour ce track.',
+    prXpNext: 'Pour atteindre le niveau {n} dans ce track de rôle, il faut {x} XP au total (Season 2).', prXpMax: 'Valeur la plus haute des notes de patch : niveau {n} = {x} XP. Les niveaux supérieurs ne sont pas publiés.',
+    prXpNone: 'Aucune courbe d’XP n’a été publiée pour ce track – les notes de patch ne couvrent que les tracks de rôle.',
+    tlViewLabel: 'Vue', tlViewTiers: 'Tiers', tlViewValue: 'Rapport qualité-prix',
+    tlRule: 'Comment lire : prix par vie à côté de <b>notre</b> tier. Si la même catégorie propose une arme moins chère avec un tier égal ou meilleur, tu verras « Alternative moins chère ». Seules les armes au prix <b>officiellement sourcé</b> sont prises en compte. Le tier est notre évaluation et ne dépend pas que du prix – portée, déblocage et style de jeu comptent aussi.',
+    tlAlt: 'Alternative moins chère', tlBest: 'Choix le moins cher en tier {t} ou mieux', tlNoPrice: 'Sans prix officiel (non évalué)', tlPriceLife: 'Prix par vie', tlVerdict: 'Verdict'
+  }
+};
+Object.keys(FB25_I18N).forEach(l => Object.assign(I18N[l], FB25_I18N[l]));
+
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -1571,7 +1680,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '24';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '25';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

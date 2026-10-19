@@ -501,7 +501,48 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
     if (!root) return;
     const T = D.tierlist, chips = $('#tlChips');
     let cur = 'alle';
+    // v25: Ansicht „Preis-Leistung“ (eigene Regel: billigere Waffe derselben Klasse mit gleichem/besserem Tier, nur offizielle Preise)
+    const viewBox = $('#tlView'), valBox = $('#tlValue'), valRoot = $('#tlValueRoot');
+    const RANK = { S: 0, A: 1, B: 2, C: 3 };
+    const offP = id => { const i = BY[id], v = i && i.price; return v && v.f === 'o' && typeof v.v === 'number' ? v.v : null; };
+    let view = new URLSearchParams(location.search).get('ansicht') === 'preis' ? 'preis' : 'tiers';
+    function valueRows(c) {
+      const rows = c.tiers.filter(r => RANK[r[0]] !== undefined);
+      const priced = rows.filter(r => offP(r[1]) !== null).map(([tr, id, , prov]) => ({ tr, id, prov, p: offP(id) }));
+      priced.forEach(x => {
+        const alts = priced.filter(y => y.id !== x.id && y.p < x.p && RANK[y.tr] <= RANK[x.tr]).sort((a, b) => a.p - b.p || RANK[a.tr] - RANK[b.tr]);
+        x.alt = alts[0] || null;
+        x.best = !x.alt && !priced.some(y => y.id !== x.id && y.p === x.p && RANK[y.tr] < RANK[x.tr]);
+      });
+      priced.sort((a, b) => RANK[a.tr] - RANK[b.tr] || a.p - b.p);
+      return { priced, missing: rows.filter(r => offP(r[1]) === null).map(r => r[1]) };
+    }
+    function renderValue() {
+      const cls = T.classes.map((c, ix) => [c, ix]).filter(([c, ix]) => (cur === 'alle' || String(ix) === cur) && c.tiers.some(r => RANK[r[0]] !== undefined));
+      valRoot.innerHTML = cls.length ? cls.map(([c]) => {
+        const { priced, missing } = valueRows(c);
+        const body = priced.map(x => {
+          const i = BY[x.id], note = x.alt
+            ? `<span class="tl-alt">${esc(t('tlAlt'))}: <a href="#pl-${x.alt.id}">${esc(BY[x.alt.id].name)}</a> <small>(${esc(x.alt.tr)}, ${esc(money(x.alt.p))} · −${esc(money(x.p - x.alt.p))})</small></span>`
+            : `<span class="tl-ok">✓ ${esc(t('tlBest', { t: x.tr }))}</span>`;
+          return `<tr id="pl-${x.id}"${x.alt ? ' class="has-alt"' : ''}><td class="fbt-namecell"><a href="${LP}/tools/datenbank/?id=${x.id}">${pic(i, 28, 'li')}${esc(i.name)}</a>${x.prov ? ` <span class="fbt-badge">${esc(t('tProv'))}</span>` : ''}</td>`
+            + `<td><span class="fbt-tier sm t-${x.tr}">${esc(x.tr)}</span></td><td class="tl-price" data-p="${x.p}">${esc(money(x.p))} ${srcLink(i.price)}</td><td>${note}</td></tr>`;
+        }).join('');
+        const miss = missing.length ? `<p class="fbt-sub tl-miss">${esc(t('tlNoPrice'))}: ${missing.map(id => `<a href="${LP}/tools/datenbank/?id=${id}">${esc(BY[id].name)}</a>`).join(', ')}</p>` : '';
+        return `<section class="fbt-tierclass"><h3>${esc(c.name)}</h3>${priced.length ? `<div class="fb-tablewrap"><table class="fbt-table tl-vtable"><thead><tr><th scope="col">${esc(t('tName'))}</th><th scope="col">Tier</th><th scope="col">${esc(t('tlPriceLife'))}</th><th scope="col">${esc(t('tlVerdict'))}</th></tr></thead><tbody>${body}</tbody></table></div>` : ''}${miss}</section>`;
+      }).join('') : `<p class="fbt-sub">${esc(t('tNone'))}</p>`;
+    }
+    function setView(v, push) {
+      view = v;
+      viewBox.querySelectorAll('.tl-vbtn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+      root.hidden = v !== 'tiers'; valBox.hidden = v !== 'preis';
+      if (v === 'preis') renderValue();
+      if (push) { const P = new URLSearchParams(location.search); if (v === 'preis') P.set('ansicht', 'preis'); else P.delete('ansicht'); history.replaceState(null, '', location.pathname + (P.toString() ? '?' + P : '') + location.hash); }
+    }
+    if (viewBox) viewBox.addEventListener('click', e => { const b = e.target.closest('.tl-vbtn'); if (b) setView(b.dataset.v, true); });
+    window.fbTierValue = c => valueRows(T.classes[c]);
     function render() {
+      if (viewBox && view === 'preis') renderValue();
       root.innerHTML = T.classes.filter((c, ix) => cur === 'alle' || String(ix) === cur).map(c => {
         const tiers = [...new Set(c.tiers.map(r => r[0]))];
         return `<section class="fbt-tierclass"><h2>${esc(c.name)}</h2>${tiers.map(tr => `<div class="fbt-tierrow"><div class="fbt-tier t-${tr === '–' ? 'x' : tr}" aria-label="Tier ${esc(tr)}">${esc(tr)}</div><div class="fbt-tieritems">
@@ -519,8 +560,8 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       const el = document.getElementById(h.slice(1)); if (!el) return;
       el.open = true; el.scrollIntoView({ block: 'center' }); el.classList.remove('fb-flash'); void el.offsetWidth; el.classList.add('fb-flash');
     }
-    render(); jump();
-    addEventListener('hashchange', () => { if (cur !== 'alle' && location.hash.startsWith('#t-')) { cur = 'alle'; chips.querySelectorAll('.fb-chip').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.c === 'alle'))); render(); } jump(); });
+    render(); if (viewBox) setView(location.hash.startsWith('#t-') ? 'tiers' : view, false); jump();
+    addEventListener('hashchange', () => { if (viewBox && location.hash.startsWith('#t-') && view !== 'tiers') setView('tiers', true); if (cur !== 'alle' && location.hash.startsWith('#t-')) { cur = 'alle'; chips.querySelectorAll('.fb-chip').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.c === 'alle'))); render(); } jump(); });
     hooks.push(render);
   })();
 
@@ -767,6 +808,103 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     if (['en', 'es', 'fr'].includes(lang)) el('stLang').value = lang;
     update(true);
     hooks.push(() => update(true));
+  })();
+
+  // ======================================================== Progression-Planer (v25)
+  (function progression() {
+    const root = $('#prRoot');
+    if (!root) return;
+    const el = id => document.getElementById(id), KEY = 'fbProgression';
+    const TR = ['Assault', 'Medic', 'Recon', 'Support', 'Driver', 'Pilot', 'WARDOG'];
+    const PR = D.progression || {};
+    const selT = el('prTrack'), inL = el('prLevel'), inC = el('prCash'), inTo = el('prTo');
+    const int = (x, lo, hi) => { const n = parseInt(x, 10); return Number.isFinite(n) ? Math.max(lo, Math.min(hi, n)) : null; };
+    // Startwerte: URL > gespeichert > Standard
+    const q = new URLSearchParams(location.search);
+    let saved = {}; try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+    const pick = (k, sk) => q.has(k) ? q.get(k) : saved[sk];
+    const t0 = pick('t', 't'); selT.value = TR.includes(t0) ? t0 : 'Assault';
+    const l0 = int(pick('lv', 'lv'), 0, 200); inL.value = l0 === null ? 1 : l0;
+    const c0 = int(pick('cash', 'cash'), 0, 1e9); inC.value = c0 === null ? '' : c0;
+    const to0 = int(pick('to', 'to'), 1, 200); inTo.value = to0 === null ? '' : to0;
+    const lvNum = i => has(i, 'level') && typeof i.level.v === 'number' ? i.level.v : null;
+    function state() {
+      return { t: selT.value, lv: int(inL.value, 0, 200) || 0, cash: int(inC.value, 0, 1e9), to: int(inTo.value, 1, 200) };
+    }
+    function calc(S) {
+      const all = D.items.filter(i => has(i, 'track') && i.track.v === S.t);
+      all.forEach(i => { delete i._ok; });
+      const lvl = all.filter(i => lvNum(i) !== null).sort((a, b) => lvNum(a) - lvNum(b) || a.name.localeCompare(b.name));
+      const next = lvl.filter(i => lvNum(i) > S.lv && (S.to === null || lvNum(i) <= S.to));
+      const have = lvl.filter(i => lvNum(i) <= S.lv);
+      const std = all.filter(i => lvNum(i) === null);
+      let sum = 0, unk = 0, comm = false, run = 0, afford = 0, affordLv = null, blocked = false;
+      next.forEach(i => {
+        const u = num(i, 'unlock');
+        if (u === null) { unk++; i._ok = null; return; }
+        sum += u; if (i.unlock.f === 'c') comm = true;
+        if (S.cash !== null && !blocked) {
+          if (run + u <= S.cash) { run += u; afford++; affordLv = lvNum(i); i._ok = true; } else { blocked = true; i._ok = false; }
+        } else i._ok = S.cash === null ? null : false;
+      });
+      const nUnl = next.filter(i => num(i, 'unlock') !== null).length;
+      return { all, lvl, next, have, std, sum, unk, comm, afford, affordLv, nUnl, rest: S.cash === null ? null : sum - S.cash };
+    }
+    const unlockTxt = i => { const u = num(i, 'unlock'); return u === null ? unk() : (u === 0 ? esc(t('tFree')) : fmt('unlock', u) + warn(i.unlock) + ' ' + srcLink(i.unlock)); };
+    function row(i) {
+      const p = num(i, 'price');
+      const ok = i._ok === true ? ' ok' : (i._ok === false ? ' no' : '');
+      return `<li class="pr-item${ok}">${pic(i, 30, 'li')}<span class="pr-iname"><a href="${LP}/tools/datenbank/?id=${i.id}">${esc(i.name)}</a><small>${esc(catName(i.cat))}${i.type ? ' · ' + esc(i.type) : ''} · ${esc(t('tLv'))} ${lvNum(i) === null ? (has(i, 'level') ? esc(t('tStd')) : esc(t('prLvUnk'))) : lvNum(i)}${warn(i.level)}</small></span>`
+        + `<span class="pr-icost"><b>${unlockTxt(i)}</b><small>${esc(t('prPerLife'))}: ${p === null ? esc(t('tUnknown')) : (p === 0 ? esc(t('tFree')) : esc(money(p))) + warn(i.price)}</small></span></li>`;
+    }
+    function groups(list) {
+      const by = {};
+      list.forEach(i => { const k = lvNum(i); (by[k] = by[k] || []).push(i); });
+      return Object.keys(by).map(Number).sort((a, b) => a - b).map(k => {
+        const s = by[k].reduce((x, i) => x + (num(i, 'unlock') || 0), 0), u = by[k].some(i => num(i, 'unlock') === null);
+        return `<div class="pr-lv"><div class="pr-lvh"><b>${esc(t('tLv'))} ${k}</b><small>${s ? esc(money(s)) : ''}${u ? (s ? ' + ' : '') + esc(t('prPlusUnk')) : ''}</small></div><ul class="pr-list">${by[k].map(row).join('')}</ul></div>`;
+      }).join('');
+    }
+    function render() {
+      const S = state(), R = calc(S);
+      const kpi = (lab, v, sub, cls) => `<div class="lo-kpi${cls ? ' ' + cls : ''}"><small>${esc(lab)}</small><b>${v}</b>${sub ? `<span class="lo-kpi-sub">${sub}</span>` : ''}</div>`;
+      const first = R.next[0], firstLv = first ? lvNum(first) : null, firstN = R.next.filter(i => lvNum(i) === firstLv);
+      const toLv = S.to !== null ? S.to : (R.next.length ? lvNum(R.next[R.next.length - 1]) : null);
+      let h = kpi(S.to !== null ? t('prSumTo', { n: S.to }) : t('prSumAll'), esc(money(R.sum)) + (R.comm ? ' ⚠' : ''),
+        esc(t('prSumSub', { n: R.nUnl, m: R.next.length })) + (R.unk ? ' · ' + esc(t('prUnkN', { n: R.unk })) : ''), 'main');
+      h += kpi(t('prNextLv'), firstLv === null ? '–' : esc(t('tLv')) + ' ' + firstLv, firstN.length ? esc(firstN.slice(0, 3).map(i => i.name).join(', ') + (firstN.length > 3 ? ' …' : '')) : esc(t('prNoneLeft')));
+      if (S.cash !== null) {
+        h += kpi(t('prAfford'), esc(t('prAffordV', { n: R.afford, m: R.nUnl })), R.affordLv !== null ? esc(t('prAffordLv', { n: R.affordLv })) : '');
+        h += kpi(R.rest > 0 ? t('prMissing') : t('prLeft'), esc(money(Math.abs(R.rest))), R.unk ? esc(t('prOnlyKnown')) : '', R.rest > 0 ? 'bad' : 'good');
+      } else h += kpi(t('prAfford'), '–', esc(t('prEnterCash')));
+      el('prKpis').innerHTML = h;
+      const lvO = R.all.filter(i => has(i, 'level') && i.level.f === 'o').length, lvC = R.all.filter(i => has(i, 'level') && i.level.f === 'c').length;
+      const uK = R.all.filter(i => num(i, 'unlock') !== null).length;
+      el('prStat').innerHTML = esc(t('prStat', { t: S.t, n: R.all.length, o: lvO, c: lvC, u: uK, x: R.all.length - uK })) + (lvC ? ' ' + warn({ f: 'c' }) : '');
+      el('prNext').innerHTML = R.next.length ? groups(R.next) : `<p class="fbt-sub">${esc(t(R.lvl.length ? 'prAllDone' : 'prNoData'))}</p>`;
+      el('prHave').innerHTML = R.have.length ? groups(R.have) : `<p class="fbt-sub">${esc(t('tNone'))}</p>`;
+      el('prHaveN').textContent = '(' + R.have.length + ')';
+      el('prStd').innerHTML = R.std.length ? `<ul class="pr-list">${R.std.map(row).join('')}</ul>` : `<p class="fbt-sub">${esc(t('tNone'))}</p>`;
+      el('prStdN').textContent = '(' + R.std.length + ')';
+      el('prStdBox').hidden = !R.std.length;
+      // XP bis zum nächsten Meilenstein (nur Rollen-Tracks laut Patchnotes)
+      const X = PR.xpCurve, xb = el('prXpNext');
+      if (X && (PR.xpTracks || []).includes(S.t)) {
+        const ms = Object.keys(X.v).map(Number).sort((a, b) => a - b), m = ms.find(k => k > S.lv);
+        xb.innerHTML = (m ? esc(t('prXpNext', { n: m, x: nf(X.v[m]) })) : esc(t('prXpMax', { n: ms[ms.length - 1], x: nf(X.v[ms[ms.length - 1]]) }))) + ' ' + srcLink(X);
+      } else xb.textContent = t('prXpNone');
+      // speichern
+      const o = { t: S.t, lv: S.lv }; if (S.cash !== null) o.cash = S.cash; if (S.to !== null) o.to = S.to;
+      try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+      const P = new URLSearchParams(); Object.entries(o).forEach(([k, v]) => P.set(k, v));
+      history.replaceState(null, '', location.pathname + '?' + P);
+      root.dataset.sum = R.sum; root.dataset.next = R.next.length; root.dataset.unk = R.unk; root.dataset.afford = R.afford;
+    }
+    [selT, inL, inC, inTo].forEach(x => x.addEventListener('input', render));
+    selT.addEventListener('change', render);
+    window.fbProgCalc = S => { const R = calc(Object.assign({ t: 'Assault', lv: 0, cash: null, to: null }, S)); return { sum: R.sum, next: R.next.map(i => i.id), unk: R.unk, afford: R.afford, have: R.have.length, std: R.std.length }; };
+    render();
+    hooks.push(render);
   })();
 
 })();
