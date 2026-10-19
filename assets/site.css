@@ -888,6 +888,8 @@
   .fb-calc-help summary { cursor: pointer; padding: 16px 0; font-weight: 700; }
   .fb-calc-help .help-body { padding-bottom: 14px; font-size: .95rem; }
   .fb-guide-link { display: block; text-align: center; margin: 4px 0 10px; font-size: .92rem; }
+  .fb-guide-link + .fb-steam-link { margin-top: -4px; }
+  .fb-steam-note { margin: -4px 0 16px; font-size: .95rem; }
 
   /* Spotify-Einwilligung (Klick zum Laden) */
   .music-consent { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 14px; background: #282828; color: #e4e4e7; }

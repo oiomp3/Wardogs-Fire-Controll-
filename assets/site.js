@@ -473,6 +473,7 @@ const FB_I18N = {
     guidesTitle: 'Alle Guides', guidesLead: 'Filtere nach Kategorie oder suche nach Stichworten.',
     crumbHome: 'Start', crumbLabel: 'Brotkrumen-Navigation',
     calcGuideLink: 'Wie funktioniert der Rechner? → Guide „Mörser L81 & SPH-2“',
+    steamGuideLink: 'Auch als englischer Guide auf Steam: „How to Hit with Mortars“ ↗',
     titleHome: 'Frontbuch – Guides und Tools für WARDOGS', titleCalc: 'Mörser-Rechner (L81 und SPH-2) · Frontbuch',
     titleSlots: 'Loadout-Roulette: Zufalls-Loadout für WARDOGS · Frontbuch', titleGuides: 'Alle Guides · Frontbuch',
     nfTitle: 'Seite nicht gefunden', nfText: 'Diese Seite gibt es nicht (mehr). Vielleicht hilft die Suche?', nfBack: 'Zur Startseite',
@@ -513,6 +514,7 @@ const FB_I18N = {
     guidesTitle: 'All guides', guidesLead: 'Filter by category or search by keyword.',
     crumbHome: 'Home', crumbLabel: 'Breadcrumb',
     calcGuideLink: 'How does it work? → Guide \u201cMörser L81 & SPH-2\u201d (German)',
+    steamGuideLink: 'Also on Steam (English): \u201cHow to Hit with Mortars\u201d ↗',
     titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'Mortar calculator (L81 and SPH-2) · Frontbuch',
     titleSlots: 'Loadout Roulette: random WARDOGS loadout · Frontbuch', titleGuides: 'All guides · Frontbuch',
     nfTitle: 'Page not found', nfText: 'This page does not exist (any more). Maybe the search helps?', nfBack: 'Back to home',
@@ -553,6 +555,7 @@ const FB_I18N = {
     guidesTitle: 'Todas las guías', guidesLead: 'Filtra por categoría o busca por palabra clave.',
     crumbHome: 'Inicio', crumbLabel: 'Ruta de navegación',
     calcGuideLink: '¿Cómo funciona? → Guía «Mörser L81 & SPH-2» (en alemán)',
+    steamGuideLink: 'También en Steam (en inglés): «How to Hit with Mortars» ↗',
     titleHome: 'Frontbuch – Guías y herramientas para WARDOGS', titleCalc: 'Calculadora de mortero (L81 y SPH-2) · Frontbuch',
     titleSlots: 'Ruleta de loadouts: loadout aleatorio para WARDOGS · Frontbuch', titleGuides: 'Todas las guías · Frontbuch',
     nfTitle: 'Página no encontrada', nfText: 'Esta página no existe (o ya no existe). ¿Quizás ayude la búsqueda?', nfBack: 'Ir al inicio',
@@ -593,6 +596,7 @@ const FB_I18N = {
     guidesTitle: 'Tous les guides', guidesLead: 'Filtre par catégorie ou recherche par mot-clé.',
     crumbHome: 'Accueil', crumbLabel: 'Fil d\u2019Ariane',
     calcGuideLink: 'Comment ça marche ? → Guide « Mörser L81 & SPH-2 » (en allemand)',
+    steamGuideLink: 'Aussi sur Steam (en anglais) : « How to Hit with Mortars » ↗',
     titleHome: 'Frontbuch – Guides et outils pour WARDOGS', titleCalc: 'Calculateur de mortier (L81 et SPH-2) · Frontbuch',
     titleSlots: 'Roulette de loadout : loadout aléatoire pour WARDOGS · Frontbuch', titleGuides: 'Tous les guides · Frontbuch',
     nfTitle: 'Page introuvable', nfText: 'Cette page n\u2019existe pas (ou plus). La recherche peut peut-être aider ?', nfBack: 'Retour à l\u2019accueil',
@@ -1535,7 +1539,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '22';
+      sc.src = '/assets/search-data.js?v=' + '23';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
