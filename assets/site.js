@@ -417,109 +417,6 @@ Object.keys(MUSIC_I18N).forEach(l => {
   I18N[l].aboutHtml = I18N[l].aboutHtml.replace(/<\/ul>\s*$/, '  <li>' + MUSIC_I18N[l].aboutSpotify + '</li>\n      </ul>');
 });
 
-const SLOT_I18N = {
-  de: {
-    slot: 'Slotmaschine',
-    slotClose: 'Slotmaschine schließen',
-    slotPlayMoney: 'Spielgeld – kein echtes Geld',
-    slotBalance: 'Guthaben',
-    slotBet: 'Einsatz',
-    slotSpin: 'Drehen',
-    slotSpinning: 'Dreht …',
-    slotRestart: 'Neustart mit $100',
-    slotSpins: 'Drehungen',
-    slotBest: 'Größter Gewinn',
-    slotSound: 'Ton',
-    slotPaytable: 'Gewinntabelle',
-    slotThree: '3 gleiche',
-    slotTwo: '2 gleiche (beliebige Position)',
-    slotRtp: 'Auszahlungsquote (RTP) ≈ 95 %: Auf lange Sicht verliert man – wie bei jedem Automaten. Zufall per crypto.getRandomValues.',
-    slotDisclaimer: 'Nur zum Spaß: Spielgeld ohne Wert. Keine Einzahlung, keine Auszahlung, keine echten Gewinne.',
-    slotReady: 'Einsatz wählen und „Drehen“ drücken.',
-    slotWin3: '{syms} – Drei gleiche! +{amount} (×{mult})',
-    slotWin2: '{syms} – Zwei gleiche: +{amount} (×{mult})',
-    slotLose: '{syms} – kein Gewinn (−{bet})',
-    slotBroke: 'Guthaben aufgebraucht – Neustart mit $100?',
-    slotRestarted: 'Neues Spielgeld: $100. Viel Spaß!',
-    symCherry: 'Kirsche', symStar: 'Stern', symTarget: 'Zielscheibe', symBomb: 'Bombe', symSkull: 'Totenkopf', symSeven: 'Sieben'
-  },
-  en: {
-    slot: 'Slot machine',
-    slotClose: 'Close slot machine',
-    slotPlayMoney: 'Play money – not real money',
-    slotBalance: 'Balance',
-    slotBet: 'Bet',
-    slotSpin: 'Spin',
-    slotSpinning: 'Spinning …',
-    slotRestart: 'Restart with $100',
-    slotSpins: 'Spins',
-    slotBest: 'Biggest win',
-    slotSound: 'Sound',
-    slotPaytable: 'Paytable',
-    slotThree: '3 of a kind',
-    slotTwo: '2 of a kind (any position)',
-    slotRtp: 'Return to player (RTP) ≈ 95%: in the long run you lose – like any slot machine. Randomness via crypto.getRandomValues.',
-    slotDisclaimer: 'Just for fun: play money with no value. No deposits, no payouts, no real winnings.',
-    slotReady: 'Pick your bet and press “Spin”.',
-    slotWin3: '{syms} – Three of a kind! +{amount} (×{mult})',
-    slotWin2: '{syms} – Two of a kind: +{amount} (×{mult})',
-    slotLose: '{syms} – no win (−{bet})',
-    slotBroke: 'Out of play money – restart with $100?',
-    slotRestarted: 'Fresh play money: $100. Have fun!',
-    symCherry: 'Cherry', symStar: 'Star', symTarget: 'Target', symBomb: 'Bomb', symSkull: 'Skull', symSeven: 'Seven'
-  },
-  es: {
-    slot: 'Tragaperras',
-    slotClose: 'Cerrar tragaperras',
-    slotPlayMoney: 'Dinero de juego: no es dinero real',
-    slotBalance: 'Saldo',
-    slotBet: 'Apuesta',
-    slotSpin: 'Girar',
-    slotSpinning: 'Girando…',
-    slotRestart: 'Reiniciar con $100',
-    slotSpins: 'Tiradas',
-    slotBest: 'Mayor premio',
-    slotSound: 'Sonido',
-    slotPaytable: 'Tabla de premios',
-    slotThree: '3 iguales',
-    slotTwo: '2 iguales (cualquier posición)',
-    slotRtp: 'Retorno al jugador (RTP) ≈ 95 %: a la larga se pierde, como en cualquier tragaperras. Azar mediante crypto.getRandomValues.',
-    slotDisclaimer: 'Solo por diversión: dinero de juego sin valor. Sin depósitos, sin pagos, sin premios reales.',
-    slotReady: 'Elige tu apuesta y pulsa «Girar».',
-    slotWin3: '{syms}: ¡tres iguales! +{amount} (×{mult})',
-    slotWin2: '{syms}: dos iguales, +{amount} (×{mult})',
-    slotLose: '{syms}: sin premio (−{bet})',
-    slotBroke: 'Te has quedado sin dinero de juego. ¿Reiniciar con $100?',
-    slotRestarted: 'Nuevo dinero de juego: $100. ¡Diviértete!',
-    symCherry: 'Cereza', symStar: 'Estrella', symTarget: 'Diana', symBomb: 'Bomba', symSkull: 'Calavera', symSeven: 'Siete'
-  },
-  fr: {
-    slot: 'Machine à sous',
-    slotClose: 'Fermer la machine à sous',
-    slotPlayMoney: 'Argent fictif – pas d\u2019argent réel',
-    slotBalance: 'Solde',
-    slotBet: 'Mise',
-    slotSpin: 'Lancer',
-    slotSpinning: 'Ça tourne…',
-    slotRestart: 'Recommencer avec $100',
-    slotSpins: 'Tours',
-    slotBest: 'Plus gros gain',
-    slotSound: 'Son',
-    slotPaytable: 'Table des gains',
-    slotThree: '3 identiques',
-    slotTwo: '2 identiques (n\u2019importe où)',
-    slotRtp: 'Taux de retour (RTP) ≈ 95\u00a0% : à long terme, on perd – comme sur toute machine à sous. Hasard via crypto.getRandomValues.',
-    slotDisclaimer: 'Juste pour le plaisir : argent fictif sans valeur. Pas de dépôt, pas de retrait, aucun gain réel.',
-    slotReady: 'Choisissez votre mise et appuyez sur «\u00a0Lancer\u00a0».',
-    slotWin3: '{syms} – Trois identiques\u00a0! +{amount} (×{mult})',
-    slotWin2: '{syms} – Deux identiques\u00a0: +{amount} (×{mult})',
-    slotLose: '{syms} – pas de gain (−{bet})',
-    slotBroke: 'Plus d\u2019argent fictif – recommencer avec $100\u00a0?',
-    slotRestarted: 'Nouvel argent fictif\u00a0: $100. Amusez-vous bien\u00a0!',
-    symCherry: 'Cerise', symStar: 'Étoile', symTarget: 'Cible', symBomb: 'Bombe', symSkull: 'Crâne', symSeven: 'Sept'
-  }
-};
-Object.keys(SLOT_I18N).forEach(l => Object.assign(I18N[l], SLOT_I18N[l]));
 
 const LANGS = {
   de: { name: 'Deutsch', flag: 'flag-de' },
@@ -557,7 +454,7 @@ const FB_I18N = {
     musicConsentText: '♪ Musik von cloudybeatz – Beim Abspielen werden Daten an Spotify übertragen.', musicConsentBtn: 'Player laden', musicConsentPrivacy: 'Datenschutz',
     consentOn: 'Status: Spotify-Player erlaubt (Einwilligung gespeichert).', consentOff: 'Status: Spotify-Player nicht geladen (keine Einwilligung).', consentRevokeBtn: 'Einwilligung widerrufen', consentRevoked: 'Einwilligung widerrufen – der Player wird nicht mehr geladen.',
     siteSub: 'Guides & Tools für WARDOGS',
-    navHome: 'Start', navGuides: 'Guides', navCalc: 'Mörser-Rechner', navSlots: 'Slotmaschine',
+    navHome: 'Start', navGuides: 'Guides', navCalc: 'Mörser-Rechner', navSlots: 'Loadout-Roulette',
     navGlossary: 'Glossar', navFaq: 'FAQ', navNews: 'Was ist neu', navImpressum: 'Impressum', navPrivacy: 'Datenschutz',
     navMore: 'Mehr', discordJoin: 'Discord beitreten', navLegal: 'Rechtliches',
     fbFooter: 'Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.',
@@ -570,17 +467,16 @@ const FB_I18N = {
     homeLead: 'Guides, Mörser-Rechner und Tools für WARDOGS.',
     tileGuidesT: 'Guides', tileGuidesD: '{n} Guides von Einstieg bis Artillerie',
     tileCalcT: 'Mörser-Rechner', tileCalcD: 'Distanz, Richtung und Elevation für L81 & SPH-2',
-    tileSlotsT: 'Slotmaschine', tileSlotsD: 'Zum Spaß – nur Spielgeld',
+    tileSlotsD: 'Zufalls-Loadout erdrehen und als Challenge teilen.',
     homeContinue: 'Weiter zum Rechner', homeContinueD: 'Dein Schussverlauf ist gespeichert ({n}).',
     homeLatest: 'Neueste Guides', homePopular: 'Beliebte Themen', homeAllGuides: 'Alle Guides →', homeExtras: 'Nachschlagen',
     guidesTitle: 'Alle Guides', guidesLead: 'Filtere nach Kategorie oder suche nach Stichworten.',
     crumbHome: 'Start', crumbLabel: 'Brotkrumen-Navigation',
     calcGuideLink: 'Wie funktioniert der Rechner? → Guide „Mörser L81 & SPH-2“',
     titleHome: 'Frontbuch – Guides und Tools für WARDOGS', titleCalc: 'Mörser-Rechner (L81 und SPH-2) · Frontbuch',
-    titleSlots: 'Slotmaschine (Spielgeld) · Frontbuch', titleGuides: 'Alle Guides · Frontbuch',
-    slotPageLead: 'Ein kleines Spiel zum Zeitvertreib. Es geht nur um Spielgeld, das in deinem Browser gespeichert wird.',
+    titleSlots: 'Loadout-Roulette: Zufalls-Loadout für WARDOGS · Frontbuch', titleGuides: 'Alle Guides · Frontbuch',
     nfTitle: 'Seite nicht gefunden', nfText: 'Diese Seite gibt es nicht (mehr). Vielleicht hilft die Suche?', nfBack: 'Zur Startseite',
-    offTitle: 'Du bist offline', offText: 'Diese Seite ist noch nicht gespeichert. Seiten, die du schon besucht hast, sowie Rechner und Slotmaschine funktionieren auch offline.',
+    offTitle: 'Du bist offline', offText: 'Diese Seite ist noch nicht gespeichert. Seiten, die du schon besucht hast, sowie Rechner und Loadout-Roulette funktionieren auch offline.',
     skip: 'Zum Inhalt springen',
     installedText: 'Du nutzt Frontbuch gerade als App.',
     installPromptText: 'Installiere Frontbuch als App – mit eigenem Icon. Rechner und besuchte Seiten funktionieren auch offline.',
@@ -590,7 +486,7 @@ const FB_I18N = {
         <li>Die Guides sind eigene Texte. Fakten stammen aus öffentlichen Quellen, die unter jedem Guide verlinkt sind.</li>
         <li>Die Elevationswerte im Rechner stammen aus Community-Tabellen.</li>
         <li>Alle Angaben ohne Gewähr.</li>
-        <li>Einstellungen, Schussverlauf und Spielgeld werden nur lokal in deinem Browser gespeichert.</li>
+        <li>Einstellungen, Schussverlauf und Loadouts werden nur lokal in deinem Browser gespeichert.</li>
       </ul>
       <p><a href="/impressum/">Impressum</a> · <a href="/datenschutz/">Datenschutz</a></p>`
   },
@@ -598,7 +494,7 @@ const FB_I18N = {
     musicConsentText: '♪ Music by cloudybeatz – playing it sends data to Spotify.', musicConsentBtn: 'Load player', musicConsentPrivacy: 'Privacy',
     consentOn: 'Status: Spotify player allowed (consent saved).', consentOff: 'Status: Spotify player not loaded (no consent).', consentRevokeBtn: 'Revoke consent', consentRevoked: 'Consent revoked – the player will no longer be loaded.',
     siteSub: 'Guides & tools for WARDOGS',
-    navHome: 'Home', navGuides: 'Guides', navCalc: 'Mortar calculator', navSlots: 'Slot machine',
+    navHome: 'Home', navGuides: 'Guides', navCalc: 'Mortar calculator', navSlots: 'Loadout Roulette',
     navGlossary: 'Glossary', navFaq: 'FAQ', navNews: 'What\u2019s new', navImpressum: 'Legal notice', navPrivacy: 'Privacy',
     navMore: 'More', discordJoin: 'Join Discord', navLegal: 'Legal',
     fbFooter: 'Unofficial fan site, not affiliated with BULKHEAD or Team17.',
@@ -611,17 +507,16 @@ const FB_I18N = {
     homeLead: 'Guides, mortar calculator and tools for WARDOGS.',
     tileGuidesT: 'Guides', tileGuidesD: '{n} guides from basics to artillery',
     tileCalcT: 'Mortar calculator', tileCalcD: 'Distance, bearing and elevation for L81 & SPH-2',
-    tileSlotsT: 'Slot machine', tileSlotsD: 'Just for fun – play money only',
+    tileSlotsD: 'Spin a random loadout and share it as a challenge.',
     homeContinue: 'Back to the calculator', homeContinueD: 'Your shot history is saved ({n}).',
     homeLatest: 'Latest guides', homePopular: 'Popular topics', homeAllGuides: 'All guides →', homeExtras: 'Reference',
     guidesTitle: 'All guides', guidesLead: 'Filter by category or search by keyword.',
     crumbHome: 'Home', crumbLabel: 'Breadcrumb',
     calcGuideLink: 'How does it work? → Guide \u201cMörser L81 & SPH-2\u201d (German)',
     titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'Mortar calculator (L81 and SPH-2) · Frontbuch',
-    titleSlots: 'Slot machine (play money) · Frontbuch', titleGuides: 'All guides · Frontbuch',
-    slotPageLead: 'A little game to pass the time. Play money only, stored in your browser.',
+    titleSlots: 'Loadout Roulette: random WARDOGS loadout · Frontbuch', titleGuides: 'All guides · Frontbuch',
     nfTitle: 'Page not found', nfText: 'This page does not exist (any more). Maybe the search helps?', nfBack: 'Back to home',
-    offTitle: 'You are offline', offText: 'This page has not been saved yet. Pages you already visited, the calculator and the slot machine also work offline.',
+    offTitle: 'You are offline', offText: 'This page has not been saved yet. Pages you already visited, the calculator and the loadout roulette also work offline.',
     skip: 'Skip to content',
     installedText: 'You are currently using Frontbuch as an app.',
     installPromptText: 'Install Frontbuch as an app – with its own icon. The calculator and visited pages also work offline.',
@@ -631,7 +526,7 @@ const FB_I18N = {
         <li>The guides are original texts (currently German only). Facts come from public sources linked below each guide.</li>
         <li>The calculator\u2019s elevation values come from community tables.</li>
         <li>All information without guarantee.</li>
-        <li>Settings, shot history and play money are stored only locally in your browser.</li>
+        <li>Settings, shot history and loadouts are stored only locally in your browser.</li>
       </ul>
       <p><a href="/impressum/">Legal notice</a> · <a href="/datenschutz/">Privacy</a> (German)</p>`
   },
@@ -639,7 +534,7 @@ const FB_I18N = {
     musicConsentText: '♪ Música de cloudybeatz – al reproducir se envían datos a Spotify.', musicConsentBtn: 'Cargar reproductor', musicConsentPrivacy: 'Privacidad',
     consentOn: 'Estado: reproductor de Spotify permitido (consentimiento guardado).', consentOff: 'Estado: reproductor de Spotify no cargado (sin consentimiento).', consentRevokeBtn: 'Revocar consentimiento', consentRevoked: 'Consentimiento revocado: el reproductor ya no se cargará.',
     siteSub: 'Guías y herramientas para WARDOGS',
-    navHome: 'Inicio', navGuides: 'Guías', navCalc: 'Calculadora de mortero', navSlots: 'Tragaperras',
+    navHome: 'Inicio', navGuides: 'Guías', navCalc: 'Calculadora de mortero', navSlots: 'Ruleta de loadouts',
     navGlossary: 'Glosario', navFaq: 'FAQ', navNews: 'Novedades', navImpressum: 'Aviso legal', navPrivacy: 'Privacidad',
     navMore: 'Más', discordJoin: 'Únete a Discord', navLegal: 'Legal',
     fbFooter: 'Sitio de fans no oficial, sin relación con BULKHEAD ni Team17.',
@@ -652,17 +547,16 @@ const FB_I18N = {
     homeLead: 'Guías, calculadora de mortero y herramientas para WARDOGS.',
     tileGuidesT: 'Guías', tileGuidesD: '{n} guías, de lo básico a la artillería',
     tileCalcT: 'Calculadora de mortero', tileCalcD: 'Distancia, rumbo y elevación para L81 y SPH-2',
-    tileSlotsT: 'Tragaperras', tileSlotsD: 'Por diversión: solo dinero de juego',
+    tileSlotsD: 'Gira un loadout aleatorio y compártelo como reto.',
     homeContinue: 'Volver a la calculadora', homeContinueD: 'Tu historial de disparos está guardado ({n}).',
     homeLatest: 'Guías recientes', homePopular: 'Temas populares', homeAllGuides: 'Todas las guías →', homeExtras: 'Consulta',
     guidesTitle: 'Todas las guías', guidesLead: 'Filtra por categoría o busca por palabra clave.',
     crumbHome: 'Inicio', crumbLabel: 'Ruta de navegación',
     calcGuideLink: '¿Cómo funciona? → Guía «Mörser L81 & SPH-2» (en alemán)',
     titleHome: 'Frontbuch – Guías y herramientas para WARDOGS', titleCalc: 'Calculadora de mortero (L81 y SPH-2) · Frontbuch',
-    titleSlots: 'Tragaperras (dinero de juego) · Frontbuch', titleGuides: 'Todas las guías · Frontbuch',
-    slotPageLead: 'Un pequeño juego para pasar el rato. Solo dinero de juego, guardado en tu navegador.',
+    titleSlots: 'Ruleta de loadouts: loadout aleatorio para WARDOGS · Frontbuch', titleGuides: 'Todas las guías · Frontbuch',
     nfTitle: 'Página no encontrada', nfText: 'Esta página no existe (o ya no existe). ¿Quizás ayude la búsqueda?', nfBack: 'Ir al inicio',
-    offTitle: 'Sin conexión', offText: 'Esta página aún no se ha guardado. Las páginas ya visitadas, la calculadora y la tragaperras también funcionan sin conexión.',
+    offTitle: 'Sin conexión', offText: 'Esta página aún no se ha guardado. Las páginas ya visitadas, la calculadora y la ruleta de loadouts también funcionan sin conexión.',
     skip: 'Saltar al contenido',
     installedText: 'Estás usando Frontbuch como app.',
     installPromptText: 'Instala Frontbuch como app, con su propio icono. La calculadora y las páginas visitadas funcionan sin conexión.',
@@ -672,7 +566,7 @@ const FB_I18N = {
         <li>Las guías son textos propios (por ahora solo en alemán). Los datos proceden de fuentes públicas enlazadas en cada guía.</li>
         <li>Los valores de elevación de la calculadora proceden de tablas de la comunidad.</li>
         <li>Información sin garantía.</li>
-        <li>Los ajustes, el historial y el dinero de juego solo se guardan localmente en tu navegador.</li>
+        <li>Los ajustes, el historial y los loadouts solo se guardan localmente en tu navegador.</li>
       </ul>
       <p><a href="/impressum/">Aviso legal</a> · <a href="/datenschutz/">Privacidad</a> (en alemán)</p>`
   },
@@ -680,7 +574,7 @@ const FB_I18N = {
     musicConsentText: '♪ Musique de cloudybeatz – la lecture transmet des données à Spotify.', musicConsentBtn: 'Charger le lecteur', musicConsentPrivacy: 'Confidentialité',
     consentOn: 'Statut : lecteur Spotify autorisé (consentement enregistré).', consentOff: 'Statut : lecteur Spotify non chargé (pas de consentement).', consentRevokeBtn: 'Retirer le consentement', consentRevoked: 'Consentement retiré – le lecteur ne sera plus chargé.',
     siteSub: 'Guides et outils pour WARDOGS',
-    navHome: 'Accueil', navGuides: 'Guides', navCalc: 'Calculateur de mortier', navSlots: 'Machine à sous',
+    navHome: 'Accueil', navGuides: 'Guides', navCalc: 'Calculateur de mortier', navSlots: 'Roulette de loadout',
     navGlossary: 'Glossaire', navFaq: 'FAQ', navNews: 'Nouveautés', navImpressum: 'Mentions légales', navPrivacy: 'Confidentialité',
     navMore: 'Plus', discordJoin: 'Rejoindre Discord', navLegal: 'Légal',
     fbFooter: 'Site de fans non officiel, sans lien avec BULKHEAD ou Team17.',
@@ -693,17 +587,16 @@ const FB_I18N = {
     homeLead: 'Guides, calculateur de mortier et outils pour WARDOGS.',
     tileGuidesT: 'Guides', tileGuidesD: '{n} guides, des bases à l\u2019artillerie',
     tileCalcT: 'Calculateur de mortier', tileCalcD: 'Distance, gisement et élévation pour L81 et SPH-2',
-    tileSlotsT: 'Machine à sous', tileSlotsD: 'Pour le plaisir – argent fictif uniquement',
+    tileSlotsD: 'Tire un loadout au hasard et partage-le comme défi.',
     homeContinue: 'Retour au calculateur', homeContinueD: 'Ton historique de tirs est enregistré ({n}).',
     homeLatest: 'Derniers guides', homePopular: 'Sujets populaires', homeAllGuides: 'Tous les guides →', homeExtras: 'Référence',
     guidesTitle: 'Tous les guides', guidesLead: 'Filtre par catégorie ou recherche par mot-clé.',
     crumbHome: 'Accueil', crumbLabel: 'Fil d\u2019Ariane',
     calcGuideLink: 'Comment ça marche ? → Guide « Mörser L81 & SPH-2 » (en allemand)',
     titleHome: 'Frontbuch – Guides et outils pour WARDOGS', titleCalc: 'Calculateur de mortier (L81 et SPH-2) · Frontbuch',
-    titleSlots: 'Machine à sous (argent fictif) · Frontbuch', titleGuides: 'Tous les guides · Frontbuch',
-    slotPageLead: 'Un petit jeu pour passer le temps. Uniquement de l\u2019argent fictif, enregistré dans ton navigateur.',
+    titleSlots: 'Roulette de loadout : loadout aléatoire pour WARDOGS · Frontbuch', titleGuides: 'Tous les guides · Frontbuch',
     nfTitle: 'Page introuvable', nfText: 'Cette page n\u2019existe pas (ou plus). La recherche peut peut-être aider ?', nfBack: 'Retour à l\u2019accueil',
-    offTitle: 'Tu es hors ligne', offText: 'Cette page n\u2019a pas encore été enregistrée. Les pages déjà visitées, le calculateur et la machine à sous fonctionnent aussi hors ligne.',
+    offTitle: 'Tu es hors ligne', offText: 'Cette page n\u2019a pas encore été enregistrée. Les pages déjà visitées, le calculateur et la roulette de loadout fonctionnent aussi hors ligne.',
     skip: 'Aller au contenu',
     installedText: 'Vous utilisez actuellement Frontbuch en tant qu\u2019application.',
     installPromptText: 'Installez Frontbuch comme application – avec sa propre icône. Le calculateur et les pages visitées fonctionnent hors ligne.',
@@ -713,7 +606,7 @@ const FB_I18N = {
         <li>Les guides sont des textes originaux (pour l\u2019instant en allemand). Les faits proviennent de sources publiques citées sous chaque guide.</li>
         <li>Les valeurs d\u2019élévation du calculateur proviennent de tables de la communauté.</li>
         <li>Informations sans garantie.</li>
-        <li>Réglages, historique et argent fictif sont stockés uniquement en local dans ton navigateur.</li>
+        <li>Réglages, historique et loadouts sont stockés uniquement en local dans ton navigateur.</li>
       </ul>
       <p><a href="/impressum/">Mentions légales</a> · <a href="/datenschutz/">Confidentialité</a> (en allemand)</p>`
   }
@@ -723,12 +616,15 @@ Object.keys(FB_I18N).forEach(l => Object.assign(I18N[l], FB_I18N[l]));
 // ---------- Frontbuch: UI-Texte der Tools (Inhalte bleiben deutsch) ----------
 const FB_TOOLS_I18N = {
   de: {
+    rrP: 'Primär', rrS: 'Sekundär', rrL: 'Werfer', rrH: 'Helm', rrV: 'Weste', rrR: 'Rig', rrB: 'Rucksack', rrE: 'Ausrüstung', rrNone: 'Nichts',
+    rrSpin: 'Drehen', rrSpinning: 'Dreht …', rrHold: 'Halten', rrCost: 'Gesamtkosten', rrToLoadout: 'Ins Loadout übernehmen', rrShare: 'Challenge teilen',
+    rrTag: 'Spiel die nächste Runde mit diesem Loadout.', rrShareText: 'Meine WARDOGS-Loadout-Challenge: Spiel die nächste Runde mit diesem Loadout.',
     navTools: 'Tools', navToolsAll: 'Alle Tools', navRef: 'Nachschlagen', titleTools: 'Tools · Frontbuch', toolsTitle: 'Tools', toolsLead: 'Rechner, Planer und Nachschlagewerke für WARDOGS.',
     tileToolsT: 'Tools', tileToolsD: 'Loadout-Planer, Datenbank, Tierlist',
     tLoadoutT: 'Loadout-Planer', tLoadoutD: 'Loadout bauen: Kosten pro Leben, Gewicht und Freischaltungen.',
     tTierT: 'Tierlist', tTierD: 'Waffen nach Klasse eingestuft.',
     tDbT: 'Datenbank', tDbD: 'Waffen, Rüstung, Fahrzeuge und Ausrüstung durchsuchen und vergleichen.',
-    tCalcD: 'Distanz, Richtung und Elevation für L81 & SPH-2', tSlotsD: 'Zum Spaß – nur Spielgeld',
+    tCalcD: 'Distanz, Richtung und Elevation für L81 & SPH-2',
     tUnknown: '– unbekannt', tCommunity: 'Community-Wert', tFree: 'kostenlos', tStd: 'Standard',
     tSources: 'Quellen', tSearch: 'Suchen', tSearchPh: 'Name, Typ, Kaliber …', tAll: 'Alle', tCat: 'Kategorie', tTrack: 'Track',
     tName: 'Name', tLevel: 'Level', tUnlock: 'Freischaltung', tPrice: 'Preis', tCompare: 'Vergleichen', tCompareShort: 'Vgl.',
@@ -751,12 +647,15 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Gespeichert: {n}', tSavedMax: 'Maximal 12 Loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   en: {
+    rrP: 'Primary', rrS: 'Secondary', rrL: 'Launcher', rrH: 'Helmet', rrV: 'Vest', rrR: 'Rig', rrB: 'Backpack', rrE: 'Equipment', rrNone: 'Nothing',
+    rrSpin: 'Spin', rrSpinning: 'Spinning …', rrHold: 'Hold', rrCost: 'Total cost', rrToLoadout: 'Open in loadout planner', rrShare: 'Share challenge',
+    rrTag: 'Play your next round with this loadout.', rrShareText: 'My WARDOGS loadout challenge: play your next round with this loadout.',
     navTools: 'Tools', navToolsAll: 'All tools', navRef: 'Reference', titleTools: 'Tools · Frontbuch', toolsTitle: 'Tools', toolsLead: 'Calculators, planners and references for WARDOGS.',
     tileToolsT: 'Tools', tileToolsD: 'Loadout planner, database, tier list',
     tLoadoutT: 'Loadout planner', tLoadoutD: 'Build a loadout: cost per life, weight and unlocks.',
     tTierT: 'Tier list', tTierD: 'Weapons ranked by class.',
     tDbT: 'Database', tDbD: 'Search and compare weapons, armour, vehicles and equipment.',
-    tCalcD: 'Distance, bearing and elevation for L81 & SPH-2', tSlotsD: 'Just for fun – play money only',
+    tCalcD: 'Distance, bearing and elevation for L81 & SPH-2',
     tUnknown: '– unknown', tCommunity: 'Community value', tFree: 'free', tStd: 'Default',
     tSources: 'Sources', tSearch: 'Search', tSearchPh: 'Name, type, calibre …', tAll: 'All', tCat: 'Category', tTrack: 'Track',
     tName: 'Name', tLevel: 'Level', tUnlock: 'Unlock', tPrice: 'Price', tCompare: 'Compare', tCompareShort: 'Cmp.',
@@ -779,12 +678,15 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Saved: {n}', tSavedMax: 'Up to 12 loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   es: {
+    rrP: 'Primaria', rrS: 'Secundaria', rrL: 'Lanzador', rrH: 'Casco', rrV: 'Chaleco', rrR: 'Rig', rrB: 'Mochila', rrE: 'Equipo', rrNone: 'Nada',
+    rrSpin: 'Girar', rrSpinning: 'Girando…', rrHold: 'Fijar', rrCost: 'Coste total', rrToLoadout: 'Pasar al planificador', rrShare: 'Compartir reto',
+    rrTag: 'Juega la próxima ronda con este loadout.', rrShareText: 'Mi reto de loadout en WARDOGS: juega la próxima ronda con este loadout.',
     navTools: 'Herramientas', navToolsAll: 'Todas las herramientas', navRef: 'Consulta', titleTools: 'Herramientas · Frontbuch', toolsTitle: 'Herramientas', toolsLead: 'Calculadoras, planificadores y referencias para WARDOGS.',
     tileToolsT: 'Herramientas', tileToolsD: 'Planificador de equipamiento, base de datos, tier list',
     tLoadoutT: 'Planificador de equipamiento', tLoadoutD: 'Crea un equipamiento: coste por vida, peso y desbloqueos.',
     tTierT: 'Tier list', tTierD: 'Armas clasificadas por clase.',
     tDbT: 'Base de datos', tDbD: 'Busca y compara armas, blindaje, vehículos y equipo.',
-    tCalcD: 'Distancia, rumbo y elevación para L81 y SPH-2', tSlotsD: 'Solo por diversión: dinero ficticio',
+    tCalcD: 'Distancia, rumbo y elevación para L81 y SPH-2',
     tUnknown: '– desconocido', tCommunity: 'Valor de la comunidad', tFree: 'gratis', tStd: 'Estándar',
     tSources: 'Fuentes', tSearch: 'Buscar', tSearchPh: 'Nombre, tipo, calibre …', tAll: 'Todos', tCat: 'Categoría', tTrack: 'Track',
     tName: 'Nombre', tLevel: 'Nivel', tUnlock: 'Desbloqueo', tPrice: 'Precio', tCompare: 'Comparar', tCompareShort: 'Comp.',
@@ -807,12 +709,15 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Guardado: {n}', tSavedMax: 'Máximo 12 equipamientos.', tUntitled: 'Equipamiento', tLv: 'Nv',
   },
   fr: {
+    rrP: 'Principale', rrS: 'Secondaire', rrL: 'Lanceur', rrH: 'Casque', rrV: 'Gilet', rrR: 'Rig', rrB: 'Sac à dos', rrE: 'Équipement', rrNone: 'Rien',
+    rrSpin: 'Lancer', rrSpinning: 'Ça tourne…', rrHold: 'Garder', rrCost: 'Coût total', rrToLoadout: 'Ouvrir dans le planificateur', rrShare: 'Partager le défi',
+    rrTag: 'Joue la prochaine manche avec ce loadout.', rrShareText: 'Mon défi de loadout WARDOGS : joue la prochaine manche avec ce loadout.',
     navTools: 'Outils', navToolsAll: 'Tous les outils', navRef: 'Référence', titleTools: 'Outils · Frontbuch', toolsTitle: 'Outils', toolsLead: 'Calculateurs, planificateurs et références pour WARDOGS.',
     tileToolsT: 'Outils', tileToolsD: 'Planificateur d’équipement, base de données, tier list',
     tLoadoutT: 'Planificateur d’équipement', tLoadoutD: 'Compose un équipement : coût par vie, poids et déblocages.',
     tTierT: 'Tier list', tTierD: 'Armes classées par classe.',
     tDbT: 'Base de données', tDbD: 'Recherche et compare armes, armures, véhicules et équipement.',
-    tCalcD: 'Distance, cap et élévation pour L81 et SPH-2', tSlotsD: 'Pour le plaisir – argent fictif uniquement',
+    tCalcD: 'Distance, cap et élévation pour L81 et SPH-2',
     tUnknown: '– inconnu', tCommunity: 'Valeur de la communauté', tFree: 'gratuit', tStd: 'Standard',
     tSources: 'Sources', tSearch: 'Rechercher', tSearchPh: 'Nom, type, calibre …', tAll: 'Tous', tCat: 'Catégorie', tTrack: 'Track',
     tName: 'Nom', tLevel: 'Niveau', tUnlock: 'Déblocage', tPrice: 'Prix', tCompare: 'Comparer', tCompareShort: 'Comp.',
@@ -906,7 +811,7 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-// Seiten-Skripte (Rechner, Slot, Guides) registrieren hier ihre Render-Funktionen für den Sprachwechsel.
+// Seiten-Skripte (Rechner, Tools, Guides) registrieren hier ihre Render-Funktionen für den Sprachwechsel.
 window.fbLangHooks = window.fbLangHooks || [];
 
 // ---------- Sprache anwenden ----------
@@ -1610,7 +1515,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '19';
+      sc.src = '/assets/search-data.js?v=' + '20';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

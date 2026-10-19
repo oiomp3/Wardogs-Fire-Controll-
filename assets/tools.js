@@ -1,4 +1,4 @@
-// ---------- Frontbuch-Tools (Datenbank, Loadout, Tierlist) ----------
+// ---------- Frontbuch-Tools (Datenbank, Loadout, Tierlist, Vergleich, Loadout-Roulette) ----------
 // Alle Werte kommen aus window.FB_DATA (assets/data.js, erzeugt aus fbsrc/data/wardogs.json).
 (function () {
   const D = window.FB_DATA;
@@ -593,6 +593,133 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     });
     render(); if (P !== null) save();
     hooks.push(() => { sels.forEach(s => { s.dataset.filled = ''; }); render(); });
+  })();
+
+  // ======================================================== Loadout-Roulette (/slots/)
+  (function roulette() {
+    const root = $('#rrRoot');
+    if (!root) return;
+    try { localStorage.removeItem('wardogsSlot'); } catch (e) {} // alter Speicherwert von v19
+    // Schlüssel = URL-Parameter des Loadout-Planers, Slot, Chance auf „Nichts“
+    const REELS = [['p', 'primary', 1 / 8], ['s', 'secondary', 1 / 4], ['l', 'launcher', 1 / 4],
+      ['h', 'helmet', 1 / 4], ['v', 'vest', 1 / 4], ['r', 'rig', 1 / 4], ['b', 'backpack', 1 / 4], ['e', 'equip', 1 / 4]];
+    const KEYS = REELS.map(r => r[0]);
+    const SLOT = Object.fromEntries(REELS.map(r => [r[0], r[1]]));
+    const NONE_P = Object.fromEntries(REELS.map(r => [r[0], r[2]]));
+    const POOL = Object.fromEntries(REELS.map(([k, slot]) => [k, D.items.filter(i => i.slot === slot && !(k === 'e' && i.type === 'Fallschirm'))]));
+    const rand = () => { try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296; } catch (e) { return Math.random(); } };
+    const pick = L => L[Math.floor(rand() * L.length)];
+    const roll = k => (!POOL[k].length || rand() < NONE_P[k] ? '' : pick(POOL[k]).id);
+    const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const spinBtn = $('#rrSpin'), spinTxt = $('#rrSpinTxt'), costEl = $('#rrCost'), toBtn = $('#rrToLoadout'), shareBtn = $('#rrShare'), toast = $('#rrToast');
+    const reelEl = k => root.querySelector(`.rr-reel[data-k="${k}"]`);
+    const stripEl = k => reelEl(k).querySelector('.rr-strip');
+    const holdEl = k => reelEl(k).querySelector('.rr-hold');
+    let st = null, spinning = false, spins = 0, toastT = 0;
+    const held = {};
+
+    function cell(id) {
+      const i = BY[id];
+      if (!i) return `<div class="rr-cell rr-none"><span class="rr-x" aria-hidden="true">❌</span><span class="rr-nm">${esc(t('rrNone'))}</span></div>`;
+      const im = i.img ? pic(i, 64, 'rr-pic').replace('loading="lazy"', 'loading="eager"') : `<span class="rr-pic rr-emo" aria-hidden="true">${CAT_EMO[i.cat] || '•'}</span>`;
+      return `<div class="rr-cell" data-id="${esc(i.id)}">${im}<span class="rr-nm">${esc(i.name)}</span></div>`;
+    }
+    function query(s) {
+      const q = KEYS.filter(k => s[k]).map(k => k + '=' + encodeURIComponent(s[k]) + (k === 'e' ? ':1' : '')).join('&');
+      return q || 'p=';
+    }
+    const shareUrl = () => location.origin + '/slots/?' + query(st);
+    function renderCells() { if (st) KEYS.forEach(k => { stripEl(k).innerHTML = cell(st[k]); }); }
+    function render() {
+      KEYS.forEach(k => {
+        const b = holdEl(k), on = !!(st && held[k]);
+        b.disabled = !st || spinning; b.setAttribute('aria-pressed', String(on));
+        b.setAttribute('aria-label', t('rrHold') + ': ' + t('rr' + k.toUpperCase()));
+        b.querySelector('.rr-lock').textContent = on ? '🔒' : '🔓';
+        reelEl(k).classList.toggle('held', on);
+      });
+      spinTxt.textContent = t(spinning ? 'rrSpinning' : 'rrSpin');
+      spinBtn.disabled = spinning || !!(st && KEYS.every(k => held[k]));
+      root.classList.toggle('spinning', spinning);
+      const ready = !!st && !spinning;
+      shareBtn.disabled = !ready;
+      if (ready) { toBtn.href = '/tools/loadout/?' + query(st); toBtn.removeAttribute('aria-disabled'); }
+      else { toBtn.removeAttribute('href'); toBtn.setAttribute('aria-disabled', 'true'); }
+      if (!st) { costEl.textContent = '–'; delete costEl.dataset.v; return; }
+      if (spinning) return;
+      let cost = 0, unknown = 0, comm = false;
+      KEYS.map(k => BY[st[k]]).filter(Boolean).forEach(i => {
+        const p = num(i, 'price');
+        if (p === null) unknown++; else { cost += p; if (i.price.f === 'c') comm = true; }
+      });
+      costEl.textContent = money(cost) + (comm ? ' ⚠' : '') + (unknown ? ' + ?' : '');
+      costEl.dataset.v = cost;
+    }
+    function spinReel(k, final, dur) {
+      const strip = stripEl(k), win = strip.parentElement;
+      if (!dur || !strip.animate) { strip.innerHTML = cell(final); return Promise.resolve(); }
+      const n = 8 + Math.round(dur / 120), L = POOL[k];
+      const fill = Array.from({ length: n }, (_, x) => cell(x % 5 === 3 || !L.length ? '' : pick(L).id));
+      strip.innerHTML = strip.innerHTML + fill.join('') + cell(final);
+      const h = win.clientHeight, dist = (strip.children.length - 1) * h;
+      win.classList.remove('land'); win.classList.add('spin');
+      const a = strip.animate([{ transform: 'translateY(0)' }, { transform: `translateY(-${dist}px)` }],
+        { duration: dur, easing: 'cubic-bezier(.12,.62,.18,1)', fill: 'forwards' });
+      return a.finished.catch(() => {}).then(() => {
+        strip.innerHTML = cell(final); a.cancel();
+        win.classList.remove('spin'); void win.offsetWidth; win.classList.add('land');
+      });
+    }
+    async function spin() {
+      if (spinning) return;
+      const todo = KEYS.filter(k => !(st && held[k]));
+      if (!todo.length) return;
+      const next = Object.assign({}, st || {});
+      todo.forEach(k => { next[k] = roll(k); });
+      spinning = true; render();
+      const rm = reduced();
+      await Promise.all(todo.map(k => spinReel(k, next[k], rm ? 0 : 700 + KEYS.indexOf(k) * 240)));
+      st = next; spinning = false; spins++;
+      root.dataset.spins = spins;
+      try { history.replaceState(null, '', '/slots/?' + query(st)); } catch (e) {}
+      render();
+    }
+    function showToast(msg) {
+      toast.textContent = msg; toast.hidden = false;
+      clearTimeout(toastT); toastT = setTimeout(() => { toast.hidden = true; }, 2600);
+    }
+    async function copy(u) {
+      try { await navigator.clipboard.writeText(u); return true; } catch (e) {}
+      try {
+        const ta = document.createElement('textarea'); ta.value = u; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok;
+      } catch (e) { return false; }
+    }
+    spinBtn.addEventListener('click', spin);
+    root.addEventListener('click', e => {
+      const b = e.target.closest('[data-hold]'); if (!b || b.disabled || !st) return;
+      held[b.dataset.hold] = !held[b.dataset.hold]; render();
+    });
+    shareBtn.addEventListener('click', async () => {
+      if (!st || spinning) return;
+      const u = shareUrl();
+      shareBtn.dataset.url = u;
+      if (navigator.share) {
+        try { await navigator.share({ title: document.title, text: t('rrShareText'), url: u }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      showToast((await copy(u)) ? t('tCopied') : u);
+    });
+    // Geteilte Challenge: /slots/?p=…&s=…
+    const P = new URLSearchParams(location.search);
+    if (KEYS.some(k => P.has(k))) {
+      st = {};
+      KEYS.forEach(k => { const id = (P.get(k) || '').split(':')[0]; st[k] = BY[id] && BY[id].slot === SLOT[k] ? id : ''; });
+      renderCells();
+    }
+    render();
+    hooks.push(() => { if (!spinning) renderCells(); render(); });
+    window.fbRoulette = { roll, keys: KEYS, none: NONE_P, pools: () => Object.fromEntries(KEYS.map(k => [k, POOL[k].map(i => i.id)])), state: () => (st ? Object.assign({}, st) : null), shareUrl: () => (st ? shareUrl() : null) };
   })();
 
 })();
