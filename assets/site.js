@@ -428,6 +428,9 @@ const DE_DIRS = I18N.de.dirs;
 const LEGACY_SHOT = /^(?:Schuss|Shot|Disparo|Tir) (\d+)$/;
 
 function detectLang() {
+  // v24: statische Sprachfassung (data-pl) bzw. Sprachpräfix im Pfad hat Vorrang
+  const pl = document.documentElement.dataset.pl || (location.pathname.match(/^\/(en|es|fr)\//) || [])[1];
+  if (pl && I18N[pl]) return pl;
   try {
     const saved = localStorage.getItem('wardogsLang');
     if (saved && I18N[saved]) return saved;
@@ -501,8 +504,8 @@ const FB_I18N = {
     fbFooter: 'Unofficial fan site, not affiliated with BULKHEAD or Team17.',
     fbFooterSmall: 'WARDOGS is a trademark of its respective owners. All information without guarantee.',
     footer: 'Unofficial fan site',
-    fbDeNote: 'Guides are currently available in German only.',
-    searchLabel: 'Search guides', searchPh: 'e.g. Mörser, Geld, FOB …', searchNone: 'No guides found.',
+    fbDeNote: '',
+    searchLabel: 'Search guides', searchPh: 'e.g. mortar, money, FOB …', searchNone: 'No guides found.',
     searchCount: '{n} guides', searchAll: 'All', filterLabel: 'Filter by category', searchClear: 'Clear search',
     homeKicker: 'Unofficial fan site',
     homeLead: 'Guides, mortar calculator and tools for WARDOGS.',
@@ -513,7 +516,7 @@ const FB_I18N = {
     homeLatest: 'Latest guides', homePopular: 'Popular topics', homeAllGuides: 'All guides →', homeExtras: 'Reference',
     guidesTitle: 'All guides', guidesLead: 'Filter by category or search by keyword.',
     crumbHome: 'Home', crumbLabel: 'Breadcrumb',
-    calcGuideLink: 'How does it work? → Guide \u201cMörser L81 & SPH-2\u201d (German)',
+    calcGuideLink: 'How does it work? → Guide \u201cL81 Mortar & SPH-2\u201d',
     steamGuideLink: 'Also on Steam (English): \u201cHow to Hit with Mortars\u201d ↗',
     titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'Mortar calculator (L81 and SPH-2) · Frontbuch',
     titleSlots: 'Loadout Roulette: random WARDOGS loadout · Frontbuch', titleGuides: 'All guides · Frontbuch',
@@ -525,12 +528,12 @@ const FB_I18N = {
     shareText: 'Frontbuch – guides and tools for WARDOGS',
     aboutHtml: `<p><strong>Frontbuch</strong> is an <strong>unofficial fan site</strong> about WARDOGS – not affiliated with BULKHEAD or Team17.</p>
       <ul>
-        <li>The guides are original texts (currently German only). Facts come from public sources linked below each guide.</li>
+        <li>The guides are original texts. Facts come from public sources linked below each guide.</li>
         <li>The calculator\u2019s elevation values come from community tables.</li>
         <li>All information without guarantee.</li>
         <li>Settings, shot history and loadouts are stored only locally in your browser.</li>
       </ul>
-      <p><a href="/impressum/">Legal notice</a> · <a href="/datenschutz/">Privacy</a> (German)</p>`
+      <p><a href="/impressum/">Legal notice</a> · <a href="/datenschutz/">Privacy</a></p>`
   },
   es: {
     musicConsentText: '♪ Música de cloudybeatz – al reproducir se envían datos a Spotify.', musicConsentBtn: 'Cargar reproductor', musicConsentPrivacy: 'Privacidad',
@@ -542,8 +545,8 @@ const FB_I18N = {
     fbFooter: 'Sitio de fans no oficial, sin relación con BULKHEAD ni Team17.',
     fbFooterSmall: 'WARDOGS es una marca de sus respectivos propietarios. Información sin garantía.',
     footer: 'Sitio de fans no oficial',
-    fbDeNote: 'Por ahora, las guías solo están disponibles en alemán.',
-    searchLabel: 'Buscar guías', searchPh: 'p. ej. Mörser, Geld, FOB …', searchNone: 'No se encontraron guías.',
+    fbDeNote: '',
+    searchLabel: 'Buscar guías', searchPh: 'p. ej. mortero, dinero, FOB …', searchNone: 'No se encontraron guías.',
     searchCount: '{n} guías', searchAll: 'Todas', filterLabel: 'Filtrar por categoría', searchClear: 'Borrar búsqueda',
     homeKicker: 'Sitio de fans no oficial',
     homeLead: 'Guías, calculadora de mortero y herramientas para WARDOGS.',
@@ -554,7 +557,7 @@ const FB_I18N = {
     homeLatest: 'Guías recientes', homePopular: 'Temas populares', homeAllGuides: 'Todas las guías →', homeExtras: 'Consulta',
     guidesTitle: 'Todas las guías', guidesLead: 'Filtra por categoría o busca por palabra clave.',
     crumbHome: 'Inicio', crumbLabel: 'Ruta de navegación',
-    calcGuideLink: '¿Cómo funciona? → Guía «Mörser L81 & SPH-2» (en alemán)',
+    calcGuideLink: '¿Cómo funciona? → Guía «Mortero L81 y SPH-2»',
     steamGuideLink: 'También en Steam (en inglés): «How to Hit with Mortars» ↗',
     titleHome: 'Frontbuch – Guías y herramientas para WARDOGS', titleCalc: 'Calculadora de mortero (L81 y SPH-2) · Frontbuch',
     titleSlots: 'Ruleta de loadouts: loadout aleatorio para WARDOGS · Frontbuch', titleGuides: 'Todas las guías · Frontbuch',
@@ -566,12 +569,12 @@ const FB_I18N = {
     shareText: 'Frontbuch – guías y herramientas para WARDOGS',
     aboutHtml: `<p><strong>Frontbuch</strong> es un <strong>sitio de fans no oficial</strong> sobre WARDOGS, sin relación con BULKHEAD ni Team17.</p>
       <ul>
-        <li>Las guías son textos propios (por ahora solo en alemán). Los datos proceden de fuentes públicas enlazadas en cada guía.</li>
+        <li>Las guías son textos propios. Los datos proceden de fuentes públicas enlazadas en cada guía.</li>
         <li>Los valores de elevación de la calculadora proceden de tablas de la comunidad.</li>
         <li>Información sin garantía.</li>
         <li>Los ajustes, el historial y los loadouts solo se guardan localmente en tu navegador.</li>
       </ul>
-      <p><a href="/impressum/">Aviso legal</a> · <a href="/datenschutz/">Privacidad</a> (en alemán)</p>`
+      <p><a href="/impressum/">Aviso legal</a> · <a href="/datenschutz/">Privacidad</a></p>`
   },
   fr: {
     musicConsentText: '♪ Musique de cloudybeatz – la lecture transmet des données à Spotify.', musicConsentBtn: 'Charger le lecteur', musicConsentPrivacy: 'Confidentialité',
@@ -583,8 +586,8 @@ const FB_I18N = {
     fbFooter: 'Site de fans non officiel, sans lien avec BULKHEAD ou Team17.',
     fbFooterSmall: 'WARDOGS est une marque de ses détenteurs respectifs. Informations sans garantie.',
     footer: 'Site de fans non officiel',
-    fbDeNote: 'Les guides sont pour l\u2019instant uniquement en allemand.',
-    searchLabel: 'Rechercher des guides', searchPh: 'p. ex. Mörser, Geld, FOB …', searchNone: 'Aucun guide trouvé.',
+    fbDeNote: '',
+    searchLabel: 'Rechercher des guides', searchPh: 'p. ex. mortier, argent, FOB …', searchNone: 'Aucun guide trouvé.',
     searchCount: '{n} guides', searchAll: 'Tous', filterLabel: 'Filtrer par catégorie', searchClear: 'Effacer la recherche',
     homeKicker: 'Site de fans non officiel',
     homeLead: 'Guides, calculateur de mortier et outils pour WARDOGS.',
@@ -595,7 +598,7 @@ const FB_I18N = {
     homeLatest: 'Derniers guides', homePopular: 'Sujets populaires', homeAllGuides: 'Tous les guides →', homeExtras: 'Référence',
     guidesTitle: 'Tous les guides', guidesLead: 'Filtre par catégorie ou recherche par mot-clé.',
     crumbHome: 'Accueil', crumbLabel: 'Fil d\u2019Ariane',
-    calcGuideLink: 'Comment ça marche ? → Guide « Mörser L81 & SPH-2 » (en allemand)',
+    calcGuideLink: 'Comment ça marche ? → Guide « Mortier L81 & SPH-2 »',
     steamGuideLink: 'Aussi sur Steam (en anglais) : « How to Hit with Mortars » ↗',
     titleHome: 'Frontbuch – Guides et outils pour WARDOGS', titleCalc: 'Calculateur de mortier (L81 et SPH-2) · Frontbuch',
     titleSlots: 'Roulette de loadout : loadout aléatoire pour WARDOGS · Frontbuch', titleGuides: 'Tous les guides · Frontbuch',
@@ -607,12 +610,12 @@ const FB_I18N = {
     shareText: 'Frontbuch – guides et outils pour WARDOGS',
     aboutHtml: `<p><strong>Frontbuch</strong> est un <strong>site de fans non officiel</strong> consacré à WARDOGS – sans lien avec BULKHEAD ou Team17.</p>
       <ul>
-        <li>Les guides sont des textes originaux (pour l\u2019instant en allemand). Les faits proviennent de sources publiques citées sous chaque guide.</li>
+        <li>Les guides sont des textes originaux. Les faits proviennent de sources publiques citées sous chaque guide.</li>
         <li>Les valeurs d\u2019élévation du calculateur proviennent de tables de la communauté.</li>
         <li>Informations sans garantie.</li>
         <li>Réglages, historique et loadouts sont stockés uniquement en local dans ton navigateur.</li>
       </ul>
-      <p><a href="/impressum/">Mentions légales</a> · <a href="/datenschutz/">Confidentialité</a> (en allemand)</p>`
+      <p><a href="/impressum/">Mentions légales</a> · <a href="/datenschutz/">Confidentialité</a></p>`
   }
 };
 Object.keys(FB_I18N).forEach(l => Object.assign(I18N[l], FB_I18N[l]));
@@ -838,17 +841,32 @@ function escapeHtml(str) {
 // Seiten-Skripte (Rechner, Tools, Guides) registrieren hier ihre Render-Funktionen für den Sprachwechsel.
 window.fbLangHooks = window.fbLangHooks || [];
 
+// ---------- Sprach-URLs: Deutsch unter /, Übersetzungen unter /en/, /es/, /fr/ ----------
+// fbLP = Präfix der aktuellen Seite ('' für Deutsch). Statische Seiten tragen data-pl, 404/Offline erkennen es am Pfad.
+window.fbLP = (function () {
+  const pl = document.documentElement.dataset.pl;
+  if (pl) return pl === 'de' ? '' : '/' + pl;
+  const m = location.pathname.match(/^\/(en|es|fr)\//);
+  return m ? '/' + m[1] : '';
+})();
+// Interne Pfade (ohne Sprachpräfix gespeichert) für die aktuelle Sprache auflösen
+function fbHref(u) {
+  if (typeof u !== 'string' || u[0] !== '/' || u[1] === '/' || !window.fbLP) return u;
+  if (/^\/(assets|overlay)\//.test(u) || /^\/(en|es|fr)(\/|$)/.test(u) || /\.[a-z0-9]+$/i.test(u.split(/[?#]/)[0])) return u;
+  return window.fbLP + u;
+}
+// Aktueller Pfad ohne Sprachpräfix (für Merkliste/Verlauf)
+function fbPath() { return location.pathname.replace(/^\/(en|es|fr)(?=\/)/, ''); }
+
 // ---------- Sprache anwenden ----------
 function applyLang() {
   document.documentElement.lang = lang;
   const titleKey = document.body.dataset.titleKey;
   if (titleKey) document.title = t(titleKey);
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n, el.dataset.i18nN ? { n: el.dataset.i18nN } : undefined); });
-  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); el.querySelectorAll('a[href^="/"]').forEach(a => a.setAttribute('href', fbHref(a.getAttribute('href')))); });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
-  // Hinweis „Guides nur auf Deutsch“ – nur für EN/ES/FR sichtbar
-  document.querySelectorAll('.fb-de-note').forEach(el => { el.hidden = lang === 'de'; });
 
   const menuBtn = document.getElementById('menuBtn');
   menuBtn.setAttribute('aria-label', document.body.classList.contains('menu-open') ? t('menuClose') : t('menuOpen'));
@@ -868,9 +886,23 @@ function applyLang() {
 
 function setLang(code) {
   if (!I18N[code]) return;
-  lang = code;
   try { localStorage.setItem('wardogsLang', code); } catch (e) {}
+  // Statische Sprachversion vorhanden? Dann zur übersetzten Fassung derselben Seite wechseln.
+  const alt = document.querySelector('link[rel="alternate"][hreflang="' + code + '"]');
+  if (alt && document.documentElement.dataset.pl && code !== document.documentElement.dataset.pl) {
+    const u = new URL(alt.href, location.href);
+    location.href = u.pathname + location.search + location.hash;
+    return;
+  }
+  lang = code;
   applyLang();
+}
+// 404/Offline (ohne eigene Sprachfassung): interne Links in die Sprache des Pfads umschreiben
+if (!document.documentElement.dataset.pl && window.fbLP) {
+  document.querySelectorAll('a[href^="/"], form[action^="/"]').forEach(a => {
+    const k = a.tagName === 'FORM' ? 'action' : 'href';
+    a.setAttribute(k, fbHref(a.getAttribute(k)));
+  });
 }
 
 // Service Worker registrieren (PWA / Offline)
@@ -1498,11 +1530,11 @@ const MUSIC = {
   const KIND = { g: 'navGuides', t: 'navTools', i: 'tDbT', iw: 'tDbT', l: 'navGlossary', f: 'navFaq' };
   function renderList(el) {
     const kind = el.dataset.fbList, max = +el.dataset.max || 60;
-    const L = (kind === 'favs' ? FBP.favs() : FBP.recent()).filter(e => e.u !== location.pathname || kind === 'favs').slice(0, max);
+    const L = (kind === 'favs' ? FBP.favs() : FBP.recent()).filter(e => e.u !== fbPath() || kind === 'favs').slice(0, max);
     const sec = el.closest('[data-fb-sec]');
     if (sec) sec.hidden = !L.length;
     if (!L.length) { el.innerHTML = el.dataset.empty ? `<li class="fb-empty">${esc(t(el.dataset.empty))}</li>` : ''; return; }
-    el.innerHTML = L.map(e => `<li><a class="fb-ritem" href="${esc(e.u)}">${thumb(e, 28)}<span><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>${kind === 'favs' ? `<button type="button" class="fb-unfav" data-unfav="${esc(e.u)}" aria-label="${esc(t('favRemove'))}: ${esc(label(e))}">✕</button>` : ''}</li>`).join('');
+    el.innerHTML = L.map(e => `<li><a class="fb-ritem" href="${esc(fbHref(e.u))}">${thumb(e, 28)}<span><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>${kind === 'favs' ? `<button type="button" class="fb-unfav" data-unfav="${esc(e.u)}" aria-label="${esc(t('favRemove'))}: ${esc(label(e))}">✕</button>` : ''}</li>`).join('');
   }
   function renderFavBtns() {
     $$('.fb-fav').forEach(b => {
@@ -1523,7 +1555,7 @@ const MUSIC = {
   });
   const rc = $('#recentClear'); if (rc) rc.addEventListener('click', () => FBP.clearRecent());
   // Seitenaufruf merken
-  try { const tr = document.body.dataset.track; if (tr) { const e = JSON.parse(tr); e.u = location.pathname; FBP.track(e); } } catch (e) {}
+  try { const tr = document.body.dataset.track; if (tr) { const e = JSON.parse(tr); e.u = fbPath(); FBP.track(e); } } catch (e) {}
   hooks.push(renderAll);
   renderAll();
   window.addEventListener('storage', e => { if (e.key === FK || e.key === RK) renderAll(); });
@@ -1539,7 +1571,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '23';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '24';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
@@ -1578,7 +1610,7 @@ const MUSIC = {
   function optionHtml(e, q, n, pre) {
     const img = e.m ? `<img class="fbt-pic${e.w ? ' wide' : ''}" src="${esc(e.m)}" width="${e.w ? 64 : 32}" height="32" loading="lazy" decoding="async" alt="">` : `<span class="fb-ic" aria-hidden="true">${esc(e.i || '•')}</span>`;
     const title = e.tk ? t(e.tk) : e.t;
-    return `<a class="fb-sopt" role="option" id="${pre}-${n}" href="${esc(e.u)}" aria-selected="false" tabindex="-1">${img}<span class="fb-sopt-txt"><b>${hl(title, q)}</b>${e.s ? `<small>${esc(e.s)}</small>` : ''}</span></a>`;
+    return `<a class="fb-sopt" role="option" id="${pre}-${n}" href="${esc(fbHref(e.u))}" aria-selected="false" tabindex="-1">${img}<span class="fb-sopt-txt"><b>${hl(title, q)}</b>${e.s ? `<small>${esc(e.s)}</small>` : ''}</span></a>`;
   }
   function resultsHtml(q, kind, pre, compact) {
     if (!q.trim()) return '';
@@ -1627,7 +1659,7 @@ const MUSIC = {
       const R = FBP.recent().slice(0, 6);
       const tools = (IDX || []).filter(r => r.e.k === 't').slice(0, 7);
       let n = 0;
-      return (R.length ? `<div class="fb-sgrp" role="presentation">${esc(t('sRecent'))}</div>` + R.map(e => `<a class="fb-sopt" role="option" id="so-${n++}" href="${esc(e.u)}" aria-selected="false" tabindex="-1">${thumb(e, 32)}<span class="fb-sopt-txt"><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>`).join('') : '') +
+      return (R.length ? `<div class="fb-sgrp" role="presentation">${esc(t('sRecent'))}</div>` + R.map(e => `<a class="fb-sopt" role="option" id="so-${n++}" href="${esc(fbHref(e.u))}" aria-selected="false" tabindex="-1">${thumb(e, 32)}<span class="fb-sopt-txt"><b>${esc(label(e))}</b><small>${esc(t(KIND[e.k] || 'navHome'))}</small></span></a>`).join('') : '') +
         `<div class="fb-sgrp" role="presentation">${esc(t('sQuick'))}</div>` + tools.map(r => optionHtml(r.e, '', n++, 'so')).join('');
     }
     function render() {

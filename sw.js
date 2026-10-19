@@ -2,7 +2,7 @@
 // - Precache: App-Shell + Rechner + Loadout-Roulette + Offline-Seite
 // - HTML (Navigation): network-first, besuchte Seiten werden zwischengespeichert
 // - Gleiche Herkunft, nur GET; alles andere (Spotify usw.) geht direkt ans Netz
-const CACHE_NAME = 'frontbuch-v23';
+const CACHE_NAME = 'frontbuch-v24';
 const PRECACHE = [
   "/",
   "/rechner/",
@@ -16,14 +16,17 @@ const PRECACHE = [
   "/favicon.ico",
   "/favicon.svg",
   "/favicon-48.png",
-  "/assets/site.css?v=23",
-  "/assets/site.js?v=23",
-  "/assets/rechner.js?v=23",
-  "/assets/guides.js?v=23",
-  "/assets/guides-data.js?v=23",
-  "/assets/data.js?v=23",
-  "/assets/tools.js?v=23",
-  "/assets/search-data.js?v=23"
+  "/assets/site.css?v=24",
+  "/assets/site.js?v=24",
+  "/assets/rechner.js?v=24",
+  "/assets/guides.js?v=24",
+  "/assets/guides-data.js?v=24",
+  "/assets/data.js?v=24",
+  "/assets/tools.js?v=24",
+  "/assets/search-data.js?v=24",
+  "/en/rechner/",
+  "/es/rechner/",
+  "/fr/rechner/"
 ];
 
 self.addEventListener('install', (event) => {

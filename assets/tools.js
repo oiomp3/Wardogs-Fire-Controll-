@@ -8,7 +8,9 @@
   const MONEY = ['unlock', 'price', 'reward'];
   const PCT = ['dr', 'supp'];
   const FIELD_ORDER = Object.keys(D.fields);
-  const nf = n => Number(n).toLocaleString('de-DE');
+  const LOC = () => ({ de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR' })[lang] || 'de-DE';
+  const LP = window.fbLP || '';
+  const nf = n => Number(n).toLocaleString(LOC());
   const esc = s => escapeHtml(String(s));
   const hooks = window.fbLangHooks;
 
@@ -43,7 +45,7 @@
   }
   function num(item, f) { const v = item && item[f]; return v && typeof v.v === 'number' ? v.v : null; }
   function catName(c) { return D.cats[c] || c; }
-  function money(n) { return nf(n) + ' $'; }
+  function money(n) { return lang === 'en' ? '$' + nf(n) : nf(n) + ' $'; }
   const CAT_EMO = { weapon: '🔫', vehicle: '🚙', buildable: '🏗️', attachment: '🔧', equipment: '🧰', armor: '🦺', gear: '🎒', magazine: '📦', ammo: '💥' };
   function pic(i, sz, cls) {
     if (!i || !i.img) { const w = i && i.cat === 'weapon' ? sz * 2 : sz; return `<span class="fbt-pic none ${w > sz ? 'wide ' : ''}${cls || ''}" style="width:${w}px;height:${sz}px;font-size:${Math.round(sz * (w > sz ? .34 : .55))}px" aria-hidden="true">${w > sz ? esc(i.name.split(' ')[0].slice(0, 7)) : (CAT_EMO[i && i.cat] || '•')}</span>`; }
@@ -118,29 +120,29 @@
       if (LOK[i.slot]) q = LOK[i.slot] + '=' + i.id;
       else if (i.slot === 'equip') q = 'e=' + i.id + ':1';
       else if (i.cat === 'attachment' && (i.for || (i.fits && i.fits.length))) q = 'p=' + (i.for || i.fits[0]) + '&a=' + i.id;
-      return q ? `<a href="/tools/loadout/?${q}">🎒 ${esc(t('tToLoadout'))}</a>` : '';
+      return q ? `<a href="${LP}/tools/loadout/?${q}">🎒 ${esc(t('tToLoadout'))}</a>` : '';
     }
     function openDetail(id) {
       const i = BY[id];
       if (!i) return;
       const srcs = [...new Set(FIELD_ORDER.filter(f => has(i, f)).map(f => i[f].s))].filter(k => D.sources[k]);
       const fw = (i.for ? [i.for] : (i.fits || [])).filter(w => BY[w]);
-      const compat = fw.length ? `<p>${esc(t('tCompatOk'))}: ${fw.map(w => `<a href="/tools/datenbank/?id=${w}"><b>${esc(BY[w].name)}</b></a>`).join(', ')}${i.fits && i.fits.length ? warn({ f: 'c' }) : ''}</p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
+      const compat = fw.length ? `<p>${esc(t('tCompatOk'))}: ${fw.map(w => `<a href="${LP}/tools/datenbank/?id=${w}"><b>${esc(BY[w].name)}</b></a>`).join(', ')}${i.fits && i.fits.length ? warn({ f: 'c' }) : ''}</p>` : (i.cat === 'attachment' ? `<p>${esc(t('tCompatUnknown'))}</p>` : '');
       const mg = i.cat === 'weapon' ? D.items.filter(m => m.cat === 'magazine' && (m.fits || []).includes(id)).sort((x, y) => (num(x, 'cap') || 0) - (num(y, 'cap') || 0)) : [];
-      const mags = mg.length ? `<p>${esc(t('dbMags'))}: ${mg.map(m => `<a href="/tools/datenbank/?id=${m.id}">${esc(m.name)}</a>`).join(', ')}${warn({ f: 'c' })}</p>` : '';
+      const mags = mg.length ? `<p>${esc(t('dbMags'))}: ${mg.map(m => `<a href="${LP}/tools/datenbank/?id=${m.id}">${esc(m.name)}</a>`).join(', ')}${warn({ f: 'c' })}</p>` : '';
       const dm = dmgMag(i);
       const missing = ['magazine', 'ammo'].includes(i.cat) ? [] : FIELD_ORDER.filter(f => !has(i, f) && ['track', 'level', 'unlock', 'price'].includes(f)).map(f => fname(f));
       const du = '/tools/datenbank/?id=' + id;
-      const xl = [loLink(i)].concat(i.cat === 'weapon' ? [`<a href="/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>`] : [],
-        tierOf(id).map(([c, tr]) => `<a href="/tools/tierlist/#t-${id}">🏆 ${esc(t('dbInTier'))}: <b>${esc(tr)}</b>&nbsp;<small lang="de">${esc(c)}</small></a>`)).filter(Boolean).join('');
+      const xl = [loLink(i)].concat(i.cat === 'weapon' ? [`<a href="${LP}/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>`] : [],
+        tierOf(id).map(([c, tr]) => `<a href="${LP}/tools/tierlist/#t-${id}">🏆 ${esc(t('dbInTier'))}: <b>${esc(tr)}</b>&nbsp;<small>${esc(c)}</small></a>`)).filter(Boolean).join('');
       const gm = (D.mentions || {})[id] || [];
       detail.innerHTML = `<div class="fbt-detail-head">${pic(i, i.cat === 'weapon' ? 72 : 96, 'big')}<h2 id="dbDetailH">${esc(i.name)}</h2><button type="button" class="fbt-btn ghost" id="dbDetailClose">${esc(t('tClose'))}</button></div>
 <div class="fbt-detail-sub"><p class="fbt-sub">${esc(catName(i.cat))}${i.type && i.type !== catName(i.cat) ? ' · ' + esc(i.type) : ''}</p>${favBtn(du, i.name, itemK(i), itemIc(i))}</div>
 ${xl ? `<div class="fbt-xlinks">${xl}</div>` : ''}
 <div class="fb-tablewrap"><table class="fbt-kv"><tbody>${fieldRows(i) || `<tr><td>${unk()}</td></tr>`}${dm !== null ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th><td>${nf(dm)}${warn({ f: 'c' })}</td></tr>` : ''}</tbody></table></div>
 ${missing.length ? `<p class="fbt-sub">${esc(t('tMissingFields'))}: ${missing.map(esc).join(', ')}</p>` : ''}
-${compat}${mags}${i.note ? `<p lang="de">${esc(i.note)}</p>` : ''}
-${gm.length ? `<h3>${esc(t('dbInGuides'))}</h3><ul class="fbt-glinks">${gm.map(([sl, ti, ic]) => `<li><a href="/guides/${esc(sl)}/" lang="de"><span aria-hidden="true">${esc(ic)}</span> ${esc(ti)}</a></li>`).join('')}</ul>` : ''}
+${compat}${mags}${i.note ? `<p>${esc(i.note)}</p>` : ''}
+${gm.length ? `<h3>${esc(t('dbInGuides'))}</h3><ul class="fbt-glinks">${gm.map(([sl, ti, ic]) => `<li><a href="${LP}/guides/${esc(sl)}/"><span aria-hidden="true">${esc(ic)}</span> ${esc(ti)}</a></li>`).join('')}</ul>` : ''}
 <h3>${esc(t('tSources'))}</h3><ul class="fbt-srclist">${srcs.map(k => `<li><a href="${esc(D.sources[k].url)}" target="_blank" rel="noopener noreferrer">${esc(D.sources[k].title)}</a>${D.sources[k].type === 'community' ? ' ⚠' : ''}</li>`).join('') || '<li>–</li>'}</ul>`;
       detail.hidden = false;
       const fresh = detail.dataset.id !== id;
@@ -217,8 +219,8 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
 
     const priceTxt = i => { const p = num(i, 'price'); return p === null ? t('tNoPrice') : (p === 0 ? t('tFree') : money(p)); };
     const cw = v => v && v.f === 'c' ? ' ⚠' : '';
-    const kg = n => (Math.round(n * 100) / 100).toLocaleString('de-DE') + ' kg';
-    const maxQ = i => i.type === 'Fallschirm' ? 1 : MAXQ;
+    const kg = n => (Math.round(n * 100) / 100).toLocaleString(LOC()) + ' kg';
+    const maxQ = i => (i.ty0 || i.type) === 'Fallschirm' ? 1 : MAXQ;
     function opt(i, cur) { return `<option value="${i.id}"${i.id === cur ? ' selected' : ''}>${esc(i.name)} · ${esc(priceTxt(i))}${cw(i.price)}</option>`; }
     function fillSel(sel, slot, cur) {
       const list = D.items.filter(i => i.slot === slot);
@@ -239,7 +241,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       const lv = lvTxt(i); if (lv) parts.push(`<span class="lo-tag">${lv}</span>`);
       if (has(i, 'unlock') && i.unlock.v > 0) parts.push(`<span class="lo-tag">🔓 ${money(i.unlock.v)}${warn(i.unlock)}</span>`);
       parts.push(`<span class="lo-tag">⚖ ${has(i, 'weight') ? kg(i.weight.v) + warn(i.weight) + srcLink(i.weight) : unk()}</span>`);
-      return parts.join('') + `<a class="lo-db" href="/tools/datenbank/?id=${i.id}" aria-label="${esc(t('tToDb'))}">ⓘ</a>`;
+      return parts.join('') + `<a class="lo-db" href="${LP}/tools/datenbank/?id=${i.id}" aria-label="${esc(t('tToDb'))}">ⓘ</a>`;
     }
     function allowedAtt() {
       return D.items.filter(i => i.cat === 'attachment' && fitsW(i, st.p))
@@ -248,7 +250,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
     function renderPresets() {
       el('loPresets').innerHTML = PRESETS.map(p => {
         const c = totals(fromPreset(p));
-        return `<button type="button" class="lo-preset" data-preset="${p.id}"><b lang="de">${esc(p.name)}</b><span class="lo-tag">${esc(p.track)}</span><span class="lo-preset-cost">${money(c.cost)}${c.comm ? ' ⚠' : ''}</span><small lang="de">${esc(p.desc)}</small></button>`;
+        return `<button type="button" class="lo-preset" data-preset="${p.id}"><b>${esc(p.name)}</b><span class="lo-tag">${esc(p.track)}</span><span class="lo-preset-cost">${money(c.cost)}${c.comm ? ' ⚠' : ''}</span><small>${esc(p.desc)}</small></button>`;
       }).join('');
     }
     function renderInputs() {
@@ -262,7 +264,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       const types = [...new Set(EQ.map(i => i.type))];
       const openG = new Set([...eqBox.querySelectorAll('details[open]')].map(d => d.dataset.ty));
       eqBox.innerHTML = types.map(ty => { const L = EQ.filter(i => i.type === ty), sel = L.reduce((x, i) => x + (st.e[i.id] || 0), 0);
-        return `<details class="lo-eqgrp" data-ty="${esc(ty)}"${sel || openG.has(ty) ? ' open' : ''}><summary><span lang="de">${esc(ty)}</span><span class="lo-eqcnt" data-cnt="${esc(ty)}">${sel || ''}</span></summary>${L.map(i => {
+        return `<details class="lo-eqgrp" data-ty="${esc(ty)}"${sel || openG.has(ty) ? ' open' : ''}><summary><span>${esc(ty)}</span><span class="lo-eqcnt" data-cnt="${esc(ty)}">${sel || ''}</span></summary>${L.map(i => {
         const n = st.e[i.id] || 0;
         return `<div class="lo-eq${n ? ' on' : ''}">${pic(i, 32, 'eq')}<span class="lo-eq-name"><span>${esc(i.name)}</span><small>${esc(priceTxt(i))}${cw(i.price)}${has(i, 'weight') ? ' · ' + kg(i.weight.v) + cw(i.weight) : ''}</small></span>
 <span class="lo-step" role="group" aria-label="${esc(t('tQty'))}: ${esc(i.name)}"><button type="button" data-eq="${i.id}" data-d="-1" aria-label="− ${esc(i.name)}"${n ? '' : ' disabled'}>−</button><output data-q="${i.id}">${n}</output><button type="button" data-eq="${i.id}" data-d="1" aria-label="+ ${esc(i.name)}"${n >= maxQ(i) ? ' disabled' : ''}>+</button></span></div>`;
@@ -469,7 +471,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
         const types = {};
         atts.sort(() => Math.random() - .5).forEach(i => { if (!types[i.type] && Object.keys(types).length < 2 && Math.random() < .6) types[i.type] = i.id; });
         s.a = Object.values(types);
-        const eq = EQ.filter(i => num(i, 'price') !== null && i.type !== 'Fallschirm');
+        const eq = EQ.filter(i => num(i, 'price') !== null && (i.ty0 || i.type) !== 'Fallschirm');
         for (let k = 0, m = 1 + Math.floor(Math.random() * 3); k < m && eq.length; k++) { const i = rnd(eq); s.e[i.id] = Math.min(maxQ(i), (s.e[i.id] || 0) + 1); }
         const c = totals(s).cost;
         if (!(bud > 0) || c <= bud) { best = s; break; }
@@ -503,7 +505,7 @@ ${dms.some(x => x !== null) ? `<tr><th scope="row">${esc(t('tDmgMag'))}</th>${dm
       root.innerHTML = T.classes.filter((c, ix) => cur === 'alle' || String(ix) === cur).map(c => {
         const tiers = [...new Set(c.tiers.map(r => r[0]))];
         return `<section class="fbt-tierclass"><h2>${esc(c.name)}</h2>${tiers.map(tr => `<div class="fbt-tierrow"><div class="fbt-tier t-${tr === '–' ? 'x' : tr}" aria-label="Tier ${esc(tr)}">${esc(tr)}</div><div class="fbt-tieritems">
-${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="fbt-tieritem" id="t-${id}"${location.hash === '#t-' + id ? ' open' : ''}><summary>${pic(BY[id], 32, 'tier')}<span>${esc(BY[id].name)}</span>${prov ? ` <span class="fbt-badge">${esc(t('tProv'))}</span>` : ''}</summary><p lang="de">${esc(why)}</p><div class="fbt-xlinks sm"><a href="/tools/datenbank/?id=${id}">🗃️ ${esc(t('tToDb'))}</a>${BY[id].cat === 'weapon' ? `<a href="/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>` : ''}${BY[id].slot ? `<a href="/tools/loadout/?${{ primary: 'p', secondary: 's', launcher: 'l' }[BY[id].slot] || 'p'}=${id}">🎒 ${esc(t('tToLoadout'))}</a>` : ''}</div></details>`).join('')}</div></div>`).join('')}</section>`;
+${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="fbt-tieritem" id="t-${id}"${location.hash === '#t-' + id ? ' open' : ''}><summary>${pic(BY[id], 32, 'tier')}<span>${esc(BY[id].name)}</span>${prov ? ` <span class="fbt-badge">${esc(t('tProv'))}</span>` : ''}</summary><p>${esc(why)}</p><div class="fbt-xlinks sm"><a href="${LP}/tools/datenbank/?id=${id}">🗃️ ${esc(t('tToDb'))}</a>${BY[id].cat === 'weapon' ? `<a href="${LP}/tools/vergleich/?w=${id}">⚖️ ${esc(t('dbToCmp'))}</a>` : ''}${BY[id].slot ? `<a href="${LP}/tools/loadout/?${{ primary: 'p', secondary: 's', launcher: 'l' }[BY[id].slot] || 'p'}=${id}">🎒 ${esc(t('tToLoadout'))}</a>` : ''}</div></details>`).join('')}</div></div>`).join('')}</section>`;
       }).join('');
     }
     chips.addEventListener('click', e => {
@@ -562,7 +564,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       const items = ids.map(id => BY[id]);
       if (!items.length) { out.innerHTML = `<p class="cmp-empty">${esc(t('cmpAdd'))}</p>`; return; }
       const rows = ROWS.filter(r => items.some(i => r[2](i) !== null));
-      out.innerHTML = `<table class="cmp-tbl"><thead><tr><th scope="col"><span class="fb-sr">${esc(t('cmpWeapon'))}</span></th>${items.map(i => `<th scope="col"><a href="/tools/datenbank/?id=${i.id}">${pic(i, 40)}<span>${esc(i.name)}</span></a><small class="fbt-sub">${esc(i.type)}${has(i, 'cal') ? ' · ' + esc(i.cal.v) : ''}</small></th>`).join('')}</tr></thead><tbody>${rows.map(r => {
+      out.innerHTML = `<table class="cmp-tbl"><thead><tr><th scope="col"><span class="fb-sr">${esc(t('cmpWeapon'))}</span></th>${items.map(i => `<th scope="col"><a href="${LP}/tools/datenbank/?id=${i.id}">${pic(i, 40)}<span>${esc(i.name)}</span></a><small class="fbt-sub">${esc(i.type)}${has(i, 'cal') ? ' · ' + esc(i.cal.v) : ''}</small></th>`).join('')}</tr></thead><tbody>${rows.map(r => {
         const xs = items.map(r[2]).filter(x => x !== null);
         const max = xs.length ? Math.max(...xs) : 0, min = xs.length ? Math.min(...xs) : 0;
         const best = items.length > 1 && xs.length > 1 && max !== min ? (r[3] > 0 ? max : min) : null;
@@ -606,7 +608,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     const KEYS = REELS.map(r => r[0]);
     const SLOT = Object.fromEntries(REELS.map(r => [r[0], r[1]]));
     const NONE_P = Object.fromEntries(REELS.map(r => [r[0], r[2]]));
-    const POOL = Object.fromEntries(REELS.map(([k, slot]) => [k, D.items.filter(i => i.slot === slot && !(k === 'e' && i.type === 'Fallschirm'))]));
+    const POOL = Object.fromEntries(REELS.map(([k, slot]) => [k, D.items.filter(i => i.slot === slot && !(k === 'e' && (i.ty0 || i.type) === 'Fallschirm'))]));
     const rand = () => { try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296; } catch (e) { return Math.random(); } };
     const pick = L => L[Math.floor(rand() * L.length)];
     const roll = k => (!POOL[k].length || rand() < NONE_P[k] ? '' : pick(POOL[k]).id);
@@ -628,7 +630,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       const q = KEYS.filter(k => s[k]).map(k => k + '=' + encodeURIComponent(s[k]) + (k === 'e' ? ':1' : '')).join('&');
       return q || 'p=';
     }
-    const shareUrl = () => location.origin + '/slots/?' + query(st);
+    const shareUrl = () => location.origin + LP + '/slots/?' + query(st);
     function renderCells() { if (st) KEYS.forEach(k => { stripEl(k).innerHTML = cell(st[k]); }); }
     function render() {
       KEYS.forEach(k => {
@@ -643,7 +645,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       root.classList.toggle('spinning', spinning);
       const ready = !!st && !spinning;
       shareBtn.disabled = !ready;
-      if (ready) { toBtn.href = '/tools/loadout/?' + query(st); toBtn.removeAttribute('aria-disabled'); }
+      if (ready) { toBtn.href = LP + '/tools/loadout/?' + query(st); toBtn.removeAttribute('aria-disabled'); }
       else { toBtn.removeAttribute('href'); toBtn.setAttribute('aria-disabled', 'true'); }
       if (!st) { costEl.textContent = '–'; delete costEl.dataset.v; return; }
       if (spinning) return;
@@ -681,7 +683,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       await Promise.all(todo.map(k => spinReel(k, next[k], rm ? 0 : 700 + KEYS.indexOf(k) * 240)));
       st = next; spinning = false; spins++;
       root.dataset.spins = spins;
-      try { history.replaceState(null, '', '/slots/?' + query(st)); } catch (e) {}
+      try { history.replaceState(null, '', LP + '/slots/?' + query(st)); } catch (e) {}
       render();
     }
     function showToast(msg) {

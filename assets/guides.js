@@ -1,6 +1,7 @@
 // ---------- Frontbuch: Guide-Suche & Filter (nutzt window.FB_GUIDES aus guides-data.js) ----------
 (function () {
   const DATA = window.FB_GUIDES || [];
+  const LP = window.fbLP || '';
   function norm(s) {
     return String(s || '').toLowerCase()
       .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
@@ -40,15 +41,15 @@
       if (!q) { homeRes.hidden = true; homeRes.innerHTML = ''; return; }
       const r = search(q).slice(0, 6);
       homeRes.innerHTML = r.length
-        ? r.map(x => `<li><a href="/guides/${x.g.s}/"><span lang="de">${escapeHtml(x.g.t)}</span><small>${escapeHtml(x.g.cl)}</small></a></li>`).join('') +
-          `<li><a href="/guides/?q=${encodeURIComponent(q)}"><b>${escapeHtml(t('homeAllGuides'))}</b></a></li>`
+        ? r.map(x => `<li><a href="${LP}/guides/${x.g.s}/"><span>${escapeHtml(x.g.t)}</span><small>${escapeHtml(x.g.cl)}</small></a></li>`).join('') +
+          `<li><a href="${LP}/guides/?q=${encodeURIComponent(q)}"><b>${escapeHtml(t('homeAllGuides'))}</b></a></li>`
         : `<li class="none">${escapeHtml(t('searchNone'))}</li>`;
       homeRes.hidden = false;
     }
     homeInput.addEventListener('input', render);
     homeInput.closest('form').addEventListener('submit', (e) => {
       e.preventDefault();
-      location.href = '/guides/' + (homeInput.value.trim() ? '?q=' + encodeURIComponent(homeInput.value.trim()) : '');
+      location.href = LP + '/guides/' + (homeInput.value.trim() ? '?q=' + encodeURIComponent(homeInput.value.trim()) : '');
     });
     homeInput.addEventListener('keydown', (e) => { if (e.key === 'Escape') { homeInput.value = ''; render(); } });
     window.fbLangHooks.push(() => { if (last) render(); });
