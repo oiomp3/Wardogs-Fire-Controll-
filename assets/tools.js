@@ -722,4 +722,49 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     window.fbRoulette = { roll, keys: KEYS, none: NONE_P, pools: () => Object.fromEntries(KEYS.map(k => [k, POOL[k].map(i => i.id)])), state: () => (st ? Object.assign({}, st) : null), shareUrl: () => (st ? shareUrl() : null) };
   })();
 
+  // ======================================================== Roulette für Streamer (/tools/streamer/)
+  (function streamer() {
+    const form = $('#stForm');
+    if (!form) return;
+    const el = id => document.getElementById(id);
+    const frame = el('stFrame'), out = el('stUrl'), msg = el('stMsg'), stage = el('stStage');
+    const SIZE = { grid: [800, 450], row: [1280, 210] };
+    const chan = () => el('stChan').value.trim().toLowerCase().replace(/^https?:\/\/(www\.|m\.)?twitch\.tv\//, '').replace(/^[@#]/, '').split(/[/?#\s]/)[0].replace(/[^a-z0-9_]/g, '').slice(0, 25);
+    const cmd = () => el('stCmd').value.trim().toLowerCase().replace(/^!+/, '').replace(/\s+/g, '').slice(0, 25) || 'roulette';
+    function query() {
+      const p = [], c = chan(), cm = cmd(), cd = Math.max(0, Math.min(3600, parseInt(el('stCd').value, 10)));
+      if (c) p.push('channel=' + c);
+      if (cm !== 'roulette') p.push('cmd=' + encodeURIComponent(cm));
+      if (Number.isFinite(cd) && cd !== 30) p.push('cooldown=' + cd);
+      if (el('stLang').value !== 'de') p.push('lang=' + el('stLang').value);
+      if (el('stLayout').value === 'row') p.push('layout=row');
+      if (el('stScale').value) p.push('scale=' + el('stScale').value);
+      if (el('stSound').checked) p.push('sound=1');
+      return p.join('&');
+    }
+    let timer = 0, lastSrc = frame.getAttribute('src');
+    function update(now) {
+      const q = query(), path = '/overlay/roulette/' + (q ? '?' + q : '');
+      out.value = location.origin + path;
+      const [w, h] = SIZE[el('stLayout').value] || SIZE.grid;
+      stage.style.aspectRatio = w + ' / ' + h;
+      el('stStep3').innerHTML = t('stStep3', { cmd: '!' + esc(cmd()) });
+      frame.title = t('stPreview');
+      clearTimeout(timer);
+      const go = () => { if (path !== lastSrc) { frame.src = path; lastSrc = path; } };
+      if (now) go(); else timer = setTimeout(go, 600);
+    }
+    form.addEventListener('input', () => { msg.textContent = ''; update(false); });
+    form.addEventListener('change', () => update(false));
+    form.addEventListener('submit', e => { e.preventDefault(); update(true); });
+    el('stCopy').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(out.value); msg.textContent = t('tCopied'); }
+      catch (e) { out.focus(); out.select(); msg.textContent = ''; }
+    });
+    out.addEventListener('focus', () => out.select());
+    if (['en', 'es', 'fr'].includes(lang)) el('stLang').value = lang;
+    update(true);
+    hooks.push(() => update(true));
+  })();
+
 })();

@@ -616,6 +616,11 @@ Object.keys(FB_I18N).forEach(l => Object.assign(I18N[l], FB_I18N[l]));
 // ---------- Frontbuch: UI-Texte der Tools (Inhalte bleiben deutsch) ----------
 const FB_TOOLS_I18N = {
   de: {
+    tStreamT: 'Roulette für Streamer', tStreamD: 'Loadout-Roulette als OBS-Overlay – dein Chat dreht mit !roulette.', rrForStreamers: 'Für Streamer',
+    stChan: 'Twitch-Name', stChanPh: 'deinkanal', stCmd: 'Chat-Befehl', stCd: 'Cooldown (Sek.)', stLang: 'Sprache', stLayout: 'Layout', stLayoutGrid: 'Kasten 800×450', stLayoutRow: 'Leiste 1280×210',
+    stScale: 'Größe', stScaleAuto: 'Automatisch', stSound: 'Ton beim Stoppen', stPreview: 'Vorschau des Overlays', stPrevHint: 'Vorschau – Klick dreht.', stUrlH: 'Overlay-URL', stObsH: 'In OBS einbinden',
+    stStep1: 'In OBS bei <b>Quellen</b> auf <b>+</b> klicken und <b>Browser</b> wählen.', stStep2: 'URL einfügen, Breite <b>800</b> und Höhe <b>450</b> eintragen (Leiste: 1280 × 210).',
+    stStep3: 'Fertig: Dein Chat dreht mit <b>{cmd}</b>. Selbst drehen: Rechtsklick auf die Quelle → <b>Interagieren</b> → klicken.', stToRoulette: '→ Zum Loadout-Roulette',
     rrP: 'Primär', rrS: 'Sekundär', rrL: 'Werfer', rrH: 'Helm', rrV: 'Weste', rrR: 'Rig', rrB: 'Rucksack', rrE: 'Ausrüstung', rrNone: 'Nichts',
     rrSpin: 'Drehen', rrSpinning: 'Dreht …', rrHold: 'Halten', rrCost: 'Gesamtkosten', rrToLoadout: 'Ins Loadout übernehmen', rrShare: 'Challenge teilen',
     rrTag: 'Spiel die nächste Runde mit diesem Loadout.', rrShareText: 'Meine WARDOGS-Loadout-Challenge: Spiel die nächste Runde mit diesem Loadout.',
@@ -647,6 +652,11 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Gespeichert: {n}', tSavedMax: 'Maximal 12 Loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   en: {
+    tStreamT: 'Roulette for streamers', tStreamD: 'Loadout roulette as an OBS overlay – your chat spins with !roulette.', rrForStreamers: 'For streamers',
+    stChan: 'Twitch name', stChanPh: 'yourchannel', stCmd: 'Chat command', stCd: 'Cooldown (sec.)', stLang: 'Language', stLayout: 'Layout', stLayoutGrid: 'Box 800×450', stLayoutRow: 'Bar 1280×210',
+    stScale: 'Size', stScaleAuto: 'Automatic', stSound: 'Sound on stop', stPreview: 'Overlay preview', stPrevHint: 'Preview – click to spin.', stUrlH: 'Overlay URL', stObsH: 'Add to OBS',
+    stStep1: 'In OBS, click <b>+</b> under <b>Sources</b> and choose <b>Browser</b>.', stStep2: 'Paste the URL, set width <b>800</b> and height <b>450</b> (bar: 1280 × 210).',
+    stStep3: 'Done: your chat spins with <b>{cmd}</b>. To spin yourself: right-click the source → <b>Interact</b> → click.', stToRoulette: '→ Go to the loadout roulette',
     rrP: 'Primary', rrS: 'Secondary', rrL: 'Launcher', rrH: 'Helmet', rrV: 'Vest', rrR: 'Rig', rrB: 'Backpack', rrE: 'Equipment', rrNone: 'Nothing',
     rrSpin: 'Spin', rrSpinning: 'Spinning …', rrHold: 'Hold', rrCost: 'Total cost', rrToLoadout: 'Open in loadout planner', rrShare: 'Share challenge',
     rrTag: 'Play your next round with this loadout.', rrShareText: 'My WARDOGS loadout challenge: play your next round with this loadout.',
@@ -678,6 +688,11 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Saved: {n}', tSavedMax: 'Up to 12 loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   es: {
+    tStreamT: 'Ruleta para streamers', tStreamD: 'Ruleta de loadouts como overlay de OBS: tu chat gira con !roulette.', rrForStreamers: 'Para streamers',
+    stChan: 'Nombre en Twitch', stChanPh: 'tucanal', stCmd: 'Comando del chat', stCd: 'Cooldown (s)', stLang: 'Idioma', stLayout: 'Diseño', stLayoutGrid: 'Caja 800×450', stLayoutRow: 'Barra 1280×210',
+    stScale: 'Tamaño', stScaleAuto: 'Automático', stSound: 'Sonido al parar', stPreview: 'Vista previa del overlay', stPrevHint: 'Vista previa: haz clic para girar.', stUrlH: 'URL del overlay', stObsH: 'Añadir a OBS',
+    stStep1: 'En OBS, pulsa <b>+</b> en <b>Fuentes</b> y elige <b>Navegador</b>.', stStep2: 'Pega la URL y pon ancho <b>800</b> y alto <b>450</b> (barra: 1280 × 210).',
+    stStep3: 'Listo: tu chat gira con <b>{cmd}</b>. Para girar tú: clic derecho en la fuente → <b>Interactuar</b> → clic.', stToRoulette: '→ Ir a la ruleta de loadouts',
     rrP: 'Primaria', rrS: 'Secundaria', rrL: 'Lanzador', rrH: 'Casco', rrV: 'Chaleco', rrR: 'Rig', rrB: 'Mochila', rrE: 'Equipo', rrNone: 'Nada',
     rrSpin: 'Girar', rrSpinning: 'Girando…', rrHold: 'Fijar', rrCost: 'Coste total', rrToLoadout: 'Pasar al planificador', rrShare: 'Compartir reto',
     rrTag: 'Juega la próxima ronda con este loadout.', rrShareText: 'Mi reto de loadout en WARDOGS: juega la próxima ronda con este loadout.',
@@ -709,6 +724,11 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Guardado: {n}', tSavedMax: 'Máximo 12 equipamientos.', tUntitled: 'Equipamiento', tLv: 'Nv',
   },
   fr: {
+    tStreamT: 'Roulette pour streamers', tStreamD: 'La roulette de loadout en overlay OBS – ton chat lance avec !roulette.', rrForStreamers: 'Pour les streamers',
+    stChan: 'Nom Twitch', stChanPh: 'tachaine', stCmd: 'Commande du chat', stCd: 'Cooldown (s)', stLang: 'Langue', stLayout: 'Disposition', stLayoutGrid: 'Bloc 800×450', stLayoutRow: 'Barre 1280×210',
+    stScale: 'Taille', stScaleAuto: 'Automatique', stSound: 'Son à l\u2019arrêt', stPreview: 'Aperçu de l\u2019overlay', stPrevHint: 'Aperçu – clique pour lancer.', stUrlH: 'URL de l\u2019overlay', stObsH: 'Ajouter à OBS',
+    stStep1: 'Dans OBS, clique sur <b>+</b> sous <b>Sources</b> et choisis <b>Navigateur</b>.', stStep2: 'Colle l\u2019URL, largeur <b>800</b> et hauteur <b>450</b> (barre : 1280 × 210).',
+    stStep3: 'C\u2019est prêt : ton chat lance avec <b>{cmd}</b>. Pour lancer toi-même : clic droit sur la source → <b>Interagir</b> → clic.', stToRoulette: '→ Vers la roulette de loadout',
     rrP: 'Principale', rrS: 'Secondaire', rrL: 'Lanceur', rrH: 'Casque', rrV: 'Gilet', rrR: 'Rig', rrB: 'Sac à dos', rrE: 'Équipement', rrNone: 'Rien',
     rrSpin: 'Lancer', rrSpinning: 'Ça tourne…', rrHold: 'Garder', rrCost: 'Coût total', rrToLoadout: 'Ouvrir dans le planificateur', rrShare: 'Partager le défi',
     rrTag: 'Joue la prochaine manche avec ce loadout.', rrShareText: 'Mon défi de loadout WARDOGS : joue la prochaine manche avec ce loadout.',
@@ -1515,7 +1535,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data.js?v=' + '20';
+      sc.src = '/assets/search-data.js?v=' + '21';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
