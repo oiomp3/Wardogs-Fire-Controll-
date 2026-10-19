@@ -1654,10 +1654,6 @@
   .rr-stream { margin: 14px 0 0; text-align: center; font-size: .9rem; font-weight: 600; }
 
   /* ---------- Roulette für Streamer (/tools/streamer/, seit v21) ---------- */
-  .tool-stream { --tint: rgba(145,70,255,.3); }
-  .art-stream { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .art-stream b { font-size: 38px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.5)); }
-  .art-stream i { font-style: normal; font: 700 .85rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 7px 10px; border-radius: 10px; background: rgba(145,70,255,.22); border: 1px solid rgba(145,70,255,.55); color: #d8c2ff; }
   .st-grid { display: grid; gap: 16px; margin-top: 14px; }
   @media (min-width: 900px) { .st-grid { grid-template-columns: 420px minmax(0, 1fr); align-items: start; } }
   .st-form { margin: 0; }
