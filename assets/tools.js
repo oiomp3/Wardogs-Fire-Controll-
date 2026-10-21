@@ -765,6 +765,190 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     window.fbRoulette = { roll, keys: KEYS, none: NONE_P, pools: () => Object.fromEntries(KEYS.map(k => [k, POOL[k].map(i => i.id)])), state: () => (st ? Object.assign({}, st) : null), shareUrl: () => (st ? shareUrl() : null) };
   })();
 
+
+  // ======================================================== Zufalls-Challenge (/tools/challenge/, v26)
+  (function challenge() {
+    const root = $('#chRoot');
+    if (!root || !window.FBChallenge) return;
+    const FC = window.FBChallenge, C = FC.build(D);
+    const el = id => document.getElementById(id);
+    const KEY = 'fbChallenge';
+    const load = () => { try { const x = JSON.parse(localStorage.getItem(KEY) || '{}'); return x && typeof x === 'object' ? x : {}; } catch (e) { return {}; } };
+    const store = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+    const S = load();
+    const okLv = L => Array.isArray(L) && L.length && L.every(x => [0, 1, 2, 3].includes(x));
+    if (!okLv(S.lv)) S.lv = [0, 1, 2, 3];
+    if (!['all', 'solo', 'squad'].includes(S.mode)) S.mode = 'all';
+    S.noveh = !!S.noveh; S.sound = !!S.sound;
+    const st0 = S.st && typeof S.st === 'object' ? S.st : {};
+    S.st = { cur: +st0.cur || 0, best: +st0.best || 0, won: +st0.won || 0, tries: +st0.tries || 0, last: st0.last || '' };
+    // Link-Parameter haben Vorrang (geteilte Challenge mit Filtern)
+    const Q = new URLSearchParams(location.search);
+    const qlv = FC.parseLevels(Q.get('levels'));
+    if (qlv) S.lv = qlv;
+    if (['solo', 'squad'].includes(Q.get('play'))) S.mode = Q.get('play');
+    if (Q.get('noveh') === '1') S.noveh = true;
+    const filt = () => ({ levels: S.lv.slice().sort(), mode: S.mode, noveh: S.noveh });
+    let cur = null, spinning = false, spins = 0, toastT = 0, ac = null, logged = '';
+    const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const spinBtn = el('chSpin'), spinTxt = el('chSpinTxt'), card = el('chCard'), shareBtn = el('chShare'), toast = el('chToast');
+
+    function tone(f, d, type, vol) {
+      if (!S.sound) return;
+      try {
+        ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+        const o = ac.createOscillator(), g = ac.createGain(), t0 = ac.currentTime;
+        o.type = type || 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(vol || .07, t0); g.gain.exponentialRampToValueAtTime(.0001, t0 + d);
+        o.connect(g).connect(ac.destination); o.start(t0); o.stop(t0 + d + .02);
+      } catch (e) {}
+    }
+    const fanfare = lv => [0, 1, 2].forEach(i => setTimeout(() => tone([523, 659, 784, 1046][Math.min(3, i + (lv > 1 ? 1 : 0))], .18, 'square', .045), i * 110));
+
+    function renderFilters() {
+      const all = S.lv.length === 4;
+      root.querySelectorAll('#chLv [data-lv]').forEach(b => {
+        const v = b.dataset.lv;
+        if (v === 'all') { b.setAttribute('aria-pressed', String(all)); return; }
+        const on = S.lv.includes(+v);
+        b.setAttribute('aria-pressed', String(on));
+        b.disabled = on && S.lv.length === 1;   // nie null Stufen
+        b.title = b.disabled ? t('chLvLast') : '';
+      });
+      root.querySelectorAll('#chMode [data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
+      el('chNoVeh').checked = S.noveh;
+      // Zähler pro Stufe (mit Spielweise/Fahrzeug-Filter) und gesamt
+      root.querySelectorAll('#chLv .ch-lvn').forEach((s, x) => { s.textContent = nf(C.count({ levels: [x], mode: S.mode, noveh: S.noveh })); });
+      const n = C.count(filt());
+      el('chCountN').textContent = nf(n);
+      el('chCountN').dataset.n = n;
+      el('chCountAll').textContent = n === C.all.length ? '' : t('chOfAll', { n: nf(C.all.length) });
+      spinBtn.disabled = spinning || !n;
+    }
+    function setSound() {
+      const b = el('chSound');
+      b.setAttribute('aria-pressed', String(S.sound));
+      b.querySelector('.ch-snd-ic').textContent = S.sound ? '🔊' : '🔇';
+    }
+    function cell(txt, cls) { return `<div class="ch-cell${cls ? ' ' + cls : ''}"><span>${esc(txt)}</span></div>`; }
+    function finalCells(P) { return { w: cell(P.wLine), g: cell(P.gLine), m: cell(P.mNone ? t('chNoRule') : P.mLine, P.mNone ? 'ch-dim' : '') }; }
+    function renderCard() {
+      const P = cur ? C.parts(cur, lang) : null;
+      ['chBadge', 'chTitle', 'chRule'].forEach(id => { el(id).removeAttribute('data-i18n'); });
+      if (!P) return;
+      const F = finalCells(P);
+      if (!spinning) ['w', 'g', 'm'].forEach(k => { root.querySelector(`#chWin${k} .ch-strip`).innerHTML = F[k]; });
+      card.dataset.lv = P.lv;
+      el('chBadge').textContent = P.lvName;
+      el('chTitle').textContent = P.title;
+      el('chRule').textContent = P.rule;
+      el('chId').textContent = t('chIdLbl') + ' ' + P.id;
+      el('chTags').innerHTML = [P.squad ? t('chTagSquad') : t('chTagSolo'), P.veh ? t('chTagVeh') : ''].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('');
+    }
+    function render() {
+      spinTxt.textContent = t(spinning ? 'chSpinning' : (cur ? 'chAgain' : 'chSpin'));
+      root.classList.toggle('spinning', spinning);
+      card.classList.toggle('ready', !!cur && !spinning);
+      shareBtn.disabled = !cur || spinning;
+      const can = !!cur && !spinning && logged !== cur.i;
+      el('chDone').disabled = !can; el('chFail').disabled = !can;
+      el('chStCur').textContent = nf(S.st.cur); el('chStBest').textContent = nf(S.st.best); el('chStWon').textContent = nf(S.st.won); el('chStTry').textContent = nf(S.st.tries);
+      renderFilters();
+    }
+    function spinReel(k, finalHtml, fill, dur, ix) {
+      const strip = root.querySelector(`#chWin${k} .ch-strip`), win = strip.parentElement;
+      if (!dur || !strip.animate) { strip.innerHTML = finalHtml; return Promise.resolve(); }
+      strip.innerHTML = strip.innerHTML + fill.map(x => cell(x, x === '—' ? 'ch-dim' : '')).join('') + finalHtml;
+      const h = win.clientHeight, dist = (strip.children.length - 1) * h;
+      win.classList.remove('land'); win.classList.add('spin');
+      let tick = 0;
+      const tickT = setInterval(() => { if (++tick % 2) tone(300 + ix * 80, .03, 'square', .02); }, 90);
+      const a = strip.animate([{ transform: 'translateY(0)' }, { transform: `translateY(-${dist}px)` }], { duration: dur, easing: 'cubic-bezier(.12,.62,.18,1)', fill: 'forwards' });
+      return a.finished.catch(() => {}).then(() => {
+        clearInterval(tickT);
+        strip.innerHTML = finalHtml; a.cancel(); tone(520 + ix * 90, .12);
+        win.classList.remove('spin'); void win.offsetWidth; win.classList.add('land');
+      });
+    }
+    function url(c) {
+      const p = ['c=' + C.idOf(c)], lv = FC.levelsParam(S.lv);
+      if (lv) p.push('levels=' + lv);
+      if (S.mode !== 'all') p.push('play=' + S.mode);
+      if (S.noveh) p.push('noveh=1');
+      return LP + '/tools/challenge/?' + p.join('&');
+    }
+    async function spin() {
+      if (spinning) return;
+      const next = C.roll(filt(), cur);
+      if (!next) { showToast(t('chNone')); return; }
+      spinning = true; render();
+      const P = C.parts(next, lang), F = finalCells(P), rm = reduced();
+      const fillN = 14, SM = C.samples(lang, fillN + 6);
+      card.classList.remove('pop');
+      await Promise.all(['w', 'g', 'm'].map((k, ix) => spinReel(k, F[k], SM[k].slice(0, fillN + ix * 3), rm ? 0 : 900 + ix * 420, ix)));
+      cur = next; spinning = false; spins++;
+      root.dataset.spins = spins; root.dataset.id = C.idOf(cur);
+      try { history.replaceState(null, '', url(cur)); } catch (e) {}
+      renderCard(); render();
+      void card.offsetWidth; card.classList.add('pop');
+      fanfare(cur.lv);
+    }
+    function showToast(msg) { toast.textContent = msg; toast.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { toast.hidden = true; }, 2800); }
+    async function copy(u) {
+      try { await navigator.clipboard.writeText(u); return true; } catch (e) {}
+      try {
+        const ta = document.createElement('textarea'); ta.value = u; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok;
+      } catch (e) { return false; }
+    }
+    function changed() { store(); if (cur && !spinning) { try { history.replaceState(null, '', url(cur)); } catch (e) {} } render(); }
+
+    spinBtn.addEventListener('click', spin);
+    el('chLv').addEventListener('click', e => {
+      const b = e.target.closest('[data-lv]'); if (!b || b.disabled || spinning) return;
+      const v = b.dataset.lv;
+      if (v === 'all') S.lv = [0, 1, 2, 3];
+      else {
+        const x = +v;
+        if (S.lv.includes(x)) { if (S.lv.length > 1) S.lv = S.lv.filter(y => y !== x); }
+        else S.lv = S.lv.concat(x).sort();
+      }
+      changed();
+    });
+    el('chMode').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (!b || spinning) return; S.mode = b.dataset.mode; changed(); });
+    el('chNoVeh').addEventListener('change', e => { S.noveh = e.target.checked; changed(); });
+    el('chSound').addEventListener('click', () => { S.sound = !S.sound; store(); setSound(); if (S.sound) tone(660, .1); });
+    shareBtn.addEventListener('click', async () => {
+      if (!cur || spinning) return;
+      const u = location.origin + url(cur);
+      shareBtn.dataset.url = u;
+      if (navigator.share) {
+        try { await navigator.share({ title: C.parts(cur, lang).title + ' · ' + document.title, text: t('chShareText'), url: u }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      showToast((await copy(u)) ? t('tCopied') : u);
+    });
+    function log(ok) {
+      if (!cur || spinning || logged === cur.i) return;
+      logged = cur.i; S.st.tries++; S.st.last = C.idOf(cur);
+      if (ok) { S.st.won++; S.st.cur++; S.st.best = Math.max(S.st.best, S.st.cur); } else S.st.cur = 0;
+      store(); render(); showToast(t('chLogged'));
+      if (ok) fanfare(3); else tone(180, .25, 'sawtooth', .04);
+    }
+    el('chDone').addEventListener('click', () => log(true));
+    el('chFail').addEventListener('click', () => log(false));
+    el('chReset').addEventListener('click', () => { S.st = { cur: 0, best: 0, won: 0, tries: 0, last: '' }; store(); render(); showToast(t('chResetDone')); });
+
+    // Geteilte Challenge: ?c=<id>
+    if (Q.has('c')) {
+      cur = C.get(Q.get('c'));
+      if (cur) { root.dataset.id = C.idOf(cur); renderCard(); card.classList.add('pop'); }
+      else showToast(t('chNotFound'));
+    }
+    store(); setSound(); render();
+    hooks.push(() => { renderCard(); render(); });
+    window.fbChallengeApp = { engine: C, filter: filt, count: () => C.count(filt()), current: () => (cur ? C.parts(cur, lang) : null), shareUrl: () => (cur ? location.origin + url(cur) : null), spin };
+  })();
+
   // ======================================================== Roulette für Streamer (/tools/streamer/)
   (function streamer() {
     const form = $('#stForm');
@@ -773,11 +957,22 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     const frame = el('stFrame'), out = el('stUrl'), msg = el('stMsg'), stage = el('stStage');
     const SIZE = { grid: [800, 450], row: [1280, 210] };
     const chan = () => el('stChan').value.trim().toLowerCase().replace(/^https?:\/\/(www\.|m\.)?twitch\.tv\//, '').replace(/^[@#]/, '').split(/[/?#\s]/)[0].replace(/[^a-z0-9_]/g, '').slice(0, 25);
-    const cmd = () => el('stCmd').value.trim().toLowerCase().replace(/^!+/, '').replace(/\s+/g, '').slice(0, 25) || 'roulette';
+    const mode = () => (el('stMode').value === 'challenge' ? 'challenge' : 'roulette');
+    const defCmd = () => mode();
+    const cmd = () => el('stCmd').value.trim().toLowerCase().replace(/^!+/, '').replace(/\s+/g, '').slice(0, 25) || defCmd();
+    const lvBoxes = () => [...form.querySelectorAll('input[name="stLv"]')];
+    function lvGuard() { const on = lvBoxes().filter(b => b.checked); lvBoxes().forEach(b => { b.disabled = b.checked && on.length === 1; }); }
+    let lastMode = mode();
     function query() {
       const p = [], c = chan(), cm = cmd(), cd = Math.max(0, Math.min(3600, parseInt(el('stCd').value, 10)));
+      if (mode() === 'challenge') {
+        p.push('mode=challenge');
+        const lv = lvBoxes().filter(b => b.checked).map(b => b.value);
+        if (lv.length && lv.length < 4) p.push('levels=' + lv.join(','));
+        if (el('stNoVeh').checked) p.push('noveh=1');
+      }
       if (c) p.push('channel=' + c);
-      if (cm !== 'roulette') p.push('cmd=' + encodeURIComponent(cm));
+      if (cm !== defCmd()) p.push('cmd=' + encodeURIComponent(cm));
       if (Number.isFinite(cd) && cd !== 30) p.push('cooldown=' + cd);
       if (el('stLang').value !== 'de') p.push('lang=' + el('stLang').value);
       if (el('stLayout').value === 'row') p.push('layout=row');
@@ -787,6 +982,13 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     }
     let timer = 0, lastSrc = frame.getAttribute('src');
     function update(now) {
+      if (mode() !== lastMode) {   // Standardbefehl mitwechseln, solange er nicht angepasst wurde
+        const v = el('stCmd').value.trim().toLowerCase().replace(/^!+/, '');
+        if (!v || v === lastMode) el('stCmd').value = mode();
+        lastMode = mode();
+      }
+      el('stLvBox').hidden = mode() !== 'challenge';
+      lvGuard();
       const q = query(), path = '/overlay/roulette/' + (q ? '?' + q : '');
       out.value = location.origin + path;
       const [w, h] = SIZE[el('stLayout').value] || SIZE.grid;
@@ -806,6 +1008,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     });
     out.addEventListener('focus', () => out.select());
     if (['en', 'es', 'fr'].includes(lang)) el('stLang').value = lang;
+    if (location.hash === '#challenge' || new URLSearchParams(location.search).get('mode') === 'challenge') el('stMode').value = 'challenge';
     update(true);
     hooks.push(() => update(true));
   })();

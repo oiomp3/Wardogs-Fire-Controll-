@@ -943,6 +943,99 @@ const FB25_I18N = {
 };
 Object.keys(FB25_I18N).forEach(l => Object.assign(I18N[l], FB25_I18N[l]));
 
+// ---------- Frontbuch v26: Zufalls-Challenge (/tools/challenge/), Challenge-Modus im Streamer-Overlay ----------
+const FB26_I18N = {
+  de: {
+    tChalT: 'Zufalls-Challenge', tChalD: 'Drehen und eine von über 20.000 WARDOGS-Challenges spielen.',
+    chLevels: 'Schwierigkeit', chLv0: 'Leicht', chLv1: 'Mittel', chLv2: 'Schwer', chLv3: 'Wahnsinn',
+    chMode: 'Spielweise', chModeAll: 'Alle', chModeSolo: 'Solo', chModeSquad: 'Squad', chNoVeh: 'Ohne Fahrzeug-Challenges',
+    chCounter: 'Challenge-Zähler', chChallenges: 'Challenges', chOfAll: 'von {n} insgesamt',
+    chSpin: 'Drehen', chAgain: 'Nochmal drehen', chSpinning: 'Dreht …', chShare: 'Challenge teilen', chShareText: 'Schaffst du diese WARDOGS-Challenge?',
+    chSound: 'Ton', chReelW: 'Waffe', chReelG: 'Ziel', chReelM: 'Regel', chIdle: 'Dreh dir eine Challenge!', chNoRule: 'Keine Zusatzregel',
+    chStreakH: 'Deine Bilanz', chDone: '✓ Geschafft', chFail: '✗ Nicht geschafft', chStreak: 'Serie', chBest: 'Beste Serie', chWon: 'Geschafft', chTries: 'Versucht',
+    chStreakHint: 'Wird nur in deinem Browser gespeichert.', chLogged: 'Eingetragen!', chResetDone: 'Bilanz zurückgesetzt.',
+    chNotFound: 'Diese Challenge gibt es nicht (mehr) – dreh einfach eine neue.', chNone: 'Keine Challenge passt zu diesen Filtern.',
+    chTagSolo: 'Solo', chTagSquad: 'Squad', chTagVeh: 'Fahrzeug', chIdLbl: 'Nr.', chLvLast: 'Mindestens eine Stufe bleibt ausgewählt.',
+    chHowH: 'So funktioniert’s',
+    chHow: 'Jede Challenge besteht aus <b>Waffenregel</b>, <b>Ziel</b> und <b>Zusatzregel</b>. Die Schwierigkeit ergibt sich aus der Summe der Teile – eine Schrotflinte ist schwerer als ein Sturmgewehr, 20 Kills schwerer als 5, ohne Helm schwerer als mit. Waffen, Klassen, Tracks und Preise stammen aus unserer <a href="/tools/datenbank/">Datenbank</a>, die Ziele nur aus Mechaniken, die unsere Guides mit Quellen beschreiben (Control Zone, Hot Zone, Drill Tower, FOB, Mörser, Halligan Bar …). Unmögliche Kombinationen werden aussortiert, z. B. Fahrzeug zerstören mit nur einer Pistole oder ein Budget unter dem Waffenpreis.',
+    chToRoulette: '🎰 Loadout dazu? → Loadout-Roulette', chToStreamer: '📺 Für Streamer: !challenge im Twitch-Chat', rrToChal: '🎲 Noch mehr Chaos? Zufalls-Challenge',
+    stMode: 'Modus', stModeR: 'Loadout-Roulette', stModeC: 'Zufalls-Challenge', stLevels: 'Schwierigkeit', stNoVeh: 'Ohne Fahrzeug-Challenges',
+    stChalH: 'Zufalls-Challenge im Stream',
+    stChalP: 'Stell oben den <b>Modus</b> auf „Zufalls-Challenge“: Dann zieht dein Chat mit <b>!challenge</b> eine Challenge (Waffenregel, Ziel, Zusatzregel und Schwierigkeit) – mit derselben Animation wie auf der Seite. Cooldown, Sprache, Layout und Größe funktionieren wie beim Roulette.',
+    stChalL1: '<code>mode=challenge</code> – Challenge statt Loadout; der Befehl ist dann standardmäßig <code>!challenge</code> (änderbar mit <code>cmd=</code>).',
+    stChalL2: '<code>levels=schwer,wahnsinn</code> – nur diese Stufen ziehen (leicht, mittel, schwer, wahnsinn; mehrere mit Komma).',
+    stChalL3: '<code>noveh=1</code> – keine Fahrzeug-Challenges; <code>play=solo</code> oder <code>play=squad</code> – nur Solo- bzw. Squad-Challenges.',
+    stChalL4: 'Zum Ausprobieren ohne Stream: <a href="/tools/challenge/">Zufalls-Challenge auf der Seite</a>.'
+  },
+  en: {
+    tChalT: 'Random Challenge', tChalD: 'Spin and play one of more than 20,000 WARDOGS challenges.',
+    chLevels: 'Difficulty', chLv0: 'Easy', chLv1: 'Medium', chLv2: 'Hard', chLv3: 'Insane',
+    chMode: 'Play style', chModeAll: 'All', chModeSolo: 'Solo', chModeSquad: 'Squad', chNoVeh: 'No vehicle challenges',
+    chCounter: 'Challenge counter', chChallenges: 'challenges', chOfAll: 'of {n} in total',
+    chSpin: 'Spin', chAgain: 'Spin again', chSpinning: 'Spinning …', chShare: 'Share challenge', chShareText: 'Can you beat this WARDOGS challenge?',
+    chSound: 'Sound', chReelW: 'Weapon', chReelG: 'Goal', chReelM: 'Rule', chIdle: 'Spin for a challenge!', chNoRule: 'No extra rule',
+    chStreakH: 'Your record', chDone: '✓ Done', chFail: '✗ Failed', chStreak: 'Streak', chBest: 'Best streak', chWon: 'Done', chTries: 'Tried',
+    chStreakHint: 'Stored only in your browser.', chLogged: 'Logged!', chResetDone: 'Record reset.',
+    chNotFound: 'This challenge doesn’t exist (any more) – just spin a new one.', chNone: 'No challenge matches these filters.',
+    chTagSolo: 'Solo', chTagSquad: 'Squad', chTagVeh: 'Vehicle', chIdLbl: 'No.', chLvLast: 'At least one level stays selected.',
+    chHowH: 'How it works',
+    chHow: 'Every challenge combines a <b>weapon rule</b>, a <b>goal</b> and an <b>extra rule</b>. The difficulty is the sum of its parts – a shotgun is harder than an assault rifle, 20 kills harder than 5, no helmet harder than a helmet. Weapons, classes, tracks and prices come from our <a href="/tools/datenbank/">database</a>; goals only use mechanics our guides describe with sources (Control Zone, Hot Zone, Drill Tower, FOB, mortar, Halligan Bar …). Impossible combinations are filtered out, e.g. destroying a vehicle with only a pistol, or a budget below the weapon’s price.',
+    chToRoulette: '🎰 Need a loadout? → Loadout Roulette', chToStreamer: '📺 For streamers: !challenge in Twitch chat', rrToChal: '🎲 Want more chaos? Random Challenge',
+    stMode: 'Mode', stModeR: 'Loadout Roulette', stModeC: 'Random Challenge', stLevels: 'Difficulty', stNoVeh: 'No vehicle challenges',
+    stChalH: 'Random Challenge on stream',
+    stChalP: 'Set the <b>mode</b> above to “Random Challenge” and your chat draws a challenge with <b>!challenge</b> (weapon rule, goal, extra rule and difficulty) – with the same animation as on the site. Cooldown, language, layout and size work just like the roulette.',
+    stChalL1: '<code>mode=challenge</code> – challenge instead of a loadout; the command then defaults to <code>!challenge</code> (change it with <code>cmd=</code>).',
+    stChalL2: '<code>levels=schwer,wahnsinn</code> – only draw these levels (leicht, mittel, schwer, wahnsinn = easy, medium, hard, insane; several separated by commas).',
+    stChalL3: '<code>noveh=1</code> – no vehicle challenges; <code>play=solo</code> or <code>play=squad</code> – only solo or squad challenges.',
+    stChalL4: 'To try it without a stream: <a href="/tools/challenge/">Random Challenge on the site</a>.'
+  },
+  es: {
+    tChalT: 'Reto aleatorio', tChalD: 'Gira y juega uno de más de 20.000 retos de WARDOGS.',
+    chLevels: 'Dificultad', chLv0: 'Fácil', chLv1: 'Media', chLv2: 'Difícil', chLv3: 'Locura',
+    chMode: 'Modo de juego', chModeAll: 'Todos', chModeSolo: 'Solo', chModeSquad: 'Escuadra', chNoVeh: 'Sin retos de vehículos',
+    chCounter: 'Contador de retos', chChallenges: 'retos', chOfAll: 'de {n} en total',
+    chSpin: 'Girar', chAgain: 'Girar otra vez', chSpinning: 'Girando…', chShare: 'Compartir reto', chShareText: '¿Superas este reto de WARDOGS?',
+    chSound: 'Sonido', chReelW: 'Arma', chReelG: 'Objetivo', chReelM: 'Regla', chIdle: '¡Gira para conseguir un reto!', chNoRule: 'Sin regla extra',
+    chStreakH: 'Tu balance', chDone: '✓ Conseguido', chFail: '✗ No conseguido', chStreak: 'Racha', chBest: 'Mejor racha', chWon: 'Conseguidos', chTries: 'Intentos',
+    chStreakHint: 'Solo se guarda en tu navegador.', chLogged: '¡Anotado!', chResetDone: 'Balance reiniciado.',
+    chNotFound: 'Este reto no existe (ya) – gira uno nuevo.', chNone: 'Ningún reto coincide con estos filtros.',
+    chTagSolo: 'Solo', chTagSquad: 'Escuadra', chTagVeh: 'Vehículo', chIdLbl: 'N.º', chLvLast: 'Al menos un nivel queda seleccionado.',
+    chHowH: 'Cómo funciona',
+    chHow: 'Cada reto combina una <b>regla de armas</b>, un <b>objetivo</b> y una <b>regla extra</b>. La dificultad es la suma de sus partes: una escopeta es más difícil que un fusil de asalto, 20 bajas más que 5 y sin casco más que con casco. Las armas, clases, tracks y precios salen de nuestra <a href="/tools/datenbank/">base de datos</a>; los objetivos solo usan mecánicas que nuestras guías describen con fuentes (Control Zone, Hot Zone, Drill Tower, FOB, mortero, Halligan Bar…). Las combinaciones imposibles se descartan, p. ej. destruir un vehículo solo con pistola o un presupuesto inferior al precio del arma.',
+    chToRoulette: '🎰 ¿Y el loadout? → Ruleta de loadouts', chToStreamer: '📺 Para streamers: !challenge en el chat de Twitch', rrToChal: '🎲 ¿Más caos? Reto aleatorio',
+    stMode: 'Modo', stModeR: 'Ruleta de loadouts', stModeC: 'Reto aleatorio', stLevels: 'Dificultad', stNoVeh: 'Sin retos de vehículos',
+    stChalH: 'Reto aleatorio en el stream',
+    stChalP: 'Pon arriba el <b>modo</b> en «Reto aleatorio» y tu chat sacará un reto con <b>!challenge</b> (regla de armas, objetivo, regla extra y dificultad), con la misma animación que en la web. Cooldown, idioma, diseño y tamaño funcionan igual que en la ruleta.',
+    stChalL1: '<code>mode=challenge</code> – reto en lugar de loadout; el comando pasa a ser <code>!challenge</code> por defecto (cámbialo con <code>cmd=</code>).',
+    stChalL2: '<code>levels=schwer,wahnsinn</code> – solo estos niveles (leicht, mittel, schwer, wahnsinn = fácil, media, difícil, locura; varios separados por comas).',
+    stChalL3: '<code>noveh=1</code> – sin retos de vehículos; <code>play=solo</code> o <code>play=squad</code> – solo retos en solitario o de escuadra.',
+    stChalL4: 'Para probarlo sin stream: <a href="/tools/challenge/">Reto aleatorio en la web</a>.'
+  },
+  fr: {
+    tChalT: 'Défi aléatoire', tChalD: 'Lance la roue et joue l’un de plus de 20 000 défis WARDOGS.',
+    chLevels: 'Difficulté', chLv0: 'Facile', chLv1: 'Moyen', chLv2: 'Difficile', chLv3: 'Folie',
+    chMode: 'Style de jeu', chModeAll: 'Tous', chModeSolo: 'Solo', chModeSquad: 'Escouade', chNoVeh: 'Sans défis de véhicule',
+    chCounter: 'Compteur de défis', chChallenges: 'défis', chOfAll: 'sur {n} au total',
+    chSpin: 'Lancer', chAgain: 'Relancer', chSpinning: 'Ça tourne…', chShare: 'Partager le défi', chShareText: 'Tu relèves ce défi WARDOGS ?',
+    chSound: 'Son', chReelW: 'Arme', chReelG: 'Objectif', chReelM: 'Règle', chIdle: 'Lance la roue pour un défi !', chNoRule: 'Pas de règle en plus',
+    chStreakH: 'Ton bilan', chDone: '✓ Réussi', chFail: '✗ Raté', chStreak: 'Série', chBest: 'Meilleure série', chWon: 'Réussis', chTries: 'Tentés',
+    chStreakHint: 'Enregistré uniquement dans ton navigateur.', chLogged: 'Noté !', chResetDone: 'Bilan réinitialisé.',
+    chNotFound: 'Ce défi n’existe pas (ou plus) – lance-en simplement un nouveau.', chNone: 'Aucun défi ne correspond à ces filtres.',
+    chTagSolo: 'Solo', chTagSquad: 'Escouade', chTagVeh: 'Véhicule', chIdLbl: 'N°', chLvLast: 'Au moins un niveau reste sélectionné.',
+    chHowH: 'Comment ça marche',
+    chHow: 'Chaque défi combine une <b>règle d’arme</b>, un <b>objectif</b> et une <b>règle en plus</b>. La difficulté est la somme des éléments : un fusil à pompe est plus dur qu’un fusil d’assaut, 20 éliminations plus que 5, sans casque plus qu’avec. Armes, catégories, tracks et prix viennent de notre <a href="/tools/datenbank/">base de données</a> ; les objectifs n’utilisent que des mécaniques décrites avec sources dans nos guides (Control Zone, Hot Zone, Drill Tower, FOB, mortier, Halligan Bar…). Les combinaisons impossibles sont écartées, par ex. détruire un véhicule avec un simple pistolet ou un budget inférieur au prix de l’arme.',
+    chToRoulette: '🎰 Et le loadout ? → Roulette de loadout', chToStreamer: '📺 Pour streamers : !challenge dans le chat Twitch', rrToChal: '🎲 Encore plus de chaos ? Défi aléatoire',
+    stMode: 'Mode', stModeR: 'Roulette de loadout', stModeC: 'Défi aléatoire', stLevels: 'Difficulté', stNoVeh: 'Sans défis de véhicule',
+    stChalH: 'Défi aléatoire en stream',
+    stChalP: 'Règle le <b>mode</b> ci-dessus sur « Défi aléatoire » : ton chat tire alors un défi avec <b>!challenge</b> (règle d’arme, objectif, règle en plus et difficulté), avec la même animation que sur le site. Cooldown, langue, mise en page et taille fonctionnent comme pour la roulette.',
+    stChalL1: '<code>mode=challenge</code> – un défi au lieu d’un loadout ; la commande devient alors <code>!challenge</code> par défaut (modifiable avec <code>cmd=</code>).',
+    stChalL2: '<code>levels=schwer,wahnsinn</code> – uniquement ces niveaux (leicht, mittel, schwer, wahnsinn = facile, moyen, difficile, folie ; plusieurs séparés par des virgules).',
+    stChalL3: '<code>noveh=1</code> – pas de défis de véhicule ; <code>play=solo</code> ou <code>play=squad</code> – uniquement des défis solo ou en escouade.',
+    stChalL4: 'Pour essayer sans stream : <a href="/tools/challenge/">Défi aléatoire sur le site</a>.'
+  }
+};
+Object.keys(FB26_I18N).forEach(l => Object.assign(I18N[l], FB26_I18N[l]));
+
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -1680,7 +1773,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '25';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '26';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

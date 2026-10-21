@@ -1,5 +1,5 @@
-// ---------- Frontbuch: Loadout-Roulette als Streamer-Overlay (/overlay/roulette/) ----------
-// Parameter: channel, cmd (Standard roulette), cooldown (s, Standard 30), lang (de/en/es/fr), layout (grid/row), scale, sound=1
+// ---------- Frontbuch: Streamer-Overlay (/overlay/roulette/): Loadout-Roulette oder ?mode=challenge (v26, + levels, noveh, play) ----------
+// Parameter: mode (roulette/challenge), channel, cmd (Standard roulette bzw. challenge), cooldown (s, Standard 30), lang (de/en/es/fr), layout (grid/row), scale, sound=1
 (function () {
   const D = window.FB_DATA;
   const root = document.getElementById('ov');
@@ -19,7 +19,8 @@
   const lang = L[Q.get('lang')] ? Q.get('lang') : 'de';
   const T = (k, o) => String(L[lang][k]).replace(/\{(\w+)\}/g, (_, x) => (o && o[x] !== undefined ? o[x] : ''));
   const channel = (Q.get('channel') || '').toLowerCase().replace(/^#/, '').replace(/[^a-z0-9_]/g, '').slice(0, 25);
-  const cmd = '!' + ((Q.get('cmd') || 'roulette').toLowerCase().replace(/^!+/, '').replace(/\s+/g, '').slice(0, 25) || 'roulette');
+  const MODE = Q.get('mode') === 'challenge' && window.FBChallenge ? 'challenge' : 'roulette';
+  const cmd = '!' + ((Q.get('cmd') || MODE).toLowerCase().replace(/^!+/, '').replace(/\s+/g, '').slice(0, 25) || MODE);
   const cdRaw = parseInt(Q.get('cooldown'), 10);
   const cooldown = Number.isFinite(cdRaw) ? Math.max(0, Math.min(3600, cdRaw)) : 30;
   const layout = Q.get('layout') === 'row' ? 'row' : 'grid';
@@ -29,6 +30,93 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nf = n => Number(n).toLocaleString('de-DE');
   document.documentElement.lang = lang;
+  const rand = () => { try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296; } catch (e) { return Math.random(); } };
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ac = null;
+  function beep(f) {
+    if (!sound) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.value = f; o.type = 'triangle'; g.gain.setValueAtTime(.08, ac.currentTime); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + .12);
+      o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + .13);
+    } catch (e) {}
+  }
+  function fit() {
+    const s = scaleP > 0 ? Math.min(scaleP, 6) : Math.min(innerWidth / SIZE[0], innerHeight / SIZE[1]);
+    root.style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+  addEventListener('resize', fit);
+  // ---------- v26: Zufalls-Challenge (?mode=challenge) ----------
+  function challengeMode() {
+    const FC = window.FBChallenge, C = FC.build(D), CT = FC.TX[lang];
+    const play = Q.get('play');
+    const F = { levels: FC.parseLevels(Q.get('levels')) || [0, 1, 2, 3], mode: play === 'solo' || play === 'squad' ? play : 'all', noveh: Q.get('noveh') === '1' };
+    const $ = id => document.getElementById(id);
+    const reel = (k, lbl) => `<div class="ovc-reel" data-k="${k}"><span class="ov-lbl">${esc(lbl)}</span><div class="ovc-win"><div class="ovc-strip"><div class="ovc-cell ovc-idle">?</div></div></div></div>`;
+    const reels = `<div class="ovc-reels">${reel('w', CT.reelW)}${reel('g', CT.reelG)}${reel('m', CT.reelM)}</div>`;
+    const cardH = '<div class="ovc-card" id="ovcCard"><span class="ovc-badge" id="ovcBadge">🎲</span><b class="ovc-title" id="ovcTitle"></b></div>';
+    root.className = 'ov ovc ov-L-' + layout;
+    root.style.width = SIZE[0] + 'px'; root.style.height = SIZE[1] + 'px';
+    const conn = channel ? `<span class="ov-conn" id="ovConn" data-s="conn"><i></i><span>#${esc(channel)}</span></span>` : '';
+    const statusHtml = `<div class="ov-status"><span class="ov-by" id="ovBy"></span><span class="ov-hint" id="ovHint"></span></div>`;
+    const brand = '<div class="ov-brand">oiotv.de</div>';
+    if (layout === 'grid') root.innerHTML = `<div class="ov-head"><b class="ov-title">🎲 ${esc(CT.title)}</b>${conn}</div>${statusHtml}${reels}${cardH}${brand}`;
+    else root.innerHTML = `<div class="ov-side"><b class="ov-title">🎲 ${esc(CT.title)}</b>${conn}${statusHtml}${brand}</div><div class="ovc-main">${reels}${cardH}</div>`;
+    let cur = null, spinning = false, spins = 0, last = 0, by = '', hintT = 0;
+    const cell = (txt, dim) => `<div class="ovc-cell${dim ? ' ovc-dim' : ''}"><span>${esc(txt)}</span></div>`;
+    function hint() {
+      const left = Math.ceil((last + cooldown * 1000 - Date.now()) / 1000);
+      $('ovHint').textContent = spinning ? '' : (channel && last && left > 0 ? T('cd', { n: left }) : (channel ? T('chat', { c: cmd }) : T('click')));
+      clearTimeout(hintT);
+      if (channel && left > 0) hintT = setTimeout(hint, 1000);
+    }
+    function render() {
+      $('ovBy').textContent = by ? T('by', { u: by }) : ''; $('ovBy').hidden = !by;
+      root.classList.toggle('spinning', spinning);
+      const card = $('ovcCard');
+      if (cur && !spinning) {
+        const P = C.parts(cur, lang);
+        card.dataset.lv = P.lv; $('ovcBadge').textContent = P.lvName; $('ovcTitle').textContent = P.title;
+        root.dataset.id = P.id;
+      }
+      card.classList.toggle('ready', !!cur && !spinning);
+      hint();
+    }
+    function spinReel(k, final, fill, dur, ix) {
+      const strip = root.querySelector(`.ovc-reel[data-k="${k}"] .ovc-strip`), win = strip.parentElement;
+      if (!dur || !strip.animate) { strip.innerHTML = final; return Promise.resolve(); }
+      strip.innerHTML += fill.map(x => cell(x, x === '—')).join('') + final;
+      const h = win.clientHeight, dist = (strip.children.length - 1) * h;
+      win.classList.remove('land'); win.classList.add('spin');
+      const a = strip.animate([{ transform: 'translateY(0)' }, { transform: `translateY(-${dist}px)` }], { duration: dur, easing: 'cubic-bezier(.12,.62,.18,1)', fill: 'forwards' });
+      return a.finished.catch(() => {}).then(() => {
+        strip.innerHTML = final; a.cancel(); beep(520 + ix * 90);
+        win.classList.remove('spin'); void win.offsetWidth; win.classList.add('land');
+      });
+    }
+    async function spin(user, fromChat) {
+      if (spinning) return false;
+      if (fromChat && last && Date.now() - last < cooldown * 1000) { hint(); return false; }
+      const next = C.roll(F, cur);
+      if (!next) return false;
+      spinning = true; last = Date.now(); by = user || '';
+      render();
+      const P = C.parts(next, lang), SM = C.samples(lang, 20), rm = reduced();
+      const fin = { w: cell(P.wLine), g: cell(P.gLine), m: cell(P.mNone ? CT.m.none : P.mLine, P.mNone) };
+      await Promise.all(['w', 'g', 'm'].map((k, ix) => spinReel(k, fin[k], SM[k].slice(0, 12 + ix * 3), rm ? 0 : 900 + ix * 420, ix)));
+      cur = next; spinning = false; spins++;
+      root.dataset.spins = spins;
+      render();
+      return true;
+    }
+    root.addEventListener('click', () => spin('', false));
+    render();
+    return { spin, state: () => (cur ? C.parts(cur, lang) : null), by: () => by, spins: () => spins, count: C.count(F), filter: F };
+  }
+
+  // ---------- Loadout-Roulette ----------
+  function rouletteMode() {
 
   // gleiche Walzen und Quoten wie /slots/
   const REELS = [['p', 'primary', 1 / 8], ['s', 'secondary', 1 / 4], ['l', 'launcher', 1 / 4],
@@ -36,10 +124,8 @@
   const KEYS = REELS.map(r => r[0]);
   const NONE_P = Object.fromEntries(REELS.map(r => [r[0], r[2]]));
   const POOL = Object.fromEntries(REELS.map(([k, slot]) => [k, D.items.filter(i => i.slot === slot && !(k === 'e' && i.type === 'Fallschirm'))]));
-  const rand = () => { try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296; } catch (e) { return Math.random(); } };
   const pick = A => A[Math.floor(rand() * A.length)];
   const roll = k => (!POOL[k].length || rand() < NONE_P[k] ? '' : pick(POOL[k]).id);
-  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const CAT_EMO = { weapon: '🔫', armor: '🦺', equipment: '🧰', gear: '🎒' };
   function cell(id) {
@@ -68,22 +154,7 @@
   const $ = id => document.getElementById(id);
   const stripEl = k => root.querySelector(`.ov-reel[data-k="${k}"] .ov-strip`);
 
-  function fit() {
-    const s = scaleP > 0 ? Math.min(scaleP, 6) : Math.min(innerWidth / SIZE[0], innerHeight / SIZE[1]);
-    root.style.transform = `translate(-50%, -50%) scale(${s})`;
-  }
-  addEventListener('resize', fit); fit();
-
-  let st = null, spinning = false, spins = 0, last = 0, by = '', hintT = 0, ac = null;
-  function beep(f) {
-    if (!sound) return;
-    try {
-      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
-      const o = ac.createOscillator(), g = ac.createGain();
-      o.frequency.value = f; o.type = 'triangle'; g.gain.setValueAtTime(.08, ac.currentTime); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + .12);
-      o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + .13);
-    } catch (e) {}
-  }
+  let st = null, spinning = false, spins = 0, last = 0, by = '', hintT = 0;
   function hint() {
     const left = Math.ceil((last + cooldown * 1000 - Date.now()) / 1000);
     $('ovHint').textContent = spinning ? '' : (channel && last && left > 0 ? T('cd', { n: left }) : (channel ? T('chat', { c: cmd }) : T('click')));
@@ -130,6 +201,11 @@
   }
   root.addEventListener('click', () => spin('', false));
   render();
+  return { spin, state: () => (st ? Object.assign({}, st) : null), by: () => by, spins: () => spins };
+  }
+  const M = MODE === 'challenge' ? challengeMode() : rouletteMode();
+  const spin = M.spin, $ = id => document.getElementById(id);
+  fit();
 
   // ---------- Twitch-Chat (anonym, nur lesen) ----------
   let ws = null, backoff = 1000, retryT = 0, connState = 'conn';
@@ -161,6 +237,6 @@
   function retry() { clearTimeout(retryT); retryT = setTimeout(connect, backoff); backoff = Math.min(backoff * 2, 60000); }
   if (channel) connect();
 
-  window.fbOverlay = { spin: () => spin('', false), state: () => (st ? Object.assign({}, st) : null), by: () => by, spins: () => spins, conn: () => connState,
-    config: { channel, cmd, cooldown, lang, layout, sound, size: SIZE } };
+  window.fbOverlay = { spin: () => spin('', false), state: M.state, by: M.by, spins: M.spins, conn: () => connState,
+    config: { mode: MODE, channel, cmd, cooldown, lang, layout, sound, size: SIZE, count: M.count, filter: M.filter } };
 })();
