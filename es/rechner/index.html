@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var P="es",A={"de":"/rechner/","en":"/en/rechner/","es":"/es/rechner/","fr":"/fr/rechner/"};try{var r=document.referrer;if(r&&r.indexOf(location.origin+"/")===0)return;var s=localStorage.getItem("wardogsLang");if(!s&&P==="de"&&!/bot|crawl|spider|slurp|headless|lighthouse|preview/i.test(navigator.userAgent)){var L=navigator.languages||[navigator.language||""];for(var i=0;i<L.length;i++){var c=String(L[i]).slice(0,2).toLowerCase();if(c==="de")break;if(A[c]){s=c;break}}}if(s&&s!==P&&A[s])location.replace(A[s]+location.search+location.hash)}catch(e){}})()</script>
+<script>(function(){var P="es",A={"de":"/rechner/","en":"/en/rechner/","es":"/es/rechner/","fr":"/fr/rechner/"};try{if(/[?&]lang=/.test(location.search))return;var r=document.referrer;if(r){if(r.indexOf(location.origin+"/")===0)return;var h="";try{h=new URL(r).hostname}catch(e){}if(/^android-app:/i.test(r)||/(^|\.)(google|bing|duckduckgo|yahoo|yandex|ecosia|qwant|baidu|startpage|brave|naver|seznam|ask|aol|msn|yandex)\./i.test(h))return}var s=localStorage.getItem("wardogsLang");if(!s&&P==="de"&&!/bot|crawl|spider|slurp|headless|lighthouse|preview|google|bing|yandex|baidu|duckduck|petal|inspection|validator|facebookexternalhit|embed/i.test(navigator.userAgent)){var L=navigator.languages||[navigator.language||""];for(var i=0;i<L.length;i++){var c=String(L[i]).slice(0,2).toLowerCase();if(c==="de")break;if(A[c]){s=c;break}}}if(s&&s!==P&&A[s])location.replace(A[s]+location.search+location.hash)}catch(e){}})()</script>
 <title>Calculadora de mortero (L81 y SPH-2) · Frontbuch</title>
 <meta name="description" content="Calcula distancia, dirección (mil) y elevación para el mortero L81 y la artillería SPH-2 en WARDOGS, con historial de disparos y también sin conexión.">
 <link rel="canonical" href="https://oiotv.de/es/rechner/">
@@ -40,7 +40,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Frontbuch">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-<link rel="stylesheet" href="/assets/site.css?v=26">
+<link rel="stylesheet" href="/assets/site.css?v=27">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Calculadora de mortero de Frontbuch", "url": "https://oiotv.de/es/rechner/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": ["de", "en", "es", "fr"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
 </head>
 <body data-title-key="titleCalc">
@@ -286,8 +286,8 @@
   </nav>
   <div class="drawer-foot" data-i18n="footer">Sitio de fans no oficial</div>
 </aside>
-<script src="/assets/site.js?v=26"></script>
-<script src="/assets/rechner.js?v=26"></script>
+<script src="/assets/site.js?v=27"></script>
+<script src="/assets/rechner.js?v=27"></script>
 <script data-goatcounter="https://frontbuch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

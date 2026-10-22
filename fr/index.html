@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var P="fr",A={"de":"/","en":"/en/","es":"/es/","fr":"/fr/"};try{var r=document.referrer;if(r&&r.indexOf(location.origin+"/")===0)return;var s=localStorage.getItem("wardogsLang");if(!s&&P==="de"&&!/bot|crawl|spider|slurp|headless|lighthouse|preview/i.test(navigator.userAgent)){var L=navigator.languages||[navigator.language||""];for(var i=0;i<L.length;i++){var c=String(L[i]).slice(0,2).toLowerCase();if(c==="de")break;if(A[c]){s=c;break}}}if(s&&s!==P&&A[s])location.replace(A[s]+location.search+location.hash)}catch(e){}})()</script>
+<script>(function(){var P="fr",A={"de":"/","en":"/en/","es":"/es/","fr":"/fr/"};try{if(/[?&]lang=/.test(location.search))return;var r=document.referrer;if(r){if(r.indexOf(location.origin+"/")===0)return;var h="";try{h=new URL(r).hostname}catch(e){}if(/^android-app:/i.test(r)||/(^|\.)(google|bing|duckduckgo|yahoo|yandex|ecosia|qwant|baidu|startpage|brave|naver|seznam|ask|aol|msn|yandex)\./i.test(h))return}var s=localStorage.getItem("wardogsLang");if(!s&&P==="de"&&!/bot|crawl|spider|slurp|headless|lighthouse|preview|google|bing|yandex|baidu|duckduck|petal|inspection|validator|facebookexternalhit|embed/i.test(navigator.userAgent)){var L=navigator.languages||[navigator.language||""];for(var i=0;i<L.length;i++){var c=String(L[i]).slice(0,2).toLowerCase();if(c==="de")break;if(A[c]){s=c;break}}}if(s&&s!==P&&A[s])location.replace(A[s]+location.search+location.hash)}catch(e){}})()</script>
 <title>Frontbuch – Guides et outils pour WARDOGS</title>
 <meta name="description" content="Frontbuch : site de fans non officiel avec des guides WARDOGS, un calculateur de mortier (L81 et SPH-2), un planificateur de loadout, une base de données et une tier list.">
 <link rel="canonical" href="https://oiotv.de/fr/">
@@ -40,7 +40,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Frontbuch">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-<link rel="stylesheet" href="/assets/site.css?v=26">
+<link rel="stylesheet" href="/assets/site.css?v=27">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://oiotv.de/#organization", "name": "Frontbuch", "url": "https://oiotv.de/", "logo": {"@type": "ImageObject", "url": "https://oiotv.de/icon-512.png", "width": 512, "height": 512}, "sameAs": ["https://discord.gg/VeQY6c5Sw2"]}, {"@type": "WebSite", "@id": "https://oiotv.de/fr/#website", "name": "Frontbuch", "url": "https://oiotv.de/fr/", "inLanguage": "fr", "description": "Site de fans non officiel avec des guides et des outils pour WARDOGS", "publisher": {"@id": "https://oiotv.de/#organization"}, "potentialAction": {"@type": "SearchAction", "target": "https://oiotv.de/fr/guides/?q={search_term_string}", "query-input": "required name=search_term_string"}}]}</script>
 </head>
 <body data-title-key="titleHome" class="home">
@@ -213,7 +213,7 @@
   </nav>
   <div class="drawer-foot" data-i18n="footer">Site de fans non officiel</div>
 </aside>
-<script src="/assets/site.js?v=26"></script>
+<script src="/assets/site.js?v=27"></script>
 <script data-goatcounter="https://frontbuch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
