@@ -1127,6 +1127,10 @@
   .lo-list .fbt-namecell { gap: 8px; }
   .fbt-tieritem summary { display: flex; align-items: center; gap: 8px; }
   .fbt-tieritem summary .fbt-badge { margin-left: 4px; }
+/* Guide-Abbildungen (neu, für bauen-tipps). An fb.css anhängen. */
+.fb-article .fb-fig{margin:1.1rem 0 1.3rem}
+.fb-article .fb-fig img{display:block;width:100%;height:auto;border-radius:10px;background:#1a1d21}
+.fb-article .fb-fig figcaption{margin-top:.4rem;font-size:.82rem;opacity:.75}
 
   /* =================== Frontbuch v15 =================== */
   :root {
