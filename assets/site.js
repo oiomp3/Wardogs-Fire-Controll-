@@ -1036,6 +1036,15 @@ const FB26_I18N = {
 };
 Object.keys(FB26_I18N).forEach(l => Object.assign(I18N[l], FB26_I18N[l]));
 
+// ---------- Frontbuch v29: Meta-Loadouts (/tools/meta-loadouts/) ----------
+const FB29_I18N = {
+  de: { tMetaT: 'Meta-Loadouts', tMetaD: 'Über 30 fertige Loadouts nach Rolle und Budget – mit Kosten pro Leben.', homeMetaAll: 'Alle Meta-Loadouts →', loToMeta: '📋 Fertige Loadouts nach Rolle und Budget → Meta-Loadouts' },
+  en: { tMetaT: 'Meta loadouts', tMetaD: 'Over 30 ready-made loadouts by role and budget – with cost per life.', homeMetaAll: 'All meta loadouts →', loToMeta: '📋 Ready-made loadouts by role and budget → Meta loadouts' },
+  es: { tMetaT: 'Loadouts meta', tMetaD: 'Más de 30 loadouts listos por rol y presupuesto, con coste por vida.', homeMetaAll: 'Todos los loadouts meta →', loToMeta: '📋 Loadouts listos por rol y presupuesto → Loadouts meta' },
+  fr: { tMetaT: 'Loadouts méta', tMetaD: 'Plus de 30 loadouts prêts à l’emploi par rôle et budget, avec le coût par vie.', homeMetaAll: 'Tous les loadouts méta →', loToMeta: '📋 Loadouts prêts par rôle et budget → Loadouts méta' }
+};
+Object.keys(FB29_I18N).forEach(l => Object.assign(I18N[l], FB29_I18N[l]));
+
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -1773,7 +1782,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '28';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '29';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
