@@ -766,13 +766,13 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
   })();
 
 
-  // ======================================================== Challenge-Rad (/tools/challenge/, v30)
+  // ======================================================== Challenge-Slot (/tools/challenge/, v31)
   (function challenge() {
     const root = $('#chRoot');
     if (!root || !window.FBChallenge) return;
     const FC = window.FBChallenge, C = FC.build();
     const el = id => document.getElementById(id);
-    const KEY = 'fbChallenge', SEG = 10;
+    const KEY = 'fbChallenge';
     const load = () => { try { const x = JSON.parse(localStorage.getItem(KEY) || '{}'); return x && typeof x === 'object' ? x : {}; } catch (e) { return {}; } };
     const S = load();
     const store = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
@@ -792,7 +792,8 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     let cur = null, spinning = false, spins = 0, toastT = 0, ac = null, logged = '';
     const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     const spinBtn = el('chSpin'), spinTxt = el('chSpinTxt'), card = el('chCard'), shareBtn = el('chShare'), toast = el('chToast');
-    const W = FC.Wheel(el('chWheel'), { engine: C, lang, segments: SEG, maxChars: 18 });
+    const R = FC.Reel(el('chReel'), { lang }), machine = el('chMachine');
+    let lastTick = 0;
 
     function tone(f, d, type, vol) {
       if (!S.sound) return;
@@ -818,7 +819,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
         b.disabled = spinning || (on && S.lv.length === 1);   // nie null Stufen
         b.title = on && S.lv.length === 1 ? t('chLvLast') : '';
       });
-      // Zähler pro Stufe (für die gewählte Spielerzahl) und gesamt auf dem Rad
+      // Zähler pro Stufe (für die gewählte Spielerzahl) und gesamt auf der Walze
       root.querySelectorAll('#chLv .ch-lvn').forEach((x, i) => { x.textContent = nf(C.count({ p: S.p, ind: S.ind, levels: [i] })); });
       const n = C.count(filt());
       el('chCountN').textContent = nf(n);
@@ -852,7 +853,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     }
     function render() {
       spinTxt.textContent = t(spinning ? 'chSpinning' : (cur ? 'chAgain' : 'chSpin'));
-      root.classList.toggle('spinning', spinning);
+      root.classList.toggle('spinning', spinning); machine.classList.toggle('spinning', spinning);
       card.classList.toggle('ready', !!cur && !spinning);
       shareBtn.disabled = !cur || spinning;
       const can = !!cur && !spinning && logged !== cur.id;
@@ -860,8 +861,8 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       el('chStCur').textContent = nf(S.st.cur); el('chStBest').textContent = nf(S.st.best); el('chStWon').textContent = nf(S.st.won); el('chStTry').textContent = nf(S.st.tries);
       renderFilters();
     }
-    // Rad mit einer neuen Stichprobe der aktuellen Auswahl füllen (Gewinner optional)
-    function fill(winner) { W.set(C.sample(filt(), SEG, winner || null)); }
+    // Ruhezustand der Walze: drei zufällige Challenges der aktuellen Auswahl (oder die gezogene in der Mitte)
+    function idle(c) { R.set(C.idle3(filt(), c || null), !!c); }
     function url(c) {
       const p = ['p=' + S.p], lv = FC.levelsParam(S.lv.slice().sort());
       if (lv) p.push('lvl=' + lv);
@@ -874,10 +875,9 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       const next = C.roll(filt(), cur);
       if (!next) { showToast(t('chNone')); return; }
       spinning = true; render();
-      fill(next);
-      const i = W.items.findIndex(x => x.id === next.id);
       card.classList.remove('pop');
-      await W.spin(i, reduced() ? 0 : 4600, () => tone(260, .03, 'square', .02));
+      // Streifen mit allen passenden Challenges der Auswahl (zufällige Reihenfolge), der Gewinner steht am Ende
+      await R.spin(C.reelList(filt(), next), reduced() ? 0 : 5200, () => { const n = performance.now(); if (n - lastTick > 55) { lastTick = n; tone(280, .025, 'square', .015); } });
       cur = next; spinning = false; spins++;
       root.dataset.spins = spins; root.dataset.id = cur.id;
       try { history.replaceState(null, '', url(cur)); } catch (e) {}
@@ -895,13 +895,13 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       } catch (e) { return false; }
     }
     function changed() {
-      store(); if (!spinning) fill();
+      store(); if (!spinning) R.set(C.idle3(filt()), false);
       if (cur && !spinning) { try { history.replaceState(null, '', url(cur)); } catch (e) {} }
       render();
     }
 
     spinBtn.addEventListener('click', spin);
-    el('chWheel').addEventListener('click', () => { if (!spinBtn.disabled) spin(); });
+    el('chReel').addEventListener('click', () => { if (!spinBtn.disabled) spin(); });
     el('chP').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b || spinning) return; S.p = +b.dataset.p; changed(); });
     el('chInd').addEventListener('change', e => { if (spinning) return; S.ind = e.target.checked; changed(); });
     el('chLv').addEventListener('click', e => {
@@ -940,12 +940,12 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     // Geteilte Challenge: ?id=<Nr.> (alte ?c=-Links der Zufalls-Challenge gibt es nicht mehr)
     if (Q.has('id')) {
       cur = C.get(Q.get('id'));
-      if (cur) { root.dataset.id = cur.id; fill(cur); W.spin(W.items.findIndex(x => x.id === cur.id), 0); renderCard(); card.classList.add('pop'); }
-      else { fill(); showToast(t('chNotFound')); }
-    } else { fill(); if (Q.has('c')) showToast(t('chOldLink')); }
+      if (cur) { root.dataset.id = cur.id; idle(cur); renderCard(); card.classList.add('pop'); }
+      else { idle(); showToast(t('chNotFound')); }
+    } else { idle(); if (Q.has('c')) showToast(t('chOldLink')); }
     store(); setSound(); render();
-    hooks.push(() => { W.setLang(lang); renderCard(); render(); });
-    window.fbChallengeApp = { engine: C, wheel: W, filter: filt, count: () => C.count(filt()), current: () => (cur ? C.parts(cur, lang) : null), shareUrl: () => (cur ? location.origin + url(cur) : null), spin };
+    hooks.push(() => { R.setLang(lang); renderCard(); render(); });
+    window.fbChallengeApp = { engine: C, reel: R, filter: filt, count: () => C.count(filt()), current: () => (cur ? C.parts(cur, lang) : null), shareUrl: () => (cur ? location.origin + url(cur) : null), spin };
   })();
 
   // ======================================================== Roulette für Streamer (/tools/streamer/)

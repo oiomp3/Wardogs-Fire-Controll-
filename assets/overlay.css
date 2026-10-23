@@ -55,33 +55,45 @@ body { font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-se
 .ov-side .ov-brand { text-align: left; }
 .ov-reels .ov-win { --h: 184px; }
 @media (prefers-reduced-motion: reduce) { .ov-win.land { animation: none; } .ov-win.spin .ov-strip { filter: none; } }
-/* v30: Challenge-Rad (?mode=challenge) */
+/* v31: Challenge-Slot, eine Walze (?mode=challenge) */
 .ovc { --l0: #22c55e; --l1: #facc15; --l2: #f97316; }
-.ovc-main { flex: 1; min-width: 0; min-height: 0; display: flex; align-items: stretch; gap: 14px; }
-.ovc-wheelbox { flex: none; width: 340px; display: flex; align-items: center; justify-content: center; }
-.ovc-wheel { width: 100%; height: auto; max-height: 100%; overflow: visible; }
-.ovc-card { --c: #4f8cff; flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 12px; padding: 12px 18px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(148,163,184,.2); border-left: 5px solid var(--c); opacity: .55; transition: opacity .2s; }
+.ovc-main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+.ovc-reelbox { flex: none; }
+.ovc .sl-machine { --rh: 62px; --pd: 8px; border-radius: 16px; }
+.ovc .sl-cell { font-size: 19px; padding: 4px 22px; }
+.ovc .sl-cell span { -webkit-line-clamp: 2; }
+.ovc-card { --c: #4f8cff; flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; padding: 8px 18px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(148,163,184,.2); border-left: 5px solid var(--c); opacity: .55; transition: opacity .2s; }
 .ovc-card.ready { opacity: 1; box-shadow: 0 0 26px -10px var(--c); }
 .ovc-card[data-lv="0"] { --c: var(--l0); } .ovc-card[data-lv="1"] { --c: var(--l1); } .ovc-card[data-lv="2"] { --c: var(--l2); }
-.ovc-badge { flex: none; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--c); background: rgba(0,0,0,.25); font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-.ovc-title { font-size: 30px; font-weight: 800; line-height: 1.18; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.ovc-badge { flex: none; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--c); background: rgba(0,0,0,.25); font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.ovc-title { font-size: 26px; font-weight: 800; line-height: 1.16; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
 .ov-sub { font-size: 14px; font-weight: 700; color: #9fb0c6; }
-.ov-L-grid.ovc .ovc-main { margin: 8px 0 4px; }
-.ov-L-row .ovc-wheelbox { width: 216px; }
+.ov-L-grid.ovc .ovc-main { margin: 6px 0 4px; }
+.ov-L-row .ovc-main { flex-direction: row; gap: 14px; }
+.ov-L-row .ovc-reelbox { width: 560px; display: flex; align-items: center; }
+.ov-L-row .sl-machine { --rh: 56px; --pd: 7px; width: 100%; }
+.ov-L-row .sl-cell { font-size: 17px; }
 .ov-L-row .ovc-card { padding: 6px 14px; gap: 6px; }
 .ov-L-row .ovc-title { font-size: 25px; -webkit-line-clamp: 4; }
-.ovc .wh-t { font-size: 19px; }
-/* v30: Challenge-Rad (SVG) – gemeinsam für /tools/challenge/ und das Overlay */
-.ch-wheel { display: block; width: 100%; height: auto; overflow: visible; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-.ch-wheel .wh-rim { fill: #0d131c; stroke: rgba(148,163,184,.35); stroke-width: 3; }
-.ch-wheel .wh-p { stroke: none; }
-.ch-wheel .wh-sep { stroke: rgba(8,11,17,.55); stroke-width: 2; }
-.ch-wheel .wh-t { fill: #fff; font: 700 18px/1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-anchor: end; dominant-baseline: central; paint-order: stroke; stroke: rgba(5,8,13,.72); stroke-width: 3.2px; stroke-linejoin: round; pointer-events: none; }
-.ch-wheel .wh-seg.win .wh-p { fill-opacity: 1; filter: brightness(1.18); }
-.ch-wheel .wh-seg.win .wh-t { font-weight: 800; }
-.ch-wheel .wh-ring { fill: #0d131c; stroke: rgba(148,163,184,.5); stroke-width: 3; }
-.ch-wheel .wh-hubc { fill: #1b2535; }
-.ch-wheel .wh-hubt { font-size: 38px; text-anchor: middle; dominant-baseline: central; }
-.ch-wheel .wh-ptr { fill: #f8fafc; stroke: #0b1018; stroke-width: 3; stroke-linejoin: round; filter: drop-shadow(0 3px 5px rgba(0,0,0,.6)); }
-.ch-wheel.spinning .wh-ptr { fill: #fcd34d; }
-.ch-wheel.has-win .wh-seg:not(.win) { opacity: .55; }
+/* v31: Challenge-Slot (eine Walze) – gemeinsam für /tools/challenge/ und das Overlay */
+.sl-machine { --rh: 78px; --pd: 10px; position: relative; width: 100%; padding: var(--pd); border-radius: 20px; background: linear-gradient(180deg, #1c2638, #0d131c); border: 1px solid rgba(148,163,184,.35); box-shadow: 0 18px 40px -18px rgba(0,0,0,.7), inset 0 0 0 2px rgba(8,11,17,.6), inset 0 0 26px -8px rgba(79,140,255,.35); }
+.sl-win { position: relative; height: calc(var(--rh) * 3); overflow: hidden; border-radius: 12px; background: radial-gradient(120% 90% at 50% 45%, #253247, #0b1018 80%); border: 1px solid rgba(148,163,184,.25); box-shadow: inset 0 14px 20px -14px rgba(0,0,0,.95), inset 0 -14px 20px -14px rgba(0,0,0,.95); touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.sl-win::before { content: ""; position: absolute; left: 0; right: 0; top: var(--rh); height: var(--rh); z-index: 1; pointer-events: none; border-top: 2px solid rgba(250,204,21,.65); border-bottom: 2px solid rgba(250,204,21,.65); background: rgba(255,255,255,.045); }
+.sl-win::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(rgba(5,8,13,.78), rgba(5,8,13,.15) 30%, transparent 36%, transparent 64%, rgba(5,8,13,.15) 70%, rgba(5,8,13,.78)); }
+.sl-win[data-lv="0"]::before { border-color: var(--l0, #22c55e); } .sl-win[data-lv="1"]::before { border-color: var(--l1, #facc15); } .sl-win[data-lv="2"]::before { border-color: var(--l2, #f97316); }
+.sl-win.landed::before { background: rgba(255,255,255,.075); box-shadow: 0 0 22px -4px currentColor; }
+.sl-win[data-lv="0"] { color: var(--l0, #22c55e); } .sl-win[data-lv="1"] { color: var(--l1, #facc15); } .sl-win[data-lv="2"] { color: var(--l2, #f97316); }
+.sl-strip { will-change: transform; }
+.sl-cell { box-sizing: border-box; height: var(--rh); display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 16px; text-align: center; color: #e9eef6; font-weight: 700; font-size: .95rem; line-height: 1.22; }
+.sl-cell span { overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.sl-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: #64748b; }
+.sl-cell[data-lv="0"] .sl-dot { background: var(--l0, #22c55e); } .sl-cell[data-lv="1"] .sl-dot { background: var(--l1, #facc15); } .sl-cell[data-lv="2"] .sl-dot { background: var(--l2, #f97316); }
+.sl-cell:not(.mid) { color: #9aa7b8; font-weight: 600; }
+.sl-win.spin .sl-cell { color: #cbd5e1; font-weight: 600; }
+.sl-win.spin .sl-strip { filter: blur(1.1px); }
+.sl-cell.win { color: #fff; font-weight: 800; }
+.sl-arrow { position: absolute; top: calc(var(--pd) + var(--rh) + var(--rh) / 2 - 11px); z-index: 3; width: 0; height: 0; border: 11px solid transparent; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0,0,0,.6)); }
+.sl-al { left: 0; border-left-color: #f8fafc; border-right-width: 0; }
+.sl-ar { right: 0; border-right-color: #f8fafc; border-left-width: 0; }
+.sl-machine.spinning .sl-arrow { border-left-color: #fcd34d; border-right-color: transparent; } .sl-machine.spinning .sl-ar { border-right-color: #fcd34d; border-left-color: transparent; }
+@media (prefers-reduced-motion: reduce) { .sl-win.spin .sl-strip { filter: none; } }

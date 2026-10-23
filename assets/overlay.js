@@ -1,4 +1,4 @@
-// ---------- Frontbuch: Streamer-Overlay (/overlay/roulette/): Loadout-Roulette oder ?mode=challenge (v30: Challenge-Rad, + p, lvl, ind) ----------
+// ---------- Frontbuch: Streamer-Overlay (/overlay/roulette/): Loadout-Roulette oder ?mode=challenge (v31: Challenge-Slot mit einer Walze, + p, lvl, ind) ----------
 // Parameter: mode (roulette/challenge), channel, cmd (Standard roulette bzw. challenge), cooldown (s, Standard 30), lang (de/en/es/fr), layout (grid/row), scale, sound=1
 (function () {
   const D = window.FB_DATA;
@@ -47,25 +47,25 @@
     root.style.transform = `translate(-50%, -50%) scale(${s})`;
   }
   addEventListener('resize', fit);
-  // ---------- v30: Challenge-Rad (?mode=challenge; Parameter p, lvl, ind – alt: levels) ----------
+  // ---------- v31: Challenge-Slot (?mode=challenge; Parameter p, lvl, ind – alt: levels) ----------
   function challengeMode() {
     const FC = window.FBChallenge, C = FC.build(), CT = FC.TX[lang];
     const pr = parseInt(Q.get('p'), 10);
     const F = { p: pr >= 1 && pr <= 4 ? pr : 1, levels: FC.parseLevels(Q.get('lvl') || Q.get('levels')) || [0, 1, 2], ind: Q.get('ind') !== '0' };
     const $ = id => document.getElementById(id);
-    const wheelH = `<div class="ovc-wheelbox"><svg class="ovc-wheel ch-wheel" id="ovcWheel" aria-hidden="true"></svg></div>`;
+    const reelH = `<div class="ovc-reelbox"><div class="sl-machine" id="ovcMachine"><div class="sl-win" id="ovcReel" aria-hidden="true"></div><span class="sl-arrow sl-al" aria-hidden="true"></span><span class="sl-arrow sl-ar" aria-hidden="true"></span></div></div>`;
     const cardH = '<div class="ovc-card" id="ovcCard"><span class="ovc-badge" id="ovcBadge">🎲</span><b class="ovc-title" id="ovcTitle"></b></div>';
     root.className = 'ov ovc ov-L-' + layout;
     root.style.width = SIZE[0] + 'px'; root.style.height = SIZE[1] + 'px';
     const conn = channel ? `<span class="ov-conn" id="ovConn" data-s="conn"><i></i><span>#${esc(channel)}</span></span>` : '';
     const statusHtml = `<div class="ov-status"><span class="ov-by" id="ovBy"></span><span class="ov-hint" id="ovHint"></span></div>`;
     const brand = '<div class="ov-brand">oiotv.de</div>';
-    const main = `<div class="ovc-main">${wheelH}${cardH}</div>`;
+    const main = `<div class="ovc-main">${reelH}${cardH}</div>`;
     if (layout === 'grid') root.innerHTML = `<div class="ov-head"><b class="ov-title">🎲 ${esc(CT.title)} · ${esc(CT.pl[F.p - 1])}</b>${conn}</div>${statusHtml}${main}${brand}`;
     else root.innerHTML = `<div class="ov-side"><b class="ov-title">🎲 ${esc(CT.title)}</b><span class="ov-sub">${esc(CT.pl[F.p - 1])}</span>${conn}${statusHtml}${brand}</div>${main}`;
-    const W = FC.Wheel($('ovcWheel'), { engine: C, lang, segments: layout === 'row' ? 8 : 10, maxChars: 17 });
-    W.set(C.sample(F, layout === 'row' ? 8 : 10));
-    let cur = null, spinning = false, spins = 0, last = 0, by = '', hintT = 0;
+    const R = FC.Reel($('ovcReel'), { lang });
+    R.set(C.idle3(F), false);
+    let cur = null, spinning = false, spins = 0, last = 0, by = '', hintT = 0, tickT = 0;
     function hint() {
       const left = Math.ceil((last + cooldown * 1000 - Date.now()) / 1000);
       $('ovHint').textContent = spinning ? '' : (channel && last && left > 0 ? T('cd', { n: left }) : (channel ? T('chat', { c: cmd }) : T('click')));
@@ -74,7 +74,7 @@
     }
     function render() {
       $('ovBy').textContent = by ? T('by', { u: by }) : ''; $('ovBy').hidden = !by;
-      root.classList.toggle('spinning', spinning);
+      root.classList.toggle('spinning', spinning); $('ovcMachine').classList.toggle('spinning', spinning);
       const card = $('ovcCard');
       if (cur && !spinning) {
         const P = C.parts(cur, lang);
@@ -91,9 +91,8 @@
       if (!next) return false;
       spinning = true; last = Date.now(); by = user || '';
       render();
-      W.set(C.sample(F, layout === 'row' ? 8 : 10, next));
-      const i = W.items.findIndex(x => x.id === next.id), rm = reduced();
-      await W.spin(i, rm ? 0 : 4200, () => beep(420));
+      const rm = reduced();
+      await R.spin(C.reelList(F, next), rm ? 0 : 4800, () => { const n = performance.now(); if (n - tickT > 70) { tickT = n; beep(380); } });
       beep(660);
       cur = next; spinning = false; spins++;
       root.dataset.spins = spins;
@@ -102,7 +101,7 @@
     }
     root.addEventListener('click', () => spin('', false));
     render();
-    return { spin, state: () => (cur ? C.parts(cur, lang) : null), by: () => by, spins: () => spins, count: C.count(F), filter: F, wheel: W };
+    return { spin, state: () => (cur ? C.parts(cur, lang) : null), by: () => by, spins: () => spins, count: C.count(F), filter: F, reel: R };
   }
 
   // ---------- Loadout-Roulette ----------
