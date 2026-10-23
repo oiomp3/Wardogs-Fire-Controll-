@@ -766,32 +766,33 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
   })();
 
 
-  // ======================================================== Zufalls-Challenge (/tools/challenge/, v26)
+  // ======================================================== Challenge-Rad (/tools/challenge/, v30)
   (function challenge() {
     const root = $('#chRoot');
     if (!root || !window.FBChallenge) return;
-    const FC = window.FBChallenge, C = FC.build(D);
+    const FC = window.FBChallenge, C = FC.build();
     const el = id => document.getElementById(id);
-    const KEY = 'fbChallenge';
+    const KEY = 'fbChallenge', SEG = 10;
     const load = () => { try { const x = JSON.parse(localStorage.getItem(KEY) || '{}'); return x && typeof x === 'object' ? x : {}; } catch (e) { return {}; } };
-    const store = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
     const S = load();
-    const okLv = L => Array.isArray(L) && L.length && L.every(x => [0, 1, 2, 3].includes(x));
-    if (!okLv(S.lv)) S.lv = [0, 1, 2, 3];
-    if (!['all', 'solo', 'squad'].includes(S.mode)) S.mode = 'all';
-    S.noveh = !!S.noveh; S.sound = !!S.sound;
+    const store = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+    const okLv = L => Array.isArray(L) && L.length && L.every(x => [0, 1, 2].includes(x));
+    if (!okLv(S.lv)) S.lv = [0, 1, 2];
+    if (![1, 2, 3, 4].includes(S.p)) S.p = 1;
+    S.ind = S.ind !== false; S.sound = !!S.sound;
+    delete S.mode; delete S.noveh;
     const st0 = S.st && typeof S.st === 'object' ? S.st : {};
     S.st = { cur: +st0.cur || 0, best: +st0.best || 0, won: +st0.won || 0, tries: +st0.tries || 0, last: st0.last || '' };
-    // Link-Parameter haben Vorrang (geteilte Challenge mit Filtern)
+    // Link-Parameter haben Vorrang: ?p=2&lvl=mittel,schwer&ind=0&id=D12
     const Q = new URLSearchParams(location.search);
-    const qlv = FC.parseLevels(Q.get('levels'));
-    if (qlv) S.lv = qlv;
-    if (['solo', 'squad'].includes(Q.get('play'))) S.mode = Q.get('play');
-    if (Q.get('noveh') === '1') S.noveh = true;
-    const filt = () => ({ levels: S.lv.slice().sort(), mode: S.mode, noveh: S.noveh });
+    const qp = parseInt(Q.get('p'), 10); if (qp >= 1 && qp <= 4) S.p = qp;
+    const qlv = FC.parseLevels(Q.get('lvl') || Q.get('levels')); if (qlv) S.lv = qlv;
+    if (Q.has('ind')) S.ind = Q.get('ind') !== '0';
+    const filt = () => ({ p: S.p, levels: S.lv.slice().sort(), ind: S.ind });
     let cur = null, spinning = false, spins = 0, toastT = 0, ac = null, logged = '';
     const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     const spinBtn = el('chSpin'), spinTxt = el('chSpinTxt'), card = el('chCard'), shareBtn = el('chShare'), toast = el('chToast');
+    const W = FC.Wheel(el('chWheel'), { engine: C, lang, segments: SEG, maxChars: 18 });
 
     function tone(f, d, type, vol) {
       if (!S.sound) return;
@@ -805,19 +806,20 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     const fanfare = lv => [0, 1, 2].forEach(i => setTimeout(() => tone([523, 659, 784, 1046][Math.min(3, i + (lv > 1 ? 1 : 0))], .18, 'square', .045), i * 110));
 
     function renderFilters() {
-      const all = S.lv.length === 4;
+      const all = S.lv.length === 3;
+      root.querySelectorAll('#chP [data-p]').forEach(b => { b.setAttribute('aria-pressed', String(+b.dataset.p === S.p)); b.disabled = spinning; });
+      el('chIndRow').hidden = S.p === 1;
+      el('chInd').checked = S.ind; el('chInd').disabled = spinning;
       root.querySelectorAll('#chLv [data-lv]').forEach(b => {
         const v = b.dataset.lv;
-        if (v === 'all') { b.setAttribute('aria-pressed', String(all)); return; }
+        if (v === 'all') { b.setAttribute('aria-pressed', String(all)); b.disabled = spinning; return; }
         const on = S.lv.includes(+v);
         b.setAttribute('aria-pressed', String(on));
-        b.disabled = on && S.lv.length === 1;   // nie null Stufen
-        b.title = b.disabled ? t('chLvLast') : '';
+        b.disabled = spinning || (on && S.lv.length === 1);   // nie null Stufen
+        b.title = on && S.lv.length === 1 ? t('chLvLast') : '';
       });
-      root.querySelectorAll('#chMode [data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
-      el('chNoVeh').checked = S.noveh;
-      // Zähler pro Stufe (mit Spielweise/Fahrzeug-Filter) und gesamt
-      root.querySelectorAll('#chLv .ch-lvn').forEach((s, x) => { s.textContent = nf(C.count({ levels: [x], mode: S.mode, noveh: S.noveh })); });
+      // Zähler pro Stufe (für die gewählte Spielerzahl) und gesamt auf dem Rad
+      root.querySelectorAll('#chLv .ch-lvn').forEach((x, i) => { x.textContent = nf(C.count({ p: S.p, ind: S.ind, levels: [i] })); });
       const n = C.count(filt());
       el('chCountN').textContent = nf(n);
       el('chCountN').dataset.n = n;
@@ -829,51 +831,42 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       b.setAttribute('aria-pressed', String(S.sound));
       b.querySelector('.ch-snd-ic').textContent = S.sound ? '🔊' : '🔇';
     }
-    function cell(txt, cls) { return `<div class="ch-cell${cls ? ' ' + cls : ''}"><span>${esc(txt)}</span></div>`; }
-    function finalCells(P) { return { w: cell(P.wLine), g: cell(P.gLine), m: cell(P.mNone ? t('chNoRule') : P.mLine, P.mNone ? 'ch-dim' : '') }; }
+    function tagFor(P) {
+      const pl = P.players;
+      if (pl.length === 4) return t('chTagAll');
+      if (pl.length === 1) return t('chP' + pl[0]);
+      return t('chTagSquad24');
+    }
     function renderCard() {
-      const P = cur ? C.parts(cur, lang) : null;
       ['chBadge', 'chTitle', 'chRule'].forEach(id => { el(id).removeAttribute('data-i18n'); });
+      const P = cur ? C.parts(cur, lang) : null;
+      card.classList.toggle('ch-idle-card', !P);
       if (!P) return;
-      const F = finalCells(P);
-      if (!spinning) ['w', 'g', 'm'].forEach(k => { root.querySelector(`#chWin${k} .ch-strip`).innerHTML = F[k]; });
       card.dataset.lv = P.lv;
       el('chBadge').textContent = P.lvName;
-      el('chTitle').textContent = P.title;
-      el('chRule').textContent = P.rule;
+      el('chTitle').textContent = P.text;
+      el('chRule').textContent = '';
+      el('chRule').hidden = true;
       el('chId').textContent = t('chIdLbl') + ' ' + P.id;
-      el('chTags').innerHTML = [P.squad ? t('chTagSquad') : t('chTagSolo'), P.veh ? t('chTagVeh') : ''].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('');
+      el('chTags').innerHTML = `<span>${esc(tagFor(P))}</span>`;
     }
     function render() {
       spinTxt.textContent = t(spinning ? 'chSpinning' : (cur ? 'chAgain' : 'chSpin'));
       root.classList.toggle('spinning', spinning);
       card.classList.toggle('ready', !!cur && !spinning);
       shareBtn.disabled = !cur || spinning;
-      const can = !!cur && !spinning && logged !== cur.i;
+      const can = !!cur && !spinning && logged !== cur.id;
       el('chDone').disabled = !can; el('chFail').disabled = !can;
       el('chStCur').textContent = nf(S.st.cur); el('chStBest').textContent = nf(S.st.best); el('chStWon').textContent = nf(S.st.won); el('chStTry').textContent = nf(S.st.tries);
       renderFilters();
     }
-    function spinReel(k, finalHtml, fill, dur, ix) {
-      const strip = root.querySelector(`#chWin${k} .ch-strip`), win = strip.parentElement;
-      if (!dur || !strip.animate) { strip.innerHTML = finalHtml; return Promise.resolve(); }
-      strip.innerHTML = strip.innerHTML + fill.map(x => cell(x, x === '—' ? 'ch-dim' : '')).join('') + finalHtml;
-      const h = win.clientHeight, dist = (strip.children.length - 1) * h;
-      win.classList.remove('land'); win.classList.add('spin');
-      let tick = 0;
-      const tickT = setInterval(() => { if (++tick % 2) tone(300 + ix * 80, .03, 'square', .02); }, 90);
-      const a = strip.animate([{ transform: 'translateY(0)' }, { transform: `translateY(-${dist}px)` }], { duration: dur, easing: 'cubic-bezier(.12,.62,.18,1)', fill: 'forwards' });
-      return a.finished.catch(() => {}).then(() => {
-        clearInterval(tickT);
-        strip.innerHTML = finalHtml; a.cancel(); tone(520 + ix * 90, .12);
-        win.classList.remove('spin'); void win.offsetWidth; win.classList.add('land');
-      });
-    }
+    // Rad mit einer neuen Stichprobe der aktuellen Auswahl füllen (Gewinner optional)
+    function fill(winner) { W.set(C.sample(filt(), SEG, winner || null)); }
     function url(c) {
-      const p = ['c=' + C.idOf(c)], lv = FC.levelsParam(S.lv);
-      if (lv) p.push('levels=' + lv);
-      if (S.mode !== 'all') p.push('play=' + S.mode);
-      if (S.noveh) p.push('noveh=1');
+      const p = ['p=' + S.p], lv = FC.levelsParam(S.lv.slice().sort());
+      if (lv) p.push('lvl=' + lv);
+      if (S.p > 1 && !S.ind) p.push('ind=0');
+      if (c) p.push('id=' + c.id);
       return LP + '/tools/challenge/?' + p.join('&');
     }
     async function spin() {
@@ -881,13 +874,14 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       const next = C.roll(filt(), cur);
       if (!next) { showToast(t('chNone')); return; }
       spinning = true; render();
-      const P = C.parts(next, lang), F = finalCells(P), rm = reduced();
-      const fillN = 14, SM = C.samples(lang, fillN + 6);
+      fill(next);
+      const i = W.items.findIndex(x => x.id === next.id);
       card.classList.remove('pop');
-      await Promise.all(['w', 'g', 'm'].map((k, ix) => spinReel(k, F[k], SM[k].slice(0, fillN + ix * 3), rm ? 0 : 900 + ix * 420, ix)));
+      await W.spin(i, reduced() ? 0 : 4600, () => tone(260, .03, 'square', .02));
       cur = next; spinning = false; spins++;
-      root.dataset.spins = spins; root.dataset.id = C.idOf(cur);
+      root.dataset.spins = spins; root.dataset.id = cur.id;
       try { history.replaceState(null, '', url(cur)); } catch (e) {}
+      tone(520, .12);
       renderCard(); render();
       void card.offsetWidth; card.classList.add('pop');
       fanfare(cur.lv);
@@ -900,13 +894,20 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
         document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok;
       } catch (e) { return false; }
     }
-    function changed() { store(); if (cur && !spinning) { try { history.replaceState(null, '', url(cur)); } catch (e) {} } render(); }
+    function changed() {
+      store(); if (!spinning) fill();
+      if (cur && !spinning) { try { history.replaceState(null, '', url(cur)); } catch (e) {} }
+      render();
+    }
 
     spinBtn.addEventListener('click', spin);
+    el('chWheel').addEventListener('click', () => { if (!spinBtn.disabled) spin(); });
+    el('chP').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b || spinning) return; S.p = +b.dataset.p; changed(); });
+    el('chInd').addEventListener('change', e => { if (spinning) return; S.ind = e.target.checked; changed(); });
     el('chLv').addEventListener('click', e => {
       const b = e.target.closest('[data-lv]'); if (!b || b.disabled || spinning) return;
       const v = b.dataset.lv;
-      if (v === 'all') S.lv = [0, 1, 2, 3];
+      if (v === 'all') S.lv = [0, 1, 2];
       else {
         const x = +v;
         if (S.lv.includes(x)) { if (S.lv.length > 1) S.lv = S.lv.filter(y => y !== x); }
@@ -914,22 +915,20 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       }
       changed();
     });
-    el('chMode').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (!b || spinning) return; S.mode = b.dataset.mode; changed(); });
-    el('chNoVeh').addEventListener('change', e => { S.noveh = e.target.checked; changed(); });
     el('chSound').addEventListener('click', () => { S.sound = !S.sound; store(); setSound(); if (S.sound) tone(660, .1); });
     shareBtn.addEventListener('click', async () => {
       if (!cur || spinning) return;
       const u = location.origin + url(cur);
       shareBtn.dataset.url = u;
       if (navigator.share) {
-        try { await navigator.share({ title: C.parts(cur, lang).title + ' · ' + document.title, text: t('chShareText'), url: u }); return; }
+        try { await navigator.share({ title: C.parts(cur, lang).text + ' · ' + document.title, text: t('chShareText'), url: u }); return; }
         catch (e) { if (e && e.name === 'AbortError') return; }
       }
       showToast((await copy(u)) ? t('tCopied') : u);
     });
     function log(ok) {
-      if (!cur || spinning || logged === cur.i) return;
-      logged = cur.i; S.st.tries++; S.st.last = C.idOf(cur);
+      if (!cur || spinning || logged === cur.id) return;
+      logged = cur.id; S.st.tries++; S.st.last = cur.id;
       if (ok) { S.st.won++; S.st.cur++; S.st.best = Math.max(S.st.best, S.st.cur); } else S.st.cur = 0;
       store(); render(); showToast(t('chLogged'));
       if (ok) fanfare(3); else tone(180, .25, 'sawtooth', .04);
@@ -938,15 +937,15 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     el('chFail').addEventListener('click', () => log(false));
     el('chReset').addEventListener('click', () => { S.st = { cur: 0, best: 0, won: 0, tries: 0, last: '' }; store(); render(); showToast(t('chResetDone')); });
 
-    // Geteilte Challenge: ?c=<id>
-    if (Q.has('c')) {
-      cur = C.get(Q.get('c'));
-      if (cur) { root.dataset.id = C.idOf(cur); renderCard(); card.classList.add('pop'); }
-      else showToast(t('chNotFound'));
-    }
+    // Geteilte Challenge: ?id=<Nr.> (alte ?c=-Links der Zufalls-Challenge gibt es nicht mehr)
+    if (Q.has('id')) {
+      cur = C.get(Q.get('id'));
+      if (cur) { root.dataset.id = cur.id; fill(cur); W.spin(W.items.findIndex(x => x.id === cur.id), 0); renderCard(); card.classList.add('pop'); }
+      else { fill(); showToast(t('chNotFound')); }
+    } else { fill(); if (Q.has('c')) showToast(t('chOldLink')); }
     store(); setSound(); render();
-    hooks.push(() => { renderCard(); render(); });
-    window.fbChallengeApp = { engine: C, filter: filt, count: () => C.count(filt()), current: () => (cur ? C.parts(cur, lang) : null), shareUrl: () => (cur ? location.origin + url(cur) : null), spin };
+    hooks.push(() => { W.setLang(lang); renderCard(); render(); });
+    window.fbChallengeApp = { engine: C, wheel: W, filter: filt, count: () => C.count(filt()), current: () => (cur ? C.parts(cur, lang) : null), shareUrl: () => (cur ? location.origin + url(cur) : null), spin };
   })();
 
   // ======================================================== Roulette für Streamer (/tools/streamer/)
@@ -968,8 +967,9 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       if (mode() === 'challenge') {
         p.push('mode=challenge');
         const lv = lvBoxes().filter(b => b.checked).map(b => b.value);
-        if (lv.length && lv.length < 4) p.push('levels=' + lv.join(','));
-        if (el('stNoVeh').checked) p.push('noveh=1');
+        if (el('stPl').value !== '1') p.push('p=' + el('stPl').value);
+        if (lv.length && lv.length < 3) p.push('lvl=' + lv.join(','));
+        if (el('stPl').value !== '1' && !el('stInd').checked) p.push('ind=0');
       }
       if (c) p.push('channel=' + c);
       if (cm !== defCmd()) p.push('cmd=' + encodeURIComponent(cm));
@@ -989,6 +989,7 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
       }
       el('stLvBox').hidden = mode() !== 'challenge';
       lvGuard();
+      el('stInd').disabled = el('stPl').value === '1';
       const q = query(), path = '/overlay/roulette/' + (q ? '?' + q : '');
       out.value = location.origin + path;
       const [w, h] = SIZE[el('stLayout').value] || SIZE.grid;

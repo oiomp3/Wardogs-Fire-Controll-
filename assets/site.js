@@ -946,7 +946,7 @@ Object.keys(FB25_I18N).forEach(l => Object.assign(I18N[l], FB25_I18N[l]));
 // ---------- Frontbuch v26: Zufalls-Challenge (/tools/challenge/), Challenge-Modus im Streamer-Overlay ----------
 const FB26_I18N = {
   de: {
-    tChalT: 'Zufalls-Challenge', tChalD: 'Drehen und eine von über 20.000 WARDOGS-Challenges spielen.',
+    tChalT: 'Challenge-Rad', tChalD: '291 Challenges für 1 bis 4 Spieler – Rad drehen und loslegen.',
     chLevels: 'Schwierigkeit', chLv0: 'Leicht', chLv1: 'Mittel', chLv2: 'Schwer', chLv3: 'Wahnsinn',
     chMode: 'Spielweise', chModeAll: 'Alle', chModeSolo: 'Solo', chModeSquad: 'Squad', chNoVeh: 'Ohne Fahrzeug-Challenges',
     chCounter: 'Challenge-Zähler', chChallenges: 'Challenges', chOfAll: 'von {n} insgesamt',
@@ -968,7 +968,7 @@ const FB26_I18N = {
     stChalL4: 'Zum Ausprobieren ohne Stream: <a href="/tools/challenge/">Zufalls-Challenge auf der Seite</a>.'
   },
   en: {
-    tChalT: 'Random Challenge', tChalD: 'Spin and play one of more than 20,000 WARDOGS challenges.',
+    tChalT: 'Challenge Wheel', tChalD: '291 challenges for 1 to 4 players – spin the wheel and play.',
     chLevels: 'Difficulty', chLv0: 'Easy', chLv1: 'Medium', chLv2: 'Hard', chLv3: 'Insane',
     chMode: 'Play style', chModeAll: 'All', chModeSolo: 'Solo', chModeSquad: 'Squad', chNoVeh: 'No vehicle challenges',
     chCounter: 'Challenge counter', chChallenges: 'challenges', chOfAll: 'of {n} in total',
@@ -990,7 +990,7 @@ const FB26_I18N = {
     stChalL4: 'To try it without a stream: <a href="/tools/challenge/">Random Challenge on the site</a>.'
   },
   es: {
-    tChalT: 'Reto aleatorio', tChalD: 'Gira y juega uno de más de 20.000 retos de WARDOGS.',
+    tChalT: 'Ruleta de retos', tChalD: '291 retos para 1 a 4 jugadores: gira la ruleta y a jugar.',
     chLevels: 'Dificultad', chLv0: 'Fácil', chLv1: 'Media', chLv2: 'Difícil', chLv3: 'Locura',
     chMode: 'Modo de juego', chModeAll: 'Todos', chModeSolo: 'Solo', chModeSquad: 'Escuadra', chNoVeh: 'Sin retos de vehículos',
     chCounter: 'Contador de retos', chChallenges: 'retos', chOfAll: 'de {n} en total',
@@ -1012,7 +1012,7 @@ const FB26_I18N = {
     stChalL4: 'Para probarlo sin stream: <a href="/tools/challenge/">Reto aleatorio en la web</a>.'
   },
   fr: {
-    tChalT: 'Défi aléatoire', tChalD: 'Lance la roue et joue l’un de plus de 20 000 défis WARDOGS.',
+    tChalT: 'Roue des défis', tChalD: '291 défis pour 1 à 4 joueurs – lance la roue et joue.',
     chLevels: 'Difficulté', chLv0: 'Facile', chLv1: 'Moyen', chLv2: 'Difficile', chLv3: 'Folie',
     chMode: 'Style de jeu', chModeAll: 'Tous', chModeSolo: 'Solo', chModeSquad: 'Escouade', chNoVeh: 'Sans défis de véhicule',
     chCounter: 'Compteur de défis', chChallenges: 'défis', chOfAll: 'sur {n} au total',
@@ -1044,6 +1044,83 @@ const FB29_I18N = {
   fr: { tMetaT: 'Loadouts méta', tMetaD: 'Plus de 30 loadouts prêts à l’emploi par rôle et budget, avec le coût par vie.', homeMetaAll: 'Tous les loadouts méta →', loToMeta: '📋 Loadouts prêts par rôle et budget → Loadouts méta' }
 };
 Object.keys(FB29_I18N).forEach(l => Object.assign(I18N[l], FB29_I18N[l]));
+
+// ---------- Frontbuch v30: Challenge-Rad (ersetzt die Zufalls-Challenge-Texte aus v26, wo sich etwas ändert) ----------
+const FB30_I18N = {
+  de: {
+    tChalT: 'Challenge-Rad', tChalD: '291 Challenges für 1 bis 4 Spieler – Rad drehen und loslegen.',
+    chPlayers: 'Spieleranzahl', chP1: 'Solo', chP2: 'Duo', chP3: '3 Leute', chP4: '4 Leute',
+    chInd: 'Einzel-Challenges dazuladen', chIndHint: 'Jeder spielt sie für sich.',
+    chCounter: 'Auf dem Rad', chChallenges: 'Challenges', chOfAll: 'von {n} insgesamt',
+    chIdle: 'Dreh das Rad!', chWheelAria: 'Rad mit Challenges. Drehen, um eine Challenge zu ziehen.', chWinnerLbl: 'Deine Challenge',
+    chTagSolo: 'Solo', chTagSquad: 'Squad', chTagSquad24: 'Squad 2–4', chTagAll: 'Jeder für sich', chIdLbl: 'Nr.',
+    chNotFound: 'Diese Challenge gibt es nicht (mehr) – dreh einfach das Rad.', chOldLink: 'Dieser Link stammt von der alten Zufalls-Challenge – dreh das Rad für eine neue.',
+    chHow: 'Das Rad zieht eine von <b>291 Challenges</b>, die wir von Hand zusammengestellt haben – in drei Stufen (leicht, mittel, schwer). Wähle oben, wie viele ihr seid: <b>Solo</b> (mit „Random“-Challenges, bei denen du dir einen Mitspieler suchst), <b>Duo</b>, <b>3 Leute</b> oder <b>4 Leute</b>. Für Gruppen gibt es eigene Squad-Challenges; die Einzel-Challenges kannst du dazuladen, dann spielt jeder sie für sich. Auf dem Rad siehst du eine Auswahl der Challenges, gezogen wird aus allen passenden. Die Mechaniken (Control Zone, Hot Zone, Drill Tower, FOB, Mörser L81, Halligan Bar …) stammen aus unseren Guides.',
+    stPlayers: 'Spieleranzahl', stInd: 'Einzel-Challenges dazuladen (ab Duo)', stModeC: 'Challenge-Rad',
+    rrToChal: '🎲 Noch mehr Chaos? Challenge-Rad',
+    stChalH: 'Challenge-Rad im Stream',
+    stChalP: 'Stell oben den <b>Modus</b> auf „Challenge-Rad“: Dann dreht dein Chat mit <b>!challenge</b> das Rad und zieht eine Challenge – mit derselben Animation wie auf der Seite. Cooldown, Sprache, Layout und Größe funktionieren wie beim Roulette.',
+    stChalL1: '<code>mode=challenge</code> – Rad statt Loadout; der Befehl ist dann standardmäßig <code>!challenge</code> (änderbar mit <code>cmd=</code>).',
+    stChalL2: '<code>p=2</code> – Spieleranzahl: 1 (Solo), 2 (Duo), 3 oder 4; <code>ind=0</code> – ab Duo nur die Squad-Challenges ohne die Einzel-Challenges.',
+    stChalL3: '<code>lvl=schwer</code> – nur diese Stufen ziehen (leicht, mittel, schwer; mehrere mit Komma, z. B. <code>lvl=mittel,schwer</code>).',
+    stChalL4: 'Zum Ausprobieren ohne Stream: <a href="/tools/challenge/">Challenge-Rad auf der Seite</a>.'
+  },
+  en: {
+    tChalT: 'Challenge Wheel', tChalD: '291 challenges for 1 to 4 players – spin the wheel and play.',
+    chPlayers: 'Players', chP1: 'Solo', chP2: 'Duo', chP3: '3 players', chP4: '4 players',
+    chInd: 'Add individual challenges', chIndHint: 'Everyone plays them on their own.',
+    chCounter: 'On the wheel', chChallenges: 'challenges', chOfAll: 'of {n} in total',
+    chIdle: 'Spin the wheel!', chWheelAria: 'Wheel of challenges. Spin to draw a challenge.', chWinnerLbl: 'Your challenge',
+    chTagSolo: 'Solo', chTagSquad: 'Squad', chTagSquad24: 'Squad 2–4', chTagAll: 'Everyone on their own', chIdLbl: 'No.',
+    chNotFound: 'This challenge doesn’t exist (any more) – just spin the wheel.', chOldLink: 'This link is from the old Random Challenge – spin the wheel for a new one.',
+    chHow: 'The wheel draws one of <b>291 hand-picked challenges</b> in three levels (easy, medium, hard). Choose how many of you are playing: <b>Solo</b> (with “random” challenges where you team up with a stranger), <b>Duo</b>, <b>3 players</b> or <b>4 players</b>. Groups get their own squad challenges; you can add the individual challenges, in which case everyone plays them on their own. The wheel shows a selection of the challenges, but the draw is made from all that fit. The mechanics (Control Zone, Hot Zone, Drill Tower, FOB, L81 mortar, Halligan Bar …) come from our guides.',
+    stPlayers: 'Players', stInd: 'Add individual challenges (from Duo)', stModeC: 'Challenge Wheel',
+    rrToChal: '🎲 Want more chaos? Challenge Wheel',
+    stChalH: 'Challenge Wheel on stream',
+    stChalP: 'Set the <b>mode</b> above to “Challenge Wheel”: your chat then spins the wheel with <b>!challenge</b> and draws a challenge – with the same animation as on the site. Cooldown, language, layout and size work just like the roulette.',
+    stChalL1: '<code>mode=challenge</code> – wheel instead of a loadout; the command then defaults to <code>!challenge</code> (change it with <code>cmd=</code>).',
+    stChalL2: '<code>p=2</code> – number of players: 1 (solo), 2 (duo), 3 or 4; <code>ind=0</code> – from duo up, only the squad challenges without the individual ones.',
+    stChalL3: '<code>lvl=schwer</code> – only draw these levels (leicht, mittel, schwer = easy, medium, hard; several separated by commas, e.g. <code>lvl=mittel,schwer</code>).',
+    stChalL4: 'To try it without a stream: <a href="/tools/challenge/">Challenge Wheel on the site</a>.'
+  },
+  es: {
+    tChalT: 'Ruleta de retos', tChalD: '291 retos para 1 a 4 jugadores: gira la ruleta y a jugar.',
+    chPlayers: 'Jugadores', chP1: 'Solo', chP2: 'Dúo', chP3: '3 jugadores', chP4: '4 jugadores',
+    chInd: 'Añadir retos individuales', chIndHint: 'Cada uno los juega por su cuenta.',
+    chCounter: 'En la ruleta', chChallenges: 'retos', chOfAll: 'de {n} en total',
+    chIdle: '¡Gira la ruleta!', chWheelAria: 'Ruleta de retos. Gira para sacar un reto.', chWinnerLbl: 'Tu reto',
+    chTagSolo: 'Solo', chTagSquad: 'Escuadra', chTagSquad24: 'Escuadra 2–4', chTagAll: 'Cada uno por su cuenta', chIdLbl: 'N.º',
+    chNotFound: 'Este reto no existe (ya): gira la ruleta.', chOldLink: 'Este enlace es del antiguo reto aleatorio: gira la ruleta para conseguir uno nuevo.',
+    chHow: 'La ruleta saca uno de <b>291 retos</b> elegidos a mano, en tres niveles (fácil, media, difícil). Elige cuántos jugáis: <b>Solo</b> (con retos «random» en los que buscas a un compañero cualquiera), <b>Dúo</b>, <b>3 jugadores</b> o <b>4 jugadores</b>. Los grupos tienen sus propios retos de escuadra; puedes añadir los retos individuales y entonces cada uno los juega por su cuenta. En la ruleta ves una selección de retos, pero el sorteo se hace entre todos los que encajan. Las mecánicas (Control Zone, Hot Zone, Drill Tower, FOB, mortero L81, Halligan Bar…) salen de nuestras guías.',
+    stPlayers: 'Jugadores', stInd: 'Añadir retos individuales (a partir de dúo)', stModeC: 'Ruleta de retos',
+    rrToChal: '🎲 ¿Más caos? Ruleta de retos',
+    stChalH: 'Ruleta de retos en el stream',
+    stChalP: 'Pon arriba el <b>modo</b> en «Ruleta de retos»: tu chat girará la ruleta con <b>!challenge</b> y sacará un reto, con la misma animación que en la web. Cooldown, idioma, diseño y tamaño funcionan igual que en la ruleta de loadouts.',
+    stChalL1: '<code>mode=challenge</code> – ruleta de retos en lugar de loadout; el comando pasa a ser <code>!challenge</code> por defecto (cámbialo con <code>cmd=</code>).',
+    stChalL2: '<code>p=2</code> – número de jugadores: 1 (solo), 2 (dúo), 3 o 4; <code>ind=0</code> – a partir de dúo, solo los retos de escuadra sin los individuales.',
+    stChalL3: '<code>lvl=schwer</code> – solo estos niveles (leicht, mittel, schwer = fácil, media, difícil; varios separados por comas, p. ej. <code>lvl=mittel,schwer</code>).',
+    stChalL4: 'Para probarlo sin stream: <a href="/tools/challenge/">Ruleta de retos en la web</a>.'
+  },
+  fr: {
+    tChalT: 'Roue des défis', tChalD: '291 défis pour 1 à 4 joueurs – lance la roue et joue.',
+    chPlayers: 'Joueurs', chP1: 'Solo', chP2: 'Duo', chP3: '3 joueurs', chP4: '4 joueurs',
+    chInd: 'Ajouter les défis individuels', chIndHint: 'Chacun les joue de son côté.',
+    chCounter: 'Sur la roue', chChallenges: 'défis', chOfAll: 'sur {n} au total',
+    chIdle: 'Lance la roue !', chWheelAria: 'Roue de défis. Lance-la pour tirer un défi.', chWinnerLbl: 'Ton défi',
+    chTagSolo: 'Solo', chTagSquad: 'Escouade', chTagSquad24: 'Escouade 2–4', chTagAll: 'Chacun de son côté', chIdLbl: 'N°',
+    chNotFound: 'Ce défi n’existe pas (ou plus) – lance simplement la roue.', chOldLink: 'Ce lien vient de l’ancien défi aléatoire – lance la roue pour en tirer un nouveau.',
+    chHow: 'La roue tire l’un des <b>291 défis</b> choisis à la main, en trois niveaux (facile, moyen, difficile). Indique combien vous jouez : <b>Solo</b> (avec des défis « random » où tu fais équipe avec un inconnu), <b>Duo</b>, <b>3 joueurs</b> ou <b>4 joueurs</b>. Les groupes ont leurs propres défis d’escouade ; tu peux ajouter les défis individuels, et chacun les joue alors de son côté. La roue affiche une sélection de défis, mais le tirage se fait parmi tous ceux qui conviennent. Les mécaniques (Control Zone, Hot Zone, Drill Tower, FOB, mortier L81, Halligan Bar…) viennent de nos guides.',
+    stPlayers: 'Joueurs', stInd: 'Ajouter les défis individuels (à partir du duo)', stModeC: 'Roue des défis',
+    rrToChal: '🎲 Encore plus de chaos ? Roue des défis',
+    stChalH: 'Roue des défis en stream',
+    stChalP: 'Règle le <b>mode</b> ci-dessus sur « Roue des défis » : ton chat lance alors la roue avec <b>!challenge</b> et tire un défi, avec la même animation que sur le site. Cooldown, langue, mise en page et taille fonctionnent comme pour la roulette.',
+    stChalL1: '<code>mode=challenge</code> – roue de défis au lieu d’un loadout ; la commande devient alors <code>!challenge</code> par défaut (modifiable avec <code>cmd=</code>).',
+    stChalL2: '<code>p=2</code> – nombre de joueurs : 1 (solo), 2 (duo), 3 ou 4 ; <code>ind=0</code> – à partir du duo, uniquement les défis d’escouade sans les défis individuels.',
+    stChalL3: '<code>lvl=schwer</code> – uniquement ces niveaux (leicht, mittel, schwer = facile, moyen, difficile ; plusieurs séparés par des virgules, p. ex. <code>lvl=mittel,schwer</code>).',
+    stChalL4: 'Pour essayer sans stream : <a href="/tools/challenge/">Roue des défis sur le site</a>.'
+  }
+};
+Object.keys(FB30_I18N).forEach(l => Object.assign(I18N[l], FB30_I18N[l]));
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1782,7 +1859,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '29';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '30';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
