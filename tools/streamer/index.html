@@ -40,7 +40,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Frontbuch">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-<link rel="stylesheet" href="/assets/site.css?v=31">
+<link rel="stylesheet" href="/assets/site.css?v=32">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Frontbuch Roulette für Streamer", "url": "https://oiotv.de/tools/streamer/", "description": "Das WARDOGS-Loadout-Roulette als Browserquelle für OBS: Twitch-Namen eintragen, URL kopieren, und dein Chat dreht mit !roulette – oder zieht mit !challenge eine Challenge vom Challenge-Slot. Mit Cooldown, Sprache und Layout.", "applicationCategory": "GameApplication", "operatingSystem": "Web", "inLanguage": "de", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
 </head>
 <body class="tool" data-track="{&quot;t&quot;: &quot;Roulette für Streamer&quot;, &quot;k&quot;: &quot;t&quot;, &quot;i&quot;: &quot;📺&quot;, &quot;tk&quot;: &quot;tStreamT&quot;}">
@@ -94,7 +94,43 @@
 </div>
 </header>
 <main id="mainContent" class="fb-main">
-<div class="fbt"><nav class="fb-crumbs" aria-label="Brotkrumen-Navigation" data-i18n-aria="crumbLabel"><ol><li><a href="/" data-i18n="crumbHome">Start</a></li><li><a href="/tools/" data-i18n="navTools">Tools</a></li><li aria-current="page" data-i18n="tStreamT">Roulette für Streamer</li></ol></nav><div class="fbt-head"><h1><span aria-hidden="true">📺 </span><span data-i18n="tStreamT">Roulette für Streamer</span></h1><button type="button" class="fb-fav" data-fu="/tools/streamer/" data-ft="Roulette für Streamer" data-fk="t" data-fi="📺" data-ftk="tStreamT" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3.2 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><span data-i18n="fav">Merken</span></button></div><p class="fb-lead" data-i18n="tStreamD">Loadout-Roulette als OBS-Overlay – dein Chat dreht mit !roulette.</p><div class="st-grid">
+<div class="fbt"><nav class="fb-crumbs" aria-label="Brotkrumen-Navigation" data-i18n-aria="crumbLabel"><ol><li><a href="/" data-i18n="crumbHome">Start</a></li><li><a href="/tools/" data-i18n="navTools">Tools</a></li><li aria-current="page" data-i18n="tStreamT">Roulette für Streamer</li></ol></nav><div class="fbt-head"><h1><span aria-hidden="true">📺 </span><span data-i18n="tStreamT">Roulette für Streamer</span></h1><button type="button" class="fb-fav" data-fu="/tools/streamer/" data-ft="Roulette für Streamer" data-fk="t" data-fi="📺" data-ftk="tStreamT" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3.2 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><span data-i18n="fav">Merken</span></button></div><p class="fb-lead" data-i18n="tStreamD">Loadout-Roulette und Challenge-Slot als OBS-Overlay – per Chat-Befehl oder als Widget ohne Chat.</p><section class="fbt-panel wg-sec" id="widget" aria-labelledby="wgH"><h2 id="wgH"><span aria-hidden="true">🎥 </span><span data-i18n="wgH">Streamer-Widget ohne Chat</span></h2>
+<p data-i18n-html="wgP">Der Challenge-Slot als Browserquelle für OBS – <b>ohne Twitch-Chat, ohne Login und ohne Befehle für Zuschauer</b>. Du drehst selbst (Klick oder Leertaste), automatisch in festen Abständen oder bei jedem Szenenwechsel. Stell hier alles ein und kopiere die URL.</p>
+<div class="st-grid">
+<form class="fbt-panel st-form" id="wgForm" autocomplete="off">
+<div class="st-two"><div class="fbt-field"><label for="wgPl" data-i18n="stPlayers">Spieleranzahl</label><select id="wgPl"><option value="1" selected data-i18n="chO1">Solo (1 Spieler)</option><option value="2" data-i18n="chO2">Duo (2 Spieler)</option><option value="3" data-i18n="chO3">Trio (3 Spieler)</option><option value="4" data-i18n="chO4">Squad (4 Spieler)</option></select></div>
+<label class="st-check"><input type="checkbox" id="wgInd" checked> <span data-i18n="stInd">Einzel-Challenges dazuladen (ab Duo)</span></label></div>
+<fieldset class="st-lv"><legend data-i18n="stLevels">Schwierigkeit</legend><div class="st-lvs"><label class="st-check"><input type="checkbox" name="wgLv" value="leicht" checked> <span data-i18n="chLv0">Leicht</span></label><label class="st-check"><input type="checkbox" name="wgLv" value="mittel" checked> <span data-i18n="chLv1">Mittel</span></label><label class="st-check"><input type="checkbox" name="wgLv" value="schwer" checked> <span data-i18n="chLv2">Schwer</span></label></div></fieldset>
+<div class="st-two">
+<div class="fbt-field"><label for="wgAuto" data-i18n="wgAuto">Automatisch drehen alle … Minuten (0 = aus)</label><input type="number" id="wgAuto" value="0" min="0" max="1440" step="1" inputmode="numeric"></div>
+<div class="fbt-field"><label for="wgShow" data-i18n="wgShow">Ergebnis anzeigen (Sekunden, 0 = bis zum nächsten Dreh)</label><input type="number" id="wgShow" value="0" min="0" max="3600" step="5" inputmode="numeric"></div>
+</div>
+<div class="st-two">
+<div class="fbt-field"><label for="wgLang" data-i18n="stLang">Sprache</label><select id="wgLang"><option value="de">Deutsch</option><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option></select></div>
+<div class="fbt-field"><label for="wgLayout" data-i18n="stLayout">Layout</label><select id="wgLayout"><option value="compact" data-i18n="wgLayC">Kompakt 640×90</option><option value="full" data-i18n="wgLayF">Voll 800×450</option></select></div>
+</div>
+<div class="st-checks"><label class="st-check"><input type="checkbox" id="wgSpinLoad"> <span data-i18n="wgSpinLoad">Beim Laden drehen (neuer Dreh bei jedem Szenenwechsel)</span></label>
+<label class="st-check"><input type="checkbox" id="wgClear"> <span data-i18n="wgClear">Transparenter Hintergrund (ohne Kasten)</span></label>
+<label class="st-check"><input type="checkbox" id="wgSound"> <span data-i18n="stSound">Ton beim Stoppen</span></label></div>
+</form>
+<div class="st-prev">
+<div class="st-stage" id="wgStage"><iframe id="wgFrame" src="/overlay/challenge/" title="Vorschau"></iframe></div>
+<p class="fbt-sub st-prev-hint" data-i18n="wgPrevHint">Vorschau – Klick oder Leertaste dreht.</p>
+</div>
+</div>
+<h3 id="wgUrlH" data-i18n="wgUrlH">Widget-URL</h3>
+<div class="st-urlrow"><input type="text" id="wgUrl" readonly aria-labelledby="wgUrlH" value="https://oiotv.de/overlay/challenge/"><button type="button" class="fbt-btn" id="wgCopy" data-i18n="tCopyLink">Link kopieren</button></div>
+<p class="fbt-msg" id="wgMsg" aria-live="polite"></p>
+<h3 data-i18n="wgObsH">Widget in OBS einbinden</h3>
+<ol class="st-steps"><li data-i18n-html="wgStep1">In OBS bei <b>Quellen</b> auf <b>+</b> klicken und <b>Browser</b> wählen.</li>
+<li id="wgStep2">Die URL von oben einfügen, Breite <b>640</b> und Höhe <b>90</b> eintragen.</li>
+<li id="wgStep3">Fertig. Drehen: Rechtsklick auf die Quelle → <b>Interagieren</b> → klicken oder Leertaste drücken. </li></ol>
+<p class="fbt-sub" data-i18n-html="wgTip"><b>Tipp:</b> Setze in den Quelleneigenschaften den Haken bei <b>Browser aktualisieren, wenn Szene aktiv wird</b> und schalte „Beim Laden drehen“ an – dann zieht jeder Szenenwechsel eine neue Challenge.</p>
+<h3 data-i18n="wgParamsH">Parameter der Widget-URL</h3>
+<ul class="st-steps st-params"><li data-i18n-html="wgL1"><code>p=2</code> – Spieleranzahl 1 (Solo), 2 (Duo), 3 (Trio) oder 4 (Squad); <code>lvl=mittel,schwer</code> – nur diese Stufen; <code>ind=0</code> – ab Duo ohne Einzel-Challenges.</li><li data-i18n-html="wgL2"><code>auto=5</code> – alle 5 Minuten automatisch drehen (Standard: aus); <code>show=30</code> – Ergebnis nach 30 Sekunden ausblenden (Standard: bleibt bis zum nächsten Dreh); <code>spin=1</code> – beim Laden einmal drehen.</li><li data-i18n-html="wgL3"><code>layout=full</code> – großes Layout 800 × 450 (Standard: <code>compact</code>, 640 × 90, eine Zeile); <code>theme=clear</code> – ohne Balken und Kasten; <code>scale=1.25</code> – Größe; <code>sound=1</code> – Ton.</li><li data-i18n-html="wgL4">Die Sprache steckt im Pfad (<code>/en/overlay/challenge/</code>); alternativ <code>lang=en</code>. Das Widget lädt nichts von außen, setzt keine Cookies und hat kein Tracking.</li></ul>
+<p class="fbt-sub"><a href="/tools/challenge/" data-i18n="wgToChal">→ Challenge-Slot auf der Seite</a></p></section>
+<h2 class="st-h2" data-i18n="wgChatH">Mit Twitch-Chat: Roulette und Challenge per Befehl</h2>
+<div class="st-grid">
 <form class="fbt-panel st-form" id="stForm" autocomplete="off">
 <div class="fbt-field"><label for="stMode" data-i18n="stMode">Modus</label><select id="stMode"><option value="roulette" data-i18n="stModeR">Loadout-Roulette</option><option value="challenge" data-i18n="stModeC">Challenge-Slot</option></select></div>
 <fieldset class="st-lv" id="stLvBox" hidden><legend data-i18n="stLevels">Schwierigkeit</legend><div class="st-lvs"><label class="st-check"><input type="checkbox" name="stLv" value="leicht" checked> <span data-i18n="chLv0">Leicht</span></label><label class="st-check"><input type="checkbox" name="stLv" value="mittel" checked> <span data-i18n="chLv1">Mittel</span></label><label class="st-check"><input type="checkbox" name="stLv" value="schwer" checked> <span data-i18n="chLv2">Schwer</span></label></div>
@@ -124,7 +160,7 @@
 <p class="fbt-msg" id="stMsg" aria-live="polite"></p></section>
 <section class="fbt-panel" aria-labelledby="stObsH"><h2 id="stObsH" data-i18n="stObsH">In OBS einbinden</h2>
 <ol class="st-steps"><li data-i18n-html="stStep1">In OBS bei <b>Quellen</b> auf <b>+</b> klicken und <b>Browser</b> wählen.</li>
-<li data-i18n-html="stStep2">URL einfügen, Breite <b>800</b> und Höhe <b>450</b> eintragen (Leiste: 1280 × 210).</li>
+<li data-i18n-html="stStep2">URL einfügen, Breite <b>640</b> und Höhe <b>90</b> eintragen (Leiste: 1280 × 210).</li>
 <li id="stStep3">Fertig: Dein Chat dreht mit <b>!roulette</b>. Selbst drehen: Rechtsklick auf die Quelle → <b>Interagieren</b> → klicken.</li></ol>
 <p class="fbt-sub"><a href="/slots/" data-i18n="stToRoulette">→ Zum Loadout-Roulette</a></p></section>
 <section class="fbt-panel" id="challenge" aria-labelledby="stChalH"><h2 id="stChalH"><span aria-hidden="true">🎲 </span><span data-i18n="stChalH">Challenge-Slot im Stream</span></h2>
@@ -210,9 +246,9 @@
   </nav>
   <div class="drawer-foot" data-i18n="footer">Inoffizielle Fan-Seite</div>
 </aside>
-<script src="/assets/site.js?v=31"></script>
-<script src="/assets/data.js?v=31"></script>
-<script src="/assets/tools.js?v=31"></script>
+<script src="/assets/site.js?v=32"></script>
+<script src="/assets/data.js?v=32"></script>
+<script src="/assets/tools.js?v=32"></script>
 <script data-goatcounter="https://frontbuch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

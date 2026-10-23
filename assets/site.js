@@ -623,7 +623,7 @@ Object.keys(FB_I18N).forEach(l => Object.assign(I18N[l], FB_I18N[l]));
 // ---------- Frontbuch: UI-Texte der Tools (Inhalte bleiben deutsch) ----------
 const FB_TOOLS_I18N = {
   de: {
-    tStreamT: 'Roulette für Streamer', tStreamD: 'Loadout-Roulette als OBS-Overlay – dein Chat dreht mit !roulette.', rrForStreamers: 'Für Streamer',
+    tStreamT: 'Roulette für Streamer', tStreamD: 'Loadout-Roulette und Challenge-Slot als OBS-Overlay – per Chat-Befehl oder als Widget ohne Chat.', rrForStreamers: 'Für Streamer',
     stChan: 'Twitch-Name', stChanPh: 'deinkanal', stCmd: 'Chat-Befehl', stCd: 'Cooldown (Sek.)', stLang: 'Sprache', stLayout: 'Layout', stLayoutGrid: 'Kasten 800×450', stLayoutRow: 'Leiste 1280×210',
     stScale: 'Größe', stScaleAuto: 'Automatisch', stSound: 'Ton beim Stoppen', stPreview: 'Vorschau des Overlays', stPrevHint: 'Vorschau – Klick dreht.', stUrlH: 'Overlay-URL', stObsH: 'In OBS einbinden',
     stStep1: 'In OBS bei <b>Quellen</b> auf <b>+</b> klicken und <b>Browser</b> wählen.', stStep2: 'URL einfügen, Breite <b>800</b> und Höhe <b>450</b> eintragen (Leiste: 1280 × 210).',
@@ -659,7 +659,7 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Gespeichert: {n}', tSavedMax: 'Maximal 12 Loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   en: {
-    tStreamT: 'Roulette for streamers', tStreamD: 'Loadout roulette as an OBS overlay – your chat spins with !roulette.', rrForStreamers: 'For streamers',
+    tStreamT: 'Roulette for streamers', tStreamD: 'Loadout roulette and Challenge Slot as an OBS overlay – by chat command or as a widget without chat.', rrForStreamers: 'For streamers',
     stChan: 'Twitch name', stChanPh: 'yourchannel', stCmd: 'Chat command', stCd: 'Cooldown (sec.)', stLang: 'Language', stLayout: 'Layout', stLayoutGrid: 'Box 800×450', stLayoutRow: 'Bar 1280×210',
     stScale: 'Size', stScaleAuto: 'Automatic', stSound: 'Sound on stop', stPreview: 'Overlay preview', stPrevHint: 'Preview – click to spin.', stUrlH: 'Overlay URL', stObsH: 'Add to OBS',
     stStep1: 'In OBS, click <b>+</b> under <b>Sources</b> and choose <b>Browser</b>.', stStep2: 'Paste the URL, set width <b>800</b> and height <b>450</b> (bar: 1280 × 210).',
@@ -695,7 +695,7 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Saved: {n}', tSavedMax: 'Up to 12 loadouts.', tUntitled: 'Loadout', tLv: 'Lv',
   },
   es: {
-    tStreamT: 'Ruleta para streamers', tStreamD: 'Ruleta de loadouts como overlay de OBS: tu chat gira con !roulette.', rrForStreamers: 'Para streamers',
+    tStreamT: 'Ruleta para streamers', tStreamD: 'Ruleta de loadouts y tragaperras de retos como overlay de OBS: por comando del chat o como widget sin chat.', rrForStreamers: 'Para streamers',
     stChan: 'Nombre en Twitch', stChanPh: 'tucanal', stCmd: 'Comando del chat', stCd: 'Cooldown (s)', stLang: 'Idioma', stLayout: 'Diseño', stLayoutGrid: 'Caja 800×450', stLayoutRow: 'Barra 1280×210',
     stScale: 'Tamaño', stScaleAuto: 'Automático', stSound: 'Sonido al parar', stPreview: 'Vista previa del overlay', stPrevHint: 'Vista previa: haz clic para girar.', stUrlH: 'URL del overlay', stObsH: 'Añadir a OBS',
     stStep1: 'En OBS, pulsa <b>+</b> en <b>Fuentes</b> y elige <b>Navegador</b>.', stStep2: 'Pega la URL y pon ancho <b>800</b> y alto <b>450</b> (barra: 1280 × 210).',
@@ -731,7 +731,7 @@ const FB_TOOLS_I18N = {
     tSavedOk: 'Guardado: {n}', tSavedMax: 'Máximo 12 equipamientos.', tUntitled: 'Equipamiento', tLv: 'Nv',
   },
   fr: {
-    tStreamT: 'Roulette pour streamers', tStreamD: 'La roulette de loadout en overlay OBS – ton chat lance avec !roulette.', rrForStreamers: 'Pour les streamers',
+    tStreamT: 'Roulette pour streamers', tStreamD: 'La roulette de loadout et la machine à sous des défis en overlay OBS – par commande du chat ou en widget sans chat.', rrForStreamers: 'Pour les streamers',
     stChan: 'Nom Twitch', stChanPh: 'tachaine', stCmd: 'Commande du chat', stCd: 'Cooldown (s)', stLang: 'Langue', stLayout: 'Disposition', stLayoutGrid: 'Bloc 800×450', stLayoutRow: 'Barre 1280×210',
     stScale: 'Taille', stScaleAuto: 'Automatique', stSound: 'Son à l\u2019arrêt', stPreview: 'Aperçu de l\u2019overlay', stPrevHint: 'Aperçu – clique pour lancer.', stUrlH: 'URL de l\u2019overlay', stObsH: 'Ajouter à OBS',
     stStep1: 'Dans OBS, clique sur <b>+</b> sous <b>Sources</b> et choisis <b>Navigateur</b>.', stStep2: 'Colle l\u2019URL, largeur <b>800</b> et hauteur <b>450</b> (barre : 1280 × 210).',
@@ -1129,6 +1129,91 @@ const FB31_I18N = {
   }
 };
 Object.keys(FB31_I18N).forEach(l => Object.assign(I18N[l], FB31_I18N[l]));
+
+// ---------- Frontbuch v32: Streamer-Widget für den Challenge-Slot (ohne Chat) ----------
+const FB32_I18N = {
+  de: {
+    wgChatH: 'Mit Twitch-Chat: Roulette und Challenge per Befehl',
+    wgH: 'Streamer-Widget ohne Chat',
+    wgP: 'Der Challenge-Slot als Browserquelle für OBS – <b>ohne Twitch-Chat, ohne Login und ohne Befehle für Zuschauer</b>. Du drehst selbst (Klick oder Leertaste), automatisch in festen Abständen oder bei jedem Szenenwechsel. Standard ist ein schlanker Ein-Zeilen-Balken (nur die Challenge plus „oiotv.de“), optional das große Layout. Stell hier alles ein und kopiere die URL.',
+    wgLayC: 'Kompakt 640×90', wgLayF: 'Voll 800×450', wgAuto: 'Automatisch drehen alle … Minuten (0 = aus)', wgShow: 'Ergebnis anzeigen (Sekunden, 0 = bis zum nächsten Dreh)',
+    wgSpinLoad: 'Beim Laden drehen (neuer Dreh bei jedem Szenenwechsel)', wgClear: 'Transparenter Hintergrund (ohne Balken und Kasten)',
+    wgPreview: 'Vorschau des Widgets', wgPrevHint: 'Vorschau – Klick oder Leertaste dreht.', wgUrlH: 'Widget-URL', wgObsH: 'Widget in OBS einbinden',
+    wgStep1: 'In OBS bei <b>Quellen</b> auf <b>+</b> klicken und <b>Browser</b> wählen.',
+    wgStep2: 'Die URL von oben einfügen, Breite <b>{w}</b> und Höhe <b>{h}</b> eintragen.',
+    wgStep3: 'Fertig. Drehen: Rechtsklick auf die Quelle → <b>Interagieren</b> → klicken oder Leertaste drücken. {auto}',
+    wgStep3Auto: 'Die Walze dreht außerdem automatisch alle {n} Min.',
+    wgTip: '<b>Tipp:</b> Setze in den Quelleneigenschaften den Haken bei <b>Browser aktualisieren, wenn Szene aktiv wird</b> und schalte „Beim Laden drehen“ an – dann zieht jeder Szenenwechsel eine neue Challenge.',
+    wgParamsH: 'Parameter der Widget-URL',
+    wgL1: '<code>p=2</code> – Spieleranzahl 1 (Solo), 2 (Duo), 3 (Trio) oder 4 (Squad); <code>lvl=mittel,schwer</code> – nur diese Stufen; <code>ind=0</code> – ab Duo ohne Einzel-Challenges.',
+    wgL2: '<code>auto=5</code> – alle 5 Minuten automatisch drehen (Standard: aus); <code>show=30</code> – Ergebnis nach 30 Sekunden ausblenden (Standard: bleibt bis zum nächsten Dreh); <code>spin=1</code> – beim Laden einmal drehen.',
+    wgL3: '<code>layout=full</code> – großes Layout 800 × 450 (Standard: <code>compact</code>, 640 × 90, eine Zeile); <code>theme=clear</code> – ohne Balken und Kasten; <code>scale=1.25</code> – Größe; <code>sound=1</code> – Ton.',
+    wgL4: 'Die Sprache steckt im Pfad (<code>/en/overlay/challenge/</code>); alternativ <code>lang=en</code>. Das Widget lädt nichts von außen, setzt keine Cookies und hat kein Tracking.',
+    wgToChal: '→ Challenge-Slot auf der Seite',
+    chToWidget: '🎥 Als Streamer-Widget in OBS (ohne Chat)'
+  },
+  en: {
+    wgChatH: 'With Twitch chat: roulette and challenge by command',
+    wgH: 'Streamer widget without chat',
+    wgP: 'The Challenge Slot as a browser source for OBS – <b>no Twitch chat, no login and no viewer commands</b>. You spin it yourself (click or Space), automatically at a fixed interval, or on every scene switch. The default is a slim one-line bar (just the challenge plus “oiotv.de”), with the large layout as an option. Set everything up here and copy the URL.',
+    wgLayC: 'Compact 640×90', wgLayF: 'Full 800×450', wgAuto: 'Spin automatically every … minutes (0 = off)', wgShow: 'Show result for (seconds, 0 = until the next spin)',
+    wgSpinLoad: 'Spin on load (a new spin on every scene switch)', wgClear: 'Transparent background (no bar or box)',
+    wgPreview: 'Widget preview', wgPrevHint: 'Preview – click or press Space to spin.', wgUrlH: 'Widget URL', wgObsH: 'Add the widget to OBS',
+    wgStep1: 'In OBS, click <b>+</b> under <b>Sources</b> and choose <b>Browser</b>.',
+    wgStep2: 'Paste the URL from above and enter width <b>{w}</b> and height <b>{h}</b>.',
+    wgStep3: 'Done. To spin: right-click the source → <b>Interact</b> → click or press Space. {auto}',
+    wgStep3Auto: 'The reel also spins automatically every {n} min.',
+    wgTip: '<b>Tip:</b> In the source properties, tick <b>Refresh browser when scene becomes active</b> and switch on “Spin on load” – then every scene switch draws a new challenge.',
+    wgParamsH: 'Widget URL parameters',
+    wgL1: '<code>p=2</code> – players: 1 (Solo), 2 (Duo), 3 (Trio) or 4 (Squad); <code>lvl=mittel,schwer</code> – only these levels (leicht, mittel, schwer = easy, medium, hard); <code>ind=0</code> – from Duo on, without the individual challenges.',
+    wgL2: '<code>auto=5</code> – spin automatically every 5 minutes (default: off); <code>show=30</code> – hide the result after 30 seconds (default: stays until the next spin); <code>spin=1</code> – spin once on load.',
+    wgL3: '<code>layout=full</code> – large layout 800 × 450 (default: <code>compact</code>, 640 × 90, one line); <code>theme=clear</code> – no bar or box; <code>scale=1.25</code> – size; <code>sound=1</code> – sound.',
+    wgL4: 'The language is part of the path (<code>/en/overlay/challenge/</code>); alternatively <code>lang=en</code>. The widget loads nothing from outside, sets no cookies and has no tracking.',
+    wgToChal: '→ Challenge Slot on the site',
+    chToWidget: '🎥 As a streamer widget in OBS (no chat)'
+  },
+  es: {
+    wgChatH: 'Con el chat de Twitch: ruleta y reto por comando',
+    wgH: 'Widget para streamers sin chat',
+    wgP: 'La tragaperras de retos como fuente de navegador para OBS: <b>sin chat de Twitch, sin inicio de sesión y sin comandos para los espectadores</b>. Giras tú (clic o barra espaciadora), automáticamente a intervalos fijos o en cada cambio de escena. Por defecto es una barra fina de una sola línea (solo el reto más «oiotv.de»); el diseño grande es opcional. Configura todo aquí y copia la URL.',
+    wgLayC: 'Compacto 640×90', wgLayF: 'Completo 800×450', wgAuto: 'Girar automáticamente cada … minutos (0 = no)', wgShow: 'Mostrar el resultado (segundos, 0 = hasta el siguiente giro)',
+    wgSpinLoad: 'Girar al cargar (un giro nuevo en cada cambio de escena)', wgClear: 'Fondo transparente (sin barra ni caja)',
+    wgPreview: 'Vista previa del widget', wgPrevHint: 'Vista previa: clic o barra espaciadora para girar.', wgUrlH: 'URL del widget', wgObsH: 'Añadir el widget a OBS',
+    wgStep1: 'En OBS, pulsa <b>+</b> en <b>Fuentes</b> y elige <b>Navegador</b>.',
+    wgStep2: 'Pega la URL de arriba e introduce ancho <b>{w}</b> y alto <b>{h}</b>.',
+    wgStep3: 'Listo. Para girar: clic derecho en la fuente → <b>Interactuar</b> → clic o barra espaciadora. {auto}',
+    wgStep3Auto: 'Además, el rodillo gira solo cada {n} min.',
+    wgTip: '<b>Consejo:</b> en las propiedades de la fuente, marca <b>Actualizar el navegador cuando la escena se active</b> y activa «Girar al cargar»: así cada cambio de escena saca un reto nuevo.',
+    wgParamsH: 'Parámetros de la URL del widget',
+    wgL1: '<code>p=2</code> – jugadores: 1 (Solo), 2 (Duo), 3 (Trio) o 4 (Squad); <code>lvl=mittel,schwer</code> – solo estos niveles (leicht, mittel, schwer = fácil, media, difícil); <code>ind=0</code> – a partir de Duo, sin los retos individuales.',
+    wgL2: '<code>auto=5</code> – girar solo cada 5 minutos (por defecto: no); <code>show=30</code> – ocultar el resultado tras 30 segundos (por defecto: se queda hasta el siguiente giro); <code>spin=1</code> – girar una vez al cargar.',
+    wgL3: '<code>layout=full</code> – diseño grande 800 × 450 (por defecto: <code>compact</code>, 640 × 90, una línea); <code>theme=clear</code> – sin barra ni caja; <code>scale=1.25</code> – tamaño; <code>sound=1</code> – sonido.',
+    wgL4: 'El idioma va en la ruta (<code>/es/overlay/challenge/</code>); también vale <code>lang=es</code>. El widget no carga nada de fuera, no usa cookies y no tiene seguimiento.',
+    wgToChal: '→ Tragaperras de retos en la web',
+    chToWidget: '🎥 Como widget para streamers en OBS (sin chat)'
+  },
+  fr: {
+    wgChatH: 'Avec le chat Twitch : roulette et défi par commande',
+    wgH: 'Widget pour streamers sans chat',
+    wgP: 'La machine à sous des défis comme source navigateur pour OBS : <b>sans chat Twitch, sans connexion et sans commande pour les spectateurs</b>. Tu lances toi-même (clic ou barre d’espace), automatiquement à intervalle fixe ou à chaque changement de scène. Par défaut, c’est une fine barre sur une seule ligne (juste le défi plus « oiotv.de »), la grande disposition est optionnelle. Règle tout ici et copie l’URL.',
+    wgLayC: 'Compact 640×90', wgLayF: 'Complet 800×450', wgAuto: 'Lancer automatiquement toutes les … minutes (0 = non)', wgShow: 'Afficher le résultat (secondes, 0 = jusqu’au prochain tour)',
+    wgSpinLoad: 'Lancer au chargement (un nouveau tour à chaque changement de scène)', wgClear: 'Fond transparent (sans barre ni cadre)',
+    wgPreview: 'Aperçu du widget', wgPrevHint: 'Aperçu – clique ou appuie sur Espace pour lancer.', wgUrlH: 'URL du widget', wgObsH: 'Ajouter le widget à OBS',
+    wgStep1: 'Dans OBS, clique sur <b>+</b> sous <b>Sources</b> et choisis <b>Navigateur</b>.',
+    wgStep2: 'Colle l’URL ci-dessus et saisis la largeur <b>{w}</b> et la hauteur <b>{h}</b>.',
+    wgStep3: 'C’est prêt. Pour lancer : clic droit sur la source → <b>Interagir</b> → clic ou barre d’espace. {auto}',
+    wgStep3Auto: 'Le rouleau tourne aussi tout seul toutes les {n} min.',
+    wgTip: '<b>Astuce :</b> dans les propriétés de la source, coche <b>Actualiser le navigateur quand la scène devient active</b> et active « Lancer au chargement » : chaque changement de scène tire alors un nouveau défi.',
+    wgParamsH: 'Paramètres de l’URL du widget',
+    wgL1: '<code>p=2</code> – joueurs : 1 (Solo), 2 (Duo), 3 (Trio) ou 4 (Squad) ; <code>lvl=mittel,schwer</code> – uniquement ces niveaux (leicht, mittel, schwer = facile, moyen, difficile) ; <code>ind=0</code> – à partir du Duo, sans les défis individuels.',
+    wgL2: '<code>auto=5</code> – lancer automatiquement toutes les 5 minutes (par défaut : non) ; <code>show=30</code> – masquer le résultat après 30 secondes (par défaut : reste jusqu’au prochain tour) ; <code>spin=1</code> – un tour au chargement.',
+    wgL3: '<code>layout=full</code> – grande disposition 800 × 450 (par défaut : <code>compact</code>, 640 × 90, une ligne) ; <code>theme=clear</code> – sans barre ni cadre ; <code>scale=1.25</code> – taille ; <code>sound=1</code> – son.',
+    wgL4: 'La langue est dans le chemin (<code>/fr/overlay/challenge/</code>) ; sinon <code>lang=fr</code>. Le widget ne charge rien de l’extérieur, ne pose aucun cookie et n’a aucun suivi.',
+    wgToChal: '→ Machine à sous des défis sur le site',
+    chToWidget: '🎥 En widget streamer dans OBS (sans chat)'
+  }
+};
+Object.keys(FB32_I18N).forEach(l => Object.assign(I18N[l], FB32_I18N[l]));
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1867,7 +1952,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '31';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '32';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

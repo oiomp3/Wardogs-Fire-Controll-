@@ -1014,6 +1014,57 @@ ${c.tiers.filter(r => r[0] === tr).map(([, id, why, prov]) => `<details class="f
     hooks.push(() => update(true));
   })();
 
+  // ======================================================== Streamer-Widget ohne Chat (v32, /tools/streamer/#widget)
+  (function widgetGen() {
+    const form = $('#wgForm');
+    if (!form) return;
+    const el = id => document.getElementById(id);
+    const frame = el('wgFrame'), out = el('wgUrl'), msg = el('wgMsg'), stage = el('wgStage');
+    const SIZE = { compact: [640, 90], full: [800, 450] };
+    const lvBoxes = () => [...form.querySelectorAll('input[name="wgLv"]')];
+    const num = (id, lo, hi) => { const v = parseFloat(el(id).value); return Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : 0; };
+    function lvGuard() { const on = lvBoxes().filter(b => b.checked); lvBoxes().forEach(b => { b.disabled = b.checked && on.length === 1; }); }
+    function query() {
+      const p = [], lv = lvBoxes().filter(b => b.checked).map(b => b.value), pl = el('wgPl').value, auto = num('wgAuto', 0, 1440), show = Math.round(num('wgShow', 0, 3600));
+      if (pl !== '1') p.push('p=' + pl);
+      if (lv.length && lv.length < 3) p.push('lvl=' + lv.join(','));
+      if (pl !== '1' && !el('wgInd').checked) p.push('ind=0');
+      if (auto > 0) p.push('auto=' + auto);
+      if (show > 0) p.push('show=' + show);
+      if (el('wgSpinLoad').checked) p.push('spin=1');
+      if (el('wgClear').checked) p.push('theme=clear');
+      if (el('wgLayout').value === 'full') p.push('layout=full');
+      if (el('wgSound').checked) p.push('sound=1');
+      return p.join('&');
+    }
+    let timer = 0, lastSrc = frame.getAttribute('src');
+    function update(now) {
+      lvGuard();
+      el('wgInd').disabled = el('wgPl').value === '1';
+      const q = query(), l = el('wgLang').value, path = (l === 'de' ? '' : '/' + l) + '/overlay/challenge/' + (q ? '?' + q : '');
+      out.value = location.origin + path;
+      const [w, h] = SIZE[el('wgLayout').value] || SIZE.compact, auto = num('wgAuto', 0, 1440);
+      stage.style.aspectRatio = w + ' / ' + h;
+      el('wgStep2').innerHTML = t('wgStep2', { w, h });
+      el('wgStep3').innerHTML = t('wgStep3', { auto: auto > 0 ? t('wgStep3Auto', { n: String(auto).replace('.', lang === 'en' ? '.' : ',') }) : '' });
+      frame.title = t('wgPreview');
+      clearTimeout(timer);
+      const go = () => { if (path !== lastSrc) { frame.src = path; lastSrc = path; } };
+      if (now) go(); else timer = setTimeout(go, 600);
+    }
+    form.addEventListener('input', () => { msg.textContent = ''; update(false); });
+    form.addEventListener('change', () => update(false));
+    form.addEventListener('submit', e => { e.preventDefault(); update(true); });
+    el('wgCopy').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(out.value); msg.textContent = t('tCopied'); }
+      catch (e) { out.focus(); out.select(); msg.textContent = ''; }
+    });
+    out.addEventListener('focus', () => out.select());
+    if (['en', 'es', 'fr'].includes(lang)) el('wgLang').value = lang;
+    update(true);
+    hooks.push(() => update(true));
+  })();
+
   // ======================================================== Progression-Planer (v25)
   (function progression() {
     const root = $('#prRoot');
