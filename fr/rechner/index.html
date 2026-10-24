@@ -42,7 +42,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Frontbuch">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-<link rel="stylesheet" href="/assets/site.css?v=35">
+<link rel="stylesheet" href="/assets/site.css?v=36">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebApplication", "@id": "https://oiotv.de/fr/rechner/#app", "name": "Calculateur de mortier WARDOGS (Frontbuch)", "alternateName": "Calculateur de mortier WARDOGS", "url": "https://oiotv.de/fr/rechner/", "description": "Calculateur de mortier WARDOGS pour le mortier L81 et l’artillerie SPH-2 : distance, direction en mil et élévation depuis tes coordonnées, gratuit.", "applicationCategory": "UtilitiesApplication", "applicationSubCategory": "Game utility", "operatingSystem": "Web", "browserRequirements": "Requires JavaScript", "inLanguage": "fr", "isAccessibleForFree": true, "dateModified": "2026-10-24", "about": {"@type": "VideoGame", "name": "WARDOGS"}, "featureList": ["Saisir les positions : relève sur la carte le X et le Y de ton arme et de la cible (0–160, une unité = 100 m). Inversés ? C’est à ça que sert « ⇄ Inverser ».", "Choisir l’arme : mortier L81 ou artillerie SPH-2.", "Calculer et pointer : reporte la direction en mil et, pour le L81, l’élévation, tire et corrige après le premier impact."], "publisher": {"@type": "Organization", "@id": "https://oiotv.de/#organization", "name": "Frontbuch", "url": "https://oiotv.de/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}, {"@context": "https://schema.org", "@type": "FAQPage", "@id": "https://oiotv.de/fr/rechner/#faq", "inLanguage": "fr", "mainEntity": [{"@type": "Question", "name": "Le calculateur de mortier WARDOGS est-il gratuit ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Le calculateur de mortier est un outil de fans gratuit et non officiel, sans inscription. Tu peux l’installer comme app et l’utiliser aussi hors ligne."}}, {"@type": "Question", "name": "Quelle portée a le mortier L81 dans le calculateur ?", "acceptedAnswer": {"@type": "Answer", "text": "Le calculateur utilise une table de la communauté de 132 à 684 m. Si la cible est plus proche ou plus loin, le statut passe au rouge. Il n’existe pas de valeurs de portée officielles."}}, {"@type": "Question", "name": "Pourquoi le calculateur n’affiche-t-il pas d’élévation pour le SPH-2 ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour le SPH-2, l’élévation dépend de l’arc (Low ou High). Le calculateur d’artillerie te donne la distance et la direction pour environ 780 à 2 629 m ; l’élévation, tu la prends dans des tables de la communauté."}}, {"@type": "Question", "name": "Que signifie mil ?", "acceptedAnswer": {"@type": "Answer", "text": "Le mil est une unité d’angle : un cercle complet fait 6400 mil, donc 360° correspondent à 6400 mil. Le calculateur affiche la direction en degrés et en mil, et l’élévation du L81 en mil."}}, {"@type": "Question", "name": "Pourquoi je rate encore ma cible avec le calculateur ?", "acceptedAnswer": {"@type": "Answer", "text": "Le calculateur ne tient pas compte des différences d’altitude du terrain. Souvent, X et Y sont aussi inversés. Corrige après le premier impact, idéalement avec un spotter."}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://oiotv.de/fr/"}, {"@type": "ListItem", "position": 2, "name": "Outils", "item": "https://oiotv.de/fr/tools/"}, {"@type": "ListItem", "position": 3, "name": "Calculateur de mortier", "item": "https://oiotv.de/fr/rechner/"}]}]</script>
 </head>
 <body data-title-key="titleCalc">
@@ -240,7 +240,7 @@
 <div class="fb-slist" id="searchList" role="listbox" aria-label="Résultats" data-i18n-aria="sResults"></div>
 </div>
 </div>
-<section class="music-bar" id="musicBar" aria-label="Musik von cloudybeatz">
+<section class="music-bar collapsed" id="musicBar" aria-label="Musik von cloudybeatz" aria-hidden="true" inert>
   <div class="music-embed" id="musicEmbed">
     <div id="musicHost"></div>
     <div class="music-placeholder" id="musicPlaceholder"></div>
@@ -250,7 +250,7 @@
   </div>
   <p class="music-toast" id="musicToast" role="status" aria-live="polite" hidden></p>
 </section>
-<button type="button" class="music-fab" id="musicFab" aria-controls="musicBar" aria-expanded="true" aria-label="Musik von cloudybeatz anzeigen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+<button type="button" class="music-fab show" id="musicFab" aria-controls="musicBar" aria-expanded="false" aria-label="Musik von cloudybeatz anzeigen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
 
 <div class="share-backdrop" id="shareBackdrop" hidden></div>
 <div class="share-pop" id="sharePop" role="dialog" aria-modal="true" aria-labelledby="sharePopTitle" hidden>
@@ -299,8 +299,8 @@
   </nav>
   <div class="drawer-foot" data-i18n="footer">Site de fans non officiel</div>
 </aside>
-<script src="/assets/site.js?v=35"></script>
-<script src="/assets/rechner.js?v=35"></script>
+<script src="/assets/site.js?v=36"></script>
+<script src="/assets/rechner.js?v=36"></script>
 <script data-goatcounter="https://frontbuch.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

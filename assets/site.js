@@ -1732,7 +1732,7 @@ const MUSIC = {
   // Hintergrundfarbe des Spotify-Players je Track (für den Teilen-Button über dem „+“)
   colors: {"3VKkgVw7qCtrvQ5OWrttLj": "#7821ac", "0sLNVGZRddExhb4cun8z36": "#380000", "3Yjh8SWU063b46lFBhsRm4": "#972700", "4rb2oi1eHqQG3ic4Qm21u8": "#0d5395", "4qnTOVMzGx91r2dNtbuwAC": "#535353", "5f2nKgvzGUutHSbfBS1iGN": "#485048", "7tUCTIYPPiiNc8NXkHVLlv": "#102038", "2bqLlvOmcQ2aC1n8hxx2vK": "#28586f", "49yzGd69TSWivEVh66dET5": "#9f0000", "0JiuhcOJCaejzvPOXAl1hN": "#9f0000"},
   previewMs: 30000,
-  collapseMs: 6000
+  collapseMs: 4000
 };
 
 (function () {
@@ -1763,7 +1763,7 @@ const MUSIC = {
   let blockTimer = null;
   let toastTimer = null;
   let collapseTimer = null;
-  let collapsed = false;
+  let collapsed = true; // v36: Player startet eingeklappt (nur das kleine Musik-Icon)
   let hovering = false;
   let phKey = 'musicLoading';
 
@@ -1819,6 +1819,7 @@ const MUSIC = {
     bar.inert = true;
     bar.setAttribute('aria-hidden', 'true');
     fab.classList.add('show');
+    fab.classList.remove('away');
     fab.setAttribute('aria-expanded', 'false');
     fab.tabIndex = 0;
   }
@@ -1849,7 +1850,17 @@ const MUSIC = {
     }, 0);
   });
   // Scrollen oder Tippen außerhalb → einklappen
-  window.addEventListener('scroll', () => { if (!hovering) collapse(); }, { passive: true });
+  // v36: Icon beim Runterscrollen ausblenden, beim Hochscrollen bzw. Stillstand wieder zeigen
+  let lastY = window.scrollY, idleTimer = null;
+  window.addEventListener('scroll', () => {
+    if (!hovering) collapse();
+    const y = window.scrollY, dy = y - lastY;
+    lastY = y;
+    if (dy > 4 && y > 60) fab.classList.add('away');
+    else if (dy < -4) fab.classList.remove('away');
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => fab.classList.remove('away'), 700);
+  }, { passive: true });
   document.addEventListener('pointerdown', (e) => {
     if (!bar.contains(e.target) && !fab.contains(e.target)) collapse();
   });
@@ -1959,7 +1970,7 @@ const MUSIC = {
 
   // Platz unten nur für das kleine Musik-Icon
   document.body.style.paddingBottom = '84px';
-  fab.tabIndex = -1;
+  fab.tabIndex = 0;
   renderMusic();
   placeShare();
   if (hasConsent()) showPlaceholder('musicLoading'); else showConsent();
@@ -2054,7 +2065,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '35';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '36';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });
