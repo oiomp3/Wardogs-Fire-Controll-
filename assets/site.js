@@ -457,7 +457,7 @@ const FB_I18N = {
     musicConsentText: '♪ Musik von cloudybeatz – Beim Abspielen werden Daten an Spotify übertragen.', musicConsentBtn: 'Player laden', musicConsentPrivacy: 'Datenschutz',
     consentOn: 'Status: Spotify-Player erlaubt (Einwilligung gespeichert).', consentOff: 'Status: Spotify-Player nicht geladen (keine Einwilligung).', consentRevokeBtn: 'Einwilligung widerrufen', consentRevoked: 'Einwilligung widerrufen – der Player wird nicht mehr geladen.',
     siteSub: 'Guides & Tools für WARDOGS',
-    navHome: 'Start', navGuides: 'Guides', navCalc: 'Mörser-Rechner', navSlots: 'Loadout-Roulette',
+    navHome: 'Start', navGuides: 'Guides', navCalc: 'Mörserrechner', navSlots: 'Loadout-Roulette',
     navGlossary: 'Glossar', navFaq: 'FAQ', navNews: 'Was ist neu', navImpressum: 'Impressum', navPrivacy: 'Datenschutz',
     navMore: 'Mehr', discordJoin: 'Discord beitreten', navLegal: 'Rechtliches',
     fbFooter: 'Inoffizielle Fan-Seite, nicht mit BULKHEAD oder Team17 verbunden.',
@@ -477,7 +477,7 @@ const FB_I18N = {
     crumbHome: 'Start', crumbLabel: 'Brotkrumen-Navigation',
     calcGuideLink: 'Wie funktioniert der Rechner? → Guide „Mörser L81 & SPH-2“',
     steamGuideLink: 'Auch als englischer Guide auf Steam: „How to Hit with Mortars“ ↗',
-    titleHome: 'Frontbuch – Guides und Tools für WARDOGS', titleCalc: 'Mörser-Rechner (L81 und SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guides und Tools für WARDOGS', titleCalc: 'WARDOGS Mörserrechner (L81 & SPH-2) – Mil & Elevation · Frontbuch',
     titleSlots: 'Loadout-Roulette: Zufalls-Loadout für WARDOGS · Frontbuch', titleGuides: 'Alle Guides · Frontbuch',
     nfTitle: 'Seite nicht gefunden', nfText: 'Diese Seite gibt es nicht (mehr). Vielleicht hilft die Suche?', nfBack: 'Zur Startseite',
     offTitle: 'Du bist offline', offText: 'Diese Seite ist noch nicht gespeichert. Seiten, die du schon besucht hast, sowie Rechner und Loadout-Roulette funktionieren auch offline.',
@@ -518,7 +518,7 @@ const FB_I18N = {
     crumbHome: 'Home', crumbLabel: 'Breadcrumb',
     calcGuideLink: 'How does it work? → Guide \u201cL81 Mortar & SPH-2\u201d',
     steamGuideLink: 'Also on Steam (English): \u201cHow to Hit with Mortars\u201d ↗',
-    titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'Mortar calculator (L81 and SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guides and tools for WARDOGS', titleCalc: 'WARDOGS Mortar Calculator (L81 & SPH-2) – Mil & Elevation · Frontbuch',
     titleSlots: 'Loadout Roulette: random WARDOGS loadout · Frontbuch', titleGuides: 'All guides · Frontbuch',
     nfTitle: 'Page not found', nfText: 'This page does not exist (any more). Maybe the search helps?', nfBack: 'Back to home',
     offTitle: 'You are offline', offText: 'This page has not been saved yet. Pages you already visited, the calculator and the loadout roulette also work offline.',
@@ -559,7 +559,7 @@ const FB_I18N = {
     crumbHome: 'Inicio', crumbLabel: 'Ruta de navegación',
     calcGuideLink: '¿Cómo funciona? → Guía «Mortero L81 y SPH-2»',
     steamGuideLink: 'También en Steam (en inglés): «How to Hit with Mortars» ↗',
-    titleHome: 'Frontbuch – Guías y herramientas para WARDOGS', titleCalc: 'Calculadora de mortero (L81 y SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guías y herramientas para WARDOGS', titleCalc: 'Calculadora de mortero WARDOGS (L81 y SPH-2) – Mil y elevación · Frontbuch',
     titleSlots: 'Ruleta de loadouts: loadout aleatorio para WARDOGS · Frontbuch', titleGuides: 'Todas las guías · Frontbuch',
     nfTitle: 'Página no encontrada', nfText: 'Esta página no existe (o ya no existe). ¿Quizás ayude la búsqueda?', nfBack: 'Ir al inicio',
     offTitle: 'Sin conexión', offText: 'Esta página aún no se ha guardado. Las páginas ya visitadas, la calculadora y la ruleta de loadouts también funcionan sin conexión.',
@@ -600,7 +600,7 @@ const FB_I18N = {
     crumbHome: 'Accueil', crumbLabel: 'Fil d\u2019Ariane',
     calcGuideLink: 'Comment ça marche ? → Guide « Mortier L81 & SPH-2 »',
     steamGuideLink: 'Aussi sur Steam (en anglais) : « How to Hit with Mortars » ↗',
-    titleHome: 'Frontbuch – Guides et outils pour WARDOGS', titleCalc: 'Calculateur de mortier (L81 et SPH-2) · Frontbuch',
+    titleHome: 'Frontbuch – Guides et outils pour WARDOGS', titleCalc: 'Calculateur de mortier WARDOGS (L81 et SPH-2) – Mil et élévation · Frontbuch',
     titleSlots: 'Roulette de loadout : loadout aléatoire pour WARDOGS · Frontbuch', titleGuides: 'Tous les guides · Frontbuch',
     nfTitle: 'Page introuvable', nfText: 'Cette page n\u2019existe pas (ou plus). La recherche peut peut-être aider ?', nfBack: 'Retour à l\u2019accueil',
     offTitle: 'Tu es hors ligne', offText: 'Cette page n\u2019a pas encore été enregistrée. Les pages déjà visitées, le calculateur et la roulette de loadout fonctionnent aussi hors ligne.',
@@ -1214,6 +1214,108 @@ const FB32_I18N = {
   }
 };
 Object.keys(FB32_I18N).forEach(l => Object.assign(I18N[l], FB32_I18N[l]));
+
+// ---------- Frontbuch v33: SEO-Texte für den WARDOGS Mörserrechner (/rechner/) ----------
+// Nur Fakten aus Rechner (parts/js_calc.js), Anleitung (helpHtml) und Guide moerser-sph2.
+const FB33_I18N = {
+  de: {
+    calcH1: 'WARDOGS Mörserrechner',
+    calcCrumb: 'Mörserrechner',
+    calcAboutH: 'Was rechnet der WARDOGS Mörserrechner?',
+    calcAboutP: 'Der Mörserrechner von Frontbuch rechnet aus zwei Kartenpositionen die <strong>Distanz</strong> in Metern, die <strong>Richtung</strong> in Grad und in <strong>Mil</strong> (6400 Mil = 360°) und für den L81-Mörser die passende <strong>Elevation in Mil</strong>. Damit ist er Mörser-Rechner und Artillerie-Rechner in einem: Du gibst nur Koordinaten ein, die Mathematik übernimmt das Tool. Er läuft im Browser, ist kostenlos, merkt sich die letzten 15 Schüsse und funktioniert als App auch offline.',
+    calcStepsH: 'So benutzt du den Mörserrechner in 3 Schritten',
+    calcStep1: '<strong>Positionen eingeben:</strong> X und Y deiner Waffe und des Ziels von der Karte ablesen (0–160, eine Einheit = 100 m). Vertauscht? Dafür gibt es „⇄ Tauschen“.',
+    calcStep2: '<strong>Waffe wählen:</strong> L81 Mörser oder SPH-2 Artillerie.',
+    calcStep3: '<strong>Berechnen und richten:</strong> Richtung in Mil und beim L81 die Elevation übernehmen, feuern und nach dem ersten Einschlag korrigieren.',
+    calcVsH: 'L81 oder SPH-2: der Unterschied',
+    calcVsP: 'Der <strong>L81-Mörser</strong> ist ein Bauwerk für kurze Distanzen. Der Rechner deckt <strong>132 bis 684 m</strong> ab und liefert dafür die Elevation aus einer Community-Tabelle. Die <strong>SPH-2</strong> ist eine selbstfahrende Panzerhaubitze für große Distanzen von etwa <strong>780 bis 2.629 m</strong>. Hier zeigt der Rechner Distanz und Richtung; die Elevation hängt vom Bogen (Low/High) ab und kommt aus Community-Tabellen. Beispiel: Von 50/50 auf 53/54 sind es 500 m, Richtung 655 Mil und beim L81 eine Elevation von 461 Mil.',
+    calcMoreP: 'Mehr dazu: <a href="/guides/moerser-sph2/">Guide Mörser L81 &amp; SPH-2</a> · <a href="/guides/artillerie-spotting/">Spotting für Artillerie</a> · <a href="/guides/artillerie-kontern/">Artillerie kontern</a>',
+    calcFaqH: 'Häufige Fragen zum Mörserrechner',
+    calcQ1: 'Ist der WARDOGS Mörserrechner kostenlos?',
+    calcA1: 'Ja. Der Mörser-Rechner ist ein kostenloses, inoffizielles Fan-Tool ohne Anmeldung. Du kannst ihn als App installieren und dann auch offline nutzen.',
+    calcQ2: 'Welche Reichweite hat der L81-Mörser im Rechner?',
+    calcA2: 'Der Rechner nutzt eine Community-Tabelle von 132 bis 684 m. Liegt das Ziel näher oder weiter weg, zeigt er den Status rot an. Offizielle Reichweitenwerte gibt es nicht.',
+    calcQ3: 'Warum zeigt der Rechner für die SPH-2 keine Elevation?',
+    calcA3: 'Bei der SPH-2 hängt die Elevation vom Bogen ab (Low oder High). Der Artillerie-Rechner gibt dir Distanz und Richtung für etwa 780 bis 2.629 m, die Elevation holst du aus Community-Tabellen.',
+    calcQ4: 'Was bedeutet Mil?',
+    calcA4: 'Mil ist ein Winkelmaß: Ein voller Kreis hat 6400 Mil, 360° entsprechen also 6400 Mil. Der Rechner gibt die Richtung in Grad und in Mil aus, die Elevation des L81 in Mil.',
+    calcQ5: 'Warum treffe ich trotz Rechner daneben?',
+    calcA5: 'Der Rechner berücksichtigt keine Höhenunterschiede im Gelände. Oft sind auch X und Y vertauscht. Korrigiere nach dem ersten Einschlag, am besten mit einem Spotter.'
+  },
+  en: {
+    calcH1: 'WARDOGS Mortar Calculator',
+    calcCrumb: 'Mortar calculator',
+    calcAboutH: 'What does the WARDOGS mortar calculator do?',
+    calcAboutP: 'The Frontbuch mortar calculator takes two map positions and works out the <strong>distance</strong> in metres, the <strong>bearing</strong> in degrees and in <strong>mil</strong> (6400 mil = 360°) and, for the L81 mortar, the matching <strong>elevation in mil</strong>. That makes it a mortar calculator and an artillery calculator in one: you only enter coordinates, the tool does the math. It runs in your browser, is free, remembers your last 15 shots and works offline as an app.',
+    calcStepsH: 'How to use the mortar calculator in 3 steps',
+    calcStep1: '<strong>Enter positions:</strong> read the X and Y of your weapon and of the target from the map (0–160, one unit = 100 m). Mixed them up? That’s what “⇄ Swap” is for.',
+    calcStep2: '<strong>Pick the weapon:</strong> L81 mortar or SPH-2 artillery.',
+    calcStep3: '<strong>Calculate and aim:</strong> dial in the bearing in mil and, for the L81, the elevation, fire and correct after the first impact.',
+    calcVsH: 'L81 or SPH-2: the difference',
+    calcVsP: 'The <strong>L81 mortar</strong> is a buildable for short distances. The calculator covers <strong>132 to 684 m</strong> and gives you the elevation from a community table. The <strong>SPH-2</strong> is a self-propelled howitzer for long distances of about <strong>780 to 2,629 m</strong>. Here the calculator shows distance and bearing; the elevation depends on the arc (Low/High) and comes from community tables. Example: from 50/50 to 53/54 is 500 m, bearing 655 mil and, for the L81, an elevation of 461 mil.',
+    calcMoreP: 'Read more: <a href="/guides/moerser-sph2/">Guide L81 mortar &amp; SPH-2</a> · <a href="/guides/artillerie-spotting/">Spotting for artillery</a> · <a href="/guides/artillerie-kontern/">Countering artillery</a>',
+    calcFaqH: 'Mortar calculator FAQ',
+    calcQ1: 'Is the WARDOGS mortar calculator free?',
+    calcA1: 'Yes. The mortar calculator is a free, unofficial fan tool with no sign-up. You can install it as an app and then use it offline too.',
+    calcQ2: 'What range does the L81 mortar have in the calculator?',
+    calcA2: 'The calculator uses a community table from 132 to 684 m. If the target is closer or further away, the status turns red. There are no official range values.',
+    calcQ3: 'Why doesn’t the calculator show an elevation for the SPH-2?',
+    calcA3: 'For the SPH-2, the elevation depends on the arc (Low or High). The artillery calculator gives you distance and bearing for about 780 to 2,629 m; take the elevation from community tables.',
+    calcQ4: 'What does mil mean?',
+    calcA4: 'Mil is an angle unit: a full circle has 6400 mil, so 360° equals 6400 mil. The calculator shows the bearing in degrees and in mil, and the L81 elevation in mil.',
+    calcQ5: 'Why do I still miss with the calculator?',
+    calcA5: 'The calculator doesn’t account for height differences in the terrain. X and Y are also often swapped. Correct after the first impact, ideally with a spotter.'
+  },
+  es: {
+    calcH1: 'Calculadora de mortero WARDOGS',
+    calcCrumb: 'Calculadora de mortero',
+    calcAboutH: '¿Qué calcula la calculadora de mortero de WARDOGS?',
+    calcAboutP: 'La calculadora de mortero de Frontbuch toma dos posiciones del mapa y calcula la <strong>distancia</strong> en metros, la <strong>dirección</strong> en grados y en <strong>mil</strong> (6400 mil = 360°) y, para el mortero L81, la <strong>elevación en mil</strong> correspondiente. Es calculadora de mortero y calculadora de artillería a la vez: tú solo introduces coordenadas y la herramienta hace las cuentas. Funciona en el navegador, es gratis, guarda tus últimos 15 disparos y también funciona sin conexión como app.',
+    calcStepsH: 'Cómo usar la calculadora de mortero en 3 pasos',
+    calcStep1: '<strong>Introduce las posiciones:</strong> lee en el mapa la X y la Y de tu arma y del objetivo (0–160, una unidad = 100 m). ¿Las has invertido? Para eso está «⇄ Intercambiar».',
+    calcStep2: '<strong>Elige el arma:</strong> mortero L81 o artillería SPH-2.',
+    calcStep3: '<strong>Calcula y apunta:</strong> ajusta la dirección en mil y, con el L81, la elevación, dispara y corrige tras el primer impacto.',
+    calcVsH: 'L81 o SPH-2: la diferencia',
+    calcVsP: 'El <strong>mortero L81</strong> es una construcción para distancias cortas. La calculadora cubre de <strong>132 a 684 m</strong> y da la elevación a partir de una tabla de la comunidad. El <strong>SPH-2</strong> es un obús autopropulsado para distancias largas, de unos <strong>780 a 2.629 m</strong>. Aquí la calculadora muestra distancia y dirección; la elevación depende del arco (Low/High) y sale de tablas de la comunidad. Ejemplo: de 50/50 a 53/54 hay 500 m, dirección 655 mil y, con el L81, una elevación de 461 mil.',
+    calcMoreP: 'Más información: <a href="/guides/moerser-sph2/">Guía mortero L81 y SPH-2</a> · <a href="/guides/artillerie-spotting/">Spotting para artillería</a> · <a href="/guides/artillerie-kontern/">Contrarrestar la artillería</a>',
+    calcFaqH: 'Preguntas frecuentes sobre la calculadora de mortero',
+    calcQ1: '¿Es gratis la calculadora de mortero de WARDOGS?',
+    calcA1: 'Sí. La calculadora de mortero es una herramienta de fans gratuita y no oficial, sin registro. Puedes instalarla como app y usarla también sin conexión.',
+    calcQ2: '¿Qué alcance tiene el mortero L81 en la calculadora?',
+    calcA2: 'La calculadora usa una tabla de la comunidad de 132 a 684 m. Si el objetivo está más cerca o más lejos, el estado se muestra en rojo. No hay valores de alcance oficiales.',
+    calcQ3: '¿Por qué la calculadora no muestra elevación para el SPH-2?',
+    calcA3: 'En el SPH-2, la elevación depende del arco (Low o High). La calculadora de artillería te da distancia y dirección para unos 780 a 2.629 m; la elevación la sacas de tablas de la comunidad.',
+    calcQ4: '¿Qué significa mil?',
+    calcA4: 'El mil es una unidad de ángulo: un círculo completo tiene 6400 mil, así que 360° equivalen a 6400 mil. La calculadora da la dirección en grados y en mil, y la elevación del L81 en mil.',
+    calcQ5: '¿Por qué fallo aunque use la calculadora?',
+    calcA5: 'La calculadora no tiene en cuenta las diferencias de altura del terreno. También es frecuente invertir X e Y. Corrige tras el primer impacto, mejor con un spotter.'
+  },
+  fr: {
+    calcH1: 'Calculateur de mortier WARDOGS',
+    calcCrumb: 'Calculateur de mortier',
+    calcAboutH: 'Que calcule le calculateur de mortier WARDOGS ?',
+    calcAboutP: 'Le calculateur de mortier de Frontbuch prend deux positions sur la carte et calcule la <strong>distance</strong> en mètres, la <strong>direction</strong> en degrés et en <strong>mil</strong> (6400 mil = 360°) et, pour le mortier L81, l’<strong>élévation en mil</strong> correspondante. C’est à la fois un calculateur de mortier et un calculateur d’artillerie : tu saisis seulement des coordonnées, l’outil fait les maths. Il tourne dans le navigateur, est gratuit, garde tes 15 derniers tirs et fonctionne aussi hors ligne en tant qu’app.',
+    calcStepsH: 'Utiliser le calculateur de mortier en 3 étapes',
+    calcStep1: '<strong>Saisir les positions :</strong> relève sur la carte le X et le Y de ton arme et de la cible (0–160, une unité = 100 m). Inversés ? C’est à ça que sert « ⇄ Inverser ».',
+    calcStep2: '<strong>Choisir l’arme :</strong> mortier L81 ou artillerie SPH-2.',
+    calcStep3: '<strong>Calculer et pointer :</strong> reporte la direction en mil et, pour le L81, l’élévation, tire et corrige après le premier impact.',
+    calcVsH: 'L81 ou SPH-2 : la différence',
+    calcVsP: 'Le <strong>mortier L81</strong> est une construction pour les courtes distances. Le calculateur couvre de <strong>132 à 684 m</strong> et donne l’élévation d’après une table de la communauté. Le <strong>SPH-2</strong> est un obusier automoteur pour les longues distances, d’environ <strong>780 à 2 629 m</strong>. Ici, le calculateur affiche la distance et la direction ; l’élévation dépend de l’arc (Low/High) et vient de tables de la communauté. Exemple : de 50/50 à 53/54, il y a 500 m, direction 655 mil et, pour le L81, une élévation de 461 mil.',
+    calcMoreP: 'Pour aller plus loin : <a href="/guides/moerser-sph2/">Guide mortier L81 &amp; SPH-2</a> · <a href="/guides/artillerie-spotting/">Spotting pour l’artillerie</a> · <a href="/guides/artillerie-kontern/">Contrer l’artillerie</a>',
+    calcFaqH: 'Questions fréquentes sur le calculateur de mortier',
+    calcQ1: 'Le calculateur de mortier WARDOGS est-il gratuit ?',
+    calcA1: 'Oui. Le calculateur de mortier est un outil de fans gratuit et non officiel, sans inscription. Tu peux l’installer comme app et l’utiliser aussi hors ligne.',
+    calcQ2: 'Quelle portée a le mortier L81 dans le calculateur ?',
+    calcA2: 'Le calculateur utilise une table de la communauté de 132 à 684 m. Si la cible est plus proche ou plus loin, le statut passe au rouge. Il n’existe pas de valeurs de portée officielles.',
+    calcQ3: 'Pourquoi le calculateur n’affiche-t-il pas d’élévation pour le SPH-2 ?',
+    calcA3: 'Pour le SPH-2, l’élévation dépend de l’arc (Low ou High). Le calculateur d’artillerie te donne la distance et la direction pour environ 780 à 2 629 m ; l’élévation, tu la prends dans des tables de la communauté.',
+    calcQ4: 'Que signifie mil ?',
+    calcA4: 'Le mil est une unité d’angle : un cercle complet fait 6400 mil, donc 360° correspondent à 6400 mil. Le calculateur affiche la direction en degrés et en mil, et l’élévation du L81 en mil.',
+    calcQ5: 'Pourquoi je rate encore ma cible avec le calculateur ?',
+    calcA5: 'Le calculateur ne tient pas compte des différences d’altitude du terrain. Souvent, X et Y sont aussi inversés. Corrige après le premier impact, idéalement avec un spotter.'
+  }
+};
+Object.keys(FB33_I18N).forEach(l => Object.assign(I18N[l], FB33_I18N[l]));
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1952,7 +2054,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '32';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '33';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

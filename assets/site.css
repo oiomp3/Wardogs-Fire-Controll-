@@ -1131,6 +1131,15 @@
 .fb-article .fb-fig{margin:1.1rem 0 1.3rem}
 .fb-article .fb-fig img{display:block;width:100%;height:auto;border-radius:10px;background:#1a1d21}
 .fb-article .fb-fig figcaption{margin-top:.4rem;font-size:.82rem;opacity:.75}
+/* v33: Rechner-Seite – Brotkrumen und Erklärtext/FAQ unter dem Tool (SEO) */
+.fb-calc-crumbs{max-width:540px;margin:0 auto}
+.fb-calc-seo{max-width:540px;margin:22px auto 8px;line-height:1.6;font-size:.97rem}
+.fb-calc-seo h2{font-size:1.25rem;margin:26px 0 10px;line-height:1.3}
+.fb-calc-seo h3{font-size:1.05rem;margin:18px 0 8px;line-height:1.3}
+.fb-calc-seo ol{padding-left:1.3em;margin:0 0 12px}
+.fb-calc-seo li{margin-bottom:6px}
+.fb-calc-seo .fb-calc-more{font-size:.92rem;color:var(--muted)}
+.fb-calc-seo .fb-faq p{margin:0 0 14px}
 
   /* =================== Frontbuch v15 =================== */
   :root {
