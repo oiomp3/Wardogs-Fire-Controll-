@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.oiotv.frontbuch",
+      "sha256_cert_fingerprints": [
+        "25:79:ED:F3:1B:01:16:3E:D8:CB:0D:B0:13:CD:3D:7F:2F:02:5E:F1:63:F5:7A:35:D5:A4:32:8A:3C:5B:1F:B0"
+      ]
+    }
+  }
+]
