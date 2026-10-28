@@ -1,0 +1,33 @@
+{
+  "name": "Entraîneur de mortier · Frontbuch",
+  "short_name": "Mortier",
+  "description": "Entraîneur de mortier pour les fans de WARDOGS : trouve la cible sur la carte, estime la distance avec la grille de 100 m, pointe le L81 et touche. Défi du jour, 12 missions, mode infini, contre-la-montre et passe de saison – gratuit dans le navigateur.",
+  "id": "/fr/tools/moerser-trainer/spielen/",
+  "start_url": "/fr/tools/moerser-trainer/spielen/",
+  "scope": "/fr/tools/moerser-trainer/spielen/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/assets/mt/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

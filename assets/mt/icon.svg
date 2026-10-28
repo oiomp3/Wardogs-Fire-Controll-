@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><radialGradient id="b" cx=".5" cy=".45" r=".7"><stop offset="0" stop-color="#3b4a2a"/><stop offset="1" stop-color="#0b0e09"/></radialGradient><radialGradient id="s" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8d6a8"/><stop offset=".75" stop-color="#b79a5e"/><stop offset="1" stop-color="#3a2f17"/></radialGradient></defs>
+<rect width="512" height="512" fill="url(#b)"/>
+<circle cx="256" cy="256" r="178" fill="url(#s)" stroke="#0a0a0a" stroke-width="14"/>
+<g stroke="#1a140a" stroke-width="7" stroke-linecap="round"><line x1="256" y1="96" x2="256" y2="206"/><line x1="256" y1="306" x2="256" y2="416"/><line x1="96" y1="256" x2="206" y2="256"/><line x1="306" y1="256" x2="416" y2="256"/></g>
+<g stroke="#1a140a" stroke-width="5">
+<line x1="236" y1="140" x2="276" y2="140"/><line x1="244" y1="170" x2="268" y2="170"/><line x1="236" y1="372" x2="276" y2="372"/><line x1="244" y1="342" x2="268" y2="342"/>
+<line x1="140" y1="236" x2="140" y2="276"/><line x1="170" y1="244" x2="170" y2="268"/><line x1="372" y1="236" x2="372" y2="276"/><line x1="342" y1="244" x2="342" y2="268"/></g>
+<circle cx="256" cy="256" r="26" fill="none" stroke="#b91c1c" stroke-width="9"/><circle cx="256" cy="256" r="7" fill="#b91c1c"/>
+<path d="M330 330 l52 52" stroke="#f59e0b" stroke-width="0"/>
+</svg>

@@ -1,0 +1,33 @@
+{
+  "name": "Mörser-Trainer · Frontbuch",
+  "short_name": "Mörser-Trainer",
+  "description": "Mörser-Trainer für WARDOGS-Fans: Ziel auf der Karte finden, Entfernung über das 100-m-Gitter schätzen, L81 richten und treffen. Tages-Challenge, 12 Missionen, Endlos, Zeitangriff und Saisonpass – kostenlos im Browser.",
+  "id": "/tools/moerser-trainer/spielen/",
+  "start_url": "/tools/moerser-trainer/spielen/",
+  "scope": "/tools/moerser-trainer/spielen/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/assets/mt/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

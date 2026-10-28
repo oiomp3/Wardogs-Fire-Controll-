@@ -1,0 +1,33 @@
+{
+  "name": "Entrenador de mortero · Frontbuch",
+  "short_name": "Mortero",
+  "description": "Entrenador de mortero para fans de WARDOGS: encuentra el objetivo en el mapa, calcula la distancia con la cuadrícula de 100 m, apunta el L81 y acierta. Reto diario, 12 misiones, modo infinito, contrarreloj y pase de temporada, gratis en el navegador.",
+  "id": "/es/tools/moerser-trainer/spielen/",
+  "start_url": "/es/tools/moerser-trainer/spielen/",
+  "scope": "/es/tools/moerser-trainer/spielen/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/assets/mt/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

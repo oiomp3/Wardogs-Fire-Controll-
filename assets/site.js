@@ -1317,6 +1317,84 @@ const FB33_I18N = {
 };
 Object.keys(FB33_I18N).forEach(l => Object.assign(I18N[l], FB33_I18N[l]));
 
+// ---------- Frontbuch v37: Mörser-Trainer (/tools/moerser-trainer/) – page texts ----------
+// Only facts from the game itself (prototype/moerser-trainer). Range table: the same community L81 table as the calculator (132–684 m).
+const FB37_I18N = {
+  de: {
+    tMtT: 'Mörser-Trainer', tMtD: 'Mörser-Spiel fürs Handy: Karte lesen, Entfernung schätzen, treffen.',
+    mtPlayH: 'Bereit zum Feuern?', mtPlay: '▶ Jetzt spielen',
+    mtNote: 'Am besten auf dem Handy im Hochformat. Kostenlos, ohne Anmeldung – dein Fortschritt bleibt auf deinem Gerät.',
+    mtFeatH: 'Was dich erwartet',
+    mtF1: '<strong>Tages-Challenge:</strong> 5 Ziele, für alle gleich, ein gewerteter Versuch pro Tag – mit Serie und Teilen-Karte.',
+    mtF2: '<strong>12 Missionen</strong> mit bis zu drei Sternen, von Bunker bis bewegliche Fahrzeuge.',
+    mtF3: '<strong>Endlos-Modus</strong> mit drei Leben und <strong>freies Training</strong> in drei Stufen.',
+    mtF4: '<strong>$-Wirtschaft und Waffenkammer:</strong> Jeder Treffer bringt $, jede Granate kostet $. Damit kaufst du Upgrades, Gelände und Kisten in drei Stufen – nur Kosmetik, Wahrscheinlichkeiten immer sichtbar.',
+    mtF5: '<strong>Zeitangriff, Saisonpass und Aufträge:</strong> 120 Sekunden gegen die Uhr, 30 Saison-Stufen, tägliche und wöchentliche Aufträge, Belohnungskalender, Sammelbuch und Meisterschaft.',
+    mtHowH: 'So spielst du',
+    mtS1: '<strong>Karte öffnen</strong> und das Ziel markieren. Die Gitterquadrate sind 100 m groß – Entfernung schätzen statt ablesen.',
+    mtS2: '<strong>Richtung und Entfernung einstellen:</strong> der Trainer rechnet die Elevation des L81 aus der Community-Tabelle (132–684 m).',
+    mtS3: '<strong>Feuern und korrigieren:</strong> Einschlag beobachten, nachrichten, treffen. Je näher, desto mehr Punkte.',
+    mtFairH: 'Fair und inoffiziell',
+    mtFairP: 'Der Mörser-Trainer ist ein inoffizielles Fan-Projekt von Frontbuch. Alle Grafiken sind selbst gezeichnet, das Gelände ist erfunden. Die Elevation kommt aus derselben Community-Tabelle wie im <a href="/rechner/">Mörserrechner</a>. Kisten in der Waffenkammer öffnest du mit im Spiel verdienten $ oder Schlüsseln; sie enthalten nur Kosmetik, und die Wahrscheinlichkeiten stehen immer dabei. Echtgeld-Käufe gibt es nicht. Der Trainer finanziert sich über Werbung von Google; ein Werbevideo siehst du nur, wenn du es selbst für einen Bonus antippst.',
+    mtMoreP: 'Mehr dazu: <a href="/guides/moerser-sph2/">Guide Mörser L81 &amp; SPH-2</a> · <a href="/rechner/">Mörserrechner</a>'
+  },
+  en: {
+    tMtT: 'Mortar Trainer', tMtD: 'Mortar game for your phone: read the map, estimate range, hit.',
+    mtPlayH: 'Ready to fire?', mtPlay: '▶ Play now',
+    mtNote: 'Best on a phone in portrait. Free, no sign-up – your progress stays on your device.',
+    mtFeatH: 'What you get',
+    mtF1: '<strong>Daily challenge:</strong> 5 targets, the same for everyone, one scored attempt per day – with streak and share card.',
+    mtF2: '<strong>12 missions</strong> with up to three stars, from bunkers to moving vehicles.',
+    mtF3: '<strong>Endless mode</strong> with three lives and <strong>free practice</strong> on three levels.',
+    mtF4: '<strong>$ economy and armory:</strong> every kill pays $, every shell costs $. Spend it on upgrades, terrains and crates in three tiers – cosmetic only, drop rates always shown.',
+    mtF5: '<strong>Time Attack, season pass and contracts:</strong> 120 seconds against the clock, 30 season tiers, daily and weekly contracts, reward calendar, collection book and mastery.',
+    mtHowH: 'How to play',
+    mtS1: '<strong>Open the map</strong> and mark the target. Grid squares are 100 m – estimate the range instead of reading it.',
+    mtS2: '<strong>Set direction and range:</strong> the trainer gets the L81 elevation from the community table (132–684 m).',
+    mtS3: '<strong>Fire and correct:</strong> watch the impact, adjust, hit. The closer, the more points.',
+    mtFairH: 'Fair and unofficial',
+    mtFairP: 'Mortar Trainer is an unofficial fan project by Frontbuch. All graphics are self-made and the terrain is fictional. The elevation comes from the same community table as the <a href="/rechner/">mortar calculator</a>. Armory crates are opened with $ or keys earned in the game; they only contain cosmetics, and the drop rates are always shown. There are no real-money purchases. The trainer is funded by ads from Google; you only watch an ad video if you tap it yourself for a bonus.',
+    mtMoreP: 'More: <a href="/guides/moerser-sph2/">Mortar L81 &amp; SPH-2 guide</a> · <a href="/rechner/">Mortar calculator</a>'
+  },
+  es: {
+    tMtT: 'Entrenador de mortero', tMtD: 'Juego de mortero para el móvil: lee el mapa, calcula la distancia y acierta.',
+    mtPlayH: '¿Listo para disparar?', mtPlay: '▶ Jugar ahora',
+    mtNote: 'Mejor en el móvil y en vertical. Gratis y sin registro: tu progreso se queda en tu dispositivo.',
+    mtFeatH: 'Qué te espera',
+    mtF1: '<strong>Reto diario:</strong> 5 objetivos, iguales para todos, un intento puntuado al día, con racha y tarjeta para compartir.',
+    mtF2: '<strong>12 misiones</strong> con hasta tres estrellas, desde búnkeres hasta vehículos en movimiento.',
+    mtF3: '<strong>Modo infinito</strong> con tres vidas y <strong>práctica libre</strong> en tres niveles.',
+    mtF4: '<strong>Economía de $ y armería:</strong> cada objetivo destruido da $ y cada proyectil cuesta $. Gástalos en mejoras, terrenos y cajas de tres niveles; solo cosméticos y con las probabilidades siempre a la vista.',
+    mtF5: '<strong>Contrarreloj, pase de temporada y contratos:</strong> 120 segundos contra el reloj, 30 niveles de temporada, contratos diarios y semanales, calendario de recompensas, colección y maestría.',
+    mtHowH: 'Cómo se juega',
+    mtS1: '<strong>Abre el mapa</strong> y marca el objetivo. Las casillas de la cuadrícula miden 100 m: calcula la distancia a ojo en vez de leerla.',
+    mtS2: '<strong>Ajusta dirección y distancia:</strong> el entrenador saca la elevación del L81 de la tabla de la comunidad (132–684 m).',
+    mtS3: '<strong>Dispara y corrige:</strong> observa el impacto, ajusta y acierta. Cuanto más cerca, más puntos.',
+    mtFairH: 'Justo y no oficial',
+    mtFairP: 'El Entrenador de mortero es un proyecto fan no oficial de Frontbuch. Todos los gráficos son propios y el terreno es inventado. La elevación viene de la misma tabla de la comunidad que la <a href="/rechner/">calculadora de mortero</a>. Las cajas de la armería se abren con $ o llaves ganados en el juego; solo contienen cosméticos y las probabilidades se muestran siempre. No hay compras con dinero real. El entrenador se financia con anuncios de Google; solo ves un vídeo publicitario si tú lo tocas para conseguir un bonus.',
+    mtMoreP: 'Más: <a href="/guides/moerser-sph2/">Guía del mortero L81 y SPH-2</a> · <a href="/rechner/">Calculadora de mortero</a>'
+  },
+  fr: {
+    tMtT: 'Entraîneur de mortier', tMtD: 'Jeu de mortier pour mobile : lis la carte, estime la distance, touche.',
+    mtPlayH: 'Prêt à tirer ?', mtPlay: '▶ Jouer maintenant',
+    mtNote: 'Idéal sur mobile en mode portrait. Gratuit, sans inscription – ta progression reste sur ton appareil.',
+    mtFeatH: 'Au programme',
+    mtF1: '<strong>Défi du jour :</strong> 5 cibles, les mêmes pour tous, une tentative notée par jour – avec série et carte à partager.',
+    mtF2: '<strong>12 missions</strong> avec jusqu’à trois étoiles, du bunker aux véhicules en mouvement.',
+    mtF3: '<strong>Mode infini</strong> avec trois vies et <strong>entraînement libre</strong> en trois niveaux.',
+    mtF4: '<strong>Économie en $ et armurerie :</strong> chaque cible détruite rapporte des $, chaque obus coûte des $. Dépense-les en améliorations, terrains et caisses de trois niveaux – purement cosmétique, probabilités toujours affichées.',
+    mtF5: '<strong>Contre-la-montre, passe de saison et contrats :</strong> 120 secondes contre la montre, 30 paliers de saison, contrats quotidiens et hebdomadaires, calendrier de récompenses, collection et maîtrise.',
+    mtHowH: 'Comment jouer',
+    mtS1: '<strong>Ouvre la carte</strong> et marque la cible. Les carreaux de la grille font 100 m – estime la distance au lieu de la lire.',
+    mtS2: '<strong>Règle direction et distance :</strong> l’entraîneur prend l’élévation du L81 dans la table de la communauté (132–684 m).',
+    mtS3: '<strong>Tire et corrige :</strong> observe l’impact, ajuste, touche. Plus c’est près, plus tu marques de points.',
+    mtFairH: 'Équitable et non officiel',
+    mtFairP: 'L’Entraîneur de mortier est un projet de fan non officiel de Frontbuch. Tous les graphismes sont faits maison et le terrain est inventé. L’élévation vient de la même table de la communauté que le <a href="/rechner/">calculateur de mortier</a>. Les caisses de l’armurerie s’ouvrent avec des $ ou des clés gagnés en jeu ; elles ne contiennent que des cosmétiques et les probabilités sont toujours affichées. Il n’y a aucun achat en argent réel. L’entraîneur est financé par des publicités de Google ; tu ne regardes une vidéo publicitaire que si tu la touches toi-même pour un bonus.',
+    mtMoreP: 'Plus : <a href="/guides/moerser-sph2/">Guide mortier L81 &amp; SPH-2</a> · <a href="/rechner/">Calculateur de mortier</a>'
+  }
+};
+Object.keys(FB37_I18N).forEach(l => Object.assign(I18N[l], FB37_I18N[l]));
+
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -2065,7 +2143,7 @@ const MUSIC = {
       const done = () => { IDX = (window.FB_SEARCH || []).map(e => ({ e, t: ' ' + norm(e.t), x: norm(e.x), s: norm(e.s) })); res(IDX); };
       if (window.FB_SEARCH) return done();
       const sc = document.createElement('script');
-      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '36';
+      sc.src = '/assets/search-data' + (window.fbLP ? '-' + window.fbLP.slice(1) : '') + '.js?v=' + '37';
       sc.onload = done; sc.onerror = () => { loading = null; res([]); };
       document.head.appendChild(sc);
     });

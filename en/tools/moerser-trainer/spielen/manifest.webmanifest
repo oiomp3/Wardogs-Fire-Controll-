@@ -1,0 +1,33 @@
+{
+  "name": "Mortar Trainer · Frontbuch",
+  "short_name": "Mortar Trainer",
+  "description": "Mortar Trainer for WARDOGS fans: find the target on the map, estimate the range on the 100 m grid, lay the L81 and hit. Daily challenge, 12 missions, endless, Time Attack and season pass – free in your browser.",
+  "id": "/en/tools/moerser-trainer/spielen/",
+  "start_url": "/en/tools/moerser-trainer/spielen/",
+  "scope": "/en/tools/moerser-trainer/spielen/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/assets/mt/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/mt/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
