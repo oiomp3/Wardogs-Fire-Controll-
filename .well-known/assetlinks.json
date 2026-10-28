@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "de.oiotv.frontbuch",
       "sha256_cert_fingerprints": [
-        "25:79:ED:F3:1B:01:16:3E:D8:CB:0D:B0:13:CD:3D:7F:2F:02:5E:F1:63:F5:7A:35:D5:A4:32:8A:3C:5B:1F:B0"
+        "25:79:ED:F3:1B:01:16:3E:D8:CB:0D:B0:13:CD:3D:7F:2F:02:5E:F1:63:F5:7A:35:D5:A4:32:8A:3C:5B:1F:B0",
+        "A6:14:27:95:E4:B8:E2:BD:6D:3E:8A:8D:40:27:CE:41:96:F9:A3:21:C6:FC:5F:40:E9:61:E3:EE:10:C9:0C:89"
       ]
     }
   }
