@@ -2,7 +2,7 @@
 // - Precache: App-Shell + Rechner + Loadout-Roulette + Offline-Seite
 // - HTML (Navigation): network-first, besuchte Seiten werden zwischengespeichert
 // - Gleiche Herkunft, nur GET; alles andere (Spotify usw.) geht direkt ans Netz
-const CACHE_NAME = 'frontbuch-v42';
+const CACHE_NAME = 'frontbuch-v43';
 const PRECACHE = [
   "/",
   "/rechner/",
@@ -16,15 +16,15 @@ const PRECACHE = [
   "/favicon.ico",
   "/favicon.svg",
   "/favicon-48.png",
-  "/assets/site.css?v=42",
-  "/assets/site.js?v=42",
-  "/assets/rechner.js?v=42",
-  "/assets/guides.js?v=42",
-  "/assets/guides-data.js?v=42",
-  "/assets/data.js?v=42",
-  "/assets/tools.js?v=42",
-  "/assets/challenge.js?v=42",
-  "/assets/search-data.js?v=42",
+  "/assets/site.css?v=43",
+  "/assets/site.js?v=43",
+  "/assets/rechner.js?v=43",
+  "/assets/guides.js?v=43",
+  "/assets/guides-data.js?v=43",
+  "/assets/data.js?v=43",
+  "/assets/tools.js?v=43",
+  "/assets/challenge.js?v=43",
+  "/assets/search-data.js?v=43",
   "/en/rechner/",
   "/es/rechner/",
   "/fr/rechner/"
