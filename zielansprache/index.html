@@ -125,23 +125,37 @@
       <div class="learn-list" id="learn-list"></div>
     </section>
 
+    <!-- DUEL SETUP -->
+    <section class="screen" id="sc-duel-setup">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Zurück">‹</button>
+        <h1>1 gegen 1</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="section"><h3>Modus</h3><div class="chips" id="duel-mode-chips"></div></div>
+      <p class="setup-note" id="duel-mode-note"></p>
+      <div class="section"><h3>Ziel</h3><div class="chips" id="duel-goal-chips"></div></div>
+      <div class="cta-wrap"><button class="cta" id="duel-start" type="button">Spiel starten</button></div>
+    </section>
+
     <!-- DUEL -->
     <section class="screen" id="sc-duel">
       <div class="duel">
         <div class="half away" id="duel-p2">
           <div class="who"><div class="name">Spieler 2</div><div class="score" id="sc2">0</div></div>
-          <div class="meta" id="meta2">Frage · Ansicht gesperrt · Taste Q</div>
+          <div class="meta" id="meta2"></div>
           <div class="pic"><img id="img2" alt=""><div class="credit" id="cr2"></div></div>
-          <button class="buzzer" id="bz2" type="button">Buzzer</button>
-          <div class="answers" id="ans2" hidden></div>
+          <div class="sol" id="sol2" hidden></div>
+          <div class="act" id="act2"></div>
         </div>
         <div class="seam"></div>
         <div class="half" id="duel-p1">
           <div class="who"><div class="name">Spieler 1</div><div class="score" id="sc1">0</div></div>
-          <div class="meta" id="meta1">Frage · Ansicht gesperrt · Leertaste</div>
+          <div class="meta" id="meta1"></div>
           <div class="pic"><img id="img1" alt=""><div class="credit" id="cr1"></div></div>
-          <button class="buzzer" id="bz1" type="button">Buzzer</button>
-          <div class="answers" id="ans1" hidden></div>
+          <div class="sol" id="sol1" hidden></div>
+          <div class="act" id="act1"></div>
         </div>
       </div>
     </section>

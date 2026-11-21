@@ -513,90 +513,323 @@
   }
 
   /* ---------- duel ---------- */
+  function loadDuelPrefs() {
+    try {
+      const p = JSON.parse(localStorage.getItem("za-duel") || "{}");
+      return {
+        mode: p.mode === "answers" ? "answers" : "call",
+        goal: p.goal === 10 ? 10 : 5,
+      };
+    } catch (_) {
+      return { mode: "call", goal: 5 };
+    }
+  }
+  function saveDuelPrefs() {
+    localStorage.setItem("za-duel", JSON.stringify({ mode: state.duel.mode, goal: state.duel.goal }));
+  }
+
+  const DUEL_NOTES = {
+    call: "Wer zuerst buzzert, sagt laut, was es ist. Der andere tippt auf Richtig oder Falsch. Liegt der Erste daneben, darf der Zweite antworten und bekommt bei richtiger Antwort doppelte Punkte.",
+    answers: "Wer zuerst buzzert, wählt aus vier Antworten. Richtige Antwort: 1 Punkt. Falsche Antwort: der andere bekommt den Punkt.",
+  };
+
+  function renderDuelSetup() {
+    const prefs = loadDuelPrefs();
+    state.duel.mode = prefs.mode;
+    state.duel.goal = prefs.goal;
+    const modeBox = $("#duel-mode-chips");
+    modeBox.innerHTML = "";
+    [
+      { id: "call", label: "Ansage" },
+      { id: "answers", label: "Mit Antworten" },
+    ].forEach((m) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (state.duel.mode === m.id ? " on" : "");
+      b.textContent = m.label;
+      b.onclick = () => {
+        state.duel.mode = m.id;
+        saveDuelPrefs();
+        renderDuelSetup();
+      };
+      modeBox.appendChild(b);
+    });
+    $("#duel-mode-note").textContent = DUEL_NOTES[state.duel.mode] || DUEL_NOTES.call;
+    const goalBox = $("#duel-goal-chips");
+    goalBox.innerHTML = "";
+    [5, 10].forEach((g) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (state.duel.goal === g ? " on" : "");
+      b.textContent = "Zuerst " + g;
+      b.onclick = () => {
+        state.duel.goal = g;
+        saveDuelPrefs();
+        renderDuelSetup();
+      };
+      goalBox.appendChild(b);
+    });
+    show("duel-setup");
+  }
+
   function startDuel() {
     stopTimer();
-    state.duel = { p1: 0, p2: 0, goal: 5, buzz: null, current: null, answers: [], q: 0 };
+    const prefs = loadDuelPrefs();
+    state.duel = {
+      p1: 0,
+      p2: 0,
+      goal: prefs.goal,
+      mode: prefs.mode,
+      buzz: null,
+      first: null,
+      current: null,
+      img: null,
+      answers: [],
+      q: 0,
+      phase: "buzz",
+      awardText: "",
+      over: false,
+      advancing: false,
+    };
     $("#sc1").textContent = "0";
     $("#sc2").textContent = "0";
     show("duel");
     duelNext();
   }
 
+  function duelSetMeta() {
+    const d = state.duel;
+    const modeLabel = d.mode === "answers" ? "Mit Antworten" : "Ansage";
+    ["1", "2"].forEach((n) => {
+      $("#meta" + n).textContent = "Frage " + d.q + " · Bis " + d.goal + " · " + modeLabel + " · Ansicht gesperrt";
+    });
+  }
+
+  function duelClearSol() {
+    ["1", "2"].forEach((n) => {
+      const s = $("#sol" + n);
+      s.hidden = true;
+      s.innerHTML = "";
+    });
+  }
+
+  function duelShowSol() {
+    const v = state.duel.current;
+    ["1", "2"].forEach((n) => {
+      const s = $("#sol" + n);
+      s.hidden = false;
+      s.innerHTML = '<div class="lbl">Lösung</div><h3>' + v.name + '</h3><div class="sub">' + v.typ + " · " + v.nation + "</div>";
+    });
+  }
+
+  function duelPaintScores() {
+    $("#sc1").textContent = String(state.duel.p1);
+    $("#sc2").textContent = String(state.duel.p2);
+  }
+
+  function duelRenderPhase() {
+    const d = state.duel;
+    const p = d.phase;
+    const act = (n, html) => {
+      $("#act" + n).innerHTML = html;
+    };
+    if (p === "buzz") {
+      duelClearSol();
+      act(1, '<button type="button" class="buzzer" data-buzz="1">Buzzer</button>');
+      act(2, '<button type="button" class="buzzer" data-buzz="2">Buzzer</button>');
+      return;
+    }
+    if (p === "wait-call") {
+      const who = d.first;
+      const other = who === 1 ? 2 : 1;
+      duelClearSol();
+      act(who, '<button type="button" class="said-btn" data-said="1">Gesagt</button>');
+      act(other, '<div class="duel-wait">Spieler ' + who + " sagt die Lösung …</div>");
+      return;
+    }
+    if (p === "judge") {
+      const who = d.first;
+      const other = who === 1 ? 2 : 1;
+      duelShowSol();
+      act(who, '<div class="duel-wait">Warten auf die Bewertung</div>');
+      act(other, '<div class="judge-row"><button type="button" class="judge-btn ok" data-judge="ok">Richtig</button><button type="button" class="judge-btn no" data-judge="no">Falsch</button></div>');
+      return;
+    }
+    if (p === "wait-call2") {
+      const who = d.first;
+      const other = who === 1 ? 2 : 1;
+      duelClearSol();
+      act(other, '<button type="button" class="said-btn" data-said="2">Gesagt</button>');
+      act(who, '<div class="duel-wait">Spieler ' + other + " sagt die Lösung …</div>");
+      return;
+    }
+    if (p === "judge2") {
+      const who = d.first;
+      const other = who === 1 ? 2 : 1;
+      duelShowSol();
+      act(other, '<div class="duel-wait">Warten auf die Bewertung</div>');
+      act(who, '<div class="judge-row"><button type="button" class="judge-btn ok" data-judge2="ok">Richtig</button><button type="button" class="judge-btn no" data-judge2="no">Falsch</button></div>');
+      return;
+    }
+    if (p === "answers") {
+      const who = d.first;
+      const other = who === 1 ? 2 : 1;
+      duelClearSol();
+      let html = '<div class="answers">';
+      d.answers.forEach((v) => {
+        html += '<button type="button" class="ans" data-ans="' + v.id + '">' + v.name + "</button>";
+      });
+      html += "</div>";
+      act(who, html);
+      act(other, '<div class="duel-wait">Spieler ' + who + " antwortet …</div>");
+      return;
+    }
+    if (p === "brief" || p === "win") {
+      const v = d.current;
+      const feat = (v.merkmale || []).slice(0, 3).map((m) => "<li>" + m + "</li>").join("");
+      duelShowSol();
+      if (p === "win") {
+        const w = d.p1 >= d.goal ? 1 : 2;
+        const html =
+          '<div class="duel-brief"><strong>Spieler ' + w + " gewinnt</strong>" +
+          '<div class="duel-award">' + d.p1 + " : " + d.p2 + "</div>" +
+          "<p>" + (d.awardText || "") + "</p></div>" +
+          '<button type="button" class="said-btn" data-duel-again>Nochmal</button>' +
+          '<button type="button" class="cta ghost" data-go="menu" style="margin-top:8px">Zum Menü</button>';
+        act(1, html);
+        act(2, html);
+        return;
+      }
+      const html =
+        '<div class="duel-brief"><strong>' + v.name + "</strong> · " + v.typ + " · " + v.nation +
+        "<ul>" + feat + "</ul>" +
+        '<div class="duel-award">' + (d.awardText || "") + "</div></div>" +
+        '<button type="button" class="said-btn" data-duel-next>Weiter</button>';
+      act(1, html);
+      act(2, html);
+    }
+  }
+
   function duelNext() {
     const p = pool();
     const v = p[Math.floor(Math.random() * p.length)];
-    const imgs = v.images;
+    const imgs = imagesFor(v, "lock-random");
     const idx = Math.floor(Math.random() * imgs.length);
-    state.duel.current = v;
-    state.duel.img = imgs[idx];
-    state.duel.answers = shuffle([v].concat(distractors(v, 3)));
-    state.duel.buzz = null;
-    state.duel.q += 1;
+    const d = state.duel;
+    d.current = v;
+    d.img = imgs[idx];
+    d.answers = shuffle([v].concat(distractors(v, 3)));
+    d.buzz = null;
+    d.first = null;
+    d.q += 1;
+    d.phase = "buzz";
+    d.awardText = "";
+    d.over = false;
+    d.advancing = false;
     const it = imgs[idx];
     ["1", "2"].forEach((n) => {
       $("#img" + n).src = "img/" + it.file;
       $("#cr" + n).textContent = "Foto: " + it.author + " · " + it.license;
-      $("#meta" + n).textContent = "Frage " + state.duel.q + " · Bis " + state.duel.goal + " · Ansicht gesperrt";
-      $("#ans" + n).hidden = true;
-      $("#ans" + n).innerHTML = "";
-      $("#bz" + n).disabled = false;
     });
+    duelSetMeta();
+    duelRenderPhase();
   }
 
   function duelBuzz(who) {
-    if (state.duel.buzz) return;
-    state.duel.buzz = who;
-    const other = who === 1 ? 2 : 1;
-    $("#bz" + who).disabled = true;
-    $("#bz" + other).disabled = true;
-    const box = $("#ans" + who);
-    box.hidden = false;
-    box.innerHTML = "";
-    state.duel.answers.forEach((v) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "ans";
-      b.textContent = v.name;
-      b.onclick = () => duelAnswer(who, v.id);
-      box.appendChild(b);
-    });
+    const d = state.duel;
+    if (!d || d.phase !== "buzz" || d.buzz) return;
+    d.buzz = who;
+    d.first = who;
+    if (d.mode === "answers") d.phase = "answers";
+    else d.phase = "wait-call";
+    duelRenderPhase();
+  }
+
+  function duelSaid(step) {
+    const d = state.duel;
+    if (step === 1 && d.phase === "wait-call") {
+      d.phase = "judge";
+      duelRenderPhase();
+    } else if (step === 2 && d.phase === "wait-call2") {
+      d.phase = "judge2";
+      duelRenderPhase();
+    }
+  }
+
+  function duelGoBrief() {
+    const d = state.duel;
+    if (d.p1 >= d.goal || d.p2 >= d.goal) {
+      d.phase = "win";
+      d.over = true;
+      saveScore("duel", Math.max(d.p1, d.p2), 0);
+    } else {
+      d.phase = "brief";
+    }
+    duelPaintScores();
+    duelRenderPhase();
+  }
+
+  function duelJudge(ok) {
+    const d = state.duel;
+    if (d.phase !== "judge") return;
+    if (ok) {
+      d["p" + d.first] += 1;
+      d.awardText = "Spieler " + d.first + ": +1";
+      duelGoBrief();
+    } else {
+      d.phase = "wait-call2";
+      duelRenderPhase();
+    }
+  }
+
+  function duelJudge2(ok) {
+    const d = state.duel;
+    if (d.phase !== "judge2") return;
+    const other = d.first === 1 ? 2 : 1;
+    if (ok) {
+      d["p" + other] += 2;
+      d.awardText = "Spieler " + other + ": +2 (doppelt)";
+    } else {
+      d.awardText = "Beide daneben · 0 Punkte";
+    }
+    duelGoBrief();
   }
 
   function duelAnswer(who, id) {
-    const ok = id === state.duel.current.id;
-    if (ok) state.duel["p" + who] += 1;
-    else state.duel["p" + (who === 1 ? 2 : 1)] += 1;
-    $("#sc1").textContent = String(state.duel.p1);
-    $("#sc2").textContent = String(state.duel.p2);
-    if (state.duel.p1 >= state.duel.goal || state.duel.p2 >= state.duel.goal) {
-      const w = state.duel.p1 >= state.duel.goal ? 1 : 2;
-      toast("Spieler " + w + " gewinnt " + state.duel.p1 + ":" + state.duel.p2);
-      saveScore("duel", Math.max(state.duel.p1, state.duel.p2), 0);
-      setTimeout(() => {
-        fillSteckbrief("res", state.duel.current, true);
-        $("#res-banner").className = "banner";
-        $("#res-h").textContent = "Spieler " + w + " gewinnt";
-        $("#res-pts").innerHTML = state.duel.p1 + " : " + state.duel.p2 + "<small>Zuerst " + state.duel.goal + " Punkte</small>";
-        $("#res-next").textContent = "Nochmal";
-        $("#res-next").onclick = startDuel;
-        show("result");
-      }, 700);
-      return;
+    const d = state.duel;
+    if (d.phase !== "answers" || who !== d.first) return;
+    const ok = id === d.current.id;
+    if (ok) {
+      d["p" + who] += 1;
+      d.awardText = "Spieler " + who + ": +1";
+    } else {
+      const other = who === 1 ? 2 : 1;
+      d["p" + other] += 1;
+      d.awardText = "Falsch · Spieler " + other + ": +1";
     }
-    setTimeout(duelNext, 700);
+    duelGoBrief();
+  }
+
+  function duelAdvance() {
+    const d = state.duel;
+    if (!d || d.advancing) return;
+    if (d.phase !== "brief") return;
+    d.advancing = true;
+    duelNext();
   }
 
   /* ---------- credits / scores ---------- */
   function renderCredits() {
     const imgs = [];
     vehicles().forEach((v) => v.images.forEach((im) => imgs.push({ v, im })));
-    let html = "<p>Nur frei lizenzierte Fotos von Wikimedia Commons. Jede Datei wurde über die Dateiseite bzw. die Commons-API auf die Lizenz geprüft. Bearbeitungen: Verkleinern auf ca. 1200 Pixel Breite. Bei CC BY-SA gilt Share-Alike für die bearbeitete Datei.</p>";
+    let html = "<p>Nur frei lizenzierte Fotos von Wikimedia Commons. Jede Datei wurde über die Dateiseite bzw. die Commons-API auf die Lizenz geprüft. Bearbeitungen: Verkleinern auf ca. 1200 Pixel Breite; bearbeitet: Kennzeichen unkenntlich gemacht. Bei CC BY-SA gilt Share-Alike für die bearbeitete Datei.</p>";
     html += "<p>Zielansprache ist ein inoffizieller Prototyp und steht in keiner Verbindung zur Bundeswehr oder zu anderen Streitkräften.</p>";
     html += "<h2>" + imgs.length + " Bilder</h2><ol>";
     imgs.forEach(({ v, im }) => {
       html += "<li><strong>" + v.name + "</strong> (" + (VIEW_LABEL[im.view] || im.view) + ") — " +
         (im.author || "unbekannt") + " · " + im.license +
         (im.source ? ' · <a href="' + im.source + '" target="_blank" rel="noopener">Quelle</a>' : "") +
+        (im.edited ? " · " + im.edited : "") +
         "</li>";
     });
     html += "</ol>";
@@ -644,7 +877,7 @@
     else if (name === "fof") startQuiz("fof");
     else if (name === "daily") startQuiz("quiz", { daily: true, total: 12 });
     else if (name === "learn") renderLearn();
-    else if (name === "duel") startDuel();
+    else if (name === "duel") renderDuelSetup();
     else if (name === "credits") renderCredits();
     else if (name === "scores") renderScores();
   }
@@ -659,8 +892,41 @@
     if (state.q > 1) endRound();
     else show("menu");
   };
-  $("#bz1").onclick = () => duelBuzz(1);
-  $("#bz2").onclick = () => duelBuzz(2);
+  $("#duel-start").onclick = startDuel;
+  $("#sc-duel").addEventListener("click", (e) => {
+    const buzz = e.target.closest("[data-buzz]");
+    if (buzz) {
+      duelBuzz(Number(buzz.getAttribute("data-buzz")));
+      return;
+    }
+    const said = e.target.closest("[data-said]");
+    if (said) {
+      duelSaid(Number(said.getAttribute("data-said")));
+      return;
+    }
+    const j = e.target.closest("[data-judge]");
+    if (j) {
+      duelJudge(j.getAttribute("data-judge") === "ok");
+      return;
+    }
+    const j2 = e.target.closest("[data-judge2]");
+    if (j2) {
+      duelJudge2(j2.getAttribute("data-judge2") === "ok");
+      return;
+    }
+    const ans = e.target.closest("[data-ans]");
+    if (ans) {
+      duelAnswer(state.duel.first, ans.getAttribute("data-ans"));
+      return;
+    }
+    if (e.target.closest("[data-duel-next]")) {
+      duelAdvance();
+      return;
+    }
+    if (e.target.closest("[data-duel-again]")) {
+      startDuel();
+    }
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -680,13 +946,20 @@
     }
     const duelOn = $("#sc-duel").classList.contains("on");
     if (duelOn) {
-      if (e.code === "Space" || e.key === "m" || e.key === "M") {
-        e.preventDefault();
-        duelBuzz(1);
-      }
-      if (e.key === "q" || e.key === "Q") {
-        e.preventDefault();
-        duelBuzz(2);
+      const phase = state.duel && state.duel.phase;
+      const p1key = e.code === "Space" || e.key === "m" || e.key === "M";
+      const p2key = e.key === "q" || e.key === "Q";
+      if (p1key || p2key) e.preventDefault();
+      if (phase === "buzz") {
+        if (p1key) duelBuzz(1);
+        if (p2key) duelBuzz(2);
+      } else if (phase === "wait-call") {
+        if ((p1key && state.duel.first === 1) || (p2key && state.duel.first === 2)) duelSaid(1);
+      } else if (phase === "wait-call2") {
+        const other = state.duel.first === 1 ? 2 : 1;
+        if ((p1key && other === 1) || (p2key && other === 2)) duelSaid(2);
+      } else if (phase === "brief" && (p1key || p2key)) {
+        duelAdvance();
       }
     }
   });

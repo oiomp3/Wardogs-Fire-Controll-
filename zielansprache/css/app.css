@@ -147,10 +147,24 @@ img{max-width:100%;display:block}
 .half .pic{flex:1;min-height:0;border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;background:#0b0d09}
 .half .pic img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
 .half .pic .credit{font-size:10px;padding:20px 8px 6px}
-.buzzer{margin-top:8px;height:64px;border-radius:14px;background:var(--ochre);color:#1a1508;font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:24px;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18)}
-.buzzer[disabled]{opacity:.4}
-.half .answers{padding:8px 0 0;gap:6px}
+.buzzer,.said-btn{margin-top:8px;height:64px;border-radius:14px;background:var(--ochre);color:#1a1508;font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:22px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18);width:100%}
+.buzzer[disabled],.said-btn[disabled]{opacity:.4}
+.half .answers{padding:8px 0 0;gap:6px;display:flex;flex-direction:column}
 .half .ans{min-height:40px;font-size:15px}
+.half .act{flex:none}
+.half .sol{margin-top:6px;text-align:center;color:var(--sand)}
+.half .sol .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sand-dim)}
+.half .sol h3{font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.half .sol .sub{font-size:12px;color:var(--text-dim)}
+.judge-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.judge-btn{height:64px;border-radius:14px;font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:22px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;justify-content:center}
+.judge-btn.ok{background:#4d6a38;color:#eef6de}
+.judge-btn.no{background:#7a3e2c;color:#f6e4da}
+.duel-wait{margin-top:8px;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:var(--text-dim);padding:0 8px}
+.duel-brief{margin-top:6px;font-size:13px;color:var(--text-dim);line-height:1.35}
+.duel-brief ul{margin:4px 0 0 16px}
+.duel-award{margin-top:4px;font-family:"Oxanium",sans-serif;font-weight:700;color:var(--ochre)}
+.setup-note{padding:0 var(--pad) 8px;font-size:14px;line-height:1.4;color:var(--text-dim)}
 
 .credits{padding:8px var(--pad) 24px;font-size:13px;line-height:1.45;color:var(--text-dim)}
 .credits h2{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--sand);margin:16px 0 6px}

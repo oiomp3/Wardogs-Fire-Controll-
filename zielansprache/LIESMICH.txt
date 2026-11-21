@@ -6,8 +6,11 @@ Kein Internet nötig. Am Handy und am PC spielbar (am Handy die Datei
 im Dateimanager antippen oder auf den PC kopieren).
 
 Enthalten: Schnellquiz, Freund oder Feind, Lernmodus, 1 gegen 1
-auf einem Gerät, Kategorie-Auswahl und Bildnachweise.
-Bestenlisten bleiben in diesem Browser gespeichert.
+auf einem Gerät (Ansage oder mit Antworten), Kategorie-Auswahl
+und Bildnachweise. Bestenlisten bleiben in diesem Browser gespeichert.
+
+Auf den Fahrzeugfotos sind nationale Kennzeichen, Fahnen und
+Nummernschilder unkenntlich gemacht.
 
 Inoffiziell und nur zum Testen. Keine Verbindung zur Bundeswehr
 oder zu anderen Streitkräften. Alle Fotos sind frei lizenziert

@@ -23,7 +23,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A7_right_side.JPG",
-        "title": "File:Leopard 2A7 right side.JPG"
+        "title": "File:Leopard 2A7 right side.JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "rear",
@@ -32,7 +33,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A7_turret_back_side.jpg",
-        "title": "File:Leopard 2A7 turret back side.jpg"
+        "title": "File:Leopard 2A7 turret back side.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -41,7 +43,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A7.JPG",
-        "title": "File:Leopard 2 A7.JPG"
+        "title": "File:Leopard 2 A7.JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -69,7 +72,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A6_tank_-_IL%C3%9C_2012.jpg",
-        "title": "File:Leopard 2A6 tank - ILÜ 2012.jpg"
+        "title": "File:Leopard 2A6 tank - ILÜ 2012.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -97,7 +101,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A5_front_view.jpg",
-        "title": "File:Leopard 2A5 front view.jpg"
+        "title": "File:Leopard 2A5 front view.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -106,7 +111,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A5_in_dust.jpg",
-        "title": "File:Leopard 2 A5 in dust.jpg"
+        "title": "File:Leopard 2 A5 in dust.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -115,7 +121,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A5_der_Bundeswehr.jpg",
-        "title": "File:Leopard 2 A5 der Bundeswehr.jpg"
+        "title": "File:Leopard 2 A5 der Bundeswehr.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -143,7 +150,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:UA_44_bde_Leopard_1A5_with_Kontakt-1_01.jpg",
-        "title": "File:UA 44 bde Leopard 1A5 with Kontakt-1 01.jpg"
+        "title": "File:UA 44 bde Leopard 1A5 with Kontakt-1 01.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -171,7 +179,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Puma_Turm_rechts.jpg",
-        "title": "File:Puma Turm rechts.jpg"
+        "title": "File:Puma Turm rechts.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -180,7 +189,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 2.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:IFV_Puma_2015_(19727694195).jpg",
-        "title": "File:IFV Puma 2015 (19727694195).jpg"
+        "title": "File:IFV Puma 2015 (19727694195).jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -208,7 +218,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Marder_1A3_1.jpg",
-        "title": "File:Marder 1A3 1.jpg"
+        "title": "File:Marder 1A3 1.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -217,7 +228,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Marder_1A3.jpg",
-        "title": "File:Marder 1A3.jpg"
+        "title": "File:Marder 1A3.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -245,7 +257,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Gepanzertes_Transportkraftfahrzeug_(GTK)_Boxer_-_Frontansicht.jpg",
-        "title": "File:Gepanzertes Transportkraftfahrzeug (GTK) Boxer - Frontansicht.jpg"
+        "title": "File:Gepanzertes Transportkraftfahrzeug (GTK) Boxer - Frontansicht.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -254,7 +267,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:KMW_Boxer_(armoured_fighting_vehicle).JPG",
-        "title": "File:KMW Boxer (armoured fighting vehicle).JPG"
+        "title": "File:KMW Boxer (armoured fighting vehicle).JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -282,7 +296,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:TPz_1_Fuchs_NBC_reconnaissance_vehicle.jpg",
-        "title": "File:TPz 1 Fuchs NBC reconnaissance vehicle.jpg"
+        "title": "File:TPz 1 Fuchs NBC reconnaissance vehicle.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -291,7 +306,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Transportpanzer_Fuchs_(TPz_Fuchs)_der_Bundeswehr_(10579660405).jpg",
-        "title": "File:Transportpanzer Fuchs (TPz Fuchs) der Bundeswehr (10579660405).jpg"
+        "title": "File:Transportpanzer Fuchs (TPz Fuchs) der Bundeswehr (10579660405).jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -300,7 +316,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Netherlands_-_TPz_Fuchs_-_NBC.jpg",
-        "title": "File:Netherlands - TPz Fuchs - NBC.jpg"
+        "title": "File:Netherlands - TPz Fuchs - NBC.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -328,7 +345,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hwagen_Fennek_(4x4).JPG",
-        "title": "File:Spähwagen Fennek (4x4).JPG"
+        "title": "File:Spähwagen Fennek (4x4).JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -356,7 +374,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:DSC05680_KMW_Dingo,_Bundesheer,_Front_Right,_2023-10.jpg",
-        "title": "File:DSC05680 KMW Dingo, Bundesheer, Front Right, 2023-10.jpg"
+        "title": "File:DSC05680 KMW Dingo, Bundesheer, Front Right, 2023-10.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "rear",
@@ -365,7 +384,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:DSC05682_KMW_Dingo,_Bundesheer,_Rear_Right,_2023-10.jpg",
-        "title": "File:DSC05682 KMW Dingo, Bundesheer, Rear Right, 2023-10.jpg"
+        "title": "File:DSC05682 KMW Dingo, Bundesheer, Rear Right, 2023-10.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -374,7 +394,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
         "source": "https://commons.wikimedia.org/wiki/File:Dingo,_ILA_2024,_Schoenefeld_(ILA44572).jpg",
-        "title": "File:Dingo, ILA 2024, Schoenefeld (ILA44572).jpg"
+        "title": "File:Dingo, ILA 2024, Schoenefeld (ILA44572).jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -402,7 +423,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_front.JPG",
-        "title": "File:Bundeswehr mowag eagle IV front.JPG"
+        "title": "File:Bundeswehr mowag eagle IV front.JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -411,7 +433,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_back.JPG",
-        "title": "File:Bundeswehr mowag eagle IV back.JPG"
+        "title": "File:Bundeswehr mowag eagle IV back.JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -420,7 +443,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_side.JPG",
-        "title": "File:Bundeswehr mowag eagle IV side.JPG"
+        "title": "File:Bundeswehr mowag eagle IV side.JPG",
+        "edited": ""
       }
     ]
   },
@@ -448,7 +472,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Dutch_Panzerhaubitz_fires_in_Afghanistan.jpg",
-        "title": "File:Dutch Panzerhaubitz fires in Afghanistan.jpg"
+        "title": "File:Dutch Panzerhaubitz fires in Afghanistan.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -457,7 +482,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Panzerhaubitze_2000_of_the_Croatian_Army.jpg",
-        "title": "File:Panzerhaubitze 2000 of the Croatian Army.jpg"
+        "title": "File:Panzerhaubitze 2000 of the Croatian Army.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -485,7 +511,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Flugabwehrkanonenpanzer_Gepard.jpg",
-        "title": "File:Flugabwehrkanonenpanzer Gepard.jpg"
+        "title": "File:Flugabwehrkanonenpanzer Gepard.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -494,7 +521,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
         "source": "https://commons.wikimedia.org/wiki/File:Gepard_1a2_overview.jpg",
-        "title": "File:Gepard 1a2 overview.jpg"
+        "title": "File:Gepard 1a2 overview.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -522,7 +550,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hpanzer_2_Luchs_(51442690757).jpg",
-        "title": "File:Spähpanzer 2 Luchs (51442690757).jpg"
+        "title": "File:Spähpanzer 2 Luchs (51442690757).jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -531,7 +560,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hpanzer_Luchs_(Prototyp).jpg",
-        "title": "File:Spähpanzer Luchs (Prototyp).jpg"
+        "title": "File:Spähpanzer Luchs (Prototyp).jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -540,7 +570,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Een_Duits_verkenningsvoertuig_Luchs_Sp%C3%A4hpanzer_(2107_97101513).jpg",
-        "title": "File:Een Duits verkenningsvoertuig Luchs Spähpanzer (2107 97101513).jpg"
+        "title": "File:Een Duits verkenningsvoertuig Luchs Spähpanzer (2107 97101513).jpg",
+        "edited": ""
       }
     ]
   },
@@ -568,7 +599,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Challenger_2_%22Amazon%22.jpg",
-        "title": "File:Challenger 2 \"Amazon\".jpg"
+        "title": "File:Challenger 2 \"Amazon\".jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -577,16 +609,8 @@ window.ZA_VEHICLES = [
         "license": "CC0",
         "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
         "source": "https://commons.wikimedia.org/wiki/File:Challenger_2_MBT_in_Estonia-902250.jpeg",
-        "title": "File:Challenger 2 MBT in Estonia-902250.jpeg"
-      },
-      {
-        "view": "oblique",
-        "file": "challenger2-oblique-3.jpg",
-        "author": "Swadim",
-        "license": "CC BY-SA 4.0",
-        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:CHALLENGER_II_DSEI_2019.jpg",
-        "title": "File:CHALLENGER II DSEI 2019.jpg"
+        "title": "File:Challenger 2 MBT in Estonia-902250.jpeg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -614,7 +638,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leclerc_Prot.jpg",
-        "title": "File:Leclerc Prot.jpg"
+        "title": "File:Leclerc Prot.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -623,7 +648,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leclerc_EVO.jpg",
-        "title": "File:Leclerc EVO.jpg"
+        "title": "File:Leclerc EVO.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -632,7 +658,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Leclerc_EVOlution.jpg",
-        "title": "File:Leclerc EVOlution.jpg"
+        "title": "File:Leclerc EVOlution.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -660,7 +687,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:M1A1_abrams_front.jpg",
-        "title": "File:M1A1 abrams front.jpg"
+        "title": "File:M1A1 abrams front.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -669,7 +697,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:M1A2_Abrams_firing.jpg",
-        "title": "File:M1A2 Abrams firing.jpg"
+        "title": "File:M1A2 Abrams firing.jpg",
+        "edited": ""
       }
     ]
   },
@@ -697,7 +726,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:M2a3-bradley07.jpg",
-        "title": "File:M2a3-bradley07.jpg"
+        "title": "File:M2a3-bradley07.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -706,7 +736,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:M2A3_Bradley_Security.jpg",
-        "title": "File:M2A3 Bradley Security.jpg"
+        "title": "File:M2A3 Bradley Security.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -715,7 +746,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:M2A3_Bradley_Fighting_Vehicles_in_northeast_Syria.jpg",
-        "title": "File:M2A3 Bradley Fighting Vehicles in northeast Syria.jpg"
+        "title": "File:M2A3 Bradley Fighting Vehicles in northeast Syria.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -743,7 +775,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:CV_90_Mk_IV_SIAF-2022.jpg",
-        "title": "File:CV 90 Mk IV SIAF-2022.jpg"
+        "title": "File:CV 90 Mk IV SIAF-2022.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -752,7 +785,8 @@ window.ZA_VEHICLES = [
         "license": "CC0",
         "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
         "source": "https://commons.wikimedia.org/wiki/File:Combat_Vehicle_90_at_Estonian_parade-902243.jpeg",
-        "title": "File:Combat Vehicle 90 at Estonian parade-902243.jpeg"
+        "title": "File:Combat Vehicle 90 at Estonian parade-902243.jpeg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -780,7 +814,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:K2_Tank_Joins_the_Fight_with_eFP_Battle_Group_Poland_-_2.jpg",
-        "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 2.jpg"
+        "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 2.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -789,7 +824,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:K2_Tank_Joins_the_Fight_with_eFP_Battle_Group_Poland_-_1.jpg",
-        "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 1.jpg"
+        "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 1.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -798,7 +834,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:K2_black_panther3.jpg",
-        "title": "File:K2 black panther3.jpg"
+        "title": "File:K2 black panther3.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -826,7 +863,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:T-64BV_mod.1987.jpg",
-        "title": "File:T-64BV mod.1987.jpg"
+        "title": "File:T-64BV mod.1987.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -835,7 +873,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:NGU_T-64BV_MBT.jpg",
-        "title": "File:NGU T-64BV MBT.jpg"
+        "title": "File:NGU T-64BV MBT.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -863,7 +902,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BTR-4_Iraq.jpg",
-        "title": "File:BTR-4 Iraq.jpg"
+        "title": "File:BTR-4 Iraq.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -872,7 +912,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BTR-4MV_03.jpg",
-        "title": "File:BTR-4MV 03.jpg"
+        "title": "File:BTR-4MV 03.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -900,7 +941,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:T-72B3_-_TankBiathlon2013-09.jpg",
-        "title": "File:T-72B3 - TankBiathlon2013-09.jpg"
+        "title": "File:T-72B3 - TankBiathlon2013-09.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -909,7 +951,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Destroyed_T-72B3_in_Tsyrkuny,_north_of_Kharkiv,_Ukraine.jpg",
-        "title": "File:Destroyed T-72B3 in Tsyrkuny, north of Kharkiv, Ukraine.jpg"
+        "title": "File:Destroyed T-72B3 in Tsyrkuny, north of Kharkiv, Ukraine.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -918,7 +961,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 3.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:T-72B3.jpg",
-        "title": "File:T-72B3.jpg"
+        "title": "File:T-72B3.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -946,7 +990,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:T-80BVM.jpg",
-        "title": "File:T-80BVM.jpg"
+        "title": "File:T-80BVM.jpg",
+        "edited": ""
       }
     ]
   },
@@ -974,7 +1019,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:T-90M.jpg",
-        "title": "File:T-90M.jpg"
+        "title": "File:T-90M.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -983,7 +1029,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:The_80th_Air_Assault_Brigade_captured_a_T-90M_Proryv_tank_in_the_Kursk_region.jpg",
-        "title": "File:The 80th Air Assault Brigade captured a T-90M Proryv tank in the Kursk region.jpg"
+        "title": "File:The 80th Air Assault Brigade captured a T-90M Proryv tank in the Kursk region.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -992,7 +1039,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Destroyed_T-90M_of_Russian_Army_3.jpg",
-        "title": "File:Destroyed T-90M of Russian Army 3.jpg"
+        "title": "File:Destroyed T-90M of Russian Army 3.jpg",
+        "edited": ""
       }
     ]
   },
@@ -1020,7 +1068,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%B0%D1%80%D1%8B%D0%BE%D0%B7%D0%B5%D0%BA,_%D0%91%D0%9C%D0%9F-2_%D0%BD%D0%B0_%D0%96%D0%B8%D0%B1%D0%B5%D0%BA_%D0%B6%D0%BE%D0%BB%D1%8B.jpg",
-        "title": "File:Сарыозек, БМП-2 на Жибек жолы.jpg"
+        "title": "File:Сарыозек, БМП-2 на Жибек жолы.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1029,7 +1078,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:BMP-2_military_parade_rehearsal.jpg",
-        "title": "File:BMP-2 military parade rehearsal.jpg"
+        "title": "File:BMP-2 military parade rehearsal.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1057,7 +1107,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:TB2015ExhibitionP2-42.jpg",
-        "title": "File:TB2015ExhibitionP2-42.jpg"
+        "title": "File:TB2015ExhibitionP2-42.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1066,7 +1117,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BMP-3_Kubinka.jpg",
-        "title": "File:BMP-3 Kubinka.jpg"
+        "title": "File:BMP-3 Kubinka.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1075,7 +1127,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BMP-3_(3).jpg",
-        "title": "File:BMP-3 (3).jpg"
+        "title": "File:BMP-3 (3).jpg",
+        "edited": ""
       }
     ]
   },
@@ -1103,7 +1156,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:Btr-80_in_Serbia.jpg",
-        "title": "File:Btr-80 in Serbia.jpg"
+        "title": "File:Btr-80 in Serbia.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1112,7 +1166,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Moscow_2012_Victory_Day_Parade_Rehearsal,_BTR-80,_Russia.jpg",
-        "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80, Russia.jpg"
+        "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80, Russia.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1121,7 +1176,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Moscow_2012_Victory_Day_Parade_Rehearsal,_BTR-80_APC,_Russia.jpg",
-        "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80 APC, Russia.jpg"
+        "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80 APC, Russia.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1149,7 +1205,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BTR-82A_turret_-_June_2023.jpg",
-        "title": "File:BTR-82A turret - June 2023.jpg"
+        "title": "File:BTR-82A turret - June 2023.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -1158,7 +1215,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BTR-82A_of_the_Western_Military_District_-_June_2023.jpg",
-        "title": "File:BTR-82A of the Western Military District - June 2023.jpg"
+        "title": "File:BTR-82A of the Western Military District - June 2023.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1167,7 +1225,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BTR-80_and_BTR-82A_with_RP-377_jammer.jpg",
-        "title": "File:BTR-80 and BTR-82A with RP-377 jammer.jpg"
+        "title": "File:BTR-80 and BTR-82A with RP-377 jammer.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1195,7 +1254,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_in_Korolyov_Moscow_Oblast.jpg",
-        "title": "File:BRDM-2 in Korolyov Moscow Oblast.jpg"
+        "title": "File:BRDM-2 in Korolyov Moscow Oblast.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1204,7 +1264,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_on_a_military_parade.JPEG",
-        "title": "File:BRDM-2 on a military parade.JPEG"
+        "title": "File:BRDM-2 on a military parade.JPEG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1213,7 +1274,8 @@ window.ZA_VEHICLES = [
         "license": "CC0",
         "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
         "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_(1964)_owned_by_James_Stewart_pic6.JPG",
-        "title": "File:BRDM-2 (1964) owned by James Stewart pic6.JPG"
+        "title": "File:BRDM-2 (1964) owned by James Stewart pic6.JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1241,7 +1303,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 3.0",
         "license_url": "https://creativecommons.org/licenses/by/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Ukrainian_BMD-2_tank_(3).JPG",
-        "title": "File:Ukrainian BMD-2 tank (3).JPG"
+        "title": "File:Ukrainian BMD-2 tank (3).JPG",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1250,7 +1313,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:BMD-2_airborne_combat_vehicle.jpg",
-        "title": "File:BMD-2 airborne combat vehicle.jpg"
+        "title": "File:BMD-2 airborne combat vehicle.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1259,7 +1323,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 2.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:BMD-2.jpg",
-        "title": "File:BMD-2.jpg"
+        "title": "File:BMD-2.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1287,7 +1352,8 @@ window.ZA_VEHICLES = [
         "license": "Public domain",
         "license_url": "",
         "source": "https://commons.wikimedia.org/wiki/File:Soviet_MT-LB.JPEG",
-        "title": "File:Soviet MT-LB.JPEG"
+        "title": "File:Soviet MT-LB.JPEG",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -1296,7 +1362,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:UA_93_bgd_MT-LB-S_01.jpg",
-        "title": "File:UA 93 bgd MT-LB-S 01.jpg"
+        "title": "File:UA 93 bgd MT-LB-S 01.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -1305,7 +1372,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:UA_30th_bgd_MT-LB-S_03.jpg",
-        "title": "File:UA 30th bgd MT-LB-S 03.jpg"
+        "title": "File:UA 30th bgd MT-LB-S 03.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   },
@@ -1333,7 +1401,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_09.jpg",
-        "title": "File:2S19 Msta-S PM MWB 09.jpg"
+        "title": "File:2S19 Msta-S PM MWB 09.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1342,7 +1411,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_03.jpg",
-        "title": "File:2S19 Msta-S PM MWB 03.jpg"
+        "title": "File:2S19 Msta-S PM MWB 03.jpg",
+        "edited": ""
       },
       {
         "view": "oblique",
@@ -1351,7 +1421,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_12.jpg",
-        "title": "File:2S19 Msta-S PM MWB 12.jpg"
+        "title": "File:2S19 Msta-S PM MWB 12.jpg",
+        "edited": ""
       }
     ]
   },
@@ -1379,7 +1450,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Sanit%C3%A4tsfahrzeug_Wiesel_2.jpg",
-        "title": "File:Sanitätsfahrzeug Wiesel 2.jpg"
+        "title": "File:Sanitätsfahrzeug Wiesel 2.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       },
       {
         "view": "oblique",
@@ -1388,7 +1460,8 @@ window.ZA_VEHICLES = [
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Wiesel_1_TOW.jpg",
-        "title": "File:Wiesel 1 TOW.jpg"
+        "title": "File:Wiesel 1 TOW.jpg",
+        "edited": "Kennzeichen unkenntlich gemacht"
       }
     ]
   }
