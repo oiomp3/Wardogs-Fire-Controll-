@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141711">
+  <meta name="description" content="Zielansprache – Prototyp zur Fahrzeugerkennung. Inoffiziell, keine Verbindung zur Bundeswehr.">
+  <title>Zielansprache – Prototyp</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- MENU -->
+    <section class="screen on" id="sc-menu">
+      <div class="status"><span data-clock>13:08</span><span>Prototyp</span></div>
+      <div class="brand">
+        <div class="kicker">Training</div>
+        <div class="logo">ZIELANSPRACHE</div>
+        <div class="sub">Fahrzeugerkennung</div>
+      </div>
+      <button class="hero" data-go="daily" type="button">
+        <img id="hero-img" alt="">
+        <div class="shade"></div>
+        <div class="caption">
+          <div>
+            <div class="t1">Tägliche Aufgabe</div>
+            <div class="t2" id="daily-sub">12 Fragen · festes Bild</div>
+          </div>
+          <div class="pill">HEUTE</div>
+        </div>
+      </button>
+      <div class="tiles">
+        <button class="tile accent" data-go="quiz" type="button">
+          <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="24" cy="24" r="15"/><circle cx="24" cy="24" r="5"/><path d="M24 3v7M24 38v7M3 24h7M38 24h7"/></svg>
+          <div><h2>Schnellquiz</h2><p>Auf Zeit, vier Antworten</p></div>
+        </button>
+        <button class="tile" data-go="fof" type="button">
+          <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 12L8 24l10 12"/><path d="M30 12l10 12-10 12"/></svg>
+          <div><h2>Freund oder Feind</h2><p>Zuerst die Seite, dann der Typ</p></div>
+        </button>
+        <button class="tile" data-go="learn" type="button">
+          <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10 8h22l6 6v26H10V8z"/><path d="M32 8v6h6M18 22h12M18 30h12"/></svg>
+          <div><h2>Lernmodus</h2><p>Steckbriefe, Wischen frei</p></div>
+        </button>
+        <button class="tile" data-go="duel" type="button">
+          <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="6" y="8" width="36" height="32" rx="3"/><path d="M24 8v32"/><circle cx="15" cy="24" r="3"/><circle cx="33" cy="24" r="3"/></svg>
+          <div><h2>1 gegen 1</h2><p>Ein Gerät, geteilter Schirm</p></div>
+        </button>
+      </div>
+      <div class="footer">
+        <button class="link" data-go="credits" type="button">Bildnachweise</button>
+        <button class="link" data-go="cats" type="button">Kategorien</button>
+        <button class="link" data-go="scores" type="button">Bestenliste</button>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="screen" id="sc-cats">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Zurück">‹</button>
+        <h1>Kategorie</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="pool"><div class="label">Fahrzeuge im Pool</div><div class="num" id="pool-count">0 <span>Typen</span></div></div>
+      <div class="section"><h3>Voreinstellungen</h3><div class="chips" id="presets"></div></div>
+      <div class="section"><h3>Klasse</h3><div class="chips" id="chip-klasse"></div></div>
+      <div class="section"><h3>Seite</h3><div class="chips" id="chip-seite"></div></div>
+      <div class="section"><h3>Ära</h3><div class="chips" id="chip-aera"></div></div>
+      <div class="section"><h3>Ansicht</h3><div class="chips" id="chip-view"></div></div>
+      <div class="summary" id="pool-summary"></div>
+      <div class="cta-wrap"><button class="cta" data-go="menu" type="button">Übernehmen</button></div>
+    </section>
+
+    <!-- QUIZ / FOF -->
+    <section class="screen" id="sc-quiz">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" id="quiz-close" type="button" aria-label="Schließen">✕</button>
+        <h1 id="quiz-title">Schnellquiz</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="k">Frage</div><div class="v" id="st-q">1/12</div></div>
+        <div class="stat"><div class="k">Zeit</div><div class="v" id="st-t">0:20</div></div>
+        <div class="stat"><div class="k">Punkte</div><div class="v" id="st-s">0</div></div>
+        <div class="stat"><div class="k">Serie</div><div class="v" id="st-k">×0</div></div>
+      </div>
+      <div class="photo-wrap" id="quiz-photo"><img alt="Fahrzeug"><div class="credit" id="quiz-credit"></div></div>
+      <div class="dots" id="quiz-dots"></div>
+      <div class="hint" id="quiz-hint"></div>
+      <div class="answers" id="quiz-answers"></div>
+    </section>
+
+    <!-- RESULT / STECKBRIEF -->
+    <section class="screen" id="sc-result">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Menü">‹</button>
+        <h1>Steckbrief</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="banner" id="res-banner"><h2 id="res-h">Richtig</h2><div class="pts" id="res-pts"></div></div>
+      <div class="photo-wrap" id="res-photo"><img alt=""><div class="credit" id="res-credit"></div></div>
+      <div class="dots" id="res-dots"></div>
+      <div class="vehicle"><h2 id="res-name"></h2><div class="tags" id="res-tags"></div></div>
+      <div class="features"><h3>Erkennungsmerkmale</h3><ul id="res-feat"></ul></div>
+      <div class="note" id="res-note"></div>
+      <div class="cta-wrap">
+        <button class="cta" id="res-next" type="button">Nächste Frage</button>
+        <button class="cta ghost" data-go="menu" type="button">Zurück zum Menü</button>
+      </div>
+    </section>
+
+    <!-- LEARN LIST -->
+    <section class="screen" id="sc-learn">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Zurück">‹</button>
+        <h1>Lernmodus</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="pool"><div class="label">Im aktuellen Pool</div><div class="num" id="learn-count">0 <span>Typen</span></div></div>
+      <div class="learn-list" id="learn-list"></div>
+    </section>
+
+    <!-- DUEL -->
+    <section class="screen" id="sc-duel">
+      <div class="duel">
+        <div class="half away" id="duel-p2">
+          <div class="who"><div class="name">Spieler 2</div><div class="score" id="sc2">0</div></div>
+          <div class="meta" id="meta2">Frage · Ansicht gesperrt · Taste Q</div>
+          <div class="pic"><img id="img2" alt=""><div class="credit" id="cr2"></div></div>
+          <button class="buzzer" id="bz2" type="button">Buzzer</button>
+          <div class="answers" id="ans2" hidden></div>
+        </div>
+        <div class="seam"></div>
+        <div class="half" id="duel-p1">
+          <div class="who"><div class="name">Spieler 1</div><div class="score" id="sc1">0</div></div>
+          <div class="meta" id="meta1">Frage · Ansicht gesperrt · Leertaste</div>
+          <div class="pic"><img id="img1" alt=""><div class="credit" id="cr1"></div></div>
+          <button class="buzzer" id="bz1" type="button">Buzzer</button>
+          <div class="answers" id="ans1" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="screen" id="sc-credits">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Zurück">‹</button>
+        <h1>Bildnachweise</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="credits" id="credits-body"></div>
+    </section>
+
+    <!-- SCORES -->
+    <section class="screen" id="sc-scores">
+      <div class="status"><span data-clock></span><span>Prototyp</span></div>
+      <div class="topbar">
+        <button class="icon-btn" data-go="menu" type="button" aria-label="Zurück">‹</button>
+        <h1>Bestenliste</h1>
+        <div class="spacer"></div>
+      </div>
+      <div class="credits">
+        <p>Gespeichert nur auf diesem Gerät.</p>
+        <h2>Schnellquiz</h2>
+        <ol class="hs" id="hs-quiz"></ol>
+        <h2>Freund oder Feind</h2>
+        <ol class="hs" id="hs-fof"></ol>
+        <h2>Tägliche Aufgabe</h2>
+        <ol class="hs" id="hs-daily"></ol>
+      </div>
+    </section>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="js/vehicles.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

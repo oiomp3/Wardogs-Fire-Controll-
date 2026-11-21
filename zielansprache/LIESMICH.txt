@@ -1,0 +1,14 @@
+Zielansprache – Offline-Prototyp
+
+ZIP entpacken, index.html im Browser öffnen.
+
+Kein Internet nötig. Am Handy und am PC spielbar (am Handy die Datei
+im Dateimanager antippen oder auf den PC kopieren).
+
+Enthalten: Schnellquiz, Freund oder Feind, Lernmodus, 1 gegen 1
+auf einem Gerät, Kategorie-Auswahl und Bildnachweise.
+Bestenlisten bleiben in diesem Browser gespeichert.
+
+Inoffiziell und nur zum Testen. Keine Verbindung zur Bundeswehr
+oder zu anderen Streitkräften. Alle Fotos sind frei lizenziert
+(Angaben unter „Bildnachweise“).

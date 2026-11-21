@@ -1,0 +1,1267 @@
+{
+  "ok": [
+    {
+      "id": "leo2a7",
+      "view": "oblique",
+      "file": "leo2a7-oblique-3.jpg",
+      "title": "File:Leopard 2 A7.JPG",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A7.JPG",
+      "orig_width": 1024,
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "leo2a6",
+      "view": "oblique",
+      "file": "leo2a6-oblique-5.jpg",
+      "title": "File:Leopard 2A6 tank - ILÜ 2012.jpg",
+      "author": "synaxonag",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A6_tank_-_IL%C3%9C_2012.jpg",
+      "orig_width": 1239,
+      "size": [
+        1200,
+        808
+      ]
+    },
+    {
+      "id": "abrams",
+      "view": "front",
+      "file": "abrams-front-44.jpg",
+      "title": "File:M1A1 abrams front.jpg",
+      "author": "U.S. Air Force photo by Tech Sgt John Houghton",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:M1A1_abrams_front.jpg",
+      "orig_width": 1902,
+      "size": [
+        1200,
+        1124
+      ]
+    },
+    {
+      "id": "t80bvm",
+      "view": "oblique",
+      "file": "t80bvm-oblique-64.jpg",
+      "title": "File:T-80BVM.jpg",
+      "author": "Ministry of Defence of the Russian Federation",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:T-80BVM.jpg",
+      "orig_width": 1200,
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "leo2a7",
+      "view": "side",
+      "file": "leo2a7-side-local.jpg",
+      "title": "File:Leopard 2A7 right side.JPG",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A7_right_side.JPG",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "leo2a5",
+      "view": "oblique",
+      "file": "leo2a5-oblique-local.jpg",
+      "title": "File:Leopard 2 A5 der Bundeswehr.jpg",
+      "author": "Bundeswehr-Fotos / Detmar Modes",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A5_der_Bundeswehr.jpg",
+      "size": [
+        1200,
+        803
+      ]
+    },
+    {
+      "id": "puma",
+      "view": "oblique",
+      "file": "puma-oblique-local.jpg",
+      "title": "File:IFV Puma 2015 (19727694195).jpg",
+      "author": "Katzennase",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:IFV_Puma_2015_(19727694195).jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "boxer",
+      "view": "oblique",
+      "file": "boxer-oblique-local.jpg",
+      "title": "File:KMW Boxer (armoured fighting vehicle).JPG",
+      "author": "Alf van Beem",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:KMW_Boxer_(armoured_fighting_vehicle).JPG",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "leo2a7",
+      "view": "rear",
+      "file": "leo2a7-rear-3.jpg",
+      "title": "File:Leopard 2A7 turret back side.jpg",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A7_turret_back_side.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "leo2a5",
+      "view": "front",
+      "file": "leo2a5-front-2.jpg",
+      "title": "File:Leopard 2A5 front view.jpg",
+      "author": "Sonaz",
+      "license": "CC BY-SA 3.0",
+      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2A5_front_view.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "leo2a5",
+      "view": "oblique",
+      "file": "leo2a5-oblique-3.jpg",
+      "title": "File:Leopard 2 A5 in dust.jpg",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leopard_2_A5_in_dust.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "leo1",
+      "view": "oblique",
+      "file": "leo1-oblique-3.jpg",
+      "title": "File:UA 44 bde Leopard 1A5 with Kontakt-1 01.jpg",
+      "author": "АрміяІнформ",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:UA_44_bde_Leopard_1A5_with_Kontakt-1_01.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "puma",
+      "view": "side",
+      "file": "puma-side-2.jpg",
+      "title": "File:Puma Turm rechts.jpg",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Puma_Turm_rechts.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "marder",
+      "view": "front",
+      "file": "marder-front-2.jpg",
+      "title": "File:Marder 1A3 1.jpg",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Marder_1A3_1.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "marder",
+      "view": "oblique",
+      "file": "marder-oblique-3.jpg",
+      "title": "File:Marder 1A3.jpg",
+      "author": "Bundeswehr-Fotos",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Marder_1A3.jpg",
+      "size": [
+        1200,
+        1079
+      ]
+    },
+    {
+      "id": "boxer",
+      "view": "front",
+      "file": "boxer-front-2.jpg",
+      "title": "File:Gepanzertes Transportkraftfahrzeug (GTK) Boxer - Frontansicht.jpg",
+      "author": "Bundeswehr-Fotos Wir.Dienen.Deutschland.",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Gepanzertes_Transportkraftfahrzeug_(GTK)_Boxer_-_Frontansicht.jpg",
+      "size": [
+        1200,
+        752
+      ]
+    },
+    {
+      "id": "fuchs",
+      "view": "oblique",
+      "file": "fuchs-oblique-1.jpg",
+      "title": "File:Transportpanzer Fuchs (TPz Fuchs) der Bundeswehr (10579660405).jpg",
+      "author": "Dirk Vorderstraße",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Transportpanzer_Fuchs_(TPz_Fuchs)_der_Bundeswehr_(10579660405).jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "fuchs",
+      "view": "front",
+      "file": "fuchs-front-2.jpg",
+      "title": "File:TPz 1 Fuchs NBC reconnaissance vehicle.jpg",
+      "author": "unknow, Released to Public by US Department of Defence",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:TPz_1_Fuchs_NBC_reconnaissance_vehicle.jpg",
+      "size": [
+        1200,
+        789
+      ]
+    },
+    {
+      "id": "fuchs",
+      "view": "oblique",
+      "file": "fuchs-oblique-3.jpg",
+      "title": "File:Netherlands - TPz Fuchs - NBC.jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Netherlands_-_TPz_Fuchs_-_NBC.jpg",
+      "size": [
+        960,
+        641
+      ]
+    },
+    {
+      "id": "fennek",
+      "view": "oblique",
+      "file": "fennek-oblique-1.jpg",
+      "title": "File:Spähwagen Fennek (4x4).JPG",
+      "author": "Huhu",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hwagen_Fennek_(4x4).JPG",
+      "size": [
+        1200,
+        797
+      ]
+    },
+    {
+      "id": "dingo",
+      "view": "oblique",
+      "file": "dingo-oblique-1.jpg",
+      "title": "File:Dingo, ILA 2024, Schoenefeld (ILA44572).jpg",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Dingo,_ILA_2024,_Schoenefeld_(ILA44572).jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "dingo",
+      "view": "front",
+      "file": "dingo-front-2.jpg",
+      "title": "File:DSC05680 KMW Dingo, Bundesheer, Front Right, 2023-10.jpg",
+      "author": "Aciarium",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:DSC05680_KMW_Dingo,_Bundesheer,_Front_Right,_2023-10.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "dingo",
+      "view": "rear",
+      "file": "dingo-rear-3.jpg",
+      "title": "File:DSC05682 KMW Dingo, Bundesheer, Rear Right, 2023-10.jpg",
+      "author": "Aciarium",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:DSC05682_KMW_Dingo,_Bundesheer,_Rear_Right,_2023-10.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "eagle",
+      "view": "front",
+      "file": "eagle-front-1.jpg",
+      "title": "File:Bundeswehr mowag eagle IV front.JPG",
+      "author": "Patrick Janotta",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_front.JPG",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "eagle",
+      "view": "oblique",
+      "file": "eagle-oblique-2.jpg",
+      "title": "File:Bundeswehr mowag eagle IV back.JPG",
+      "author": "Patrick Janotta",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_back.JPG",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "eagle",
+      "view": "oblique",
+      "file": "eagle-oblique-3.jpg",
+      "title": "File:Bundeswehr mowag eagle IV side.JPG",
+      "author": "Patrick Janotta",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bundeswehr_mowag_eagle_IV_side.JPG",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "pzh2000",
+      "view": "oblique",
+      "file": "pzh2000-oblique-1.jpg",
+      "title": "File:Dutch Panzerhaubitz fires in Afghanistan.jpg",
+      "author": "Gerben van Es/Ministerie van Defensie",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dutch_Panzerhaubitz_fires_in_Afghanistan.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "pzh2000",
+      "view": "oblique",
+      "file": "pzh2000-oblique-2.jpg",
+      "title": "File:Panzerhaubitze 2000 of the Croatian Army.jpg",
+      "author": "12. HRVCON/ J. Bobinac",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Panzerhaubitze_2000_of_the_Croatian_Army.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "gepard",
+      "view": "oblique",
+      "file": "gepard-oblique-1.jpg",
+      "title": "File:Flugabwehrkanonenpanzer Gepard.jpg",
+      "author": "Rainer Lippert",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Flugabwehrkanonenpanzer_Gepard.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "gepard",
+      "view": "oblique",
+      "file": "gepard-oblique-2.jpg",
+      "title": "File:Gepard 1a2 overview.jpg",
+      "author": "Hans-Hermann Bühling",
+      "license": "CC BY-SA 3.0",
+      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Gepard_1a2_overview.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "luchs",
+      "view": "oblique",
+      "file": "luchs-oblique-1.jpg",
+      "title": "File:Spähpanzer 2 Luchs (51442690757).jpg",
+      "author": "Thomas Vogt from Paderborn, Deutschland",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hpanzer_2_Luchs_(51442690757).jpg",
+      "size": [
+        1200,
+        798
+      ]
+    },
+    {
+      "id": "luchs",
+      "view": "oblique",
+      "file": "luchs-oblique-2.jpg",
+      "title": "File:Spähpanzer Luchs (Prototyp).jpg",
+      "author": "Huhu",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Sp%C3%A4hpanzer_Luchs_(Prototyp).jpg",
+      "size": [
+        1200,
+        705
+      ]
+    },
+    {
+      "id": "luchs",
+      "view": "oblique",
+      "file": "luchs-oblique-3.jpg",
+      "title": "File:Een Duits verkenningsvoertuig Luchs Spähpanzer (2107 97101513).jpg",
+      "author": "Staffotografen Directie Voorlichting Ministerie van Defensie",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Een_Duits_verkenningsvoertuig_Luchs_Sp%C3%A4hpanzer_(2107_97101513).jpg",
+      "size": [
+        1200,
+        734
+      ]
+    },
+    {
+      "id": "challenger2",
+      "view": "oblique",
+      "file": "challenger2-oblique-1.jpg",
+      "title": "File:Challenger 2 \"Amazon\".jpg",
+      "author": "KyūMaruOtami",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Challenger_2_%22Amazon%22.jpg",
+      "size": [
+        1200,
+        743
+      ]
+    },
+    {
+      "id": "challenger2",
+      "view": "oblique",
+      "file": "challenger2-oblique-2.jpg",
+      "title": "File:Challenger 2 MBT in Estonia-902250.jpeg",
+      "author": "Andrii Nikolaienko",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Challenger_2_MBT_in_Estonia-902250.jpeg",
+      "size": [
+        1200,
+        681
+      ]
+    },
+    {
+      "id": "challenger2",
+      "view": "oblique",
+      "file": "challenger2-oblique-3.jpg",
+      "title": "File:CHALLENGER II DSEI 2019.jpg",
+      "author": "Swadim",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:CHALLENGER_II_DSEI_2019.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "leclerc",
+      "view": "oblique",
+      "file": "leclerc-oblique-1.jpg",
+      "title": "File:Leclerc Prot.jpg",
+      "author": "Glaucio G M",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leclerc_Prot.jpg",
+      "size": [
+        1200,
+        680
+      ]
+    },
+    {
+      "id": "leclerc",
+      "view": "oblique",
+      "file": "leclerc-oblique-2.jpg",
+      "title": "File:Leclerc EVO.jpg",
+      "author": "Meumeu03",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leclerc_EVO.jpg",
+      "size": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "id": "leclerc",
+      "view": "oblique",
+      "file": "leclerc-oblique-3.jpg",
+      "title": "File:Leclerc EVOlution.jpg",
+      "author": "Meumeu03",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leclerc_EVOlution.jpg",
+      "size": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "id": "abrams",
+      "view": "oblique",
+      "file": "abrams-oblique-3.jpg",
+      "title": "File:M1A2 Abrams firing.jpg",
+      "author": "Sgt. Joaquin Vasquez-Duran",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:M1A2_Abrams_firing.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "bradley",
+      "view": "oblique",
+      "file": "bradley-oblique-1.jpg",
+      "title": "File:M2a3-bradley07.jpg",
+      "author": "Shane A. Cuomo, U.S. Air Force",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:M2a3-bradley07.jpg",
+      "size": [
+        1200,
+        766
+      ]
+    },
+    {
+      "id": "bradley",
+      "view": "oblique",
+      "file": "bradley-oblique-2.jpg",
+      "title": "File:M2A3 Bradley Security.jpg",
+      "author": "M. Zalewski",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:M2A3_Bradley_Security.jpg",
+      "size": [
+        1200,
+        656
+      ]
+    },
+    {
+      "id": "bradley",
+      "view": "oblique",
+      "file": "bradley-oblique-3.jpg",
+      "title": "File:M2A3 Bradley Fighting Vehicles in northeast Syria.jpg",
+      "author": "Spc. William Gore",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:M2A3_Bradley_Fighting_Vehicles_in_northeast_Syria.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "cv90",
+      "view": "oblique",
+      "file": "cv90-oblique-1.jpg",
+      "title": "File:CV 90 Mk IV SIAF-2022.jpg",
+      "author": "Boevaya mashina",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:CV_90_Mk_IV_SIAF-2022.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "cv90",
+      "view": "oblique",
+      "file": "cv90-oblique-2.jpg",
+      "title": "File:Combat Vehicle 90 at Estonian parade-902243.jpeg",
+      "author": "Andrii Nikolaienko",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Combat_Vehicle_90_at_Estonian_parade-902243.jpeg",
+      "size": [
+        1200,
+        923
+      ]
+    },
+    {
+      "id": "k2",
+      "view": "oblique",
+      "file": "k2-oblique-1.jpg",
+      "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 2.jpg",
+      "author": "Staff Sgt. Matthew Foster",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:K2_Tank_Joins_the_Fight_with_eFP_Battle_Group_Poland_-_2.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "k2",
+      "view": "oblique",
+      "file": "k2-oblique-2.jpg",
+      "title": "File:K2 Tank Joins the Fight with eFP Battle Group Poland - 1.jpg",
+      "author": "Staff Sgt. Matthew Foster",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:K2_Tank_Joins_the_Fight_with_eFP_Battle_Group_Poland_-_1.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "k2",
+      "view": "oblique",
+      "file": "k2-oblique-3.jpg",
+      "title": "File:K2 black panther3.jpg",
+      "author": "Simta",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:K2_black_panther3.jpg",
+      "size": [
+        1200,
+        777
+      ]
+    },
+    {
+      "id": "t64bv",
+      "view": "oblique",
+      "file": "t64bv-oblique-1.jpg",
+      "title": "File:T-64BV mod.1987.jpg",
+      "author": "Vitaly V. Kuzmin",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:T-64BV_mod.1987.jpg",
+      "size": [
+        1200,
+        780
+      ]
+    },
+    {
+      "id": "t64bv",
+      "view": "oblique",
+      "file": "t64bv-oblique-2.jpg",
+      "title": "File:NGU T-64BV MBT.jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:NGU_T-64BV_MBT.jpg",
+      "size": [
+        1200,
+        675
+      ]
+    },
+    {
+      "id": "btr4",
+      "view": "oblique",
+      "file": "btr4-oblique-1.jpg",
+      "title": "File:BTR-4 Iraq.jpg",
+      "author": "Армія Інформ",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BTR-4_Iraq.jpg",
+      "size": [
+        1200,
+        517
+      ]
+    },
+    {
+      "id": "btr4",
+      "view": "oblique",
+      "file": "btr4-oblique-2.jpg",
+      "title": "File:BTR-4MV 03.jpg",
+      "author": "VoidWanderer",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BTR-4MV_03.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "t72b3",
+      "view": "oblique",
+      "file": "t72b3-oblique-1.jpg",
+      "title": "File:T-72B3 - TankBiathlon2013-09.jpg",
+      "author": "Vitaly V. Kuzmin",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:T-72B3_-_TankBiathlon2013-09.jpg",
+      "size": [
+        1200,
+        782
+      ]
+    },
+    {
+      "id": "t72b3",
+      "view": "oblique",
+      "file": "t72b3-oblique-2.jpg",
+      "title": "File:Destroyed T-72B3 in Tsyrkuny, north of Kharkiv, Ukraine.jpg",
+      "author": "OSINTWiki",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Destroyed_T-72B3_in_Tsyrkuny,_north_of_Kharkiv,_Ukraine.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "t72b3",
+      "view": "oblique",
+      "file": "t72b3-oblique-3.jpg",
+      "title": "File:T-72B3.jpg",
+      "author": "Vitaly Kuzmin",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:T-72B3.jpg",
+      "size": [
+        1200,
+        779
+      ]
+    },
+    {
+      "id": "t90m",
+      "view": "oblique",
+      "file": "t90m-oblique-1.jpg",
+      "title": "File:T-90M.jpg",
+      "author": "Ministry of Defence of the Russian Federation",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:T-90M.jpg",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "t90m",
+      "view": "oblique",
+      "file": "t90m-oblique-2.jpg",
+      "title": "File:The 80th Air Assault Brigade captured a T-90M Proryv tank in the Kursk region.jpg",
+      "author": "Roman Pilipey",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:The_80th_Air_Assault_Brigade_captured_a_T-90M_Proryv_tank_in_the_Kursk_region.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "t90m",
+      "view": "oblique",
+      "file": "t90m-oblique-3.jpg",
+      "title": "File:Destroyed T-90M of Russian Army 3.jpg",
+      "author": "АрміяInform",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Destroyed_T-90M_of_Russian_Army_3.jpg",
+      "size": [
+        960,
+        540
+      ]
+    },
+    {
+      "id": "bmp2",
+      "view": "oblique",
+      "file": "bmp2-oblique-1.jpg",
+      "title": "File:Сарыозек, БМП-2 на Жибек жолы.jpg",
+      "author": "Nikolai Bulykin",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%B0%D1%80%D1%8B%D0%BE%D0%B7%D0%B5%D0%BA,_%D0%91%D0%9C%D0%9F-2_%D0%BD%D0%B0_%D0%96%D0%B8%D0%B1%D0%B5%D0%BA_%D0%B6%D0%BE%D0%BB%D1%8B.jpg",
+      "size": [
+        1200,
+        675
+      ]
+    },
+    {
+      "id": "bmp2",
+      "view": "oblique",
+      "file": "bmp2-oblique-2.jpg",
+      "title": "File:BMP-2 military parade rehearsal.jpg",
+      "author": "Фальшивомонетчик (original picture) SuperTank17 (crop)",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:BMP-2_military_parade_rehearsal.jpg",
+      "size": [
+        1200,
+        765
+      ]
+    },
+    {
+      "id": "bmp3",
+      "view": "oblique",
+      "file": "bmp3-oblique-1.jpg",
+      "title": "File:TB2015ExhibitionP2-42.jpg",
+      "author": "Vitaly V. Kuzmin",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:TB2015ExhibitionP2-42.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "bmp3",
+      "view": "oblique",
+      "file": "bmp3-oblique-2.jpg",
+      "title": "File:BMP-3 Kubinka.jpg",
+      "author": "Toshonenov",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BMP-3_Kubinka.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "bmp3",
+      "view": "oblique",
+      "file": "bmp3-oblique-3.jpg",
+      "title": "File:BMP-3 (3).jpg",
+      "author": "Vitaly V. Kuzmin",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BMP-3_(3).jpg",
+      "size": [
+        1200,
+        751
+      ]
+    },
+    {
+      "id": "btr80",
+      "view": "oblique",
+      "file": "btr80-oblique-1.jpg",
+      "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80, Russia.jpg",
+      "author": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Moscow_2012_Victory_Day_Parade_Rehearsal,_BTR-80,_Russia.jpg",
+      "size": [
+        1200,
+        797
+      ]
+    },
+    {
+      "id": "btr80",
+      "view": "oblique",
+      "file": "btr80-oblique-2.jpg",
+      "title": "File:Moscow 2012 Victory Day Parade Rehearsal, BTR-80 APC, Russia.jpg",
+      "author": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Moscow_2012_Victory_Day_Parade_Rehearsal,_BTR-80_APC,_Russia.jpg",
+      "size": [
+        1200,
+        797
+      ]
+    },
+    {
+      "id": "btr80",
+      "view": "rear",
+      "file": "btr80-rear-3.jpg",
+      "title": "File:Btr-80 in Serbia.jpg",
+      "author": "SPC Glenn W. Suggs",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Btr-80_in_Serbia.jpg",
+      "size": [
+        1200,
+        796
+      ]
+    },
+    {
+      "id": "btr82a",
+      "view": "oblique",
+      "file": "btr82a-oblique-1.jpg",
+      "title": "File:BTR-82A turret - June 2023.jpg",
+      "author": "Ministry of Defence of the Russian Federation",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BTR-82A_turret_-_June_2023.jpg",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "btr82a",
+      "view": "oblique",
+      "file": "btr82a-oblique-2.jpg",
+      "title": "File:BTR-82A of the Western Military District - June 2023.jpg",
+      "author": "Ministry of Defence of the Russian Federation",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BTR-82A_of_the_Western_Military_District_-_June_2023.jpg",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "btr82a",
+      "view": "oblique",
+      "file": "btr82a-oblique-3.jpg",
+      "title": "File:BTR-80 and BTR-82A with RP-377 jammer.jpg",
+      "author": "Ministry of Defence of the Russian Federation",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BTR-80_and_BTR-82A_with_RP-377_jammer.jpg",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "brdm2",
+      "view": "oblique",
+      "file": "brdm2-oblique-1.jpg",
+      "title": "File:BRDM-2 in Korolyov Moscow Oblast.jpg",
+      "author": "Dmitry Ivanov.",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_in_Korolyov_Moscow_Oblast.jpg",
+      "size": [
+        1200,
+        905
+      ]
+    },
+    {
+      "id": "brdm2",
+      "view": "oblique",
+      "file": "brdm2-oblique-2.jpg",
+      "title": "File:BRDM-2 on a military parade.JPEG",
+      "author": "Unknown authorUnknown author",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_on_a_military_parade.JPEG",
+      "size": [
+        1200,
+        790
+      ]
+    },
+    {
+      "id": "brdm2",
+      "view": "oblique",
+      "file": "brdm2-oblique-3.jpg",
+      "title": "File:BRDM-2 (1964) owned by James Stewart pic6.JPG",
+      "author": "AlfvanBeem",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:BRDM-2_(1964)_owned_by_James_Stewart_pic6.JPG",
+      "size": [
+        1200,
+        901
+      ]
+    },
+    {
+      "id": "bmd2",
+      "view": "oblique",
+      "file": "bmd2-oblique-1.jpg",
+      "title": "File:Ukrainian BMD-2 tank (3).JPG",
+      "author": "Michael Esspe",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ukrainian_BMD-2_tank_(3).JPG",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "bmd2",
+      "view": "oblique",
+      "file": "bmd2-oblique-2.jpg",
+      "title": "File:BMD-2 airborne combat vehicle.jpg",
+      "author": "Rockybrown",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BMD-2_airborne_combat_vehicle.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "bmd2",
+      "view": "oblique",
+      "file": "bmd2-oblique-3.jpg",
+      "title": "File:BMD-2.jpg",
+      "author": "Xabier Eskisabel",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BMD-2.jpg",
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "id": "mtlb",
+      "view": "front",
+      "file": "mtlb-front-1.jpg",
+      "title": "File:Soviet MT-LB.JPEG",
+      "author": "DON S. Montgomery, U.S. Navy (Ret.)",
+      "license": "Public domain",
+      "license_url": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Soviet_MT-LB.JPEG",
+      "size": [
+        1200,
+        789
+      ]
+    },
+    {
+      "id": "mtlb",
+      "view": "oblique",
+      "file": "mtlb-oblique-2.jpg",
+      "title": "File:UA 93 bgd MT-LB-S 01.jpg",
+      "author": "Operational Command “East”",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:UA_93_bgd_MT-LB-S_01.jpg",
+      "size": [
+        1080,
+        719
+      ]
+    },
+    {
+      "id": "mtlb",
+      "view": "oblique",
+      "file": "mtlb-oblique-3.jpg",
+      "title": "File:UA 30th bgd MT-LB-S 03.jpg",
+      "author": "30th Prince Konstanty Ostrogski Mechanized Brigade",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:UA_30th_bgd_MT-LB-S_03.jpg",
+      "size": [
+        1200,
+        799
+      ]
+    },
+    {
+      "id": "msta",
+      "view": "oblique",
+      "file": "msta-oblique-1.jpg",
+      "title": "File:2S19 Msta-S PM MWB 09.jpg",
+      "author": "Zala",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_09.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "msta",
+      "view": "oblique",
+      "file": "msta-oblique-2.jpg",
+      "title": "File:2S19 Msta-S PM MWB 03.jpg",
+      "author": "Zala",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_03.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "msta",
+      "view": "oblique",
+      "file": "msta-oblique-3.jpg",
+      "title": "File:2S19 Msta-S PM MWB 12.jpg",
+      "author": "Zala",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2S19_Msta-S_PM_MWB_12.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    },
+    {
+      "id": "wiesel",
+      "view": "oblique",
+      "file": "wiesel-oblique-2.jpg",
+      "title": "File:Sanitätsfahrzeug Wiesel 2.jpg",
+      "author": "Bundeswehr-Fotos",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sanit%C3%A4tsfahrzeug_Wiesel_2.jpg",
+      "size": [
+        1200,
+        798
+      ]
+    },
+    {
+      "id": "wiesel",
+      "view": "oblique",
+      "file": "wiesel-oblique-3.jpg",
+      "title": "File:Wiesel 1 TOW.jpg",
+      "author": "funky1opti",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wiesel_1_TOW.jpg",
+      "size": [
+        1200,
+        900
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "file": "abrams-oblique-45.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:M1 abrams loading the main gun.jpg"
+    },
+    {
+      "file": "leo2a6-oblique-2.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:UA Leopard 2A6 01.jpg"
+    },
+    {
+      "file": "leo2a6-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:UA Leopard 2A6 02.jpg"
+    },
+    {
+      "file": "leo1-oblique-1.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:UA 44 bde Leopard 1A5 with Kontakt-1 03.jpg"
+    },
+    {
+      "file": "leo1-oblique-2.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:UA 44 bde Leopard 1A5 with Kontakt-1 04.jpg"
+    },
+    {
+      "file": "puma-side-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Puma-Triebwerk.jpg"
+    },
+    {
+      "file": "marder-oblique-1.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Indonesian Army Marder 1A3 cadet crewman.jpg"
+    },
+    {
+      "file": "boxer-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:GTK Boxer Chassis.jpg"
+    },
+    {
+      "file": "fennek-oblique-2.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Spähwagen Fennek - Reifen.JPG"
+    },
+    {
+      "file": "fennek-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Spähwagen Fennek - Cockpit.JPG"
+    },
+    {
+      "file": "pzh2000-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:KMW Panzerhaubitze 2000 view inside Munster 2015.jpg"
+    },
+    {
+      "file": "gepard-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Flakpanzer Gepard SPAAG.JPG"
+    },
+    {
+      "file": "cv90-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:2nd ANGLICO Marines learn more about Swedish Army CV90 Infantry Fighting Vehicle in Sweden during BALTOPS 24 (8480808).jpg"
+    },
+    {
+      "file": "t64bv-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:T-64BV (searchlight-number 6) turret.jpg"
+    },
+    {
+      "file": "btr4-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Big Time Rush 2012.jpg"
+    },
+    {
+      "file": "t80bvm-front-2.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:T-80 MBT reactive armour.JPEG"
+    },
+    {
+      "file": "t80bvm-side-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:T-80 (1).JPEG"
+    },
+    {
+      "file": "bmp2-oblique-3.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Belarus-Volot Transporting BMP-2-2.jpg"
+    },
+    {
+      "file": "wiesel-oblique-1.jpg",
+      "reason": "qa: not a usable recognition photo",
+      "title": "File:Wiesel on MAN truck.jpg"
+    }
+  ]
+}
